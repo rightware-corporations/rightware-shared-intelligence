@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -24,3 +24,6 @@ jobs:
         shell: bash
         run: |
           git ls-tree HEAD vendor/mem0 | grep -F "160000 commit f1791daa86d469249c9b002f62644d58a1eb96a0"
+          test -f vendor/mem0/LICENSE
+          test -f vendor/mem0/server/main.py
+          test "$(git -C vendor/mem0 rev-parse HEAD)" = "f1791daa86d469249c9b002f62644d58a1eb96a0"
