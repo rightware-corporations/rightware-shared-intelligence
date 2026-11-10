@@ -1,0 +1,26 @@
+name: foundation
+on:
+  push:
+    branches: [feat/work00-mem0-upstream-foundation]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax check
+        run: python -m compileall -q rightware_si tests
+      - name: Deterministic tests (FAKE transport only)
+        run: python -m unittest discover -s tests -v
+      - name: Check upstream gitlink
+        shell: bash
+        run: |
+          git ls-tree HEAD vendor/mem0 | grep -F "160000 commit f1791daa86d469249c9b002f62644d58a1eb96a0"
