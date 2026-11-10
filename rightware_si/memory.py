@@ -13,7 +13,7 @@ import re
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 from uuid import uuid4
 
 _IDENTIFIER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
@@ -69,6 +69,12 @@ class MemoryScopeError(RuntimeError):
     """Upstream returned a memory from an unexpected or absent project scope."""
 
 
+class _BlockRedirect(HTTPRedirectHandler):
+    # Prevent forwarding the X-API-Key to an unexpected redirect destination.
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
 class Mem0HTTPClient:
     """Thin Mem0 self-hosted HTTP client.
 
@@ -101,7 +107,7 @@ class Mem0HTTPClient:
             headers={"Content-Type": "application/json", "X-API-Key": self._api_key},
         )
         try:
-            with urlopen(req, timeout=self._timeout) as response:
+            with build_opener(_BlockRedirect).open(req, timeout=self._timeout) as response:
                 data = json.loads(response.read(2_000_000).decode("utf-8"))
         except HTTPError as exc:
             raise Mem0HTTPError(f"Mem0 HTTP status {exc.code}") from None
