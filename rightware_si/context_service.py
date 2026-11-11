@@ -73,6 +73,16 @@ class ScopedContextReader:
             raise SemanticUnavailable("semantic memory backend unavailable") from None
         if not isinstance(rows, list):
             raise SemanticUnavailable("unexpected memory backend response")
+        for row in rows:
+            if not isinstance(row, dict) or row.get("user_id") != scope.mem0_user_id:
+                # Defence in depth: do not rely solely on provider-side filtering.
+                raise SemanticUnavailable("memory returned outside authorized scope")
+            meta = row.get("metadata")
+            if isinstance(meta, dict) and (
+                ("rw_organization" in meta and meta["rw_organization"] != scope.organization)
+                or ("rw_project" in meta and meta["rw_project"] != scope.project)
+            ):
+                raise SemanticUnavailable("memory metadata violates project scope")
         return self._safe_rows(rows)
 
     def search(self, project: str, principal: str, query: str, limit: int = 5) -> dict:
