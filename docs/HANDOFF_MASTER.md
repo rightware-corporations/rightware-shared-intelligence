@@ -142,6 +142,20 @@
 
 ---
 
+
+---
+
+## SI-MH-0007 — SI-RD-02: Reverse analysis & benchmark contract
+**Data:** 2026-11-12 (Africa/Maputo) · **Classificação:** INVESTIGAÇÃO DOCUMENTAL / RECOMENDAÇÃO, NÃO TESTADO como benchmark · **Parent:** `develop@a357e636f3accb73d8214ede7946b4e6e518142d`.
+
+**Objectivo:** implementar a regra RESEARCH FIRST da RIGHTWARE na próxima etapa do Shared Intelligence; estudar código, licenças, decisões de arquitectura e adaptar, sem reinventar Mem0/Hindsight/Graphiti/Letta/LangGraph/Temporal/A2A.
+**Ficheiros criados:** `docs/research/SI_RD_02_SOURCE_CODE_MATRIX_2026-11-12.md` (matriz com SHA de sete repos e anchors de código), `docs/research/SI_RD_02_BENCHMARK_CONTRACT.md` (tracks e métricas), `docs/research/fixtures/SI_RD_02_cases_v1.jsonl` (18 oracles sintéticos; validados estruturalmente: 6 memory, 6 continuity, 6 security).
+**Achados:** Mem0 ADD-only/hybrid e graph retirado do OSS; Hindsight já tem mecanismos de memory defense, validator e tenant hooks; Graphiti timestamps episódicos/temporal e retrieval híbrida; Letta Code Git-backed memory; LangGraph e Temporal têm persistência/workflows; A2A requer persistência separada para eventos críticos. Critérios de diferenciação **ainda são hipóteses**, não reivindicações comerciais.
+**Método de validação desta entrega:** repositórios analisados por API GitHub com SHA explicitado; fixture JSONL montada e validada sintacticamente com JSON.stringify sobre 18 objectos únicos e oracles. **Nenhum LLM, motor externo, pentest, CI novo, benchmark nem deploy executado por SI-RD-02**; testes anteriores do projecto continuam distintos.
+**Evidência histórica do núcleo:** WORK-03A CI 43121657190 SUCCESS (55 testes + E2E); este commit documental precisa do seu próprio CI. `develop` apenas; `main` intocada; nenhum novo branch/PR, migration, código, vendor pin, Jarvis/PULSE ou dado privado alterado.
+**Decisão oficial:** nenhuma decisão de produto; apenas recomendação de manter Mem0 enquanto se benchmarka baseline PostgreSQL, Hindsight e Graphiti; workflow engines num track independente.
+**Riscos e limitações:** não auditadas dependências/transitive licenses; implementação dos vendors não executada; avaliação funcional e dados de mercado NÃO VALIDADA. Próximo gate SI-RD-03: harness isolado de avaliação com os fixtures; validação dos oracles por humano, pin de ambientes, repetição e resultados reprodutíveis; segurança com critério zero falhas críticas. Responsável: coordenação técnica RIGHTWARE.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

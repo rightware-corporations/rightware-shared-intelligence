@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0006 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0007 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -45,6 +45,14 @@
 - No new benchmarks run, no runtime/DB/Jarvis changes, no commercial advantage validated. Source URLs and experimental method in dossier.
 - Baseline used for this research checkpoint: develop@521961dd681d55b86cadef823f61243e176b15da; CI run 43119637429 SUCCESS (pre-existing runtime), new documentation CI PENDING after commit.
 - Proposed next research task: **SI-RD-02**, inspect source/license/versions per technology, then build synthetic memory+continuity benchmark with identical conditions.
+
+## SI-RD-02 — Pesquisa de engenharia concluída documentalmente (sem benchmark executado)
+- Dossier [SOURCE_CODE_MATRIX](research/SI_RD_02_SOURCE_CODE_MATRIX_2026-11-12.md), [BENCHMARK_CONTRACT](research/SI_RD_02_BENCHMARK_CONTRACT.md) e [18 fixtures sintéticas](research/fixtures/SI_RD_02_cases_v1.jsonl). Checkpoint SI-MH-0007.
+- Código/documentação de sete fornecedores lidos com SHA e licença principal identificados; classificação REUSE/EVALUATE/LEARN. Matriz não constitui aprovação de licenças transitivas ou desempenho.
+- A investigação indica que Hindsight já possui memory defense/validação, Graphiti temporal edges, Letta Git-backed memory; Mem0 pinned é ADD-only/hybrid e não inclui graph OSS. Diferença comercial ainda HIPÓTESE.
+- Fixture validada estruturalmente: 18 JSONL objectos (6 memory, 6 continuity, 6 security), IDs únicos, oracles. Nenhum benchmark foi executado, nenhuma integração mudou.
+- CI do commit SI-RD-02: PENDENTE, deve ser consultado e registado em checkpoint posterior; último CI consolidado verificado foi WORK-03A 43121657190 SUCCESS (55 testes + E2E).
+- Próximo gate recomendado: SI-RD-03 isolated benchmark harness (baseline PostgreSQL vs Mem0/Hindsight, Graphiti temporal depois), sem alterar o runtime/ produção.
 
 ## Next exact work
 **Próximo WORK — desenho do deployment/segurança e SI-RD-02 investigação técnica**; preservar o núcleo com CI verde, depois avaliar staging Jarvis read-only. Antes de qualquer release ou limpeza de branches, reconciliar seis PRs históricos, proteger main/develop e fazer backup externo.
