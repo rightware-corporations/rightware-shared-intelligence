@@ -1,0 +1,3 @@
+# WORK-02A PostgreSQL transactional-core integration tests.
+# Applies to isolated CI/test environments; not a production locked build.
+psycopg[binary]>=3.2,<4
