@@ -127,6 +127,21 @@
 
 ---
 
+## SI-MH-0006 — WORK-03A R1: CI real validado após reorganização
+**Data:** 2026-11-12 (Africa/Maputo) · **Estado:** VALIDADO · **Commit testado:** `54f3664359e884a90902dee3db2c238c26b622a8` · **Ramo:** `develop`.
+
+**Evidência exacta:** GitHub Actions [43121657190](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43121657190), workflow `rightware-shared-intelligence-ci`, conclusão **SUCCESS**. Logs: `HANDOFF_POLICY_PASS audited_commits=1`; `PACKAGE_LAYOUT_PASS backend`; `MIGRATION_PASS` 0001, 0002, 0003 (PostgreSQL16); **55 testes executados, OK**; `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` (cliente MCP stdio independente -> REST autenticada -> PostgreSQL scoped -> Mem0 OSS real + Ollama embeddings + pgvector). Chave efémera mascarada, não visível em claro no log.
+
+**Comparação com base anterior:** 51 testes anteriores + 4 novos testes de árvore. A migração preservou **17/17 hashes dos blobs** de código/requisitos/SQL. O workflow consolidado instala `backend/requirements/` e o pacote em `backend/rightware_si/`, que foi confirmado por import editável. O CI não utilizou Qwen text generation e não é uma certificação de segurança em produção.
+
+**Histórico preservado:** pesquisa SI-RD-01 do commit `6c257ff70b5ac961b455cc23fb96a6676e575939` (SI-MH-0004); seis Draft PRs históricos continuam disponíveis e `main` inalterada. Frontend e deployment ainda não implementados.
+
+**Riscos e trabalho pendente:** CI cobre somente runtime de laboratório e dados sintéticos; restrições de produção (identidade OIDC/workload, política de retenção/apagamento, rate limits, TLS, backups, outbox e lease recovery). Reconciliar PRs/branches históricos antes de encerrar, sem remover referências sem prova. Avançar com a investigação SI-RD-02 de alternativas/benchmarks e o desenho operacional do deployment de forma autónoma, sem afetar o Jarvis em produção.
+
+**Handoff pós-verificação:** este commit actualiza MASTER e HANDOFF actual; próprio CI deste commit de documentação ainda precisa de verificação separada (não antecipar resultado).
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

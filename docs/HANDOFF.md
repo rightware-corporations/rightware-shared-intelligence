@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0005 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0006 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -33,11 +33,11 @@
 - Embedding model tag not immutable; vendor MCP hosts and actual Jarvis staging require separate test; no production readiness claim.
 - Existing six Draft PRs + historical branches need careful inventory/archival before deletion. GitHub branch protections and separate backup/restore remain unconfigured.
 
-## WORK-03A R0 — Reestruturação de diretórios (CI PENDENTE)
+## WORK-03A R1 — Reestruturação validada em laboratório
 - Parent HEAD actual de `develop`: `6c257ff70b5ac961b455cc23fb96a6676e575939`. A pesquisa SI-RD-01 e SI-MH-0004 estão preservados.
 - 11 blobs Python movidos para `backend/rightware_si/`, 3 SQL para `database/migrations/`, 3 requisitos para `backend/requirements/`, **17/17 hashes de blob iguais**.
 - `pyproject.toml` ajustado; `.github/workflows/ci.yml` único workflow actual; testes de layout novos. `frontend/` e `infrastructure/` contêm documentação, **não** aplicações/deployments.
-- `docs/ARCHITECTURE.md`, `README.md` e `docs/work03a/RESTRUCTURE_MANIFEST.md` descrevem o estado actual. CI do NOVO commit PENDENTE; não atribuir PASS até ler os logs.
+- `docs/ARCHITECTURE.md`, `README.md` e `docs/work03a/RESTRUCTURE_MANIFEST.md` descrevem o estado actual. **CI 43121657190 SUCCESS (55/55 testes + E2E real)** para o código reorganizado; evidência completa em `docs/work03a/EVIDENCE.md`.
 - `main`, vendor Mem0, Jarvis, PULSE e seis Draft PRs não alterados. Continuar a investigação SI-RD-02 sem transformar hipóteses em decisões oficiais.
 
 ## Investigation checkpoint SI-RD-01 (documentation only)
@@ -47,7 +47,7 @@
 - Proposed next research task: **SI-RD-02**, inspect source/license/versions per technology, then build synthetic memory+continuity benchmark with identical conditions.
 
 ## Next exact work
-**Verificar CI da reorganização WORK-03A no HEAD actual de develop;** se passar, acrescentar nova adenda SI-MH-0006 e actualizar este HANDOFF. Seguidamente rever a arquitectura real, estratégia de deployment e SI-RD-02 antes de iniciar testes Jarvis staging. Não encerrar/apagar os 6 PRs históricos sem reconciliação.
+**Próximo WORK — desenho do deployment/segurança e SI-RD-02 investigação técnica**; preservar o núcleo com CI verde, depois avaliar staging Jarvis read-only. Antes de qualquer release ou limpeza de branches, reconciliar seis PRs históricos, proteger main/develop e fazer backup externo.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
