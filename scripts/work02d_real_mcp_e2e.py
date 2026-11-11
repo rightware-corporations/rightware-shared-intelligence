@@ -24,8 +24,11 @@ from rightware_si.token_admin import issue_api_token, revoke_api_token
 
 def check_db() -> str:
     dsn = os.environ["RW_TEST_DATABASE_URL"]
-    if urlsplit(dsn).path != "/rw_test":
-        raise RuntimeError("Refusing non-ephemeral database")
+    parsed = urlsplit(dsn)
+    if (parsed.path != "/rw_test"
+        or parsed.hostname not in ("127.0.0.1", "localhost")
+        or parsed.port != 5432):
+        raise RuntimeError("Refusing non-local or non-ephemeral database")
     if os.environ.get("RW_SI_DATABASE_URL") != dsn:
         raise RuntimeError("API database and test database must match")
     if os.environ.get("RW_SI_MEM0_URL") != "http://127.0.0.1:8891":
@@ -37,6 +40,10 @@ def check_db() -> str:
 
 def prepare(dsn: str):
     with psycopg.connect(dsn) as conn:
+        # The prior unit suite seeds "alpha"/"beta" into the same disposable
+        # /rw_test database. Reset fixtures to avoid cross-suite collisions.
+        # check_db() already rejects non-local/non-ephemeral DB targets.
+        conn.execute("TRUNCATE si_organizations,si_principals RESTART IDENTITY CASCADE")
         conn.execute("INSERT INTO si_organizations(id) VALUES('rwlab')")
         conn.execute("INSERT INTO si_projects(id,organization_id) VALUES "
                      "('alpha','rwlab'),('beta','rwlab')")
