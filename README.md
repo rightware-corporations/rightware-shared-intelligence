@@ -1,28 +1,60 @@
 # RIGHTWARE Shared Intelligence
 
-Independent RIGHTWARE-owned platform for scoped contextual memory, verified operational continuity, and handoffs between authorized AI agents/applications.
+Independent RIGHTWARE infrastructure for authorized AI agents and applications to share **contextual memory**, **task continuity** and **evidence-aware handoffs**.
 
-**Status (2026-11-12): experimental, NOT deployed or production-ready.** The tested WORK-02D laboratory includes PostgreSQL tasks/handoffs, FastAPI authentication, read-only MCP, real Mem0 + local Ollama embeddings and a passing synthetic E2E. No production Jarvis/PULSE integration and no frontend application yet.
+**Status:** experimental Python backend validated with synthetic end-to-end data. **Not a production service.** Jarvis and PULSE production remain unchanged. No working frontend UI exists.
 
-## Repository governance — operator decisions
-- **develop:** the ONLY active construction/integration branch; all technical outputs require handoff logging in the same commit.
-- **main:** stable approved release branch (currently only initial README; do not deploy as a product). No merge without explicit release approval.
-- Historic six experimental branches and their Draft PRs are temporarily preserved as evidence; no new feature branches. Cleanup is a separate audited migration.
-- [Current handoff](docs/HANDOFF.md) — resume here first.
-- [MASTER HANDOFF](docs/HANDOFF_MASTER.md) — append-only technical history.
-- [Handoff policy](docs/HANDOFF_POLICY.md) — mandatory per-output checkpoint procedure.
-- [Historical recovery](docs/handoffs/BASELINE_WORK00_WORK02D.md) — PR/commit/CI evidence from WORK-00 to WORK-02D.
+## Start here
+- [Current HANDOFF](docs/HANDOFF.md) — last state, evidence, blockers and next action.
+- [MASTER HANDOFF](docs/HANDOFF_MASTER.md) — cumulative append-only engineering history.
+- [Handoff policy](docs/HANDOFF_POLICY.md) — update BOTH in every technical commit.
+- [Architecture — implemented vs proposed](docs/ARCHITECTURE.md).
+- [WORK-03A restructuring manifest](docs/work03a/RESTRUCTURE_MANIFEST.md).
+- [Mem0 upstream provenance](docs/UPSTREAM_PROVENANCE.md).
 
-## Current source layout (pre-consolidation)
-- `rightware_si/` — Python backend (REST, auth, tasks/leases, MCP, memory adapters).
-- `db/migrations/` — authoritative PostgreSQL schema and security migrations.
-- `vendor/mem0/` — Apache-2.0 original Mem0 pinned as Git submodule; attribution in THIRD_PARTY_NOTICES.md.
-- `tests/`, `scripts/` and `.github/workflows/` — reproducible tests and real E2E lab.
-- `docs/` — architecture, security, API contracts, evidence, current and historical handoffs.
+## Project layout
 
-**Next proposed milestone:** WORK-03A architecture/folder consolidation without functional rewrite. Proposed future layout: backend/, database/, infrastructure/, frontend/ (later), tests/, docs/, vendor/. Re-run all tests after moves.
+```text
+backend/
+  rightware_si/             # FastAPI, PostgreSQL core, contextual memory, MCP
+  requirements/             # core.txt, api.txt, memory.txt
+database/
+  migrations/               # 0001–0003 authoritative PostgreSQL schema
+frontend/
+  README.md                 # FUTURE: admin panel, not implemented
+infrastructure/
+  README.md                 # deployment boundaries; no production stack
+tests/                      # unit, PostgreSQL, REST, MCP and layout tests
+scripts/                    # CI governance and real synthetic E2E
+docs/                       # current + historical handoffs, architecture and evidence
+vendor/mem0/                # pinned Apache-2.0 Git submodule
+.github/workflows/ci.yml    # one active CI workflow on develop
+pyproject.toml              # editable package at backend/rightware_si
+```
 
-## Safety
-Never write secrets, unredacted CI tokens, private conversations or personal project memories to this PUBLIC repository. No production data or Jarvis deployment in the current proof. Model-generated contextual text is UNVERIFIED; PostgreSQL is source of truth for task state.
+## Git policy
+- **develop:** all future engineering/checkpoints. Every technical commit updates `docs/HANDOFF_MASTER.md` and `docs/HANDOFF.md`.
+- **main:** explicitly approved releases only. As of this checkpoint, `main` contains only initial README; it is not an installed/shared-intelligence release.
+- Historic WORK-00 through WORK-02D branches and six Draft PRs are preserved temporarily for provenance; no new temporary work branches.
 
-Read docs/HANDOFF.md, then docs/HANDOFF_MASTER.md and the latest CI run before continuing.
+## Lab validation (not production instructions)
+
+Test dependencies and editable package:
+
+```sh
+git submodule update --init --recursive
+python -m pip install -r backend/requirements/core.txt -r backend/requirements/api.txt -r backend/requirements/memory.txt
+python -m pip install -e vendor/mem0 -e .
+```
+
+The integration test harness requires **disposable** PostgreSQL database `rw_test`, configured through `RW_TEST_DATABASE_URL`. The real Mem0 smoke requires an additional isolated pgvector database, a local Ollama service and synthetic data. Do not point these scripts at customer, Jarvis, PULSE or production databases.
+
+See [infrastructure/README.md](infrastructure/README.md) and the [CI workflow](.github/workflows/ci.yml) for the tested synthetic-lab configuration. No default hosted paid inference API is required for that embedding smoke; real self-hosting, security and capacity planning are still pending.
+
+## Functional boundaries
+- PostgreSQL task and authorization state is **authoritative**.
+- Mem0 is a **replaceable semantic-memory component** and its content is **UNVERIFIED**.
+- MCP stdio bridge shares the authenticated REST gateway's project-scoped policies.
+- Model text never directly approves work or grants permissions.
+
+Maintainer: RIGHTWARE. Mem0 is an independent upstream project and retains its own license and source history.

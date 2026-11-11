@@ -1,33 +1,72 @@
-# Architecture v0.1 — proposal and lab implementation
+# RIGHTWARE Shared Intelligence — Architecture baseline (WORK-03A)
 
-**State:** WORK-00 experimental code. The only executable RIGHTWARE component is a Python Mem0 HTTP client and its deterministic fake-backed tests. No MCP server, database migration, production authentication, orchestrator or integration with Jarvis/PULSE is implemented.
+**Status:** actual repository-backed architecture after layout consolidation. **Experimental code only**; no production deployment or Jarvis/PULSE integration. Historical WORK-00 proposal was replaced here because it did not describe the implemented WORK-02D system; original history remains in Git and `docs/work01/`.
 
-## Boundaries
+## One repository, one Python application, private memory service
 
-- vendor/mem0: unmodified upstream gitlink, pinned to a reviewed commit. This is Mem0's code; license and development history remain upstream.
-- rightware_si: RIGHTWARE-authored, dependency-free, project-scoped Python adapter.
-- The adapter calls Mem0 self-hosted REST POST /memories (infer=false) and POST /search using the supplied service account key.
-- Mem0 self-hosted provides its own persistence/auth. The current upstream server uses PostgreSQL/pgvector, but defaults to hosted LLM and embedding APIs unless configured otherwise. The adapter does not make this free or offline.
-- project scope rw:<organization>:<project> is a naming convention only. It is NOT secure tenant authorization.
+```text
+Proposed future Admin UI (NOT built)        External clients (Jarvis / PULSE / MCP SDK)
+             |                                         |
+             +-----------------------------------------+
+                         AUTHENTICATED REST API
+                         backend/rightware_si/http_api.py
+                                     |
+                      backend/rightware_si/api_auth.py
+                                     |
+         +---------------------------+--------------------------+
+         |                                                      |
+    WorkCore (PostgreSQL)                             ScopedContextReader
+    backend/rightware_si/core/postgres.py               backend/rightware_si/context_service.py
+         |                                                      |
+    PostgreSQL 16 operational store                     Memory adapter / internal Mem0
+    database/migrations/0001–0003                         |
+                                                         Mem0 OSS + Ollama local embeddings
+                                                         PostgreSQL 17 / pgvector (LAB)
+```
 
-## Trust and state
+MCP uses `backend/rightware_si/mcp_bridge.py` as a **read-only stdio bridge**, and calls the **same REST API** with a project-scoped bearer token; it cannot skip REST authentication.
 
-A model-written handoff is a claim, not verified completion. Upstream Mem0 stores/searches notes; it is NOT authoritative for task state, approvals, evidence validation, or audit trails.
+### Backend — implemented
+- `backend/rightware_si/http_api.py`: FastAPI routes for tasks, events, handoffs, context and semantic search; no public write-memory endpoint.
+- `api_auth.py`, `token_admin.py`: bearer token verifier and offline lab token issuance/revocation; no OAuth/OIDC.
+- `core/postgres.py`: task lifecycle, versions, exclusive lease transfer, append-only task events, scoped grants and idempotency.
+- `context_service.py`: derives organization/project scope from PostgreSQL, reads canonical tasks and obtains Mem0 candidates; rejects cross-project metadata, labels memory UNVERIFIED; degrades when Mem0 is down.
+- `memory.py`: pinned Mem0 HTTP adapter, scope convention, no identity authority.
+- `mem0_local_service.py`: **isolated lab** wrapper around pinned OSS Mem0 with Ollama embedding and pgvector; private loopback and test key, not exposed to the internet.
+- `mcp_bridge.py`: stdio, read-only get_task/get_task_events/get_project_context.
+- `client_readonly.py`: standalone probe only, **not** integrated into Jarvis.
 
-Future event system must be append-only and transactional in a RIGHTWARE-controlled PostgreSQL schema. Only a trusted verifier may mark an action verified. Do not infer approval from a memory record.
+### Database — implemented
+- `database/migrations/0001_work02_core.sql`: organizations, projects, principals, permissions, tasks, leases, handoffs, evidence references, task events, idempotency.
+- `0002_work02b_api_credentials.sql`: hashed bearer keys / expiration / revocation.
+- `0003_work02d_scrub_lease_replays.sql`: scrubs historical one-time lease secrets from saved idempotency JSON.
+- The lab uses PostgreSQL 16 for authoritative task state, a **separate** PostgreSQL 17+pgvector instance for Mem0 embeddings. Production database topology **is not yet decided**.
+- No migration framework such as Flyway/Alembic is installed; SQL files are explicitly applied in the CI lab.
 
-## Integration target (not implemented)
+### Memory — implemented laboratory path
+- Upstream Mem0 is a Git submodule under `vendor/mem0/`, pinned to `f1791daa86d469249c9b002f62644d58a1eb96a0` (Apache-2.0).
+- Ollama `0.40.15` and `all-minilm:latest` embeddings validated in CI. Tags are not immutable model hashes.
+- No text-generation success claimed: real smoke uses `infer=false`, no Qwen generation.
+- Retrieval filtering is not a replacement for RIGHTWARE authorization.
 
-App / Claude / n8n / Jarvis
-→ authenticated RIGHTWARE REST or MCP gateway (not yet built)
-→ access policy / event log / memory adapter
-→ local/remote Mem0 self-hosted service
-→ its configured Postgres and LLM/embedder providers
+### Frontend — future
+`frontend/README.md` is only a placeholder explaining a possible React/TypeScript administrative console. There are no frontend dependencies, build commands, pages, screens or working application. Frontend is not a prerequisite for agent-to-agent memory.
 
-No direct production exposure of the Mem0 REST API or this helper client.
+### Infrastructure — planned, not deployed
+`infrastructure/README.md` captures isolation, credentials, runtime dependencies and proposed deployment boundary. There is **no tested Docker Compose or production deploy** in WORK-03A.
 
-## Quick test
+### Tests and CI
+- Root `tests/`: synthetic deterministic tests plus real disposable PostgreSQL auth/transaction tests, layout guard and MCP in-memory contract.
+- `scripts/work02d_real_mcp_e2e.py`: real external MCP subprocess -> REST auth -> PostgreSQL project scope -> Mem0 OSS -> Ollama embeddings -> pgvector with synthetic Alpha/Beta.
+- `.github/workflows/ci.yml`: single current workflow for develop plus release PR to main. Enforces BOTH handoff files in each new commit, installs `backend/` editable distribution, migrates disposable PostgreSQL, runs unit/integration suite and real E2E.
+- Historial CI from WORK-00 to WORK-02D remains visible in Git history, PRs and GitHub Actions.
 
-python -m unittest discover -s tests -v
+## Architecture decisions vs remaining proposals
 
-Test descriptions explicitly say FAKE. They test serialization, isolation filter, input validation, and fail-closed handling of cross-project results. They do not test Mem0 itself, PostgreSQL, Ollama, MCP, or external apps.
+**Official engineering workflow decision:** only `develop` and `main` as continuing work branches. Per-output MASTER + CURRENT Handoff documentation. No direct Jarvis production modifications.
+
+**Recommended technical direction (not production approved):** keep simple Python modular monolith + REST/MCP and replaceable Mem0 library, postpone UI until needed.
+
+**Production blockers:** OIDC/workload identity, per-resource authorization, rate limits, TLS, secrets management, history erasure, outbox/consent-aware memory ingestion, secure lease recovery, backups/restore, independent security assessment, real Jarvis staging.
+
+See `docs/work01/` for the original domain model and acceptance hypotheses; implementation coverage is narrower than that proposal.

@@ -6,7 +6,7 @@ from scripts.check_handoff_policy import missing_handoffs
 class HandoffPolicyTests(unittest.TestCase):
     def test_both_files_present(self):
         self.assertEqual(missing_handoffs(("docs/HANDOFF.md",
-            "docs/HANDOFF_MASTER.md", "rightware_si/core/postgres.py")), set())
+            "docs/HANDOFF_MASTER.md", "backend/rightware_si/core/postgres.py")), set())
 
     def test_missing_master_is_reported(self):
         self.assertEqual(missing_handoffs(("docs/HANDOFF.md",)),

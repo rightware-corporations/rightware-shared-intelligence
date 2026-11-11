@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0004 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0005 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -10,8 +10,8 @@
 - MASTER entry SI-MH-0001 reconstructs WORK-00 -> WORK-02D. SI-MH-0002 records the operator's two-branch + per-output handoff decisions.
 
 ## Current implemented scope
-- Python package rightware_si: PostgreSQL task/handoff lifecycle, scoped project grants, append-only task events, bearer auth FastAPI, read-only MCP stdio bridge, contextual memory retrieval and isolated Mem0 local laboratory service.
-- DB: core migrations 0001 (tasks/leases/grants), 0002 (API token registry), 0003 (remove sensitive lease credentials from idempotency responses).
+- Python package em `backend/rightware_si/` (import `rightware_si`): PostgreSQL task/handoff lifecycle, project grants, bearer auth FastAPI, MCP stdio, Mem0 contextual e integração de laboratório.
+- Database em `database/migrations/`: SQL 0001 tarefas/grants, 0002 API credentials, 0003 limpeza de lease tokens (bytes preservados nesta mudança).
 - Memory engine: Mem0 OSS pinned submodule vendor/mem0 SHA f1791daa86d469249c9b002f62644d58a1eb96a0, Ollama local all-minilm embeddings + pgvector in test.
 - NO frontend application or deployment infrastructure ready yet. NO Jarvis/PULSE production integration. NO model training, no global approved-decision engine.
 
@@ -33,6 +33,13 @@
 - Embedding model tag not immutable; vendor MCP hosts and actual Jarvis staging require separate test; no production readiness claim.
 - Existing six Draft PRs + historical branches need careful inventory/archival before deletion. GitHub branch protections and separate backup/restore remain unconfigured.
 
+## WORK-03A R0 — Reestruturação de diretórios (CI PENDENTE)
+- Parent HEAD actual de `develop`: `6c257ff70b5ac961b455cc23fb96a6676e575939`. A pesquisa SI-RD-01 e SI-MH-0004 estão preservados.
+- 11 blobs Python movidos para `backend/rightware_si/`, 3 SQL para `database/migrations/`, 3 requisitos para `backend/requirements/`, **17/17 hashes de blob iguais**.
+- `pyproject.toml` ajustado; `.github/workflows/ci.yml` único workflow actual; testes de layout novos. `frontend/` e `infrastructure/` contêm documentação, **não** aplicações/deployments.
+- `docs/ARCHITECTURE.md`, `README.md` e `docs/work03a/RESTRUCTURE_MANIFEST.md` descrevem o estado actual. CI do NOVO commit PENDENTE; não atribuir PASS até ler os logs.
+- `main`, vendor Mem0, Jarvis, PULSE e seis Draft PRs não alterados. Continuar a investigação SI-RD-02 sem transformar hipóteses em decisões oficiais.
+
 ## Investigation checkpoint SI-RD-01 (documentation only)
 - [Research dossier](research/SI_RD_01_TECH_LANDSCAPE_2026-11-12.md): review of Mem0, Hindsight, Graphiti/Zep, Letta, LangGraph, Temporal, A2A, simple PostgreSQL/FTS baseline; verified issue statuses vs vendor claims; community success/failure patterns; proposed differential hypotheses.
 - No new benchmarks run, no runtime/DB/Jarvis changes, no commercial advantage validated. Source URLs and experimental method in dossier.
@@ -40,7 +47,7 @@
 - Proposed next research task: **SI-RD-02**, inspect source/license/versions per technology, then build synthetic memory+continuity benchmark with identical conditions.
 
 ## Next exact work
-**WORK-03A — Repository architecture consolidation (existing engineering queue; coordinate with SI-RD-02):** adopt backend/, database/, infrastructure/, tests/, docs/ and vendor/ layout without rewriting tested functions; adapt packaging/CI; run full 48 tests + real E2E; append MASTER and refresh this HANDOFF in the same commit. Only then stage optional read-only Jarvis compatibility.
+**Verificar CI da reorganização WORK-03A no HEAD actual de develop;** se passar, acrescentar nova adenda SI-MH-0006 e actualizar este HANDOFF. Seguidamente rever a arquitectura real, estratégia de deployment e SI-RD-02 antes de iniciar testes Jarvis staging. Não encerrar/apagar os 6 PRs históricos sem reconciliação.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

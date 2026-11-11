@@ -5,9 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rightware-shared-intelligence"
 version = "0.1.0"
-description = "Experimental adapter for portable project-scoped AI memory"
+description = "Experimental independent scoped AI memory and transactional handoff core"
 requires-python = ">=3.11"
 dependencies = []
 
+[tool.setuptools]
+package-dir = {"" = "backend"}
+
 [tool.setuptools.packages.find]
+where = ["backend"]
 include = ["rightware_si*"]

@@ -167,7 +167,7 @@ class PostgresCoreTests(unittest.TestCase):
                 ("synthetic-legacy-credential",),
             )
         with psycopg.connect(self.dsn,autocommit=True) as conn:
-            conn.execute(Path("db/migrations/0003_work02d_scrub_lease_replays.sql").read_text())
+            conn.execute(Path("database/migrations/0003_work02d_scrub_lease_replays.sql").read_text())
         with psycopg.connect(self.dsn) as conn:
             row=conn.execute(
                 "SELECT response FROM si_idempotency "

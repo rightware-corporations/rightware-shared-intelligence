@@ -108,6 +108,25 @@
 **Limites e segurança:** dados sintéticos apenas; não confundir relatos/benchmarks próprios de fornecedores com provas RIGHTWARE; issues podem ter sido corrigidos em versões recentes; actualizações de product-market fit dependem de entrevistas. Nenhum dado sensível publicado.
 **Próximo passo:** SI-RD-02 matriz com código/versão/licenças e desenho de benchmark justo; escolher baseline antes de novas funcionalidades. WORK-03A só prossegue respeitando gate de arquitectura e investigação.
 
+## SI-MH-0005 — WORK-03A R0: Consolidar pastas e arquitetura executável
+**Data:** 2026-11-12 (Africa/Maputo) · **Classificação:** IMPLEMENTADO; CI DESTE COMMIT PENDENTE · **Base verificada:** develop@`6c257ff70b5ac961b455cc23fb96a6676e575939`.
+
+**Objectivo:** reorganizar a árvore para futuro deployment e continuidade de engenharia sem alterar os 17 blobs existentes de código Python, SQL ou requirements, sem reescrever o núcleo e mantendo somente `develop`/`main` como branches de trabalho.
+
+**Operações executadas na árvore Git:** `rightware_si/**` → `backend/rightware_si/**` (11 blobs), `db/migrations/**` → `database/migrations/**` (3), `requirements-work02*.txt` → `backend/requirements/{core,api,memory}.txt` (3). SHA de blobs de origem/destino conferido: **17/17 idênticos**. `pyproject.toml` ajustado para pacote editável em backend; testes com path atualizado e quatro testes novos de layout. Seis workflows históricos retirados da árvore actual de develop, preservados no Git, e um CI `.github/workflows/ci.yml` consolidado para develop/PR main, com validação de handoffs, build/editable import, PostgreSQL e Mem0/Ollama E2E.
+
+**Artefactos documentais:** README e `docs/ARCHITECTURE.md` actualizados; `backend/README.md`, `database/README.md`, `frontend/README.md` e `infrastructure/README.md` criados. A frontend e deployment continuam NÃO IMPLEMENTADOS. Inventário completo em `docs/work03a/RESTRUCTURE_MANIFEST.md`.
+
+**Conflito concorrente tratado sem perda:** durante preparação, entrou em develop a pesquisa SI-RD-01 no commit `6c257ff70b5ac961b455cc23fb96a6676e575939` com entrada SI-MH-0004. Reconciliado o tree para preservar `docs/research/SI_RD_01_TECH_LANDSCAPE_2026-11-12.md` e a entrada SI-MH-0004. A pesquisa e hipótese de benchmark SI-RD-02 continuam abertas; não as confundimos com validação de produto.
+
+**Evidência ANTES da alteração:** develop@`521961dd681d55b86cadef823f61243e176b15da`, Actions `43119637429`: 51/51 PASS + E2E real PASS. Pesquisa SI-RD-01@`6c257ff`, Actions `43120700147`: SUCCESS (documentação, sem novo benchmark). **Testes da árvore reorganizada NÃO comprovados no instante deste commit; devem ser anotados em nova adenda SI-MH-0006 após CI.**
+
+**Não realizado:** nenhum merge, Jarvis/PULSE alterado, frontend implementado, serviço lançado, fornecedor trocado, modelo textual Qwen testado, branch antiga apagada ou dado privado publicado.
+
+**Riscos:** localização do pacote setuptools, caminhos de migração, testes/imports em CI. **Rollback:** revert do commit por Git (sem force push). **Próxima acção:** CI de develop para novo HEAD; se falhar, corrigir e preservar log. Depois validar gate de arquitectura/benchmarks e staging Jarvis autorizado separadamente.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
