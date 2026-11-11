@@ -25,7 +25,6 @@ jobs:
     env:
       MEM0_TELEMETRY: "false"
       RW_SI_MEM0_URL: http://127.0.0.1:8891
-      RW_SI_MEM0_API_KEY: work02c-synthetic-only-private-local-key-123456789
       RW_SI_MEM0_PG_DSN: postgresql://rw:rw-ci-synthetic@127.0.0.1:5433/mem0_lab
       RW_SI_MEM0_HISTORY: /tmp/work02c_mem0_history.sqlite
       RW_SI_OLLAMA_URL: http://127.0.0.1:11434
@@ -39,11 +38,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Generate ephemeral local-only secret (not committed or printed)
+        run: |
+          python - <<'PY'
+          import os, secrets
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as f:
+              f.write("RW_SI_MEM0_API_KEY=" + secrets.token_urlsafe(48) + "\n")
+          PY
       - name: Verify pinned Mem0 and install real library
         run: |
           test "$(git -C vendor/mem0 rev-parse HEAD)" = "f1791daa86d469249c9b002f62644d58a1eb96a0"
           python -m pip install -r requirements-work02.txt -r requirements-work02b.txt -r requirements-work02c.txt
           python -m pip install -e vendor/mem0
+          python -m pip install -e .
           python - <<'PY'
           from mem0 import Memory
           print("ACTUAL_MEM0_LIBRARY_IMPORT_PASS",Memory.__module__)
