@@ -95,6 +95,19 @@
 **Próximo passo:** WORK-03A reorganizar pastas/packaging sem alterar comportamento; comparar tree e repetir CI. Antes de encerrar as antigas branches, reconciliar os seis PRs e preservar links SHA/CI.
 
 ---
+---
+
+## SI-MH-0004 — SI-RD-01 investigação técnica comparativa / feedback
+**Registado:** 2026-11-12 (Africa/Maputo) · **Classificação:** PESQUISA DOCUMENTAL / HIPÓTESES / RECOMENDAÇÕES · **Branch de base:** develop@521961dd681d55b86cadef823f61243e176b15da.
+**Objectivo:** aprender com outras infraestruturas de memória e continuidade de agentes, seus sucessos, issues de produção, resultados e repositórios, antes de ampliar o Shared Intelligence Core.
+**Entregável:** [docs/research/SI_RD_01_TECH_LANDSCAPE_2026-11-12.md](research/SI_RD_01_TECH_LANDSCAPE_2026-11-12.md); referências primárias e propostas de comparação mantidas no dossier.
+**Achados relevantes:** Mem0: issue histórico de dados ruidosos/realimentação, com soluções da comunidade e um relato de retorno ao Mem0 por usabilidade; issue TS P0 encerrado em Julho 2026; Graphiti: issues de duplicação e embeddings não finitos; Hindsight: resultados reportados e issue de timeout/mitigação; Letta: proposta archival consolidation encerrada; LangGraph/Temporal/A2A já fornecem primitivas de persistência e interoperabilidade, portanto não reinventar sem comparação.
+**Hipóteses não aprovadas:** verified operational continuity, memory quality/temporal truth e private enterprise intelligence. Não existe benchmarking novo nem prova comercial neste checkpoint.
+**Alterações:** dossier de investigação + actualização dos dois handoffs num commit; sem código, dependencies, DB, migrações, Git branches, PRs, Jarvis ou main alterados.
+**Evidência anterior, não reexecutada:** develop@521961dd681d55b86cadef823f61243e176b15da; run 43119637429 SUCCESS, relativo ao núcleo já existente. Nenhum teste ou benchmark executado neste SI-RD-01. CI do commit documental deve ser inspecionado depois, sem antecipar PASS.
+**Limites e segurança:** dados sintéticos apenas; não confundir relatos/benchmarks próprios de fornecedores com provas RIGHTWARE; issues podem ter sido corrigidos em versões recentes; actualizações de product-market fit dependem de entrevistas. Nenhum dado sensível publicado.
+**Próximo passo:** SI-RD-02 matriz com código/versão/licenças e desenho de benchmark justo; escolher baseline antes de novas funcionalidades. WORK-03A só prossegue respeitando gate de arquitectura e investigação.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0003 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0004 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -33,8 +33,14 @@
 - Embedding model tag not immutable; vendor MCP hosts and actual Jarvis staging require separate test; no production readiness claim.
 - Existing six Draft PRs + historical branches need careful inventory/archival before deletion. GitHub branch protections and separate backup/restore remain unconfigured.
 
+## Investigation checkpoint SI-RD-01 (documentation only)
+- [Research dossier](research/SI_RD_01_TECH_LANDSCAPE_2026-11-12.md): review of Mem0, Hindsight, Graphiti/Zep, Letta, LangGraph, Temporal, A2A, simple PostgreSQL/FTS baseline; verified issue statuses vs vendor claims; community success/failure patterns; proposed differential hypotheses.
+- No new benchmarks run, no runtime/DB/Jarvis changes, no commercial advantage validated. Source URLs and experimental method in dossier.
+- Baseline used for this research checkpoint: develop@521961dd681d55b86cadef823f61243e176b15da; CI run 43119637429 SUCCESS (pre-existing runtime), new documentation CI PENDING after commit.
+- Proposed next research task: **SI-RD-02**, inspect source/license/versions per technology, then build synthetic memory+continuity benchmark with identical conditions.
+
 ## Next exact work
-**WORK-03A — Repository architecture consolidation:** adopt backend/, database/, infrastructure/, tests/, docs/ and vendor/ layout without rewriting tested functions; adapt packaging/CI; run full 48 tests + real E2E; append MASTER and refresh this HANDOFF in the same commit. Only then stage optional read-only Jarvis compatibility.
+**WORK-03A — Repository architecture consolidation (existing engineering queue; coordinate with SI-RD-02):** adopt backend/, database/, infrastructure/, tests/, docs/ and vendor/ layout without rewriting tested functions; adapt packaging/CI; run full 48 tests + real E2E; append MASTER and refresh this HANDOFF in the same commit. Only then stage optional read-only Jarvis compatibility.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
