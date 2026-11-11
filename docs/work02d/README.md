@@ -1,6 +1,6 @@
 # WORK-02D — Experimental security and E2E acceptance
 
-**Status:** engineering change on `feat/work02d-e2e-security-hardening`. No merge, no Jarvis production changes.
+**Status:** isolated prototype verified in CI (48/48 tests + full real MCP/REST/Mem0 E2E PASS). No merge, no Jarvis production changes. Full production security certification remains outstanding. Evidence: `docs/work02d/EVIDENCE.md`.
 
 ## Scope
 

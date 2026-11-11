@@ -2,6 +2,16 @@
 
 Updated 2026-11-11. Durable state for continuation after a token limit or chat change.
 
+## WORK-02D VERIFIED CHECKPOINT — 2026-11-11
+- Draft PR #6: https://github.com/rightware-corporations/rightware-shared-intelligence/pull/6, stacked on WORK-02C, unmerged.
+- Tested code HEAD: 8d7f5234d375d29df774388529094708a4e0cb3c.
+- WORK-02D GitHub Actions run 43108517846: **SUCCESS**. 48/48 Python tests PASS on REAL PostgreSQL16 (including lease-secret and migration regression). Migrations 0001/0002/0003 PASS.
+- Same run: `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` with **external MCP v2 stdio subprocess -> REST bearer gateway -> PostgreSQL project grants/task -> real Mem0 OSS -> Ollama local embeddings -> PostgreSQL17/pgvector**.
+- E2E verified authorized Alpha, canonical task state, UNVERIFIED context, denial of Beta/unprivileged principal, and rejection after bearer revocation. All content synthetic.
+- Initial run 43107788463 FAILED in older disabled-Mem0 test due to CI environment leakage; fixture made hermetic. Retest 43108113909: 48/48 PASS, but E2E FAILED on duplicate synthetic project fixture after unit tests. Reset restricted to local rw_test fixed this; 43108517846 SUCCESS.
+- Client-side read-only Jarvis integration is NOT deployed; no Jarvis source or runtime modified. No merge to main.
+- Follow-up: independently review lease retry/recovery design; workload identity, rate limits, retention/erasure, outbox; staging Jarvis opt-in under explicit approval. See docs/work02d/EVIDENCE.md.
+
 ## Project
 Independent RIGHTWARE-owned memory and operational-continuity infrastructure; public repo https://github.com/rightware-corporations/rightware-shared-intelligence.
 Mem0 submodule vendor/mem0 pinned to f1791daa86d469249c9b002f62644d58a1eb96a0, Apache-2.0. Do not modify this pin without review.
