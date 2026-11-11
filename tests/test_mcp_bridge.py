@@ -17,7 +17,7 @@ class McpBridgeTests(unittest.IsolatedAsyncioTestCase):
         }) as fn:
             async with Client(mcp_bridge.mcp) as client:
                 tools = await client.list_tools()
-                names = {t.name for t in tools}
+                names = {t.name for t in tools.tools}
                 self.assertIn("get_task",names)
                 self.assertIn("get_task_events",names)
                 self.assertNotIn("approve_task",names)

@@ -103,7 +103,7 @@ class Work02BApiTests(unittest.TestCase):
     def test_token_expiry_is_respected(self):
         t=self.create()
         with psycopg.connect(self.dsn) as conn:
-            conn.execute("UPDATE si_api_tokens SET expires_at=now()-interval '1 second' "
+            conn.execute("UPDATE si_api_tokens SET issued_at=now()-interval '2 hours', expires_at=now()-interval '1 hour' "
                          "WHERE id=%s::uuid",(self.ids["agent-a"],))
         self.assertEqual(self.client.get(
             f"/v1/projects/alpha/tasks/{t['task_id']}",headers=self.h()
