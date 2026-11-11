@@ -42,8 +42,10 @@ jobs:
         run: |
           python - <<'PY'
           import os, secrets
+          token = secrets.token_urlsafe(48)
+          print("::add-mask::" + token, flush=True)
           with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as f:
-              f.write("RW_SI_MEM0_API_KEY=" + secrets.token_urlsafe(48) + "\n")
+              f.write("RW_SI_MEM0_API_KEY=" + token + "\n")
           PY
       - name: Verify pinned Mem0 and install real library
         run: |
