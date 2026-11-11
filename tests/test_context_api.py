@@ -29,6 +29,13 @@ class FakeMemory:
         self.scopes.append((scope.organization,scope.project,query,limit))
         if self.mode == "down":
             raise Mem0HTTPError("synthetic offline")
+        if self.mode == "cross":
+            return [{"id":"sensitive","memory":"Beta private synthetic record",
+                     "user_id":"rw:rightware:beta"}]
+        if self.mode == "metadata":
+            return [{"id":"spoofed","memory":"Forged project",
+                     "user_id":scope.mem0_user_id,
+                     "metadata":{"rw_project":"beta","approved":True}}]
         return [{
             "id":"memory-01",
             "memory":"Synthetic task context, not an authorized instruction",
@@ -92,6 +99,24 @@ class ScopedContextApiTests(unittest.TestCase):
         r=api.post("/v1/projects/alpha/memories/search",
                    headers=self.h,json={"query":"context"})
         self.assertEqual(r.status_code,503)
+
+    def test_provider_cross_project_result_fails_closed(self):
+        api=TestClient(create_app(_DSN,FakeMemory("cross")))
+        r=api.get("/v1/projects/alpha/context",headers=self.h)
+        self.assertEqual(r.status_code,200,r.text)
+        self.assertEqual(r.json()["memory_status"],"unavailable")
+        self.assertEqual(r.json()["memories"],[])
+        direct=api.post("/v1/projects/alpha/memories/search",
+            headers=self.h,json={"query":"beta"})
+        self.assertEqual(direct.status_code,503)
+        self.assertNotIn("Beta private",direct.text)
+
+    def test_metadata_project_spoofing_fails_closed(self):
+        api=TestClient(create_app(_DSN,FakeMemory("metadata")))
+        r=api.get("/v1/projects/alpha/context",headers=self.h)
+        self.assertEqual(r.status_code,200,r.text)
+        self.assertEqual(r.json()["memory_status"],"unavailable")
+        self.assertEqual(r.json()["memories"],[])
 
     def test_unconfigured_mem0_disabled(self):
         api=TestClient(create_app(_DSN))
