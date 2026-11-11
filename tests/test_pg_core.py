@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
 import os
+from pathlib import Path
 import unittest
 from urllib.parse import urlsplit
 
@@ -154,6 +155,27 @@ class PostgresCoreTests(unittest.TestCase):
             self.core.accept_handoff(
                 "alpha","agent-b",off["handoff_id"],4,"accept-0001"
             )
+
+    def test_migration_scrubs_legacy_secret(self):
+        a=self.make_running()
+        with psycopg.connect(self.dsn) as conn:
+            conn.execute(
+                "UPDATE si_idempotency "
+                "SET response=jsonb_set(response,'{lease_token}',to_jsonb(%s::text)) "
+                "WHERE project_id='alpha' AND principal_id='agent-a' "
+                "AND action='claim_task' AND idem_key='claim-0001'",
+                ("synthetic-legacy-credential",),
+            )
+        with psycopg.connect(self.dsn,autocommit=True) as conn:
+            conn.execute(Path("db/migrations/0003_work02d_scrub_lease_replays.sql").read_text())
+        with psycopg.connect(self.dsn) as conn:
+            row=conn.execute(
+                "SELECT response FROM si_idempotency "
+                "WHERE project_id='alpha' AND principal_id='agent-a' "
+                "AND action='claim_task' AND idem_key='claim-0001'"
+            ).fetchone()
+        self.assertNotIn("lease_token",row[0])
+        self.assertEqual(row[0]["status"],"IN_PROGRESS")
 
     def test_handoff_other_principal_denied(self):
         _,off=self.handoff()
