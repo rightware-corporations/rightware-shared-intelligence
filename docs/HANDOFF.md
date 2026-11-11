@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo) · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0003 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -19,7 +19,7 @@
 - WORK-02D code base SHA 6345fb4f6238ecea2d376e82b659238d4684f30f: Actions https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43109095085 **SUCCESS**.
 - 48/48 unit+PostgreSQL/REST/MCP tests PASS; separate real MCP subprocess -> REST auth -> PostgreSQL task/grants -> real Mem0 OSS -> Ollama local embeddings -> pgvector E2E PASS. Synthetic data only.
 - Corrected fail runs: 43107788463 and 43108113909. Preserve these failures and fixes in evidence, not delete history.
-- DEVELOP CI after governance commit: PENDING until verified. Do NOT claim new commit PASS just because its base was verified.
+- Primeira execução de DEVELOP para a política e base WORK-02D: [Actions run 43119271001](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43119271001) **SUCCESS**: HANDOFF_POLICY_PASS (ambos os docs editados no commit), **51/51 testes PASS** e E2E real MCP/REST/PostgreSQL/Mem0/Ollama PASS. Código+docs verificados em commit fb59750191a50c605ef828c1d726f4bad29c811c.
 
 ## Official operator decisions (2026-11-12)
 1. Only develop (building/testing) and main (approved stable release) as ongoing working branches.

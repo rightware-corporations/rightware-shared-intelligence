@@ -86,6 +86,15 @@
 
 ---
 
+## SI-MH-0003 — DEVELOP baseline CI verified
+**Registado:** 2026-11-12 · **Classificação:** VALIDADO · **Alteração validada:** commit fb59750191a50c605ef828c1d726f4bad29c811c.
+**Contexto:** confirmação da política do MASTER e da branch develop após migração do HEAD WORK-02D, sem mudança na lógica existente.
+**Evidência:** [GitHub Actions 43119271001](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43119271001) SUCCESS.
+**Resultados observados nos logs:** HANDOFF_POLICY_PASS audited_commits=1; **51/51 testes PASS** (48 anteriores + 3 testes da política); WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS (real MCP subprocess, REST auth, PostgreSQL, Mem0 OSS, Ollama/pgvector e negativas de acesso). Credencial efémera não apareceu em claro nos logs.
+**Escopo:** somente provas sintéticas de laboratório; nenhuma alteração ou deployment Jarvis/PULSE, nenhum merge para main. Este novo commit de atualização de evidência altera só os dois documentos de handoff; requer verificação própria do CI, que não deve ser presumida.
+**Próximo passo:** WORK-03A reorganizar pastas/packaging sem alterar comportamento; comparar tree e repetir CI. Antes de encerrar as antigas branches, reconciliar os seis PRs e preservar links SHA/CI.
+
+---
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
