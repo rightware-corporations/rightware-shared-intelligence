@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import os
 import unittest
+from unittest.mock import patch
 from urllib.parse import urlsplit
 
 import psycopg
@@ -119,7 +120,8 @@ class ScopedContextApiTests(unittest.TestCase):
         self.assertEqual(r.json()["memories"],[])
 
     def test_unconfigured_mem0_disabled(self):
-        api=TestClient(create_app(_DSN))
+        with patch.dict(os.environ, {"RW_SI_MEM0_URL":"", "RW_SI_MEM0_API_KEY":""}):
+            api=TestClient(create_app(_DSN))
         r=api.get("/v1/projects/alpha/context",headers=self.h)
         self.assertEqual(r.status_code,200,r.text)
         self.assertEqual(r.json()["memory_status"],"disabled")

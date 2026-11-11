@@ -183,12 +183,21 @@ class WorkCore:
                 if reservation["payload_hash"] != fingerprint:
                     raise Conflict("idempotency key reused with different parameters")
                 if reservation["response"] is not None:
+                    # A one-time lease credential is never recoverable from
+                    # stored idempotency data. Explicit 409 is safer than a
+                    # silent replay without a usable lease credential.
+                    if action in {"claim_task", "accept_handoff"}:
+                        raise Conflict("lease credential cannot be replayed")
                     return reservation["response"]
                 response=handler(conn)
+                # Never persist a bearer-capable lease secret in PostgreSQL.
+                # Normal response is returned once to the authorized caller;
+                # stored idempotency state retains public transaction fields.
+                safe_response={k:v for k,v in response.items() if k!="lease_token"}
                 conn.execute(
                     "UPDATE si_idempotency SET response=%s WHERE project_id=%s "
                     "AND principal_id=%s AND action=%s AND idem_key=%s",
-                    (Jsonb(response),project,actor,action,idem),
+                    (Jsonb(safe_response),project,actor,action,idem),
                 )
                 return response
 

@@ -1,0 +1,114 @@
+name: work02d-real-e2e-and-security
+on:
+  push:
+    branches: [feat/work02d-e2e-security-hardening]
+permissions:
+  contents: read
+jobs:
+  real-mcp-mem0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      core_postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: rw
+          POSTGRES_PASSWORD: rw-ci-synthetic
+          POSTGRES_DB: rw_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rw -d rw_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+      mem0_pgvector:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: rw
+          POSTGRES_PASSWORD: rw-ci-synthetic
+          POSTGRES_DB: mem0_lab
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U rw -d mem0_lab"
+          --health-interval 5s
+          --health-timeout 4s
+          --health-retries 25
+    env:
+      MEM0_TELEMETRY: "false"
+      RW_TEST_DATABASE_URL: postgresql://rw:rw-ci-synthetic@127.0.0.1:5432/rw_test
+      RW_SI_DATABASE_URL: postgresql://rw:rw-ci-synthetic@127.0.0.1:5432/rw_test
+      RW_SI_MEM0_URL: http://127.0.0.1:8891
+      RW_SI_MEM0_PG_DSN: postgresql://rw:rw-ci-synthetic@127.0.0.1:5433/mem0_lab
+      RW_SI_MEM0_HISTORY: /tmp/work02d_mem0_history.sqlite
+      RW_SI_OLLAMA_URL: http://127.0.0.1:11434
+      RW_SI_OLLAMA_EMBED_MODEL: all-minilm:latest
+      RW_SI_OLLAMA_EMBED_DIMS: "384"
+      RW_SI_OLLAMA_LLM_MODEL: qwen3.5:2b
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate and mask ephemeral internal secret
+        run: |
+          python - <<'PY'
+          import os,secrets
+          token=secrets.token_urlsafe(48)
+          print("::add-mask::"+token,flush=True)
+          with open(os.environ["GITHUB_ENV"],"a",encoding="utf-8") as f:
+              f.write("RW_SI_MEM0_API_KEY="+token+"\n")
+          PY
+      - name: Install pinned Mem0 and RIGHTWARE
+        run: |
+          test "$(git -C vendor/mem0 rev-parse HEAD)" = "f1791daa86d469249c9b002f62644d58a1eb96a0"
+          python -m pip install -r requirements-work02.txt -r requirements-work02b.txt -r requirements-work02c.txt
+          python -m pip install -e vendor/mem0 -e .
+          python -m compileall -q rightware_si tests scripts
+      - name: Apply isolated core and security migrations
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import psycopg
+          with psycopg.connect(os.environ["RW_TEST_DATABASE_URL"],autocommit=True) as conn:
+              for name in ("0001_work02_core.sql","0002_work02b_api_credentials.sql",
+                           "0003_work02d_scrub_lease_replays.sql"):
+                  conn.execute(Path("db/migrations",name).read_text(encoding="utf-8"))
+                  print("MIGRATION_PASS",name)
+          PY
+      - name: Full deterministic/real PostgreSQL test suite
+        run: python -m unittest discover -s tests -v
+      - name: Start ephemeral local Ollama
+        run: |
+          docker run -d --rm --name work02d-ollama --network host ollama/ollama:0.40.15
+          for i in $(seq 1 90); do
+            curl -fsS http://127.0.0.1:11434/api/tags >/dev/null && break
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:11434/api/tags >/dev/null
+      - name: Install approved local embedding model
+        run: docker exec work02d-ollama ollama pull all-minilm:latest
+      - name: Start real Mem0 library lab service
+        run: |
+          python -m rightware_si.mem0_local_service > /tmp/work02d_mem0_service.log 2>&1 &
+          for i in $(seq 1 60); do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST \
+              http://127.0.0.1:8891/search \
+              -H 'Content-Type: application/json' \
+              -d '{"query":"test","filters":{"user_id":"rw:rwlab:alpha"}}' || true)
+            if [ "$CODE" = "401" ]; then break; fi
+            sleep 1
+          done
+          test "$CODE" = "401"
+      - name: Full chain real MCP stdio → REST → PostgreSQL → Mem0 → Ollama
+        run: python scripts/work02d_real_mcp_e2e.py
+      - name: Internal diagnostics on failure
+        if: failure()
+        run: |
+          echo "MEM0_LOG_TAIL"
+          tail -n 90 /tmp/work02d_mem0_service.log || true
+          docker logs --tail 30 work02d-ollama || true
