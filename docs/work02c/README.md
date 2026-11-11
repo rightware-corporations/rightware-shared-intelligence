@@ -52,7 +52,7 @@ Execute only synthetic-data smoke after the service is healthy:
 python scripts/work02c_real_mem0_smoke.py
 \`\`\`
 
-**As written, this command is not automatically run by GitHub Actions**. A passing FAKE-backend CI run is not proof of actual Mem0/pgvector/Ollama operation, embedding quality, model costs, security or Jarvis compatibility. Preserve real smoke logs, commit pins, model digests and environment manifests when executed.
+**Real Mem0 lab verified in CI:** A separate workflow (`.github/workflows/work02c-real-mem0-local.yml`) now executes the genuine Mem0 open-source library (pinned submodule), PostgreSQL 17/pgvector, Ollama 0.40.15 with `all-minilm:latest` embeddings, and a synthetic two-project add/search test. The initial run `43071128516` failed because the test script was missing the RIGHTWARE editable package install; this was corrected. Retest `43071532909` produced `REAL_MEM0_SMOKE_PASS`, with one Alpha memory retrieved and no Beta memory returned. This **does not** prove retrieval quality at scale, vendor MCP/Jarvis compatibility, security certification, or production readiness. The test does not invoke Qwen generation (`infer=false`). The embedding-model tag still needs an immutable digest for reproducibility. CI generates an ephemeral Mem0 service key; subsequent runs mask it in job logs. See `docs/work02c/EVIDENCE.md` for details.
 
 ## 4. Secure behavior and constraints
 - A project ID string never grants access; \`context:read\`/\`memory:read\` is checked against the authenticated actor.
