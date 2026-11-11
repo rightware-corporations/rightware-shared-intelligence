@@ -1,7 +1,7 @@
 name: work02d-real-e2e-and-security
 on:
   push:
-    branches: [feat/work02d-e2e-security-hardening]
+    branches: [develop]
 permissions:
   contents: read
 jobs:
@@ -50,9 +50,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Enforce MASTER and current HANDOFF updates for all pushed commits
+        env:
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: python scripts/check_handoff_policy.py
       - name: Generate and mask ephemeral internal secret
         run: |
           python - <<'PY'

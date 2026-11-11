@@ -1,42 +1,44 @@
-# RIGHTWARE Shared Intelligence — Engineering Handoff
+# RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-Updated 2026-11-11. Durable state for continuation after a token limit or chat change.
+**Refreshed:** 2026-11-12 (Africa/Maputo) · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
-## WORK-02D VERIFIED CHECKPOINT — 2026-11-11
-- Draft PR #6: https://github.com/rightware-corporations/rightware-shared-intelligence/pull/6, stacked on WORK-02C, unmerged.
-- Tested code HEAD: 8d7f5234d375d29df774388529094708a4e0cb3c.
-- WORK-02D GitHub Actions run 43108517846: **SUCCESS**. 48/48 Python tests PASS on REAL PostgreSQL16 (including lease-secret and migration regression). Migrations 0001/0002/0003 PASS.
-- Same run: `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` with **external MCP v2 stdio subprocess -> REST bearer gateway -> PostgreSQL project grants/task -> real Mem0 OSS -> Ollama local embeddings -> PostgreSQL17/pgvector**.
-- E2E verified authorized Alpha, canonical task state, UNVERIFIED context, denial of Beta/unprivileged principal, and rejection after bearer revocation. All content synthetic.
-- Initial run 43107788463 FAILED in older disabled-Mem0 test due to CI environment leakage; fixture made hermetic. Retest 43108113909: 48/48 PASS, but E2E FAILED on duplicate synthetic project fixture after unit tests. Reset restricted to local rw_test fixed this; 43108517846 SUCCESS.
-- Client-side read-only Jarvis integration is NOT deployed; no Jarvis source or runtime modified. No merge to main.
-- Follow-up: independently review lease retry/recovery design; workload identity, rate limits, retention/erasure, outbox; staging Jarvis opt-in under explicit approval. See docs/work02d/EVIDENCE.md.
+## Immediate recovery
+- Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
+- Active development branch: **develop**. Created from verified WORK-02D code+docs commit **6345fb4f6238ecea2d376e82b659238d4684f30f**; current branch head must always be fetched at the start of a new task.
+- Stable release branch: **main**, SHA **87c3351055aaf58d37f233dbc96eaa8f0b749c5c** (only initial README). main is NOT a tested deployment/release of the shared intelligence service.
+- All new work directly in develop; main only receives an explicitly approved release. Historical feat/docs branches and six Draft PRs are retained as forensic anchors until safely reconciled. **Do not delete them or merge automatically.**
+- MASTER entry SI-MH-0001 reconstructs WORK-00 -> WORK-02D. SI-MH-0002 records the operator's two-branch + per-output handoff decisions.
 
-## Project
-Independent RIGHTWARE-owned memory and operational-continuity infrastructure; public repo https://github.com/rightware-corporations/rightware-shared-intelligence.
-Mem0 submodule vendor/mem0 pinned to f1791daa86d469249c9b002f62644d58a1eb96a0, Apache-2.0. Do not modify this pin without review.
-No Shared Intelligence or Jarvis/PULSE production deployment was performed.
+## Current implemented scope
+- Python package rightware_si: PostgreSQL task/handoff lifecycle, scoped project grants, append-only task events, bearer auth FastAPI, read-only MCP stdio bridge, contextual memory retrieval and isolated Mem0 local laboratory service.
+- DB: core migrations 0001 (tasks/leases/grants), 0002 (API token registry), 0003 (remove sensitive lease credentials from idempotency responses).
+- Memory engine: Mem0 OSS pinned submodule vendor/mem0 SHA f1791daa86d469249c9b002f62644d58a1eb96a0, Ollama local all-minilm embeddings + pgvector in test.
+- NO frontend application or deployment infrastructure ready yet. NO Jarvis/PULSE production integration. NO model training, no global approved-decision engine.
 
-## Open stacked Draft PRs (all unmerged)
-#1 WORK-00 -> #2 WORK-01 -> #3 WORK-02A -> #4 WORK-02B -> #5 WORK-02C. Proposed WORK-02D branch: feat/work02d-e2e-security-hardening, based on WORK-02C f82147d49cfe65560462acff420974f56684e09a.
+## Last verified tests and status
+- WORK-02D code base SHA 6345fb4f6238ecea2d376e82b659238d4684f30f: Actions https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43109095085 **SUCCESS**.
+- 48/48 unit+PostgreSQL/REST/MCP tests PASS; separate real MCP subprocess -> REST auth -> PostgreSQL task/grants -> real Mem0 OSS -> Ollama local embeddings -> pgvector E2E PASS. Synthetic data only.
+- Corrected fail runs: 43107788463 and 43108113909. Preserve these failures and fixes in evidence, not delete history.
+- DEVELOP CI after governance commit: PENDING until verified. Do NOT claim new commit PASS just because its base was verified.
 
-## Verified prior evidence
-WORK-02B: 29/29 tests PASS, Actions run 43067218210.
-WORK-02C: 45/45 tests PASS, Actions run 43070689611.
-WORK-02C actual Mem0 OSS + Ollama embeddings + PostgreSQL/pgvector: REAL_MEM0_SMOKE_PASS, Actions run 43071532909; final WORK-02C SHA f82147d49c CI real run 43072249164 SUCCESS.
-Qwen text generation NOT tested; infer=false. Prior synthetic scope test is not security certification.
+## Official operator decisions (2026-11-12)
+1. Only develop (building/testing) and main (approved stable release) as ongoing working branches.
+2. Every technical output/checkpoint must be durable: append MASTER, refresh CURRENT HANDOFF and commit alongside output. Research conclusions, blocked work and test failures count as outputs.
+3. Preserving future work in docs is mandatory to survive loss of the chat. Use history and SHA, not chat session as the source of truth.
 
-## WORK-02D plan (not yet accepted)
-1. Ensure lease secrets are NEVER stored in si_idempotency.response; migration 0003 scrubs legacy values; claim/accept retry returns explicit 409 because the one-time lease secret cannot be safely replayed.
-2. Real independent MCP stdio subprocess client -> REST FastAPI auth -> PostgreSQL permissions/tasks -> Mem0 OSS -> Ollama embeddings -> PG17/pgvector.
-3. Negative cases: Beta project denial, unprivileged principal denial, token revocation, no unverified promotion.
-4. Record actual CI results, commit SHA, fixes, PR URL and remaining gaps in docs/work02d/EVIDENCE.md; update this HANDOFF after verified checkpoint.
+## Unresolved risks
+- Repository is public; no private memories, keys, tokens, personal data or CI secrets may be committed.
+- Lease-token idempotency secrecy improved in WORK-02D, but a lost response still requires recovery/reassignment policy.
+- Workload identity/OIDC, TLS for remote clients, rate limits, resource-level grants, memory retention/deletion, event outbox and independent security review remain unimplemented.
+- Embedding model tag not immutable; vendor MCP hosts and actual Jarvis staging require separate test; no production readiness claim.
+- Existing six Draft PRs + historical branches need careful inventory/archival before deletion. GitHub branch protections and separate backup/restore remain unconfigured.
 
-## Safety boundaries
-PostgreSQL tasks/events are authoritative; Mem0 produces UNVERIFIED context. Authenticated project grants are applied server-side; client-supplied Mem0 user_id is never permission.
-Public repo: no real tokens, private chats, or production business data. CI keys must be ephemeral and masked.
-Remaining production gates: workload identity, rate limiting/TLS, lease recovery after lost response, outbox, retention/erasure, red-team isolation, real Jarvis staging and opt-in rollback.
-Jarvis is production-sensitive: no changes to Jarvis repository, runtime or deployment here. No merge to main.
+## Next exact work
+**WORK-03A — Repository architecture consolidation:** adopt backend/, database/, infrastructure/, tests/, docs/ and vendor/ layout without rewriting tested functions; adapt packaging/CI; run full 48 tests + real E2E; append MASTER and refresh this HANDOFF in the same commit. Only then stage optional read-only Jarvis compatibility.
 
-## Next action
-Run WORK-02D CI, inspect logs, fix failures, update evidence and HANDOFF before ending the work.
+## Recovery protocol
+1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
+2. Read docs/HANDOFF_POLICY.md and matching checkpoint.
+3. Review last GitHub Actions result + diff and any open blockers.
+4. Execute limited work; commit output and both handoffs atomically; review actual CI and append follow-up if outcome arrives later.
+
