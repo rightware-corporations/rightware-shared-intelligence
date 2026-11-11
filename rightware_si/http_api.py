@@ -16,6 +16,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from rightware_si.api_auth import make_principal_dependency
 from rightware_si.core import AccessDenied, Conflict, InvalidTransition, Missing, WorkCore
+from rightware_si.context_service import ScopedContextReader, SemanticUnavailable
+from rightware_si.memory import Mem0HTTPClient, SharedMemory
 
 
 class StrictModel(BaseModel):
@@ -37,6 +39,11 @@ class OfferHandoff(Versioned):
     lease_token: str = Field(min_length=20, max_length=256)
 
 
+class MemorySearch(StrictModel):
+    query: str = Field(min_length=1, max_length=2000)
+    limit: int = Field(default=5, ge=1, le=10)
+
+
 class SubmitResult(Versioned):
     lease_token: str = Field(min_length=20, max_length=256)
     evidence_url: str = Field(min_length=10, max_length=2048)
@@ -55,12 +62,20 @@ def _invoke(operation):
         raise HTTPException(status_code=422, detail="Invalid operation") from None
 
 
-def create_app(dsn: str | None = None) -> FastAPI:
+def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     dsn = dsn or os.environ.get("RW_SI_DATABASE_URL")
     if not dsn:
         raise RuntimeError("RW_SI_DATABASE_URL is required; refusing to start unconfigured")
     core = WorkCore(dsn)
     principal_dep = make_principal_dependency(dsn)
+    if memory_provider is None:
+        mem0_url = os.environ.get("RW_SI_MEM0_URL", "")
+        mem0_key = os.environ.get("RW_SI_MEM0_API_KEY", "")
+        if bool(mem0_url) != bool(mem0_key):
+            raise RuntimeError("Mem0 URL and key must be configured together")
+        if mem0_url:
+            memory_provider = SharedMemory(Mem0HTTPClient(mem0_url, mem0_key))
+    context_reader = ScopedContextReader(dsn, memory_provider)
     app = FastAPI(
         title="RIGHTWARE Shared Intelligence — WORK-02B experimental API",
         description="Authenticated pilot task/handoff API. No production or external use.",
@@ -153,6 +168,30 @@ def create_app(dsn: str | None = None) -> FastAPI:
             project_id, actor, str(task_id), body.expected_version,
             body.lease_token, body.evidence_url, idem
         ))
+
+    @app.get("/v1/projects/{project_id}/context")
+    def get_project_context(
+        project_id: str, query: str = "project context",
+        task_id: UUID | None = None, limit: int = 5,
+        actor: str = Depends(principal_dep),
+    ):
+        if not query.strip() or len(query) > 2000 or not 1 <= limit <= 10:
+            raise HTTPException(status_code=422, detail="Invalid context request")
+        return _invoke(lambda: context_reader.context(
+            project_id, actor, query, str(task_id) if task_id else None, limit
+        ))
+
+    @app.post("/v1/projects/{project_id}/memories/search")
+    def search_project_memory(
+        project_id: str, body: MemorySearch,
+        actor: str = Depends(principal_dep),
+    ):
+        try:
+            return _invoke(lambda: context_reader.search(
+                project_id, actor, body.query, body.limit
+            ))
+        except SemanticUnavailable:
+            raise HTTPException(status_code=503, detail="Semantic memory unavailable") from None
 
     return app
 
