@@ -115,6 +115,46 @@ class PostgresCoreTests(unittest.TestCase):
         self.assertEqual(result["verification_state"],"REFERENCED")
         self.assertEqual(len(self.core.task_events("alpha","agent-a",a["task_id"])),6)
 
+    def test_lease_secrets_never_persist_in_idempotency(self):
+        a=self.make_running()
+        with psycopg.connect(self.dsn) as conn:
+            row=conn.execute(
+                "SELECT response FROM si_idempotency WHERE "
+                "project_id='alpha' AND principal_id='agent-a' "
+                "AND action='claim_task' AND idem_key='claim-0001'"
+            ).fetchone()
+        self.assertNotIn("lease_token",row[0])
+        self.assertEqual(row[0]["status"],"IN_PROGRESS")
+        # One-time lease credential cannot be reconstructed from a DB read
+        # or re-issued through a duplicate idempotency key.
+        with self.assertRaises(Conflict):
+            self.core.claim_task("alpha","agent-a",a["task_id"],2,"claim-0001")
+        with psycopg.connect(self.dsn) as conn:
+            row=conn.execute(
+                "SELECT response FROM si_idempotency WHERE "
+                "project_id='alpha' AND principal_id='agent-a' "
+                "AND action='claim_task' AND idem_key='claim-0001'"
+            ).fetchone()
+        self.assertNotIn("lease_token",row[0])
+
+    def test_accepted_handoff_secret_not_replayable(self):
+        _,off=self.handoff()
+        result=self.core.accept_handoff(
+            "alpha","agent-b",off["handoff_id"],4,"accept-0001"
+        )
+        self.assertIn("lease_token",result)
+        with psycopg.connect(self.dsn) as conn:
+            row=conn.execute(
+                "SELECT response FROM si_idempotency WHERE "
+                "project_id='alpha' AND principal_id='agent-b' "
+                "AND action='accept_handoff' AND idem_key='accept-0001'"
+            ).fetchone()
+        self.assertNotIn("lease_token",row[0])
+        with self.assertRaises(Conflict):
+            self.core.accept_handoff(
+                "alpha","agent-b",off["handoff_id"],4,"accept-0001"
+            )
+
     def test_handoff_other_principal_denied(self):
         _,off=self.handoff()
         with self.assertRaises(AccessDenied):
