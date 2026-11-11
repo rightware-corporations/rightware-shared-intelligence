@@ -1,0 +1,6 @@
+# WORK-02B experimental API and stdio MCP 2.x bridge.
+# Explicit major-version ranges avoid silently importing legacy MCP 1.x.
+fastapi>=0.115,<1
+uvicorn>=0.34,<1
+httpx>=0.27,<1
+mcp>=2,<3
