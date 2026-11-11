@@ -1,0 +1,55 @@
+name: work02b-rest-mcp
+on:
+  push:
+    branches: [feat/work02b-auth-rest-mcp]
+  pull_request:
+    branches: [feat/work02a-postgres-transactional-core]
+permissions:
+  contents: read
+jobs:
+  postgres-api-mcp:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: rw
+          POSTGRES_PASSWORD: rw-ci-only
+          POSTGRES_DB: rw_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rw -d rw_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      RW_TEST_DATABASE_URL: postgresql://rw:rw-ci-only@127.0.0.1:5432/rw_test
+      RW_SI_DATABASE_URL: postgresql://rw:rw-ci-only@127.0.0.1:5432/rw_test
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install WORK-02A and WORK-02B dependencies
+        run: python -m pip install -r requirements-work02.txt -r requirements-work02b.txt
+      - name: Verify imports and syntax
+        run: |
+          python -m compileall -q rightware_si tests
+          python -c "import psycopg,fastapi,httpx,mcp; print('dependencies imported')"
+      - name: Apply WORK-02A and WORK-02B schemas to isolated rw_test
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import psycopg
+          with psycopg.connect(os.environ["RW_TEST_DATABASE_URL"], autocommit=True) as conn:
+              for file in ("db/migrations/0001_work02_core.sql",
+                           "db/migrations/0002_work02b_api_credentials.sql"):
+                  conn.execute(Path(file).read_text(encoding="utf-8"))
+                  print(f"Migrated: {file}")
+          PY
+      - name: Execute deterministic, PostgreSQL, REST and MCP tests
+        run: python -m unittest discover -s tests -v
