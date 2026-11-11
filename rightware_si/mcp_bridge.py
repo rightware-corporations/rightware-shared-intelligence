@@ -12,7 +12,7 @@ MCP is READ-ONLY by design in WORK-02B; no handoff mutations are exposed.
 from __future__ import annotations
 
 import os
-from urllib.parse import quote, urlsplit
+from urllib.parse import quote, urlsplit, urlencode
 
 import httpx
 from mcp.server import MCPServer
@@ -69,6 +69,15 @@ def _segment(identifier: str) -> str:
 def get_task(project_id: str, task_id: str) -> dict:
     """Read an authorized project's canonical task status and version."""
     return _read_api(f"/v1/projects/{_segment(project_id)}/tasks/{_segment(task_id)}")
+
+
+@mcp.tool()
+def get_project_context(project_id: str, query: str = "project context") -> dict:
+    """Get project-scoped context. All Mem0 candidate text is UNVERIFIED."""
+    if not isinstance(query, str) or not query.strip() or len(query) > 1000:
+        raise ValueError("invalid search query")
+    path = f"/v1/projects/{_segment(project_id)}/context?" + urlencode({"query": query})
+    return _read_api(path)
 
 
 @mcp.tool()

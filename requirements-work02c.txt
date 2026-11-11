@@ -1,0 +1,4 @@
+# For the WORK-02C isolated self-hosted Mem0 service only (not imported by Jarvis).
+# Install WORK-02A/B reqs and then vendor/mem0 from the pinned Git submodule.
+ollama>=0.3,<1
+psycopg-pool>=3.2.6,<4
