@@ -281,6 +281,20 @@
 **Próxima ação:** inspecionar execução GitHub Actions para o commit R1A; reportar PASS/FAIL com evidências em nova entrada; depois WORK-03B R1B (checkpoint versionado + resume canónico sob ACL), sem alterar o Jarvis.
 
 ---
+## SI-MH-0016 — WORK-03B R1A CI verified
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** VALIDADO EM LABORATÓRIO, NÃO PRODUÇÃO · **Tested SHA:** `538eb1b67628e8a0905b6511da9fddf9f0d1313c`.
+
+**Evidência:** [Actions 43157921966](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43157921966) **SUCCESS**. Logs observados: HANDOFF_POLICY_PASS, MIGRATION_PASS SQL 0001/0002/0003/0004, **69 testes OK** (60 anteriores + 8 R1A reais + 1 teste estático de contrato), e WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS (MCP stdio/REST/PostgreSQL/Mem0/Ollama/pgvector reais com dados sintéticos e casos negativos). Nenhum segredo interno efémero em claro foi observado no log.
+
+**Resultado R1A:** AgentRun, SourceRecord e Observations ASSERTED com task lease ativa, grants por project, identidade do bearer, idempotência e isolamento por task; SQL com FK composta, evento de continuidade independente e claim sem autopromoção a DONE. O commit manteve o Mem0 e MCP read-only existentes. A evidência detalhada está em `docs/work03b/R1A_EVIDENCE.md`.
+
+**Não implica:** UC-CORE-01 completo, checkpoints, nova sessão resume, verified evidence, reviewer DONE, governança de memória, privacy consent, comparação de providers, Jarvis staging, deployment ou certificação empresarial. M02 R1A_LAB_PARTIAL, M01–M18 PENDING_FULL_E2E.
+
+**Escopo desta adenda:** anexar resultado realmente observado ao MASTER e HANDOFF atual; não modificar runtime/DB/CI/vendor ou main. O próprio commit documental terá novo CI, cujo resultado não foi antecipado.
+
+**Próxima ação:** WORK-03B R1B — checkpoint versionado e recuperação de contexto canónico após interrupção em novo processo, sempre com ACL revalidada, Mem0 down fallback e sem expor segredo de lease.
+
+---
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0015 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0016 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -92,12 +92,12 @@
 - Base de código: `develop@ad1bc5dcf604bf3fed58846a5fed29ca8fa39917` validada anteriormente em [Actions 43155153394](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43155153394): 60/60 testes e real Mem0/MCP smoke PASS (dados sintéticos).
 - **Neste novo commit:** SQL 0004; backend `continuity.py`; 4 rotas REST autenticadas para run/source/observation/list; 8 testes reais novos + 1 gate de contrato; CI migra 0004. O task.version continua inalterado nos asserts; si_continuity_events guarda referências e sequência independente.
 - **Novo contrato:** 14 rotas implementadas, 6 propostas, M02 R1A_LAB_PARTIAL; M01–M18 todos PENDING_FULL_E2E. Ver [R1A_IMPLEMENTATION.md](work03b/R1A_IMPLEMENTATION.md).
-- **SEM provas novas neste instante:** o novo HEAD ainda precisa de CI; nenhum resultado da implementação R1A é considerado PASS antes da run completar.
+- **R1A validado em laboratório:** `develop@538eb1b67628e8a0905b6511da9fddf9f0d1313c`, [Actions 43157921966](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43157921966) **SUCCESS** — SQL 0001–0004 MIGRATION_PASS, **69/69 testes PASS**, E2E anterior real MCP/REST/PostgreSQL/Mem0/Ollama PASS (synthetic). Documento detalhado [R1A_EVIDENCE.md](work03b/R1A_EVIDENCE.md). Este commit documental requer validação CI própria.
 - Sem alterações a `main`, Jarvis/PULSE, vendor Mem0, produção, deployment ou MCP write tools. Não foram implementados checkpoint/resume, memória persistente por outbox, verificador, decisão DONE ou consentimento/retention.
 - Segurança: 30-min task lease, grant scoped e idempotência; falhas 409 em stale/lease ou replay secreto, 403 em permissões; observações são ASSERTED, nunca verificadas.
 - Próximo: validar CI desta mudança; se falhar, corrigir e registar. Depois **WORK-03B R1B — TaskCheckpoint + scoped read-only Resume em novo processo** e controlos de revogação.
 ## Next exact work
-**Próximo gate: verificar CI real para WORK-03B R1A e registar a evidência; seguir WORK-03B R1B** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: WORK-03B R1B após R1A 69/69 PASS — implementar Checkpoint e Resume canónico read-only em processo independente** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
