@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0008 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0009 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -60,7 +60,7 @@
 - Lacunas prioritárias: observação e memória autorizadas, context snapshot, `resume` após crash/restart, handoffs com artefactos, verificação/decisão/approval, memory lifecycle, outbox, Jarvis staging.
 - **RECOMENDAÇÃO:** WORK-03B R0 Functional Contract Closure **antes** do deployment; R1 jornada real de continuidade, R2 trust/lifecycle e só depois staging/infra. A aprovação formal desse roadmap ainda cabe ao operador.
 - A pesquisa SI-RD-02 continua documental (18 oracles sintéticos; nenhum benchmark concluído); SI-RD-03 permanece avaliação de fornecedores separada.
-- CI do novo commit documental PENDENTE; último CI observado para código anterior foi 43122815508 SUCCESS.
+- **SI-FG-01 commit `12ea7c3b299b5a84b0d1a96d59a4c78401cbe40b` validado:** [Actions 43151016529](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43151016529) SUCCESS: HANDOFF_POLICY_PASS, **55/55 testes PASS e E2E sintético real PASS**. A documentação evidencia as lacunas; não entrega funcionalidades ausentes.
 
 ## Next exact work
 **Proposta prioritária: WORK-03B R0 Functional Contract Closure** — formalizar lacunas e a jornada de continuidade entre dois agentes antes de avançar para deployment. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.

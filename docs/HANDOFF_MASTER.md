@@ -174,6 +174,20 @@
 
 ---
 
+## SI-MH-0009 — SI-FG-01 CI verified (document-only checkpoint)
+
+**Data:** 2026-11-12 Africa/Maputo · **Tipo:** VALIDADO · **Tested commit:** `12ea7c3b299b5a84b0d1a96d59a4c78401cbe40b` (SI-FG-01 audit + both handoffs).
+
+**Evidência:** [Actions run 43151016529](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43151016529) **SUCCESS**. Logs: HANDOFF_POLICY_PASS audited_commits=1; 55/55 existing tests PASS; real independent MCP/REST/PostgreSQL/Mem0/Ollama synthetic E2E PASS.
+
+**Escopo da validação:** regressão do código previamente testado enquanto foram acrescentados documentos. **Não** é validação de features ausentes, de todos os M01–M18, de benchmark SI-RD-03 ou de Jarvis em produção.
+
+**Avaliação inalterada:** SI-FG-01 identifica lacunas funcionais e recomenda WORK-03B R0 Functional Contract Closure antes de deployment. Não houve alterações a runtime, vendor, DB, main ou Jarvis/PULSE.
+
+**Próxima ação proposta:** definir e ratificar jornada única UC-CORE-01 entre dois agentes (context-write -> checkpoint/handoff -> new-session resume -> evidence -> independent review); delimitar o MVP e especificar esquema/API/testes. Novo commit de documentação desta adenda exige verificação CI própria; não presumir resultado.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
