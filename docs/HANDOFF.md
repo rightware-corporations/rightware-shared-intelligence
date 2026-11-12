@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0019 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0020 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -109,7 +109,15 @@
 ## SI-RD-03C — Investigação de evidências importada para futuro R2
 - [Dossier técnico](research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md) e [16 casos sintéticos](research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl) documentados e versionados em `develop`. Não são implementações, benchmarks ou decisões aprovadas; todos os 16 oracles foram validados estruturalmente mas **NÃO EXECUTADOS**.
 - Áreas: in-toto/Test Result, SLSA, Sigstore/GitHub attestations, W3C PROV, OpenTelemetry e autorização de verificador/revisor. Preservar `ASSERTED` vs `CHECKED_PASS` vs `REVIEW_ACCEPTED`, e não atribuir DONE por CI simples.
-- Último HEAD lido antes desta importação: `develop@ea7cd5f6d9c01a3298ed204fd5b25cbfe8de18f0`; checkpoint MASTER SI-MH-0019; CI específico deste commit PENDENTE. Nenhum runtime/DB/JARVIS/MAIN alterado e **WORK-03B R1C continua a prioridade de engenharia em sessão separada**.
+- A importação SI-MH-0019 foi verificada no HEAD `9233f8afefa5877e2eec27a5f90ca0a4a00322ad`: [CI 43161674536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43161674536) SUCCESS, 81/81 testes + E2E R1B e regressão Mem0 PASS. Nenhum dos 16 oráculos EV foi executado. Nenhum runtime/DB/JARVIS/MAIN alterado; **R1C mantém prioridade**.
+
+## SI-RD-03C → WORK-03B R2 — Integração e gates (RECOMENDAÇÃO, NÃO CÓDIGO)
+- **Checkpoint SI-MH-0020:** documento [R2_SI_RD_03C_INTEGRATION_REVIEW.md](work03b/R2_SI_RD_03C_INTEGRATION_REVIEW.md). Referências oficiais preservadas: [dossier SI-RD-03C](research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md) e [fixture EV-01..EV-16](research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl), sem edições.
+- **Verificação estática de ingestão:** 16 JSONL válidos, IDs EV-01..EV-16 únicos, todas entradas `synthetic=true`, `executed=false`; oráculos NÃO executados. CI do HEAD de origem `9233f8afefa5877e2eec27a5f90ca0a4a00322ad` SUCCESS [43161674536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43161674536) com **81/81 testes anteriores**, não um teste de verificador R2.
+- **Reuse antes de Build:** R1A/R1B PostgreSQL grants, `si_evidence_refs`, `si_source_records`, `si_observations ASSERTED`, `si_continuity_events`, task `IN_REVIEW`, MCP REST auth; in-toto/Test Result + W3C PROV vocabulário; SLSA/GitHub Attestations/Sigstore opcionais em builds, OTel como correlação sem prompts. OPA e novas dependências adiados.
+- **Trust invariants:** `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED`; CI verde, URL, assinatura ou LLM não autorizam `DONE`. Executor, verificador e reviewer devem ser distintos sob grants atuais. R2 contratual e a fixture exigem gates pós-R1C.
+- **Alterações deste checkpoint:** documentos e handoffs somente. `main`, JARVIS/PULSE, fornecedor Mem0, CI/workflow, backend, SQL, testes e fixture de investigação inalterados. CI deste novo commit ainda por comprovar.
+- **Prioridade inalterada:** WORK-03B R1C (checkpoint-bound handoff, fencing, lease recovery) → avaliação/ratificação R2 → EV-01..EV-16 tests reais com logs/SHAs.
 
 ## Next exact work
 **Próximo gate: WORK-03B R1C após R1B 81/81 PASS — checkpoint-bound Handoff + fencing/lease recovery** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.

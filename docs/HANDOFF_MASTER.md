@@ -347,6 +347,24 @@
 **Isolamento de trabalho:** somente dois documentos de investigação + `docs/HANDOFF.md` e `docs/HANDOFF_MASTER.md`. Nada em backend, DB/migrations, tests, workflows, Mem0, main, Jarvis/PULSE, R1C ou PRs antigos. Não implementar R2 automaticamente nem alterar o contrato canónico antes do gate de design.
 **Próximo passo:** depois de estabilizar R1C, a outra sessão deverá ler o dossier/fixture, rever os oracles com fonte e dono de política, confrontar com `docs/work03b/UC_CORE_01_CONTRACT.json` e preparar R2 design/validação, com novo checkpoint de handoff quando houver alterações.
 
+## SI-MH-0020 — SI-RD-03C → R2: referência integrada, 16 oráculos classificados e R1C preservado
+
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** REVISÃO DE INVESTIGAÇÃO / RECOMENDAÇÃO; NÃO IMPLEMENTAÇÃO R2. **HEAD lido e preservado:** `develop@9233f8afefa5877e2eec27a5f90ca0a4a00322ad` (SI-MH-0019), `main@87c3351055aaf58d37f233dbc96eaa8f0b749c5c`; `vendor/mem0@f1791daa86d469249c9b002f62644d58a1eb96a0`.
+
+**Consulta prévia:** `docs/HANDOFF.md`, última entrada SI-MH-0019 de `docs/HANDOFF_MASTER.md`, contrato canónico `docs/work03b/UC_CORE_01_CONTRACT.json`, código do WorkCore (submit_result/offer_handoff/accept_handoff) e CI [43161674536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43161674536). **CI do SHA base SUCCESS:** HANDOFF_POLICY_PASS, migrações 0001–0005, 81/81 testes PASS, E2E R1B A→B em processos separados (sem Mem0), E2E anterior Mem0/MCP/Ollama PASS. A suíte não executa oráculos EV-01..EV-16.
+
+**Fontes R2 incorporadas por referência, sem modificação:** `docs/research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md` e `docs/research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl`. Lidos e analisados. Verificação estática de ingestão: **16 objectos JSONL**, IDs EV-01..EV-16 únicos e sequenciais, campos presentes, `synthetic=true` e `executed=false` em todos. Isto NÃO é execução de verificador, benchmark, teste de segurança ou gate de produto.
+
+**Novo artefacto:** `docs/work03b/R2_SI_RD_03C_INTEGRATION_REVIEW.md` — matriz completa dos 16 casos com oráculo/UC-CORE-01/risco, CROSSWALK para recursos RIGHTWARE já construídos, decisão REUSE/BUILD/DEFER para in-toto, SLSA, Sigstore, GitHub Attestations, W3C PROV, OpenTelemetry/OPA e gates futuros R2-00..R2-05. Referências oficiais de standards consultadas para nuances: in-toto v1.2 (Test Result v0.1 independente), SLSA versões e OTel conteúdo sensível.
+
+**Separação de confiança mandatória:** `ASSERTED` continua claim do agente; `CHECKED_PASS/FAIL/INCONCLUSIVE` é resultado futuro de verificador separado e limitado ao teste exacto; `REVIEW_ACCEPTED/REJECTED` pertence a actor/política com `task:review`, sujeito a CAS/ACL. Nem URL, screenshot, assinatura, CI verde ou memória semântica promovem automaticamente a DONE. Não existe ainda endpoint/verificador/revisor R2 implementado. M07/M13/M14/M15 e UC-CORE-01 final continuam pendentes.
+
+**Implementação e isolamento:** documentação apenas; não alterar código, migrations, requirements, testes, workflow, contratos canónicos, GitHub fixture, runtime, `main`, JARVIS/PULSE, Mem0 ou branches. Não instalar in-toto/Cosign/OPA/OTel agora. `develop` recebe único commit fast-forward com ambos handoffs. Resultado da CI do novo commit será verificado separadamente; até lá PENDENTE.
+
+**Próximo passo:** **WORK-03B R1C continua prioritário**: handoff atomicamente vinculado ao checkpoint, lease fencing e recuperação segura; só depois ratificar contratos de R2 e transformar EV-01..EV-16 em execução com evidência real. Não marcar nenhum dos 16 PASS sem implementação e logs.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
