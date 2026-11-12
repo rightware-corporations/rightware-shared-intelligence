@@ -5,7 +5,7 @@ Python application package lives in `backend/rightware_si/`; import name remains
 - `http_api.py`: REST API (FastAPI) gateway
 - `api_auth.py`: bearer authentication
 - `core/postgres.py`: transactional PostgreSQL work core
-- `continuity.py`: R1A authenticated, source-linked unverified observations and agent runs, guarded by task leases
+- `continuity.py`: R1A run/source/observation and R1B immutable checkpoint CAS + grant-scoped read-only resume (Mem0-independent)
 - `context_service.py`, `memory.py`: project-scoped memory retrieval
 - `mem0_local_service.py`: isolated, private Mem0 lab service
 - `mcp_bridge.py`: read-only MCP stdio -> REST

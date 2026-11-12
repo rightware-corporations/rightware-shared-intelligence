@@ -86,5 +86,17 @@ def get_task_events(project_id: str, task_id: str) -> dict:
     return _read_api(f"/v1/projects/{_segment(project_id)}/tasks/{_segment(task_id)}/events")
 
 
+
+@mcp.tool()
+def resume_task(project_id: str, task_id: str) -> dict:
+    """Read an authorized canonical task checkpoint without granting write access.
+
+    Continuation references and assertions remain UNVERIFIED; no Mem0 or
+    automatic tool execution is triggered by this read-only MCP tool.
+    """
+    return _read_api(
+        f"/v1/projects/{_segment(project_id)}/tasks/{_segment(task_id)}/resume"
+    )
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")

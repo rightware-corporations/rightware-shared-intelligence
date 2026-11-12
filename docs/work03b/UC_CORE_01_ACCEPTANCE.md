@@ -13,19 +13,19 @@
 | M02 | Observation appended as ASSERTED, with source | R1A_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M03 | Handoff offer blocks and releases old lease | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M04 | Atomic acceptance to B / old lease invalid | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
-| M05 | Scoped context includes versioned and authorized refs | MISSING | R1 | PENDING_FULL_E2E |
+| M05 | Scoped context includes versioned and authorized refs | R1B_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M06 | Submission enters IN_REVIEW, never DONE | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M07 | Independent verification and authorized DONE acceptance | MISSING | R2 | PENDING_FULL_E2E |
 | M08 | Optimistic task version conflict | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M09 | Idempotency under lost secret response | SPEC_CONFLICT | R1 | PENDING_FULL_E2E |
 | M10 | Cross-project denial for all reads/mutations/MCP | LAB_PARTIAL | R1_R2 | PENDING_FULL_E2E |
 | M11 | Concurrent accepted handoff / one lease | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
-| M12 | Memory offline degrades without losing task state | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
+| M12 | Memory offline degrades without losing task state | R1B_CANONICAL_FALLBACK_PARTIAL | R1 | PENDING_FULL_E2E |
 | M13 | Revoked source or grant blocks snapshot replay | MISSING | R2 | PENDING_FULL_E2E |
 | M14 | Prompt injection in memory cannot authorize action | UNPROVEN | R2 | PENDING_FULL_E2E |
 | M15 | Misleading evidence fails specific verification | MISSING | R2 | PENDING_FULL_E2E |
-| M16 | New process restart reconstructs progress and outbox | MISSING | R1_R2 | PENDING_FULL_E2E |
-| M17 | REST/MCP parity without policy bypass | LAB_PARTIAL | R1_R2 | PENDING_FULL_E2E |
+| M16 | New process restart reconstructs progress and outbox | R1B_RESTART_PARTIAL_NO_OUTBOX | R1_R2 | PENDING_FULL_E2E |
+| M17 | REST/MCP parity without policy bypass | R1B_MCP_READ_PARITY_PARTIAL | R1_R2 | PENDING_FULL_E2E |
 | M18 | All mutations have actor/version/correlation/audit | LAB_PARTIAL | R1_R2 | PENDING_FULL_E2E |
 
 ## 2. Executable R1 target / deterministic tests
@@ -58,3 +58,8 @@ Git SHA; database migration version; test command/environment; independent clien
 - PostgreSQL 0004 keeps observations in an independent append-only continuity event stream and keeps task.version unchanged. Mutations require task lease, effective principal and project grants. Source URI is a pointer and is never fetched by this service.
 - Original M02 is **R1A_LAB_PARTIAL**; M01–M18 remain **PENDING_FULL_E2E**. Nothing yet proves ContextSnapshot, checkpoint, resume, outbox, verifier, review, Jarvis staging or production.
 - SourceRecord GIT_REF currently accepts HTTPS github.com URL; TOOL_RECEIPT accepts a safe local urn:rw: reference only. Privacy/retention, real source verification and resource-level ACL still require design.
+
+## WORK-03B R1B laboratory progress (NOT full UC-CORE-01)
+- Implemented lease-bound immutable TaskCheckpoint with `expected_checkpoint_seq` CAS and source-linked Observation refs, plus current-grant and project-scoped read-only Resume. Checkpoint seq is separate from task.version.
+- MCP read-only `resume_task` delegates to the same authenticated REST route, no write tools. A new independent process B accepts the handoff and reconstructs A's checkpoint without A's chat or credentials; Mem0 service is deliberately unavailable in this test.
+- **Limit:** existing handoff does NOT bind a specific checkpoint (R1C), not all source-level revocations/consent/outbox or verification/review implemented. The entire M01-M18 remains PENDING_FULL_E2E.

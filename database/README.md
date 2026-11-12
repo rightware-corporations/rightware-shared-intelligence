@@ -6,6 +6,7 @@ All RIGHTWARE-owned migrations live in `database/migrations/`, in numeric order:
 2. `0002_work02b_api_credentials.sql` — experimental API token hash, expiry and revocation.
 3. `0003_work02d_scrub_lease_replays.sql` — scrub legacy replayable lease secret fields.
 4. `0004_work03b_r1a_continuity.sql` — task-bound AgentRun, SourceRecord, Observation, associations, continuation event stream.
+5. `0005_work03b_r1b_checkpoints.sql` — immutable task checkpoints and same-task Observation bindings; database triggers, independent checkpoint sequence and checkpoint event.
 
 `database/` owns RIGHTWARE operational schema; the vendored Mem0 library controls its own memory index/schema and is **not** allowed to rewrite RIGHTWARE task state.
 

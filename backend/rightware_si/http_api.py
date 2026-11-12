@@ -74,6 +74,16 @@ class RecordObservation(Versioned):
     source_ids: list[UUID] = Field(min_length=1, max_length=10)
 
 
+class RecordCheckpoint(Versioned):
+    agent_run_id: UUID
+    lease_token: str = Field(min_length=20, max_length=256)
+    expected_checkpoint_seq: int = Field(ge=0, strict=True)
+    summary: str = Field(min_length=1, max_length=2000)
+    next_actions: list[str] = Field(min_length=1, max_length=12)
+    blockers: list[str] = Field(default_factory=list, max_length=12)
+    observation_ids: list[UUID] = Field(default_factory=list, max_length=20)
+
+
 def _invoke(operation):
     try:
         return operation()
@@ -260,6 +270,29 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
         actor: str = Depends(principal_dep),
     ):
         return _invoke(lambda: continuity.list_observations(
+            project_id, actor, str(task_id)
+        ))
+
+    @app.post("/v1/projects/{project_id}/tasks/{task_id}/checkpoints", status_code=201)
+    def record_checkpoint(
+        project_id: str, task_id: UUID, body: RecordCheckpoint,
+        idem: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=128)],
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: continuity.record_checkpoint(
+            project_id, actor, str(task_id), str(body.agent_run_id),
+            body.expected_version, body.lease_token,
+            body.expected_checkpoint_seq, body.summary,
+            body.next_actions, body.blockers,
+            [str(x) for x in body.observation_ids], idem,
+        ))
+
+    @app.get("/v1/projects/{project_id}/tasks/{task_id}/resume")
+    def resume_task(
+        project_id: str, task_id: UUID,
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: continuity.resume_task(
             project_id, actor, str(task_id)
         ))
 

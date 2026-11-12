@@ -86,3 +86,14 @@ Princípio de autoridade: PostgreSQL para estado/eventos/checkpoints/decisões v
 - The 0004 migration adds immutable-by-app records with task-scoped composite FKs, plus a separate continuity event stream that does not conflict with task lifecycle version events.
 - FastAPI has **14 implemented protected routes**; the canonical R0 contract now lists **6 future routes**. All R1A additions require existing server bearer authorization, correct task lease and project grants; observation reads require both task:read and context:read.
 - Full checkpoint, resume across new process, review/DONE and source-level privacy remain **unimplemented**. See docs/work03b/R1A_IMPLEMENTATION.md. This is not production-ready.
+
+
+## WORK-03B R1B — Implemented checkpoint/resume (experimental)
+
+- PostgreSQL migration `0005_work03b_r1b_checkpoints.sql`: immutable `si_task_checkpoints` and `si_checkpoint_observations` (same-task FK), checkpoint_seq CAS, trigger rejects UPDATE/DELETE of checkpoint rows and associations. No historical task status/event schema replacement.
+- `backend/rightware_si/continuity.py`: `record_checkpoint` requires active lease, current task version, owned AgentRun, `checkpoint:write` plus `task:execute` and `context:read`; validates observation references and records ASSERTED checkpoint without incrementing task.version.
+- `resume_task` returns a **read-only fresh canonical PostgreSQL snapshot** under `REPEATABLE READ READ ONLY`, reauthorizes `task:read` and `context:read`, includes latest checkpoint/observations and task/handoff status, with `memory_status=NOT_QUERIED`. Does not mint a lease or promote assertions to verified.
+- REST exposes POST task checkpoints and GET task resume; MCP adds a **read-only** `resume_task` tool delegating to the same REST authorization layer.
+- Canonical contract: **16 implemented routes, 4 future**, 14-step UC-CORE-01 still **PENDING_FULL_E2E**. Proof is in `docs/work03b/R1B_IMPLEMENTATION.md` and CI evidence after execution.
+
+**Limitation:** existing handoff is NOT tied to a specific checkpoint; target agent sees latest authorized checkpoint, and its `task_version_recorded` can differ from current task version after the handoff. R1C will bind handoff+checkpoint and address lost lease secrets. Production resource-level privacy/consent, outbox, external verification and DONE review remain missing.

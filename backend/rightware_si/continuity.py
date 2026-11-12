@@ -269,3 +269,214 @@ class ContinuityCore(WorkCore):
                 })
             return {"task_id": task_id, "observations": output,
                     "limit": 100, "truncated": len(rows) == 100}
+
+
+    @staticmethod
+    def _texts(values, name: str, minimum: int, maximum: int) -> list[str]:
+        if not isinstance(values, list) or not minimum <= len(values) <= maximum:
+            raise ValueError(f"{name}: invalid number of items")
+        return [_check_text(value, name, 500) for value in values]
+
+    def record_checkpoint(self, project: str, actor: str, task_id: str,
+                          run_id: str, expected_version: int, lease_token: str,
+                          expected_checkpoint_seq: int, summary: str,
+                          next_actions: list[str], blockers: list[str],
+                          observation_ids: list[str], idem: str) -> dict:
+        """Append a checkpoint with CAS sequence and same-task observed references.
+
+        Checkpoint claims and action suggestions stay ASSERTED, never approved.
+        No task state/version transition, model inference, or Mem0 calls.
+        """
+        task_id = _uuid(task_id, "task id")
+        run_id = _uuid(run_id, "run id")
+        summary = _check_text(summary, "checkpoint summary", 2000)
+        actions = self._texts(next_actions, "next_actions", 1, 12)
+        blockers = self._texts(blockers, "blockers", 0, 12)
+        if not isinstance(expected_checkpoint_seq, int) or isinstance(
+            expected_checkpoint_seq, bool
+        ) or expected_checkpoint_seq < 0:
+            raise ValueError("invalid expected_checkpoint_seq")
+        if not isinstance(observation_ids, list) or len(observation_ids) > 20:
+            raise ValueError("checkpoint supports up to 20 observations")
+        obs_ids = sorted(_uuid(x, "observation id") for x in observation_ids)
+        if len(obs_ids) != len(set(obs_ids)):
+            raise ValueError("duplicate observation reference")
+        lease_hash = _lease_fingerprint(lease_token)
+
+        def action(conn):
+            task = self._working(conn, project, actor, task_id,
+                                 expected_version, lease_token)
+            self._authorize(conn, project, actor, "task:execute")
+            self._authorize(conn, project, actor, "context:read")
+            self._owned_run(conn, project, actor, task_id, run_id)
+            current_seq = conn.execute(
+                "SELECT COALESCE(MAX(checkpoint_seq),0) AS seq "
+                "FROM si_task_checkpoints WHERE project_id=%s AND task_id=%s::uuid",
+                (project, task_id),
+            ).fetchone()["seq"]
+            if current_seq != expected_checkpoint_seq:
+                raise Conflict("stale checkpoint sequence")
+            if obs_ids:
+                matches = conn.execute(
+                    "SELECT id FROM si_observations "
+                    "WHERE project_id=%s AND task_id=%s::uuid "
+                    "AND id=ANY(%s::uuid[])",
+                    (project, task_id, obs_ids),
+                ).fetchall()
+                if len(matches) != len(obs_ids):
+                    raise Missing("observation does not belong to this task")
+            checkpoint_id = str(uuid4())
+            seq = current_seq + 1
+            conn.execute(
+                "INSERT INTO si_task_checkpoints "
+                "(id,project_id,task_id,agent_run_id,recorded_by,checkpoint_seq,"
+                "task_version_recorded,summary,next_actions,blockers) "
+                "VALUES(%s::uuid,%s,%s::uuid,%s::uuid,%s,%s,%s,%s,%s,%s)",
+                (checkpoint_id, project, task_id, run_id, actor, seq,
+                 expected_version, summary, Jsonb(actions), Jsonb(blockers)),
+            )
+            for obs in obs_ids:
+                conn.execute(
+                    "INSERT INTO si_checkpoint_observations "
+                    "(project_id,task_id,checkpoint_id,observation_id) "
+                    "VALUES(%s,%s::uuid,%s::uuid,%s::uuid)",
+                    (project, task_id, checkpoint_id, obs),
+                )
+            self._continuity_event(
+                conn, task, actor, "CHECKPOINT_RECORDED", checkpoint_id,
+                {"checkpoint_id": checkpoint_id, "checkpoint_seq": seq,
+                 "run_id": run_id, "observation_count": len(obs_ids)},
+            )
+            return {
+                "checkpoint_id": checkpoint_id, "checkpoint_seq": seq,
+                "task_id": task_id, "task_version": expected_version,
+                "run_id": run_id, "trust_state": "ASSERTED",
+                "observation_ids": obs_ids,
+            }
+
+        return self._execute(
+            project, actor, "checkpoint:write", "record_checkpoint", idem,
+            {"task": task_id, "run": run_id, "v": expected_version,
+             "expected_seq": expected_checkpoint_seq, "summary": summary,
+             "next_actions": actions, "blockers": blockers,
+             "observation_ids": obs_ids, "lease_hash": lease_hash},
+            action,
+        )
+
+    def resume_task(self, project: str, actor: str, task_id: str) -> dict:
+        """Build a fresh read-only canonical snapshot; never mint a lease.
+
+        Deliberately does not query Mem0 or trust arbitrary semantic results.
+        Re-evaluates project grants for EACH request in a single DB snapshot.
+        """
+        _valid_id(project, "project")
+        _valid_id(actor, "actor")
+        task_id = _uuid(task_id, "task id")
+        with psycopg.connect(self.dsn, row_factory=dict_row, connect_timeout=10) as conn:
+            with conn.transaction():
+                conn.execute(
+                    "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY"
+                )
+                self._authorize(conn, project, actor, "task:read")
+                self._authorize(conn, project, actor, "context:read")
+                task = conn.execute(
+                    "SELECT id,project_id,title,status,version,acceptance_criteria,"
+                    "updated_at FROM si_tasks WHERE project_id=%s AND id=%s::uuid",
+                    (project, task_id),
+                ).fetchone()
+                if task is None:
+                    raise Missing("task not found in project")
+                latest = conn.execute(
+                    "SELECT id,agent_run_id,recorded_by,checkpoint_seq,"
+                    "task_version_recorded,summary,next_actions,blockers,"
+                    "trust_state,created_at FROM si_task_checkpoints "
+                    "WHERE project_id=%s AND task_id=%s::uuid "
+                    "ORDER BY checkpoint_seq DESC LIMIT 1",
+                    (project, task_id),
+                ).fetchone()
+                checkpoint = None
+                if latest is not None:
+                    linked = conn.execute(
+                        "SELECT o.id,o.agent_run_id,o.asserted_by,o.claim_text,"
+                        "o.trust_state FROM si_checkpoint_observations l "
+                        "JOIN si_observations o ON "
+                        "o.project_id=l.project_id AND o.task_id=l.task_id "
+                        "AND o.id=l.observation_id "
+                        "WHERE l.project_id=%s AND l.task_id=%s::uuid "
+                        "AND l.checkpoint_id=%s::uuid ORDER BY o.created_at,o.id",
+                        (project, task_id, str(latest["id"])),
+                    ).fetchall()
+                    observations = []
+                    for obs in linked:
+                        sources = conn.execute(
+                            "SELECT s.id,s.source_kind,s.source_revision,"
+                            "s.digest_sha256 FROM si_observation_sources l "
+                            "JOIN si_source_records s ON "
+                            "s.project_id=l.project_id AND s.task_id=l.task_id "
+                            "AND s.id=l.source_id "
+                            "WHERE l.project_id=%s AND l.task_id=%s::uuid "
+                            "AND l.observation_id=%s::uuid ORDER BY s.id",
+                            (project, task_id, str(obs["id"])),
+                        ).fetchall()
+                        observations.append({
+                            "observation_id": str(obs["id"]),
+                            "run_id": str(obs["agent_run_id"]),
+                            "asserted_by": obs["asserted_by"],
+                            "claim": obs["claim_text"],
+                            "trust_state": obs["trust_state"],
+                            "sources": [
+                                {"source_id": str(s["id"]),
+                                 "kind": s["source_kind"],
+                                 "revision": s["source_revision"],
+                                 "digest_sha256": s["digest_sha256"]}
+                                for s in sources
+                            ],
+                        })
+                    checkpoint = {
+                        "checkpoint_id": str(latest["id"]),
+                        "checkpoint_seq": latest["checkpoint_seq"],
+                        "agent_run_id": str(latest["agent_run_id"]),
+                        "recorded_by": latest["recorded_by"],
+                        "task_version_recorded": latest["task_version_recorded"],
+                        "summary": latest["summary"],
+                        "next_actions": latest["next_actions"],
+                        "blockers": latest["blockers"],
+                        "trust_state": latest["trust_state"],
+                        "created_at": latest["created_at"].isoformat(),
+                        "observations": observations,
+                    }
+                h = conn.execute(
+                    "SELECT id,status,from_principal_id,to_principal_id "
+                    "FROM si_handoffs WHERE project_id=%s AND task_id=%s::uuid "
+                    "ORDER BY offered_at DESC,id DESC LIMIT 1",
+                    (project, task_id),
+                ).fetchone()
+                handoff = ({
+                    "handoff_id": str(h["id"]), "status": h["status"],
+                    "from_principal_id": h["from_principal_id"],
+                    "to_principal_id": h["to_principal_id"],
+                    "checkpoint_binding": "NOT_IMPLEMENTED_R1B",
+                } if h else None)
+                return {
+                    "source_of_truth": "postgresql",
+                    "project_id": project,
+                    "task": {
+                        "task_id": str(task["id"]), "title": task["title"],
+                        "status": task["status"], "version": task["version"],
+                        "acceptance_criteria": task["acceptance_criteria"],
+                        "updated_at": task["updated_at"].isoformat(),
+                    },
+                    "snapshot_status": (
+                        "CHECKPOINT_AVAILABLE" if checkpoint else "NO_CHECKPOINT"
+                    ),
+                    "checkpoint": checkpoint,
+                    "last_handoff": handoff,
+                    "memory_status": "NOT_QUERIED",
+                    "verified_completion": False,
+                    "read_only": True,
+                    "lease_issued": False,
+                    "checkpoint_version_matches_task": (
+                        checkpoint is not None
+                        and checkpoint["task_version_recorded"] == task["version"]
+                    ),
+                }

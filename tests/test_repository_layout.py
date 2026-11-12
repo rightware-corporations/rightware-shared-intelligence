@@ -20,7 +20,8 @@ class RepositoryLayoutTests(unittest.TestCase):
             sorted(p.name for p in migrations.glob("*.sql")),
             ["0001_work02_core.sql", "0002_work02b_api_credentials.sql",
              "0003_work02d_scrub_lease_replays.sql",
-             "0004_work03b_r1a_continuity.sql"],
+             "0004_work03b_r1a_continuity.sql",
+             "0005_work03b_r1b_checkpoints.sql"],
         )
         self.assertFalse((ROOT / "db" / "migrations").exists())
 

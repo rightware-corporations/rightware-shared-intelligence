@@ -94,12 +94,15 @@ jobs:
           with psycopg.connect(os.environ["RW_TEST_DATABASE_URL"],autocommit=True) as conn:
               for name in ("0001_work02_core.sql","0002_work02b_api_credentials.sql",
                            "0003_work02d_scrub_lease_replays.sql",
-                           "0004_work03b_r1a_continuity.sql"):
+                           "0004_work03b_r1a_continuity.sql",
+                           "0005_work03b_r1b_checkpoints.sql"):
                   conn.execute(Path("database/migrations",name).read_text(encoding="utf-8"))
                   print("MIGRATION_PASS",name)
           PY
       - name: Full deterministic/real PostgreSQL test suite
         run: python -m unittest discover -s tests -v
+      - name: Independent subprocess Agent A to Agent B resume without Mem0
+        run: python scripts/work03b_r1b_real_resume_e2e.py
       - name: Start ephemeral local Ollama
         run: |
           docker run -d --rm --name work02d-ollama --network host ollama/ollama:0.40.15

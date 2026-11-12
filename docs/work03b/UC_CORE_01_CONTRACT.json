@@ -1,8 +1,8 @@
 {
   "document_id": "WORK03B_R0_UC_CORE_01",
-  "revision": "0.1.1-r1a-lab",
+  "revision": "0.1.2-r1b-lab",
   "date": "2026-11-12",
-  "status": "DRAFT_FOR_OPERATOR_RATIFICATION_PARTIAL_R1A_LAB",
+  "status": "DRAFT_FOR_OPERATOR_RATIFICATION_PARTIAL_R1B_LAB",
   "scope": "synthetic_two_independent_agent_clients",
   "authoritative_store": "RIGHTWARE_PostgreSQL",
   "semantic_provider": "Mem0_unverified_replaceable",
@@ -183,25 +183,21 @@
       "path": "/v1/projects/{project_id}/tasks/{task_id}/observations",
       "permission": "task:read+context:read",
       "implementation": "IMPLEMENTED_R1A_LAB"
-    }
-  ],
-  "future_routes": [
+    },
     {
       "method": "POST",
       "path": "/v1/projects/{project_id}/tasks/{task_id}/checkpoints",
-      "permission": "task:execute",
-      "phase": "R1",
-      "purpose": "Lease-bound versioned step progress; external effects remain unverified",
-      "implementation": "PROPOSED_UNIMPLEMENTED"
+      "permission": "checkpoint:write+task:execute+context:read",
+      "implementation": "IMPLEMENTED_R1B_LAB"
     },
     {
       "method": "GET",
       "path": "/v1/projects/{project_id}/tasks/{task_id}/resume",
       "permission": "task:read+context:read",
-      "phase": "R1",
-      "purpose": "Fresh scoped continuation manifest; read-only; does not mint lease",
-      "implementation": "PROPOSED_UNIMPLEMENTED"
-    },
+      "implementation": "IMPLEMENTED_R1B_LAB"
+    }
+  ],
+  "future_routes": [
     {
       "method": "POST",
       "path": "/v1/projects/{project_id}/tasks/{task_id}/review",
@@ -274,7 +270,7 @@
       "operation": "write_checkpoint",
       "expected_state": "IN_PROGRESS",
       "expected_version": 3,
-      "implementation": "PROPOSED_R1"
+      "implementation": "IMPLEMENTED_R1B_LAB_PARTIAL"
     },
     {
       "id": "S06",
@@ -306,7 +302,7 @@
       "operation": "restart_process_and_resume",
       "expected_state": "IN_PROGRESS",
       "expected_version": 5,
-      "implementation": "PROPOSED_R1"
+      "implementation": "IMPLEMENTED_R1B_LAB_PARTIAL"
     },
     {
       "id": "S10",
@@ -381,7 +377,7 @@
     {
       "id": "M05",
       "description": "Scoped context includes versioned and authorized refs",
-      "preexisting_coverage": "MISSING",
+      "preexisting_coverage": "R1B_LAB_PARTIAL",
       "target_phase": "R1",
       "final_acceptance": "PENDING_FULL_E2E"
     },
@@ -430,7 +426,7 @@
     {
       "id": "M12",
       "description": "Memory offline degrades without losing task state",
-      "preexisting_coverage": "LAB_PARTIAL",
+      "preexisting_coverage": "R1B_CANONICAL_FALLBACK_PARTIAL",
       "target_phase": "R1",
       "final_acceptance": "PENDING_FULL_E2E"
     },
@@ -458,14 +454,14 @@
     {
       "id": "M16",
       "description": "New process restart reconstructs progress and outbox",
-      "preexisting_coverage": "MISSING",
+      "preexisting_coverage": "R1B_RESTART_PARTIAL_NO_OUTBOX",
       "target_phase": "R1_R2",
       "final_acceptance": "PENDING_FULL_E2E"
     },
     {
       "id": "M17",
       "description": "REST/MCP parity without policy bypass",
-      "preexisting_coverage": "LAB_PARTIAL",
+      "preexisting_coverage": "R1B_MCP_READ_PARITY_PARTIAL",
       "target_phase": "R1_R2",
       "final_acceptance": "PENDING_FULL_E2E"
     },
@@ -516,5 +512,6 @@
     "LLM_only_verification",
     "adopt_new_orchestrator_in_R0"
   ],
-  "r1a_scope": "New AgentRun, SourceRecord, Observation + authorized observation listing. Checkpoint/resume/verifier/DONE remain unimplemented."
+  "r1a_scope": "New AgentRun, SourceRecord, Observation + authorized observation listing. Checkpoint/resume/verifier/DONE remain unimplemented.",
+  "r1b_scope": "Immutable checkpoint sequence CAS with source-linked observation IDs; scoped read-only canonical resume after handoff in separate subprocess, offline Mem0, no lease minting. NOT checkpoint-bound handoff, verified DONE or outbox."
 }

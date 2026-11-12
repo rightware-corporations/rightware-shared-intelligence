@@ -295,6 +295,29 @@
 **Próxima ação:** WORK-03B R1B — checkpoint versionado e recuperação de contexto canónico após interrupção em novo processo, sempre com ACL revalidada, Mem0 down fallback e sem expor segredo de lease.
 
 ---
+## SI-MH-0017 — WORK-03B R1B: Checkpoint & Resume Engine (implementation)
+
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** IMPLEMENTADO NO GIT; CI **PENDENTE** no momento do commit · **Base:** `develop@9080bbe1d73b91fe752159354000e39e20eb2234`. CI anterior: [43158313613](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43158313613) SUCCESS (69/69 + real MCP/Mem0/Ollama E2E, dados sintéticos).
+
+**Objetivo:** permitir checkpoint versionado, imutável e recuperável para continuação de tarefa por outro agente em sessão separada, sem depender de conversa original nem de Mem0. O handoff continua a ser um mecanismo de lease independente; binding a um checkpoint ainda não implementado (R1C).
+
+**Implementação deste checkpoint:**
+- `database/migrations/0005_work03b_r1b_checkpoints.sql`: tabela de checkpoints com sequência por tarefa, referência ao AgentRun, resumo/ações/bloqueios JSONB, trust=ASSERTED, observações cross-task proibidas por composite FK e triggers PostgreSQL de imutabilidade UPDATE/DELETE; estende event_type de continuidade para CHECKPOINT_RECORDED.
+- `backend/rightware_si/continuity.py`: `record_checkpoint` transacional e CAS `expected_checkpoint_seq` sob lock de task, lease atual, task version, run ownership e grants `checkpoint:write` + `task:execute` + `context:read`; `resume_task` com snapshot PostgreSQL REPEATABLE READ READ ONLY, reautorização `task:read` + `context:read`, latest checkpoint/refs/handoff, nenhuma nova lease, no verified/DONE, sem chamada Mem0.
+- `backend/rightware_si/http_api.py`: POST `/v1/projects/{project_id}/tasks/{task_id}/checkpoints`, GET `.../resume`; modelos estritos Pydantic. `backend/rightware_si/mcp_bridge.py`: somente nova ferramenta read-only `resume_task` via REST autenticada (nenhuma tool de escrita).
+- `tests/test_work03b_r1b.py`: 9 cenários PostgreSQL/TestClient reais; `tests/test_work03b_r1b_mcp.py`: 2 cenários do SDK MCP. `scripts/work03b_r1b_real_resume_e2e.py`: teste isolado com processos A/B separados; B recebe apenas token seu e handoff ID, nunca chat/lease/DB creds de A, consulta API real sem Mem0/Ollama ativo; teste de revogação e intruder.
+- Workflow CI migra SQL 0005, executa 81 testes esperados (69 anteriores +9+2+1 gate de contrato), novo E2E sem Mem0 antes do E2E existente Mem0/Ollama. Resultado CI fica pendente até logs.
+- Contrato canónico `docs/work03b/UC_CORE_01_CONTRACT.json`: **16 REST routes implementadas / 4 propostas**; S05/S09 apenas R1B_LAB_PARTIAL, M05/M12/M16/M17 parciais. M01–M18 continuam PENDING_FULL_E2E. Teste AST e matriz de aceitação atualizados.
+- README do repo/backend/database, `docs/ARCHITECTURE.md`, `docs/work03b/WORK03B_R0_FUNCTIONAL_CONTRACT.md` e novo `docs/work03b/R1B_IMPLEMENTATION.md` documentam o escopo.
+
+**O que NÃO foi feito:** não foi modificado `main`, Jarvis/PULSE de produção, vendor Mem0, deploy ou serviços pagos. Não há checkpoint binding no handoff (R1C), recuperação de lease perdido, outbox/ingestão Mem0 das observações, consent/PII/retention, evidência verificada por terceiro, aprovação DONE, UI ou preparação enterprise.
+
+**Riscos e política:** checkpoint e next_actions são dados de agente não confiáveis, nunca instruções a executar; nenhuma fonte externa é verificada por registrar um URL. A trigger de imutabilidade não substitui privilégios mínimos da role DB e backups. Mem0 disabled não permite reivindicar memória semântica válida.
+
+**Próxima ação exata:** analisar o CI do novo SHA; se falhar, corrigir em `develop` e registar o FAILED em adenda. Se passar, acrescentar SI-MH-0018 com resultados concretos e atualizar HANDOFF. Depois iniciar WORK-03B R1C, com handoff atomicamente vinculado ao checkpoint, fencing e recovery da lease sob autorização.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

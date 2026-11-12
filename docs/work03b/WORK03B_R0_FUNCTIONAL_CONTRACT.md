@@ -100,3 +100,7 @@ The comparison SI-RD-03 must not block deterministic authority. Keep Mem0 pinned
 
 ## R1A progress — later implementation (not R0 historical state)
 The R0 baseline above documented 10 existing routes and 7 future proposals. The canonical JSON has since been updated to **14 implemented laboratory routes and 6 proposed routes**: new AgentRun start, SourceRecord register, Observation assertion and authorized observation read. M02 is R1A_LAB_PARTIAL, while M01-M18 full acceptance remains PENDING_FULL_E2E. See R1A_IMPLEMENTATION.md. No checkpoint/resume, independent verification, reviewer DONE or production deployment is implied.
+
+
+## WORK-03B R1B — Execution update (experimental)
+The original R0 10/7 route counts above are historical. After R1A and R1B the DRAFT machine contract describes **16 live experimental routes and 4 proposed routes**, including POST checkpoint and GET resume. S05 and S09 are **R1B_LAB_PARTIAL**; M05/M12/M16/M17 partial as detailed in the current acceptance matrix. Full UC-CORE-01 acceptance and model-independent evidence verification are **not implemented**.

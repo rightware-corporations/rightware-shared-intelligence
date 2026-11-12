@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0016 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0017 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -96,8 +96,18 @@
 - Sem alterações a `main`, Jarvis/PULSE, vendor Mem0, produção, deployment ou MCP write tools. Não foram implementados checkpoint/resume, memória persistente por outbox, verificador, decisão DONE ou consentimento/retention.
 - Segurança: 30-min task lease, grant scoped e idempotência; falhas 409 em stale/lease ou replay secreto, 403 em permissões; observações são ASSERTED, nunca verificadas.
 - Próximo: validar CI desta mudança; se falhar, corrigir e registar. Depois **WORK-03B R1B — TaskCheckpoint + scoped read-only Resume em novo processo** e controlos de revogação.
+## WORK-03B R1B — Checkpoint & Resume Engine (CÓDIGO PRONTO / CI PENDENTE)
+- Base original validada `develop@9080bbe1d73b91fe752159354000e39e20eb2234`: [CI 43158313613](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43158313613) SUCCESS, 69/69 + E2E real Mem0/MCP/Ollama em laboratório.
+- **R1B neste commit:** `0005_work03b_r1b_checkpoints.sql` com checkpoints imutáveis (DB triggers), CAS por seq, FKs mesmo task, eventos auditáveis; métodos `ContinuityCore.record_checkpoint` e `resume_task` (PostgreSQL repeatable read, read-only e project grants).
+- REST POST checkpoint + GET resume e MCP `resume_task` apenas de leitura. **16 rotas implementadas / 4 rotas futuras** em `docs/work03b/UC_CORE_01_CONTRACT.json`.
+- Novos testes: 9 PostgreSQL/REST, 2 MCP e 1 estático; E2E verdadeiro com subprocessos A/B independentes e Mem0 desligado antes do lab Mem0 existente. Contagem esperada 81, mas **CI ainda não comprovado para este SHA**.
+- `docs/work03b/R1B_IMPLEMENTATION.md` explica a mecânica, limitações e os riscos. Snapshot de observações **ASSERTED**, não VERIFIED. Não emite lease nem executa next_actions; apresenta `checkpoint_binding=NOT_IMPLEMENTED_R1B`.
+- `main`, Jarvis/PULSE, pinned vendor Mem0 inalterados. Nenhum release, deploy, dado privado ou inferência de modelo neste trabalho.
+- Progresso UC-CORE-01 **PARCIAL**. Sem checkpoint-bound handoff (R1C), lease lost-response recovery, outbox/ingest, per-source consent, independent reviewer e DONE.
+- Próximo passo: rever CI de `develop`, acrescentar SI-MH-0018 de evidência e confirmar passagem do teste real dois processos; depois R1C.
+
 ## Next exact work
-**Próximo gate: WORK-03B R1B após R1A 69/69 PASS — implementar Checkpoint e Resume canónico read-only em processo independente** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: validar CI real WORK-03B R1B e persistir evidência; depois implementar WORK-03B R1C — checkpoint-bound Handoff + fencing/lease recovery** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
