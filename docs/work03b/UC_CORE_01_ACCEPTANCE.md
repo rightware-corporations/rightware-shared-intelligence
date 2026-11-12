@@ -87,3 +87,12 @@ Git SHA; database migration version; test command/environment; independent clien
 ## R2 R1A CI verified (narrow evidence, not UC-CORE-01 completion)
 
 [Actions 43214573166](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43214573166) SUCCESS: 115/115 unit/real PG tests, **LIVE GitHub provider** EV-01..EV-04 (exact matching run and deliberate policy mismatch cases), MOCK/controlled EV-05..EV-07 unit cases. The source research fixture EV-01..EV-16 still has `executed=false` because it documents proposed oracles; new execution results are separately recorded in [R2_R1A_EVIDENCE.md](R2_R1A_EVIDENCE.md). EV-08..EV-16 unexecuted. No new R2 REST route or real reviewer and all M01–M18 remain `PENDING_FULL_E2E`.
+
+
+## WORK-03B R2 R1B — Isolated ledger implementation, NOT M01–M18 approval
+
+- PostgreSQL migration 0007 adds immutable operator-seeded policies, append-only VerificationAttempt and EVIDENCE_CHECKED continuity event. Scope and future criteria attached to the same project/task/evidence; results are independent of existing si_evidence_refs and ASSERTED observations.
+- Internal SERVICE verifier with evidence:verify + task:read, distinct from creator/submitter/policy author; external GitHub run fetched outside DB, authorization rechecked transactionally before insert. Read access requires evidence:read + task:read, both current grants.
+- 16 real PostgreSQL unit/integration tests were added to verify mock PASS/FAIL/INCONCLUSIVE, authorization, revocation during slow check, no DONE, immutability, idempotent replay, cross-project isolation, criteria binding, source URI policy, and concurrent new attempts. Separate live lab script verifies actual GitHub provider run and stores a scoped result in disposable PostgreSQL.
+- **Expected count: 131 tests (115 prior + 16 new)** at time of implementation; do NOT mark PASS until actual CI. The original EV-01..EV-16 research fixture remains unchanged (proposal oracles, not execution journal); R2 R1B tests do not execute all EV scenarios. No public REST verify route or review/DONE exists.
+- SEC-R1C-01..04 and official R2 provider/criteria/consent policies remain pending. M01–M18 FINAL status PENDING_FULL_E2E remains unchanged. See [R2_R1B_VERIFICATION_LEDGER.md](R2_R1B_VERIFICATION_LEDGER.md).

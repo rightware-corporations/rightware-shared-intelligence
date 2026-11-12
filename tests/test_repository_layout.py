@@ -22,7 +22,8 @@ class RepositoryLayoutTests(unittest.TestCase):
              "0003_work02d_scrub_lease_replays.sql",
              "0004_work03b_r1a_continuity.sql",
              "0005_work03b_r1b_checkpoints.sql",
-             "0006_work03b_r1c_handoff_fencing.sql"],
+             "0006_work03b_r1c_handoff_fencing.sql",
+             "0007_work03b_r2_r1b_verification_ledger.sql"],
         )
         self.assertFalse((ROOT / "db" / "migrations").exists())
 

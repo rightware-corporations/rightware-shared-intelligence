@@ -492,6 +492,28 @@
 
 ---
 
+## SI-MH-0028 — WORK-03B R2 R1B: ledger de evidências append-only e SERVICE verifier em laboratório
+
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** IMPLEMENTAÇÃO EXPERIMENTAL/ISOLADA, **CI PENDENTE** no momento deste commit; NÃO aprovação oficial de políticas R1C, não produção. **HEAD base:** develop@7e38f617c851d8c70911e15001aec945eac5ebda; main@87c3351055aaf58d37f233dbc96eaa8f0b749c5c e vendor Mem0 pin f1791daa86d469249c9b002f62644d58a1eb96a0 preservados.
+
+**Baseline:** [CI 43215546691](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43215546691) SUCCESS 115/115 testes, EV-01..04 live provider, EV-05..07 simulados, R1C A→B e Mem0/Ollama real. Confirmação prévia do HEAD, HANDOFF e histórico SI-MH-0027.
+
+**Âmbito implementado, sem endpoint público:**
+- database/migrations/0007_work03b_r2_r1b_verification_ledger.sql: nova tabela si_evidence_verification_policies versionada, amarrada a project/task/evidence, critério, repo/workflow/run/full SHA e criador; nova si_verification_attempts append-only com idempotência project+SERVICE+key, resultado limitado CHECKED_PASS/CHECKED_FAIL/INCONCLUSIVE e campo de proveniência LIVE_HTTPS vs SIMULATED_TRANSPORT. Triggers PostgreSQL bloqueiam UPDATE/DELETE, FKs impedem referência entre projetos/tarefas, novo evento EVIDENCE_CHECKED. Históricos si_evidence_refs REFERENCED e si_observations ASSERTED permanecem intactos.
+- backend/rightware_si/verification_ledger.py: EvidenceLedger de uso **interno e confiável** (não request público); autenticação do ator é pressuposto e testada via bearer/resolve_principal no CLI. Somente principal_kind SERVICE com project grant evidence:verify + task:read verifica; autor/criador/evidence submitter não pode auto-verificar. Preflight compara estado IN_REVIEW, expected task version, critério e URL exata pinada à política do operador, sem fetch URL arbitrário. Consulta GitHub API HTTPS limitada **fora da transação**; nova autorização/versão/policy/URL sob row lock antes do insert. Read de attempts exige task:read + evidence:read e projeto atual.
+- tests/test_r2_r1b_ledger.py: **16 testes reais PostgreSQL + código** de resultado simulated PASS/FAIL/INCONCLUSIVE, grants, separação AGENT vs SERVICE, self-check, URL errada, versão obsoleta, revogação durante chamada externa, idempotência/replay, DB imutável, critérios, revogação na leitura e concorrência.
+- scripts/work03b_r2_r1b_live_ledger.py: prova end-to-end isolada GitHub API real (run histórico 43202560651) → SERVICE autenticado → insert PostgreSQL append-only; recusa DB diferente de localhost:5432/rw_test, trunca somente DB efémera sintética. Inclui task WorkCore create/publish/claim/submit, policy operator-seeded, confirmação de idempotência, read revocation, task IN_REVIEW e si_evidence_refs REFERENCED. GitHub Actions GITHUB_TOKEN somente read.
+- CI workflow aplica SQL 0007, corre **131 testes esperados** (115 anteriores +16) e script live ledger, depois R1C E2E/Mem0. Contagem PASS NÃO afirmada até logs.
+- Docs R2_R1B_VERIFICATION_LEDGER.md, README, database/backend README, docs/ARCHITECTURE.md e UC_CORE_01_ACCEPTANCE.md atualizados.
+
+**Separação de estados obrigatória:** check independente e append-only NÃO altera status IN_REVIEW, task.version, trust_state ASSERTED, evidence REFERENCED, nem autoriza REVIEW_ACCEPTED/DONE. SIMULATED_TRANSPORT não é assinatura nem fonte live. Prova externa limita-se aos campos de workflow do GitHub, não aos critérios empresariais completos.
+
+**Não alterado / bloqueios:** sem nova rota POST verify/review pública, sem MCP de escrita, sem app UI, sem R2 reviewer/DONE, sem OIDC/produção/consent/retention/reconciliação de efeitos, sem Sigstore/SLSA/attestation. Contrato R2 R0 continua histórico DRAFT com 0 rotas operacionais; UC-CORE-01 18 lab/3 futuras e M01–M18 PENDING_FULL_E2E. SEC-R1C-01..04 ainda pendentes de ratificação. main/Jarvis/PULSE/vendor Mem0 inalterados; sem novas dependências e sem branch temporária.
+
+**Próximo:** acompanhar CI do SHA de implementação, registrar FAILs de forma append-only ou, se passar, SI-MH-0029 com prova live GitHub→PostgreSQL, 131 testes e regressões reais. Posteriormente ratificar provider/client policy, segurança e privacidade antes de qualquer API/reviewer público.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

@@ -50,6 +50,11 @@ pyproject.toml              # editable package at backend/rightware_si
 - `backend/rightware_si/evidence_github.py` and `tests/test_r2_r1a_github_lab.py` test provider response logic with a fake transport, including EV-01..EV-07. The separate `scripts/work03b_r2_r1a_github_live.py` uses a real previously completed GitHub Actions run for limited EV-01..EV-04 provider checks.
 - No verifier persistence, evidence API route, reviewer, DONE, or new dependency has been added. Original SI-RD-03C 16-oracle source fixture stays unmodified; EV-08..EV-16 remain unexecuted.
 
+## R2 R1B — Internal append-only PostgreSQL verification lab
+
+- [R2 R1B Evidence Ledger](docs/work03b/R2_R1B_VERIFICATION_LEDGER.md): pinned policy, independent SERVICE identity, project grants, PostgreSQL immutable VerificationAttempt records and re-authorization after real GitHub API response. Mocked responses are explicitly marked SIMULATED_TRANSPORT.
+- No public verification API/MCP, no reviewer, no DONE, no policy ratification and no production deployment. The original source fixture SI-RD-03C remains unchanged. R2-R0 zero operational R2 routes remains correct.
+
 ## Git policy
 - **develop:** all future engineering/checkpoints. Every technical commit updates `docs/HANDOFF_MASTER.md` and `docs/HANDOFF.md`.
 - **main:** explicitly approved releases only. As of this checkpoint, `main` contains only initial README; it is not an installed/shared-intelligence release.

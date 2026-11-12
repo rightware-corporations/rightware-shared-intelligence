@@ -9,6 +9,8 @@ Python application package lives in `backend/rightware_si/`; import name remains
 - `context_service.py`, `memory.py`: project-scoped memory retrieval
 - `mem0_local_service.py`: isolated, private Mem0 lab service
 - `mcp_bridge.py`: read-only MCP stdio -> REST
+- `evidence_github.py`: bounded read-only GitHub API workflow run checker (R2 R1A)
+- `verification_ledger.py`: R2 R1B internal LAB PostgreSQL append-only verified-attempt ledger with SERVICE grants; no public endpoint or DONE
 - `token_admin.py`: offline token issuance/revocation
 - `client_readonly.py`: standalone compatibility probe, not Jarvis integration
 

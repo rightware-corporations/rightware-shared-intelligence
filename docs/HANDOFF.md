@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0027 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0028 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -155,8 +155,18 @@
 - **Contratos de segurança ainda abertos:** SEC-R1C-01..04 sem ratificação; R2 R0 DRAFT, sem VerificationAttempt, `evidence:verify` service principal, resource grants/retention, endpoint ou reviewer; M01–M18 pendentes.
 - **Este commit documental:** apenas reporte + dois handoffs; CI separada deve ser observada. Próximo: ratificar políticas de GitHub provider e R1C release; depois R2 R1B persistência/autorização controladas, sem alterar Jarvis, main ou vendor Mem0.
 
+## WORK-03B R2 R1B — Internal VerificationAttempt Ledger (CÓDIGO PRONTO; CI PENDENTE)
+
+- Baseline develop@7e38f617c851d8c70911e15001aec945eac5ebda, [Actions 43215546691](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43215546691) 115/115 SUCCESS, GitHub API EV-01..04 live e R1C/Mem0/Ollama E2E reais.
+- **Migration 0007:** si_evidence_verification_policies e si_verification_attempts scoped por project/task/evidence, imutáveis/append-only e geração de evento EVIDENCE_CHECKED. Campo observation_channel LIVE_HTTPS vs SIMULATED_TRANSPORT diferencia prova real de mock.
+- **Serviço interno:** verification_ledger.EvidenceLedger exige actor SERVICE autenticado, evidence:verify+task:read, separação do criador/submeter/policy owner; policy exact GitHub URL+repo/workflow/run SHA, estado IN_REVIEW e expected_version; chamada de rede fora de lock, revalidação de grants/versão antes do commit. Leitura apenas com evidence:read + task:read. Replays idempotentes. NENHUM endpoint público R2 ou decisão DONE.
+- **CI prevista:** 16 novos testes reais PostgreSQL, total esperado **131**, mais scripts/work03b_r2_r1b_live_ledger.py (GitHub API real → SERVICE authenticated → PostgreSQL append-only; status IN_REVIEW, original evidence REFERENCED, revogação de leitura). Resultados CI **AINDA NÃO OBSERVADOS** neste commit.
+- [R2_R1B_VERIFICATION_LEDGER.md](work03b/R2_R1B_VERIFICATION_LEDGER.md) contém schema, boundary de autoridade, lista de testes e limitações. Original SI-RD-03C fixture ainda investigação; R2 R0 JSON mantém 0 REST rotas R2 operacionais; UC-CORE-01 18 lab/3 futuras, M01–M18 PENDING_FULL_E2E.
+- **Gates pendentes:** SEC-R1C-01..04 sem ratificação, critérios/provider por cliente, consent/privacy/source ACL, OIDC, rate limits, policy lifecycle, REST/MCP verify e revisor independente. Sem main/JARVIS/PULSE/vendor changes, sem paid services/deploy.
+- Próximo: verificar CI, corrigir regressões com adendas, depois registar SI-MH-0029 de evidência real. Não confundir CHECKED_PASS de um run com revisão aprovada ou DONE.
+
 ## Next exact work
-**Próximo gate: ratificar SEC-R1C-01..04 e política de provedor/critério GitHub para R2 R1B; R2 R1A passou 115/115 com EV-01..04 LIVE e EV-05..07 MOCK, mas o sistema continua sem VerificationAttempt/autoridade/revisor/DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: verificar CI e relatório do R2 R1B experimental (131 testes previstos, real GitHub→PostgreSQL), preservar tudo em SI-MH-0029; só depois ratificar SEC-R1C-01..04 e políticas para API de verificação operacional/revisão/DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

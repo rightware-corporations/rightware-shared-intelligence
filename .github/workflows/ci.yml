@@ -97,7 +97,8 @@ jobs:
                            "0003_work02d_scrub_lease_replays.sql",
                            "0004_work03b_r1a_continuity.sql",
                            "0005_work03b_r1b_checkpoints.sql",
-                           "0006_work03b_r1c_handoff_fencing.sql"):
+                           "0006_work03b_r1c_handoff_fencing.sql",
+                           "0007_work03b_r2_r1b_verification_ledger.sql"):
                   conn.execute(Path("database/migrations",name).read_text(encoding="utf-8"))
                   print("MIGRATION_PASS",name)
           PY
@@ -107,6 +108,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/work03b_r2_r1a_github_live.py
+      - name: R2-R1B live GitHub verification to append-only PostgreSQL ledger (synthetic lab)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/work03b_r2_r1b_live_ledger.py
       - name: Independent subprocess bound handoff, resume and lease recovery without Mem0
         run: python scripts/work03b_r1b_real_resume_e2e.py
       - name: Start ephemeral local Ollama

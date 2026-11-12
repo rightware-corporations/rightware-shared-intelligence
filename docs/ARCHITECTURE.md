@@ -124,3 +124,12 @@ Princípio de autoridade: PostgreSQL para estado/eventos/checkpoints/decisões v
 - 15 synthetic provider-response tests exercise EV-01..EV-07 adapter code and negative/security cases. Separate real GitHub CI smoke checks EV-01..EV-04 against one previously completed public Actions run; these prove **only those exact provider fields** when live CI succeeds.
 - This is **not yet integrated** with PostgreSQL `si_evidence_refs`, independent verifier service identity, resource-level policy/grants, new REST/MCP route, or `ReviewDecision`. The `R2_TRUST_CONTRACT_R0.json` still shows `implemented_r2_routes=0` for operational routes; 18 experimental REST routes and 3 future routes stay unchanged.
 - Four SEC-R1C policy decisions are still **unratified**. The design/implementation gate for writable verified results and DONE remains blocked. No source fixture or historical handoff is overwritten.
+
+
+## WORK-03B R2 R1B — Internal VerificationAttempt ledger (EXPERIMENTAL)
+
+- Migration 0007 adds immutable policy and append-only verification attempt tables bound by project/task/evidence composite foreign keys, with safe idempotency and a continuity event. The original evidence pointer remains REFERENCED and observations remain ASSERTED.
+- Internal EvidenceLedger verifies only under an authenticated trusted SERVICE principal with current evidence:verify + task:read, distinct from creator/evidence submitter/policy author. Policies are pre-seeded by a trusted operator in synthetic lab; there is no public policy or verification endpoint.
+- A bounded GitHub API call happens *outside* the database transaction; authorization, policy, task version, source reference and grants are then rechecked under task lock before insert. LIVE_HTTPS vs SIMULATED_TRANSPORT differentiates real provider from mocked source. Read requires evidence:read plus task:read.
+- The existing R2-R0 contract remains a historical draft with zero **operational API** R2 routes; UC-CORE-01 route inventory remains 18 implemented laboratory REST operations + 3 future. The new internal Python ledger does NOT implement the future public POST verify or review route.
+- All M01–M18 full E2E remain pending. Verification does not approve tasks, cryptographically sign evidence, certify acceptance criteria or set DONE. SEC-R1C-01..04 remain recommendations not ratified. See [R2_R1B_VERIFICATION_LEDGER.md](work03b/R2_R1B_VERIFICATION_LEDGER.md).
