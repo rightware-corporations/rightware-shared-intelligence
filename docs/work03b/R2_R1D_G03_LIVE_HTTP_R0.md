@@ -28,3 +28,7 @@
 - Observe `WORK03B_R2_R1D_LAB_HTTP_GITHUB_LIVE_PASS`, `Ran 174 tests / OK`, all existing live and Mem0/Ollama regression markers, seven migrations, new SHA and run ID.
 - If unavailable/rate-limited provider, mark FAIL/INCONCLUSIVE; do **not** fabricate a PASS or remove the step. Repair only with a new checkpoint.
 - Feature flag remains OFF by default and script is an isolated ephemeral CI lab; no production rollout.
+
+## SI-MH-0039 — G03 REAL LIVE verified
+
+The precise implementation SHA `4086e9b62fa06c8c28b9af48c47fe56354e73b2d` passed [Actions 43257931058](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43257931058): **174 tests/OK**, seven migrations, the distinct `WORK03B_R2_R1D_LAB_HTTP_GITHUB_LIVE_PASS` marker for TestClient REST → server-sourced provider credential → real GitHub API → PostgreSQL append-only, idempotent replay and revocation 403, with no review/DONE; R1A/R1B, R1C and Mem0/Ollama regressions PASS. See [SI-MH-0039 evidence report](R2_R1D_G03_SI_MH_0039_VERIFIED.md) for scope and remaining G01/G04/G05 gates. This addendum itself remains documentation-only, CI separately pending.

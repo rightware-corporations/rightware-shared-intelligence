@@ -676,6 +676,23 @@
 
 **Não alterado:** SQL migrations, main, JARVIS, PULSE, vendor Mem0, produção ou novas dependências. Próximo: verificar CI, registar resultado em SI-MH-0039 e, se necessário, corrigir failure com evidência.
 
+
+---
+
+## SI-MH-0039 — Confirmado R2 R1D-G03 LIVE via FastAPI REST → GitHub → PostgreSQL
+
+**Data:** 2026-11-12 Africa/Maputo. **Classificação:** VALIDATED LAB / REAL EXTERNAL GITHUB PROVIDER, DOCUMENTATION CHECKPOINT. **HEAD antes:** `develop@4086e9b62fa06c8c28b9af48c47fe56354e73b2d`.
+
+**Fonte primária real:** [Actions 43257931058](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43257931058) **SUCCESS** para `4086e9b62fa06c8c28b9af48c47fe56354e73b2d`. `HANDOFF_POLICY_PASS`, sete migrations 0001..0007, **174 testes** `Ran 174 tests in 23.223s / OK`. `WORK03B_R2_R1A_GITHUB_LIVE_PASS`, `WORK03B_R2_R1B_LEDGER_LIVE_PASS`, **`WORK03B_R2_R1D_LAB_HTTP_GITHUB_LIVE_PASS`**, `WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS`, `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` todos verificados no log.
+
+**Prova G03:** FastAPI `TestClient` HTTP com SERVICE bearer → token GitHub só no lado do servidor → HTTPS GitHub real run historicamente pinned → PostgreSQL append-only `CHECKED_PASS` `LIVE_HTTPS`, idempotência, revogação 403, task `IN_REVIEW`, evidence `REFERENCED`, sem reviewer/DONE. NÃO é deploy de servidor público nem teste browser externo. Os HTTP MockTransport G02 são ainda SIMULATED, não confundir. Ver [R2_R1D_G03_SI_MH_0039_VERIFIED.md](work03b/R2_R1D_G03_SI_MH_0039_VERIFIED.md).
+
+**Gates não fechados:** G01 policy expiry/disable/supersede por tenant e autoridade pendentes de ratificação e implementação; G04 workload OIDC/consent/source ACL/retention, rate-limit, RLS e audit pendentes; G05 branch protection/release/M01–M18 e reviewer/DONE ausentes. SEC-R1C-01..04 apenas princípios aprovados. R2 continua laboratory opt-in OFF por default, sem prod.
+
+**Neste SI-MH-0039:** ficheiro novo de evidência e atualização de [R2_R1D_G03_LIVE_HTTP_R0.md](work03b/R2_R1D_G03_LIVE_HTTP_R0.md), CURRENT e MASTER. **Zero código, migration, teste ou workflow alterado** neste commit documental. CI do SI-MH-0039 próprio PENDENTE; o PASS acima pertence ao SHA `4086e9b62fa06c8c28b9af48c47fe56354e73b2d`. `main`, JARVIS/PULSE, vendor Mem0 inalterados.
+
+**Próxima decisão:** desenho exato de policy lifecycle G01 num tenant interno RIGHTWARE (eventos append-only e revogação em transação), submetendo autoridade/prazos ao operador antes de implementar qualquer schema novo. Nenhum deployment de produção.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

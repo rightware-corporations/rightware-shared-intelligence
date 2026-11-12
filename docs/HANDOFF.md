@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0038 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0039 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -244,3 +244,10 @@
 - **CI desse commit PENDENTE:** expected 174 tests plus unique G03 marker; do NOT claim G03 LIVE success without observing logs. LAB-only feature flag remains OFF by default, no prod.
 - SEC-R1C principles ratified, policy lifecycle G01, identity/consent G04, release G05 and 16 original EV oracles not fully closed. No changes main/JARVIS/PULSE/vendor Mem0.
 - NEXT: inspect G03 GitHub Actions logs, preserve evidence, rectify failure if needed, checkpoint SI-MH-0039.
+
+## SI-MH-0039 — R2 R1D-G03 LIVE HTTP verified, 174/174 tests
+
+- **Último código verificado** `develop@4086e9b62fa06c8c28b9af48c47fe56354e73b2d` — [Actions 43257931058](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43257931058) **SUCCESS**, `Ran 174 tests / OK`, 7 migrations e markers R1A/R1B/G03 GitHub LIVE, R1C A/B e Mem0/Ollama PASS.
+- **G03 comprovado:** HTTP TestClient via SERVIÇO independente autenticado, provider GitHub HTTPS REAL com token só de servidor, PostgreSQL append-only `LIVE_HTTPS`, idempotência e revoked verify grant negado, IN_REVIEW/REFERENCED/no-DONE. Não é servidor público implantado. [Evidência do job](work03b/R2_R1D_G03_SI_MH_0039_VERIFIED.md).
+- G02 negativos 174/174 incluídos, mas G01 policy lifecycle/tenant expiry/revocation ainda sem ratificação nem código; G04 identity/OIDC/privacy/consent/retention/rate limits e G05 release/M01..M18 bloqueados. Nenhum reviewer/DONE, prod, JARVIS/PULSE/main/vendor Mem0.
+- Este checkpoint **só documentação**, CI próprio ainda PENDENTE. Próximo gate: G01 contract/decisões de autoridade para policy por tenant, depois migration/tests sob aprovação.
