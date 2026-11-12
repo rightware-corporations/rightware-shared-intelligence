@@ -41,6 +41,10 @@ pyproject.toml              # editable package at backend/rightware_si
 - Persistent lease fence generation never regresses across acceptance, removal or holder-only rekey. Authenticated current holder can inspect generation and obtain a new one-time token with a dedicated `task:recover` grant; raw lease secrets are never stored or replayed.
 - See [R1C implementation](docs/work03b/R1C_IMPLEMENTATION.md). This is a lab capability only; external effects, multi-tenant resource ACL and Jarvis production are out of scope.
 
+## Security review and future R2 (draft, not implementation)
+- [R1C security decision register](docs/work03b/R1C_SECURITY_POLICY_GATE_R0.md): legacy unbound handoffs, administrative reassignment and external-effect reconciliation. **Recommendations only; operator ratification pending.**
+- [R2 trust R0 contract](docs/work03b/R2_TRUST_CONTRACT_R0.md) and [machine-readable draft](docs/work03b/R2_TRUST_CONTRACT_R0.json): evidence verification, independent review and the 16 *unexecuted* synthetic oracles. Six new tests validate only documentation consistency; **no verifier, signed artifact validation or DONE approval exists.**
+
 ## Git policy
 - **develop:** all future engineering/checkpoints. Every technical commit updates `docs/HANDOFF_MASTER.md` and `docs/HANDOFF.md`.
 - **main:** explicitly approved releases only. As of this checkpoint, `main` contains only initial README; it is not an installed/shared-intelligence release.

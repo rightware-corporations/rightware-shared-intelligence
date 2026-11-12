@@ -417,6 +417,27 @@
 
 ---
 
+## SI-MH-0024 — R1C security policy gate and R2 R0 trust contract authored
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** DESIGN / RECOMENDAÇÃO NÃO RATIFICADA, CONTRATO R2 R0 APENAS. **HEAD verificado antes das alterações:** `develop@30986f53ab2b0459f4ea9eb8a5f7874d5dbcbfc4`, `main@87c3351055aaf58d37f233dbc96eaa8f0b749c5c`, Mem0 pinned `f1791daa86d469249c9b002f62644d58a1eb96a0`.
+
+**Evidência da base:** [GitHub Actions 43196692278](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43196692278) SUCCESS no HEAD `30986f53ab2b0459f4ea9eb8a5f7874d5dbcbfc4`; migrações 0001–0006, **94/94 testes PASS**, handoff-bound R1C E2E entre subprocessos com perda/rekey de lease e Mem0 desligado, e regressão real MCP/REST/Postgres/Mem0 OSS/Ollama PASS. Isto não é prova de R2, external side effects, OIDC ou produção.
+
+**Análise do código existente:** `WorkCore.offer_handoff/accept_handoff` exigem checkpoint mais recente quando a tarefa tem checkpoint, mas o modo LEGACY_UNBOUND permite tarefas sem checkpoint; `recover_lease` é holder-only com `task:recover`, não transferência para titular ausente; `si_lease_fences` garante gerações de leases no PostgreSQL, mas não idempotência/provas de efeitos externos. Os 16 oráculos SI-RD-03C são `synthetic=true` e `executed=false` (confirmado novamente), com três rotas futuras no contrato UC-CORE-01.
+
+**Artefactos deste output:**
+- `docs/work03b/R1C_SECURITY_POLICY_GATE_R0.md`: decisões **SEC-R1C-01** (descontinuação controlada de LEGACY_UNBOUND), **SEC-R1C-02** (ausência do titular, não permitir takeover automático), **SEC-R1C-03** (outbox/receipts/reconciliação para ações externas), **SEC-R1C-04** (limites de grant, identidade/step-up/rate-limit), com alternativas, risco, gate e roteiro. **Todos como RECOMENDAÇÃO / PENDENTE DE DECISÃO**, não escolhas aprovadas.
+- `docs/work03b/R2_TRUST_CONTRACT_R0.md`: contrato escrito de EvidenceVerification & Trust R2 R0, distinção ASSERTED → CHECKED_PASS/FAIL/INCONCLUSIVE → REVIEW_ACCEPTED/REJECTED com actor e autoridade distintos; integração por reutilização de PostgreSQL/si_evidence_refs/grants/checkpoints, mapeamento de EV-01..EV-16 e gates R2-00..R2-05; nenhum DONE automático.
+- `docs/work03b/R2_TRUST_CONTRACT_R0.json`: contrato machine-readable, 2 rotas R2 propostas e **0 implementadas**, três boundaries, records candidatos, invariantes e 16 entradas com `observed_decision=null`, `executed=false`, oráculos copiados sem lhes atribuir PASS.
+- `tests/test_r2_r0_contract.py`: **6 testes de consistência estática** de contrato/fixture/ausência de routes R2, sem invocar verifier, Sigstore, GitHub API, artefactos assinados, reviewer ou ações externas. Actualizados README, arquitectura e matriz de aceitação para ligar as referências.
+- `docs/HANDOFF_MASTER.md` recebe esta entrada cumulativa e `docs/HANDOFF.md` estado corrente. `docs/research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md` e fixture ficam intactos.
+
+**Limites / integridade:** APENAS docs + testes estáticos; nenhuma alteração ao backend, SQL, requisitos, vendor Mem0, CI workflow, contrato original UC_CORE_01_CONTRACT.json, `main`, JARVIS/PULSE, deploy ou produção. Não instalado in-toto/Sigstore/SLSA/OPA/OTel. `M01–M18` continua `PENDING_FULL_E2E`; R2 verifier/reviewer não existe. **CI deste novo commit AINDA PENDENTE à data do registo; seis testes novos são EXPECTATIVA, não resultado.**
+
+**Próxima ação:** verificar CI real e persistir a evidência numa nova adenda SI-MH-0025 (sem reescrever esta); então apresentar a RIGHTWARE as quatro recomendações de R1C para ratificação/alteração e critérios/provedores da primeira versão de R2. Só após aprovação executar novas migrations/endpoints.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

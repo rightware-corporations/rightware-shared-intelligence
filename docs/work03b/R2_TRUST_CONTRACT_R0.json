@@ -1,0 +1,404 @@
+{
+  "document_id": "RW_SI_WORK03B_R2_R0_TRUST_CONTRACT",
+  "revision": "0.1.0-draft",
+  "date": "2026-11-12",
+  "status": "DRAFT_OPERATOR_RATIFICATION_REQUIRED_NOT_IMPLEMENTED",
+  "phase": "R2_R0_CONTRACT_ONLY",
+  "reference_develop_sha": "30986f53ab2b0459f4ea9eb8a5f7874d5dbcbfc4",
+  "references": [
+    "docs/work03b/UC_CORE_01_CONTRACT.json",
+    "docs/work03b/R1C_SECURITY_POLICY_GATE_R0.md",
+    "docs/research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md",
+    "docs/research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl",
+    "docs/work03b/R2_SI_RD_03C_INTEGRATION_REVIEW.md"
+  ],
+  "implemented_r2_routes": 0,
+  "proposed_routes": [
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/evidence/{evidence_id}/verify",
+      "required_grant": "evidence:verify",
+      "state": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/review",
+      "required_grant": "task:review",
+      "state": "PROPOSED_UNIMPLEMENTED"
+    }
+  ],
+  "state_separation": {
+    "assertion": {
+      "owner": "si_observations",
+      "current_value": "ASSERTED",
+      "rule": "Never overwrite agent claim with independently checked status"
+    },
+    "evidence_reference": {
+      "owner": "si_evidence_refs",
+      "current_value": "REFERENCED",
+      "rule": "A URL/pointer alone is not a verification"
+    },
+    "verification_result": {
+      "owner": "PROPOSED_APPEND_ONLY_VERIFICATION_RECORD",
+      "future_values": [
+        "CHECKED_PASS",
+        "CHECKED_FAIL",
+        "INCONCLUSIVE"
+      ],
+      "rule": "Scope by exact project/task/evidence/criteria/policy and provider observation; no implicit task status update"
+    },
+    "review_decision": {
+      "owner": "PROPOSED_APPEND_ONLY_REVIEW_DECISION",
+      "future_values": [
+        "REVIEW_ACCEPTED",
+        "REVIEW_REJECTED"
+      ],
+      "rule": "Independent authorized human/policy CAS after all required checks"
+    },
+    "task": {
+      "owner": "si_tasks",
+      "current_state": "IN_REVIEW",
+      "future_state": "DONE",
+      "rule": "Transition only after separate authorized review; NEVER from LLM/Mem0"
+    }
+  },
+  "proposed_records": [
+    {
+      "name": "VerificationPolicy",
+      "keys": [
+        "project_id",
+        "policy_id",
+        "policy_version",
+        "allowed_verifier_identity",
+        "source_type",
+        "required_claim_binding",
+        "criteria_ids",
+        "allowlisted_repository_id",
+        "allowlisted_workflow_id"
+      ],
+      "implementation": "DESIGN_ONLY"
+    },
+    {
+      "name": "VerificationAttempt",
+      "keys": [
+        "id",
+        "project_id",
+        "task_id",
+        "evidence_id",
+        "verification_policy_id",
+        "policy_version",
+        "criteria_id",
+        "source_digest",
+        "source_repo_id",
+        "source_sha",
+        "provider_run_id",
+        "provider_attempt",
+        "verified_by",
+        "observed_at",
+        "checked_at",
+        "result",
+        "reason_code",
+        "source_reference"
+      ],
+      "implementation": "DESIGN_ONLY"
+    },
+    {
+      "name": "ReviewDecision",
+      "keys": [
+        "id",
+        "project_id",
+        "task_id",
+        "expected_task_version",
+        "reviewer_id",
+        "policy_version",
+        "criteria_ids",
+        "verification_attempt_ids",
+        "decision",
+        "reason_code",
+        "created_at"
+      ],
+      "implementation": "DESIGN_ONLY"
+    }
+  ],
+  "invariants": [
+    "ASSERTED_NOT_CHECKED",
+    "VERIFIED_NOT_APPROVED",
+    "APPROVED_ONLY_BY_AUTHORIZED_INDEPENDENT_REVIEW",
+    "PROJECT_SCOPE_ON_EVERY_READ_AND_WRITE",
+    "NEVER_AUTO_DONE_FROM_GREEN_CI",
+    "PROVIDER_IDENTITY_AND_EXACT_SHA_WORKFLOW_REPOSITORY_BINDING",
+    "INCIDENTAL_SIGNATURE_DOES_NOT_MEAN_CLAIM_TRUE",
+    "FAIL_CLOSED_FOR_TIMEOUT_PENDING_UNTRUSTED_SOURCE",
+    "SEPARATE_APPEND_ONLY_VERIFICATION_RESULTS",
+    "REVOCATION_RECHECK_BEFORE_WRITE_AND_READ",
+    "NO_UNTRUSTED_MODEL_PROMPT_COMMAND_PROMOTION",
+    "NO_UNKNOWN_EXTERNAL_EFFECT_REEXECUTION",
+    "NO_R2_IMPLEMENTATION_BEFORE_SECURITY_GATES_RATIFIED"
+  ],
+  "implementation_gates": [
+    {
+      "id": "R2-00",
+      "scope": "R1C security policy and UC-CORE-01 ratification",
+      "state": "PENDING_OPERATOR"
+    },
+    {
+      "id": "R2-01",
+      "scope": "R2 schema and verified result policy design review",
+      "state": "DRAFT_NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R2-02",
+      "scope": "real GitHub API verifier EV-01..EV-07 with exact binding",
+      "state": "NOT_STARTED"
+    },
+    {
+      "id": "R2-03",
+      "scope": "independent review, privacy and effects EV-11..EV-16",
+      "state": "NOT_STARTED"
+    },
+    {
+      "id": "R2-04",
+      "scope": "optional authentic signed attestation EV-08..EV-10",
+      "state": "NOT_STARTED"
+    },
+    {
+      "id": "R2-05",
+      "scope": "all necessary real E2E gates, rollback and operator acceptance",
+      "state": "NOT_STARTED"
+    }
+  ],
+  "oracle_references": [
+    {
+      "id": "EV-01",
+      "scenario": "ci_exact_sha",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_PASS",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-02",
+      "scenario": "ci_wrong_sha",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_FAIL",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-03",
+      "scenario": "ci_wrong_repository",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_FAIL",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-04",
+      "scenario": "ci_wrong_workflow",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_FAIL",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-05",
+      "scenario": "ci_pending",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "INCONCLUSIVE",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-06",
+      "scenario": "ci_external_api_down",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "INCONCLUSIVE",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-07",
+      "scenario": "fake_screenshot",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "INCONCLUSIVE",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-02",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-08",
+      "scenario": "attestation_valid",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_PASS",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-04",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-09",
+      "scenario": "attestation_wrong_digest",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_FAIL",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-04",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-10",
+      "scenario": "attestation_untrusted_issuer",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "CHECKED_FAIL",
+      "expected_task_outcome": "not_DONE",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-04",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-11",
+      "scenario": "agent_self_review",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "DENY_REVIEW",
+      "expected_task_outcome": "stay_IN_REVIEW",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-03",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-12",
+      "scenario": "reviewer_without_scope",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "DENY_REVIEW",
+      "expected_task_outcome": "stay_IN_REVIEW",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-03",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-13",
+      "scenario": "reviewer_with_checks",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "REVIEW_ACCEPTED",
+      "expected_task_outcome": "DONE_after_authorized_transition",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-03",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-14",
+      "scenario": "duplicate_external_effect",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "RECONCILE_REQUIRED",
+      "expected_task_outcome": "no_reexecution_without_check",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-03",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-15",
+      "scenario": "revoked_context",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "DENY_ACCESS",
+      "expected_task_outcome": "no_data_disclosure",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-03",
+      "requires_real_verifier_or_policy_test": true
+    },
+    {
+      "id": "EV-16",
+      "scenario": "llm_prompt_injection",
+      "track": "evidence_trust",
+      "synthetic": true,
+      "executed": false,
+      "expected_decision": "DENY_PROMOTION",
+      "expected_task_outcome": "stay_IN_REVIEW",
+      "observed_decision": null,
+      "observed_task_outcome": null,
+      "claim_status": "SPECIFICATION_NOT_TEST_RESULT",
+      "gate": "R2-03",
+      "requires_real_verifier_or_policy_test": true
+    }
+  ],
+  "explicit_non_goals": [
+    "claim_16_R2_verifier_tests_passed",
+    "approve_DONE_from_green_CI",
+    "install_sigstore_in_toto_slsa_opa_or_otel_in_R0",
+    "implement_new_R2_sql_routes_production_or_deployment",
+    "modify_main_Jarvis_PULSE_or_mem0_pin",
+    "change_R1C_runtime_security_policy_without_operator_ratif"
+  ]
+}

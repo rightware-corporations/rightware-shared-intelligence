@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0023 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0024 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -119,18 +119,26 @@
 - **CI verificado para a integração:** `develop@2db9cd40e1701639434dc0c00cca8cf5282adead` [Actions 43182746837](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43182746837) SUCCESS: handoff gate, cinco migrations, **81/81 testes**, R1B A/B E2E com Mem0 desligado e regressão MCP/REST/Mem0/Ollama PASS. **Nenhum EV-01..EV-16 foi executado**. SI-MH-0021 adiciona evidência; o seu commit é apenas documental e precisará de CI própria.
 - **Prioridade inalterada:** WORK-03B R1C (checkpoint-bound handoff, fencing, lease recovery) → avaliação/ratificação R2 → EV-01..EV-16 tests reais com logs/SHAs.
 
-## WORK-03B R1C — Checkpoint Bound Handoff & Lease Fencing (IMPLEMENTADO; CI PENDENTE)
+## WORK-03B R1C — Checkpoint Bound Handoff & Lease Fencing (VALIDADO EM LABORATÓRIO, 94/94)
 - Base `develop@5fa303487fb4df92d5938c1c84ae2384fd3f882e` e CI [43183197724](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43183197724) SUCCESS (81/81, R1B A→B e Mem0/Ollama real E2E).
 - **Novo código:** migration `0006_work03b_r1c_handoff_fencing.sql`; `si_handoffs` checkpoint id/seq/task.version com FK/trigger; `si_lease_fences` garante geração persistente monotónica. Oferta ligada a checkpoint *exato e do writer* quando tarefa já tem checkpoint; nenhuma auto-substituição de estado. Sem checkpoint, modo histórico `LEGACY_UNBOUND`, não é handoff verificável.
 - **Leases:** aceitação revê checkpoint/grants, fencing generation crescente; holder autenticado e com `task:recover` consulta nonsecret generation e roda token one-time por `expected_generation`. Replays 409; sem usurpação de outro holder nem armazenamento de segredo bruto no audit/idempotency.
 - **API:** 2 rotas novas GET `lease-status` / POST `lease-recovery`; resume inclui id do checkpoint bound/historical sem emitir lease. Contrato canónico 18 rotas atuais de laboratório + 3 R2 futuras.
 - **CI R1C comprovado:** [Actions 43196082372](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43196082372) SUCCESS no `develop@0eb985a02d34a55db2cafe721978bd96abbbeac2`: 0001–0006 MIGRATION_PASS, **94/94 testes PASS**, R1C B recovered lease in separate subprocess/without Mem0, replay denied, R1B e Mem0/Ollama E2E regressão PASS. Evidência [R1C_EVIDENCE.md](work03b/R1C_EVIDENCE.md). O commit documental desta adenda requer nova validação CI.
 - [R1C_IMPLEMENTATION.md](work03b/R1C_IMPLEMENTATION.md) documenta contratos e limites. Nenhum R2 verifier implementado; EV-01..EV-16 `executed=false`, decisões `ASSERTED` não `CHECKED_PASS` nem `REVIEW_ACCEPTED`.
-- Não mexer `main`, JARVIS/PULSE, Mem0 pinned, deploy, frontend. Riscos: modo LEGACY_UNBOUND, token recovery de holder com bearer privilegiado, nenhum fencing sobre efeitos externos, sem consent/retention/verified DONE. **R1C CI ainda pendente.**
+- Não mexer `main`, JARVIS/PULSE, Mem0 pinned, deploy, frontend. Riscos: modo LEGACY_UNBOUND, token recovery de holder com bearer privilegiado, nenhum fencing sobre efeitos externos, sem consent/retention/verified DONE. **R1C CI e adenda documental já validados em 43196082372 / 43196692278 (94/94)**.
 - Próximo: decidir política R1C LEGACY_UNBOUND, grant holder-only recovery/step-up e fencing de side-effects externos; depois **R2 design/contrato**, usando SI-RD-03C sem executar os 16 EV até ao gate aprovado.
 
+## SEC-R1C + WORK-03B R2 R0 — DECISIONS/CONTRACT (NÃO IMPLEMENTAÇÃO)
+
+- **Checkpoint SI-MH-0024:** [R1C_SECURITY_POLICY_GATE_R0.md](work03b/R1C_SECURITY_POLICY_GATE_R0.md) apresenta SEC-R1C-01..04 como **RECOMENDAÇÕES, NÃO DECISÕES OFICIAIS**: migração de LEGACY_UNBOUND, ausência de titular/takeover, efeitos externos e recovery grant/step-up. O código R1C lab não foi alterado.
+- **R2 R0 desenhado apenas:** [R2_TRUST_CONTRACT_R0.md](work03b/R2_TRUST_CONTRACT_R0.md) e [R2_TRUST_CONTRACT_R0.json](work03b/R2_TRUST_CONTRACT_R0.json). R2-00..R2-05 gates; `si_observations ASSERTED` continua separado de futuro `VerificationAttempt CHECKED_*`, e `ReviewDecision` requer revisor autorizado e policy/version CAS. Não há aprovação DONE por CI.
+- **EV-01..EV-16:** 16 oráculos `executed=false`, `observed_decision=null`; nenhuma execução/verificação real nesta mudança. `tests/test_r2_r0_contract.py` adiciona só **6 testes de consistência estática**. Esperado: 100 testes totais (94 existentes +6); **CI do novo SHA PENDENTE até evidência GitHub Actions**.
+- Contrato original UC-CORE-01 preservado com 18 rotas laboratório / 3 futuras, M01–M18 `PENDING_FULL_E2E`. Não instaladas dependências nem alterados backend/SQL/workflow/vendor, `main`, JARVIS/PULSE.
+- **Próximo gate:** verificar CI do commit de contrato e anexar resultado SI-MH-0025. Depois ratificar/rever SEC-R1C-01..04 e escolher critérios/provider real para R2 R1 (GitHub workflow verification) antes de escrever verifier ou review endpoint.
+
 ## Next exact work
-**Próximo gate: rever/ratificar segurança e compatibilidade R1C (LEGACY_UNBOUND/holder-only recovery); depois preparar contrato R2 Evidence Verification & Trust baseado em SI-RD-03C, sem declarar EV-01..EV-16 PASS** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: validar o contrato R2 R0 no CI, ratificar SEC-R1C-01..04 e seleccionar primeiro provedor/verificador (GitHub Actions) antes de implementar qualquer R2 R1; EV-01..EV-16 permanecem NÃO EXECUTADOS** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

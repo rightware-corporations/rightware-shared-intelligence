@@ -69,3 +69,11 @@ Git SHA; database migration version; test command/environment; independent clien
 - No-checkpoint historical flows remain `LEGACY_UNBOUND` for backward compatibility; never claim them as a complete continuity transfer. Any later product release should deliberately phase out this legacy mode.
 - Task leases now have persistent per-task monotonic `si_lease_fences` generations across handoffs and rekeys. Holder-only `GET lease-status` and `POST lease-recovery` require explicit `task:recover` plus execution/ownership and expected generation; one-time secrets cannot be replayed. No automatic takeover by another agent/administrator is implemented.
 - Test real PostgreSQL/REST interleaving and independent subprocess A→B: exact binding, stale rejection, CAS, lost-reply rekey, monotonic fencing, revocation and Mem0-offline read-only resume. Full M01–M18 acceptance remains `PENDING_FULL_E2E`; no source-level consent, R2 independent verification or DONE.
+
+
+## R2 R0 preparation checkpoint — DOCUMENT/CONTRACT GATE ONLY
+
+- [R1C security decisions](R1C_SECURITY_POLICY_GATE_R0.md): four explicit recommendations and their outstanding operator ratification gates. Current `LEGACY_UNBOUND`, holder-only rekey and absence of external-effect protection remain **as implemented** in the lab.
+- [R2 written trust contract](R2_TRUST_CONTRACT_R0.md) and [machine-readable oracles](R2_TRUST_CONTRACT_R0.json): three separate states ASSERTED, CHECKED_*, REVIEW_*; exact future GitHub evidence provider binding and scoped reviewer; no automatic DONE. The original `UC_CORE_01_CONTRACT.json` is unchanged and still has 18 experimental REST routes, three future R2 routes and M01–M18 `PENDING_FULL_E2E`.
+- `tests/test_r2_r0_contract.py` checks only that 16 SI-RD-03C fixture oracles remain `executed=false` and match the R2 draft and that its routes aren't live. **A static lint PASS must not be reported as EV-01..EV-16 execution.** 
+- Do not initiate evidence verifier, crypto installation, review endpoint or policy-based deployment before operator ratification.

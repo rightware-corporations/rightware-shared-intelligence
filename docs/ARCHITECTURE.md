@@ -109,3 +109,11 @@ Princípio de autoridade: PostgreSQL para estado/eventos/checkpoints/decisões v
 - R1C synthetic CI and security negative tests are documented in `docs/work03b/R1C_IMPLEMENTATION.md` and associated evidence once the run is observed.
 
 **Remaining:** No administrator-driven take-over when owner gone, no token recovery without `task:recover` grant, no fencing enforced against external tools (they need protocol support), no source-level consent/retention, no outbox, independent evidence verification, reviewer DONE, production deployment or Jarvis modifications. CI success only validates the tested synthetic paths.
+
+
+## Next security gates and R2 trust architecture (DESIGN ONLY; no runtime implementation)
+
+- R1C lab success is established by [CI 43196692278](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43196692278) (94/94 plus A/B recovery and Mem0 E2E). Release gates for `LEGACY_UNBOUND`, absent-holder reassignment, rate-limited workload identity, external effects and DB isolation are **not approved**; see [R1C_SECURITY_POLICY_GATE_R0.md](work03b/R1C_SECURITY_POLICY_GATE_R0.md).
+- Proposed R2 independent validation is a **three-stage authority boundary**: agent `ASSERTED` observations remain immutable; a separate append-only verification attempt records the particular checked provider/criterion; a distinct `task:review` principal accepts or rejects using current grants, policy version and task CAS. No automatic `DONE` from CI/attestation/LLM. See [R2_TRUST_CONTRACT_R0.md](work03b/R2_TRUST_CONTRACT_R0.md) and [R2_TRUST_CONTRACT_R0.json](work03b/R2_TRUST_CONTRACT_R0.json).
+- Existing PostgreSQL task/grants/events, `si_evidence_refs`, R1A SourceRecords/Observations, and R1B/C checkpoint/fencing are reused by **future** R2. No R2 tables, routes, provider calls, dependencies, Sigstore/in-toto verification, OPA, OpenTelemetry, or production integration was added by the R0 contract.
+- The 16 SI-RD-03C cases are **unexecuted proposed oracles**; the new contract tests assert only mapping/consistency. Actual independent verification/review, enterprise privacy and `M01–M18` full acceptance remain pending.
