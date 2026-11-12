@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0035 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0036 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -221,3 +221,10 @@
 - [Evidência e matriz API-NEG](work03b/R2_R1C_SI_MH_0035_VERIFIED_EVIDENCE.md): API-NEG parcialmente cobertos; expiração/revogação de policy por tenant, provider identity/OIDC/consent/retention e 503/secret-redaction ainda não fechados. Evitar marcação de aceitação integral.
 - Este SI-MH-0035 altera apenas docs+handoffs; **seu próprio CI pendente**. `main`, JARVIS, PULSE, vendor Mem0 preservados.
 - NEXT: R2 R1D-R0 — contratos policy/provider/identity/privacy, ampliar negativos, ensaio LIVE GitHub-through-REST isolado; sem produção.
+
+## SI-MH-0036 — CI da adenda 0035 confirmado; R2 R1D-R0 apenas PROPOSTO
+
+- **Develop before SI-MH-0036:** `5adb8165eddf54c5145c5aba983882a72dca4b43`, [Actions 43252042999](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43252042999) **SUCCESS** `Ran 158 tests / OK`; handoff policy, migrations 0001..0007, GitHub R1A/R1B LIVE, R1C A/B e Mem0/Ollama E2E PASS. Code checkpoint SI-MH-0034 também validado em 43251091244.
+- **Plano R2 R1D-R0:** [R2_R1D_SECURITY_GATES_R0.md](work03b/R2_R1D_SECURITY_GATES_R0.md): Policy lifecycle/tenant ownership, completar negativos API-NEG, ensaio LIVE GitHub-through-REST em CI isolado, identity/OIDC/privacy/consent, release gates; **RECOMENDAÇÃO não ratificada, nada implementado em R1D**.
+- Este checkpoint apenas documentos; CI dele **PENDENTE**. Endpoint R2 R1C continua opt-in só laboratório, nunca DONE, main/JARVIS/PULSE/vendor Mem0 preservados.
+- NEXT: ratificação dos contratos de provider/identity/privacy por tenant; depois testes R1D negativos e LIVE REST em laboratório sem deploy.

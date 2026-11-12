@@ -633,6 +633,21 @@
 
 **Próximo:** R2 R1D-R0 laboratório negativo e contratos de provider/identity/privacy por tenant antes de produção; não confundir segurança de laboratório com autorização de release. Ratificação SEC-R1C-01..04 cobre PRINCÍPIOS, não mecanismos operacionais.
 
+
+---
+
+## SI-MH-0036 — SI-MH-0035 CI SUCCESS e R2 R1D-R0 security gate proposto
+
+**Data:** 2026-11-12 Africa/Maputo. **Classificação:** VERIFIED CI FOLLOW-UP + FUTURE DESIGN PROPOSAL, SEM CÓDIGO R1D. **HEAD base:** `develop@5adb8165eddf54c5145c5aba983882a72dca4b43`.
+
+**Validação da adenda documental anterior:** [GitHub Actions 43252042999](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43252042999) **SUCCESS** para commit `5adb8165eddf54c5145c5aba983882a72dca4b43`. Logs mostram `HANDOFF_POLICY_PASS`, migrações 0001–0007 PASS, **`Ran 158 tests in 23.972s` / `OK`**, `WORK03B_R2_R1A_GITHUB_LIVE_PASS`, `WORK03B_R2_R1B_LEDGER_LIVE_PASS`, `WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS`, `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS`. O run é regressão de laboratório com dados sintéticos; não autoriza produção. SI-MH-0034 código também validado em [43251091244](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43251091244), 158/158.
+
+**Proposta de futuro trabalho:** [R2_R1D_SECURITY_GATES_R0.md](work03b/R2_R1D_SECURITY_GATES_R0.md) prioriza policy lifecycle (expiry/disable/supersede), negative API-NEG ainda parciais, GitHub LIVE através do **novo** REST endpoint num laboratório isolado, identidade/autorização/privacidade por tenant e release gates. **Documento não ratificado e não implementado**; nada passa silenciosamente de hipótese para runtime.
+
+**Alterações do checkpoint atual:** somente novo plano R1D e atualização dos dois handoffs. Não alterou backend, frontend, migrations, testes, configs, CI workflow, políticas de runtime, `main`, JARVIS, PULSE ou vendor Mem0. O CI deste novo commit SI-MH-0036 permanece PENDENTE até leitura dos logs.
+
+**Riscos e próximo passo:** branch `develop` ainda sem proteção remota confirmada, política de tenant/consent/OIDC e reviewer/DONE ausentes. Antes de R1D técnico, ratificar scope e autoridade; continuar a manter a rota R2 R1C desligada por padrão e restrita ao `rw_test` local.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
