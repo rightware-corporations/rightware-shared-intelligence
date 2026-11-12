@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0031 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0032 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -190,3 +190,11 @@
 - `tests/test_r2_r1c_contract.py` adiciona **11 static lint tests** sem PostgreSQL ou API E2E. Suite estimada 142 (131 baseline +11); **CI do novo commit pendente**, não declarar 142 PASS sem observação.
 - SEC-R1C-01..04, R2-PROVIDER, R2-IDENTITY, R2-PRIVACY aguardam ratificação; nenhuma rota R2, review ou DONE disponível. `main`, JARVIS, PULSE e pinned Mem0 preservados.
 - **Next:** verificar CI do SI-MH-0031; ratificar políticas; só depois autorizar endpoint SERVICE-only e executar API negative integration, revocation, concurrency e live provider tests.
+
+## SI-MH-0032 — SEC-R1C conservador ratificado (PRINCÍPIOS) / REST R2 R1C LAB (CI PENDENTE)
+
+- HEAD de origem `develop@3567c99dfa620f3bf23eaf8fa0b1b030c42f131c`, commit atómico de backend+testes+docs+ambos handoffs. [Registo oficial de princípios](work03b/SEC_R1C_POLICY_RATIFICATION_R1.md): SEC-R1C-01..04 aprovadas como DIREÇÃO DE SEGURANÇA; mecanismos de execução não implementados em produção. R2-PROVIDER/IDENTITY/PRIVACY para tenants reais **pendentes de ratificação**.
+- [R2 R1C LAB](work03b/R2_R1C_LAB_IMPLEMENTATION_R0.md): nova rota FastAPI **apenas se** `RW_SI_ENABLE_R2_R1C_LAB_API=1`, `RW_SI_ENVIRONMENT=lab` e PostgreSQL loopback `/rw_test`; de resto desativada. `expected_evidence_id` validado antes e depois do provider. SERVICE-only com bearer e evidence:verify + task:read. Nenhuma rota de review/DONE.
+- `tests/test_r2_r1c_api_lab.py`: 16 testes HTTP/DB sintéticos adicionados; contrato estático 11 atualizado; suíte estimada **158 = 131+11+16**, **CI pendente**. Não confundir simulados com LIVE; novo artefacto não comprovado até execução. Última baseline verificada: 131/131 [43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677).
+- Pendentes: CI deste checkpoint, mapping API-NEG por caso, identity OIDC, gestão da policy/pin/expiry/disable, privacidade por fonte, rate-limit, outbox, reviewer, DONE, M01–M18. Sem alterações a `main`, JARVIS/PULSE, Mem0 pinned.
+- NEXT: confirmar CI real e corrigir falhas se existirem; depois checkpoint de evidência com SHA/logs, sem promover para produção.

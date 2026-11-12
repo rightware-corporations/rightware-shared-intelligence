@@ -1,8 +1,8 @@
 {
   "document_id": "RW_SI_WORK03B_R2_R1C_REST_VERIFY_CONTRACT",
-  "revision": "0.1.0-preimplementation",
+  "revision": "0.1.1-r1c-lab-implementation",
   "date": "2026-11-12",
-  "status": "DRAFT_NOT_RATIFIED_NOT_IMPLEMENTED",
+  "status": "SEC_PRINCIPLES_RATIFIED_LAB_IMPLEMENTATION_CI_PENDING",
   "baseline_develop_sha": "0eb4e662490ffb22a18cdb5e21ac4c85c14066d4",
   "implementation_scope": "R2_R1C_REST_EVIDENCE_VERIFY_ONLY",
   "depends_on": [
@@ -78,7 +78,8 @@
     "reject_task_creator": true,
     "reject_evidence_submitter": true,
     "reject_policy_author": true,
-    "review_grant_not_in_scope": "task:review"
+    "review_grant_not_in_scope": "task:review",
+    "security_principles_ratified": true
   },
   "binding": {
     "require_path_evidence_policy_match_before_network": true,
@@ -88,7 +89,7 @@
     "require_policy_version_cas": true,
     "require_allowlist_by_project": true,
     "require_expiry_disable_revocation_lifecycle_before_release": true,
-    "gap_in_current_ledger": "EvidenceLedger.verify_and_record accepts policy_id but not evidence_id; API must not ignore path evidence_id"
+    "gap_in_current_ledger": "Closed in lab via keyword-only expected_evidence_id checked before network and under transaction lock"
   },
   "provider": {
     "kind": "GITHUB_WORKFLOW_RUN",
@@ -118,24 +119,30 @@
   "runtime": {
     "route_enabled": false,
     "auto_done": false,
-    "release_mode": false
+    "release_mode": false,
+    "lab_route_implemented": true,
+    "lab_route_requires": [
+      "RW_SI_ENVIRONMENT=lab",
+      "RW_SI_ENABLE_R2_R1C_LAB_API=1",
+      "PostgreSQL on localhost:5432/rw_test"
+    ]
   },
   "required_operator_gates": [
     {
       "id": "SEC-R1C-01",
-      "status": "NOT_RATIFIED"
+      "status": "PRINCIPLE_RATIFIED_IMPLEMENTATION_PENDING"
     },
     {
       "id": "SEC-R1C-02",
-      "status": "NOT_RATIFIED"
+      "status": "PRINCIPLE_RATIFIED_IMPLEMENTATION_PENDING"
     },
     {
       "id": "SEC-R1C-03",
-      "status": "NOT_RATIFIED"
+      "status": "PRINCIPLE_RATIFIED_IMPLEMENTATION_PENDING"
     },
     {
       "id": "SEC-R1C-04",
-      "status": "NOT_RATIFIED"
+      "status": "PRINCIPLE_RATIFIED_IMPLEMENTATION_PENDING"
     },
     {
       "id": "R2-PROVIDER",
@@ -274,5 +281,7 @@
     "PRODUCTION_DEPLOYMENT",
     "MAIN_RELEASE"
   ],
-  "warning": "This JSON is a proposal and its tests are static contract lint; no API security is proven"
+  "warning": "This JSON is a proposal and its tests are static contract lint; no API security is proven",
+  "implementation_notes": "Policy principles ratified from operator 'vamos' following explicit recommendations; only lab API authorized, production provider/identity/privacy decisions unratified. No runtime rollout.",
+  "source_implementation_sha": "CI_PENDING"
 }

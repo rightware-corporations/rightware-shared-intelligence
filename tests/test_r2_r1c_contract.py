@@ -1,4 +1,4 @@
-"""R2 R1C draft contract gates. Static lint ONLY, not REST/DB E2E."""
+"""R2 R1C lab contract gates. Static lint ONLY, not REST/DB E2E."""
 from __future__ import annotations
 
 import ast
@@ -23,7 +23,8 @@ class R2R1CContractGate(unittest.TestCase):
         cls.ledger_ast = ast.parse(cls.ledger_src)
 
     def test_01_still_draft_no_runtime(self):
-        self.assertEqual(self.spec["status"], "DRAFT_NOT_RATIFIED_NOT_IMPLEMENTED")
+        self.assertEqual(self.spec["status"], "SEC_PRINCIPLES_RATIFIED_LAB_IMPLEMENTATION_CI_PENDING")
+        self.assertTrue(self.spec["runtime"]["lab_route_implemented"])
         self.assertFalse(self.spec["authorization"]["operator_ratified"])
         self.assertFalse(self.spec["runtime"]["route_enabled"])
         self.assertFalse(self.spec["runtime"]["auto_done"])
@@ -58,7 +59,7 @@ class R2R1CContractGate(unittest.TestCase):
         method = next(n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == "verify_and_record")
         args = {a.arg for a in method.args.args}
         self.assertIn("policy_id", args)
-        self.assertNotIn("expected_evidence_id", args)
+        self.assertIn("expected_evidence_id", {a.arg for a in method.args.kwonlyargs})
 
     def test_06_no_verify_or_review_public_route(self):
         routes = set()
@@ -69,7 +70,7 @@ class R2R1CContractGate(unittest.TestCase):
                 if isinstance(d, ast.Call) and isinstance(d.func, ast.Attribute) and d.args:
                     if d.func.attr in {"post", "get", "put", "patch", "delete"} and isinstance(d.args[0], ast.Constant):
                         routes.add(str(d.args[0].value))
-        self.assertNotIn(self.spec["api"]["path"], routes)
+        self.assertIn(self.spec["api"]["path"], routes)
         self.assertNotIn("/v1/projects/{project_id}/tasks/{task_id}/review", routes)
 
     def test_07_checked_never_done(self):
@@ -103,7 +104,10 @@ class R2R1CContractGate(unittest.TestCase):
         g = self.spec["required_operator_gates"]
         self.assertEqual({x["id"] for x in g},
             {"SEC-R1C-01","SEC-R1C-02","SEC-R1C-03","SEC-R1C-04","R2-PROVIDER","R2-IDENTITY","R2-PRIVACY"})
-        self.assertTrue(all(x["status"] == "NOT_RATIFIED" for x in g))
+        for item in g:
+            expected = ("PRINCIPLE_RATIFIED_IMPLEMENTATION_PENDING"
+                        if item["id"].startswith("SEC-R1C-") else "NOT_RATIFIED")
+            self.assertEqual(item["status"], expected)
 
 if __name__ == "__main__":
     unittest.main()

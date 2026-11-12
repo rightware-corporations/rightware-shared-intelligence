@@ -7,7 +7,10 @@ request resolves its actor from a high-entropy bearer token, not JSON.
 from __future__ import annotations
 
 import os
+from urllib.parse import urlsplit
 from typing import Annotated
+
+import psycopg
 from uuid import UUID
 from typing import Literal
 
@@ -20,6 +23,7 @@ from rightware_si.core import AccessDenied, Conflict, InvalidTransition, Missing
 from rightware_si.context_service import ScopedContextReader, SemanticUnavailable
 from rightware_si.continuity import ContinuityCore
 from rightware_si.memory import Mem0HTTPClient, SharedMemory
+from rightware_si.verification_ledger import EvidenceLedger
 
 
 class StrictModel(BaseModel):
@@ -33,6 +37,11 @@ class CreateTask(StrictModel):
 
 class Versioned(StrictModel):
     expected_version: int = Field(gt=0, strict=True)
+
+
+class VerifyEvidence(StrictModel):
+    policy_id: UUID
+    expected_task_version: int = Field(gt=0, strict=True)
 
 
 class OfferHandoff(Versioned):
@@ -108,6 +117,16 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     dsn = dsn or os.environ.get("RW_SI_DATABASE_URL")
     if not dsn:
         raise RuntimeError("RW_SI_DATABASE_URL is required; refusing to start unconfigured")
+    # R2 R1C is deliberately disabled by default and only registered for the
+    # disposable loopback PostgreSQL synthetic lab. No production endpoint.
+    r2_lab_enabled = os.environ.get("RW_SI_ENABLE_R2_R1C_LAB_API") == "1"
+    if r2_lab_enabled:
+        parsed_dsn = urlsplit(dsn)
+        if (os.environ.get("RW_SI_ENVIRONMENT") != "lab" or
+                parsed_dsn.scheme not in ("postgresql", "postgres") or
+                parsed_dsn.hostname not in ("127.0.0.1", "localhost") or
+                parsed_dsn.port != 5432 or parsed_dsn.path != "/rw_test"):
+            raise RuntimeError("R2 R1C lab API requires disposable local /rw_test and lab environment")
     core = WorkCore(dsn)
     continuity = ContinuityCore(dsn)
     principal_dep = make_principal_dependency(dsn)
@@ -324,6 +343,27 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
         return _invoke(lambda: continuity.resume_task(
             project_id, actor, str(task_id)
         ))
+
+    if r2_lab_enabled:
+        # Experimental adapter: the request cannot choose actor, provider,
+        # transport, token, source URL or trust-state. All authority stays in
+        # the authenticated ledger and its transaction-time rechecks.
+        verification = EvidenceLedger(dsn)
+
+        @app.post("/v1/projects/{project_id}/evidence/{evidence_id}/verify")
+        def verify_evidence(
+            project_id: str, evidence_id: UUID, body: VerifyEvidence,
+            idem: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=128)],
+            actor: str = Depends(principal_dep),
+        ):
+            try:
+                return _invoke(lambda: verification.verify_and_record(
+                    project_id, actor, str(body.policy_id),
+                    body.expected_task_version, idem,
+                    expected_evidence_id=str(evidence_id),
+                ))
+            except psycopg.OperationalError:
+                raise HTTPException(status_code=503, detail="Verification service unavailable") from None
 
     return app
 

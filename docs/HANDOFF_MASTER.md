@@ -568,6 +568,24 @@
 
 **Próximo gate:** ratificação explícita das políticas e de condições por projecto/tenant; depois implementação mínima de binding `expected_evidence_id` + FastAPI SERVICE-only em checkpoint de engenharia separado com real negative tests. DONE e reviewer continuam separados.
 
+
+---
+
+## SI-MH-0032 — SEC-R1C ratificação de princípios e R2 R1C FastAPI LAB
+
+**Data:** 2026-11-12 Africa/Maputo. **HEAD verificado antes:** `develop@3567c99dfa620f3bf23eaf8fa0b1b030c42f131c`. **Classificação:** DECISÃO OFICIAL DE PRINCÍPIOS (não release) + IMPLEMENTAÇÃO EXPERIMENTAL EM LABORATÓRIO; **CI DESTE COMMIT PENDENTE**.
+
+**Decisão do operador:** após proposta explícita das quatro medidas SEC-R1C conservadoras, "vamos" foi interpretado como aceitação dos princípios: exigir handoff com checkpoint em novas tarefas de release (legacy só allowlist), proibir takeover automático, não repetir side-effects externos ambíguos sem reconciliação, e proteger `task:recover` com workload identity restrita/auditável. Documentado em [SEC_R1C_POLICY_RATIFICATION_R1.md](work03b/SEC_R1C_POLICY_RATIFICATION_R1.md). **Detalhes de implementação/produção continuam pendentes** (OIDC, 2-person workflow, legacy inventories, idempotency receipts, rate limiting), sem alteração do R1C existente.
+
+**R2 R1C laboratório implementado mas não validado:** `http_api.py` agora tem endpoint `POST /v1/projects/{project_id}/evidence/{evidence_id}/verify` **apenas com flag `RW_SI_ENABLE_R2_R1C_LAB_API=1`, RW_SI_ENVIRONMENT=lab e `/rw_test` localhost:5432**. `verification_ledger.py` prende explicitamente `expected_evidence_id` à policy antes da chamada GitHub e novamente na transação. JSON/contrato estático atualizados. 16 testes HTTP+DB sintéticos novos, 11 testes estáticos preservados; regressão R1B 131 anterior. **158 testes esperados, NÃO DECLARAR PASS antes da CI**. Diferença TEST MOCK vs LIVE marcada `SIMULATED_TRANSPORT`; nenhuma prova LIVE nova até execução CI.
+
+**Limites:** `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED != DONE`; REST verifica apenas resultados e nunca faz DONE. Sem API em produção, sem provider policy management, sem OIDC, consent/retention, reviewer, efeitos externos, Migração SQL, alterar `main`, JARVIS/PULSE, vendor Mem0 ou PRs históricos. R2-PROVIDER/IDENTITY/PRIVACY para tenants reais não ratificados, 16 cenários negativos permanecem requisitos até execução/mapping, EV-08..16 não executados, M01–M18 PENDING_FULL_E2E.
+
+**Documentação:** [R2_R1C_LAB_IMPLEMENTATION_R0.md](work03b/R2_R1C_LAB_IMPLEMENTATION_R0.md), [R2_R1C_REST_VERIFY_CONTRACT_R0.json](work03b/R2_R1C_REST_VERIFY_CONTRACT_R0.json) e handoff atualizados. Último CI inequívoco anterior: R2 R1B 131 PASS em [43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677). CI SI-MH-0031 não confirmado por fonte de workflow PR-only.
+
+**Próximo:** verificar CI do SHA novo; se PASS, criar SI-MH-0033 com resultados de execução reais; se FAIL, preservar causa e corrigir. Só depois avaliar piloto com autorização de policy/identity/privacy formal, hardening e testes de tentativas de exploração. Nunca liberar DONE automaticamente.
+
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

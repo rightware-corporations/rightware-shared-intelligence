@@ -60,7 +60,8 @@ class EvidenceLedger:
 
     @classmethod
     def _load(cls, conn: psycopg.Connection, project: str, actor: str,
-              policy_id: str, expected_version: int, lock: bool) -> tuple[dict, dict, dict]:
+              policy_id: str, expected_version: int, lock: bool,
+              expected_evidence_id: str | None = None) -> tuple[dict, dict, dict]:
         cls._authorize_service(conn, project, actor)
         task_query = (
             "SELECT id,project_id,status,version,acceptance_criteria,created_by "
@@ -84,6 +85,9 @@ class EvidenceLedger:
         ).fetchone()
         if not policy:
             raise Missing("verification policy not found in this project")
+        if (expected_evidence_id is not None and
+                str(policy["evidence_id"]) != expected_evidence_id):
+            raise Conflict("path evidence differs from policy-bound evidence")
         evidence = conn.execute(
             "SELECT id,uri,submitted_by,verification_state "
             "FROM si_evidence_refs WHERE project_id=%s AND task_id=%s::uuid "
@@ -151,6 +155,7 @@ class EvidenceLedger:
     def verify_and_record(
         self, project: str, actor: str, policy_id: str,
         expected_task_version: int, idem: str, *,
+        expected_evidence_id: str | None = None,
         client: httpx.Client | None = None, github_token: str | None = None,
     ) -> dict[str, Any]:
         """Provider fetch is bounded and outside DB lock; commit rechecks grants.
@@ -161,6 +166,8 @@ class EvidenceLedger:
         project = _valid_id(project, "project")
         actor = _valid_id(actor, "actor")
         policy_id = _uuid(policy_id)
+        if expected_evidence_id is not None:
+            expected_evidence_id = _uuid(expected_evidence_id)
         _key(idem)
         _positive_version(expected_task_version)
 
@@ -169,6 +176,7 @@ class EvidenceLedger:
                 conn.execute("SET TRANSACTION READ ONLY")
                 _, policy, _ = self._load(
                     conn, project, actor, policy_id, expected_task_version, False,
+                    expected_evidence_id=expected_evidence_id,
                 )
                 # Safe repeat is allowed, but the exact policy and version
                 # must match. Permission is checked even on this fast path.
@@ -194,6 +202,7 @@ class EvidenceLedger:
             with conn.transaction():
                 task, policy, _ = self._load(
                     conn, project, actor, policy_id, expected_task_version, True,
+                    expected_evidence_id=expected_evidence_id,
                 )
                 # Pinned policy fields are append-only and checked again.
                 if self._policy_from_row(policy) != pinned:
