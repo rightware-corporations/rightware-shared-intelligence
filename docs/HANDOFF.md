@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0024 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0025 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -133,12 +133,12 @@
 
 - **Checkpoint SI-MH-0024:** [R1C_SECURITY_POLICY_GATE_R0.md](work03b/R1C_SECURITY_POLICY_GATE_R0.md) apresenta SEC-R1C-01..04 como **RECOMENDAÇÕES, NÃO DECISÕES OFICIAIS**: migração de LEGACY_UNBOUND, ausência de titular/takeover, efeitos externos e recovery grant/step-up. O código R1C lab não foi alterado.
 - **R2 R0 desenhado apenas:** [R2_TRUST_CONTRACT_R0.md](work03b/R2_TRUST_CONTRACT_R0.md) e [R2_TRUST_CONTRACT_R0.json](work03b/R2_TRUST_CONTRACT_R0.json). R2-00..R2-05 gates; `si_observations ASSERTED` continua separado de futuro `VerificationAttempt CHECKED_*`, e `ReviewDecision` requer revisor autorizado e policy/version CAS. Não há aprovação DONE por CI.
-- **EV-01..EV-16:** 16 oráculos `executed=false`, `observed_decision=null`; nenhuma execução/verificação real nesta mudança. `tests/test_r2_r0_contract.py` adiciona só **6 testes de consistência estática**. Esperado: 100 testes totais (94 existentes +6); **CI do novo SHA PENDENTE até evidência GitHub Actions**.
+- **CI de contrato R2 R0 VERIFICADO:** `develop@22d71632caa6f7e442af5964561b42b1b4ea8693` [Actions 43201981635](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43201981635) SUCCESS: seis migrations, **100/100 testes PASS** (94 anteriores + seis estáticos), R1B/R1C A→B + rekey com Mem0 OFF, MCP/REST/Mem0/Ollama real PASS. Isto é somente **CONTRACT-LINT**, não EV-01..EV-16 execução; `executed=false` e `observed_decision=null` em todos. Evidência [R2_R0_CONTRACT_EVIDENCE.md](work03b/R2_R0_CONTRACT_EVIDENCE.md). A adenda documental exige CI própria.
 - Contrato original UC-CORE-01 preservado com 18 rotas laboratório / 3 futuras, M01–M18 `PENDING_FULL_E2E`. Não instaladas dependências nem alterados backend/SQL/workflow/vendor, `main`, JARVIS/PULSE.
-- **Próximo gate:** verificar CI do commit de contrato e anexar resultado SI-MH-0025. Depois ratificar/rever SEC-R1C-01..04 e escolher critérios/provider real para R2 R1 (GitHub workflow verification) antes de escrever verifier ou review endpoint.
+- **Próximo gate:** ratificar/rever SEC-R1C-01..04 e definir provider GitHub Actions/critério exacto para um futuro verificador R2 R1. Não há R2 verifier, review endpoint ou decisão DONE implementados.
 
 ## Next exact work
-**Próximo gate: validar o contrato R2 R0 no CI, ratificar SEC-R1C-01..04 e seleccionar primeiro provedor/verificador (GitHub Actions) antes de implementar qualquer R2 R1; EV-01..EV-16 permanecem NÃO EXECUTADOS** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: ratificar SEC-R1C-01..04 e escolher o primeiro fornecedor/critério do verificador R2 R1 (proposta: GitHub Actions); implementar somente após aprovação explícita, mantendo EV-01..EV-16 NÃO EXECUTADOS até testes reais** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

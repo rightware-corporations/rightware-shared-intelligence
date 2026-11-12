@@ -438,6 +438,22 @@
 
 ---
 
+## SI-MH-0025 — R2 R0 contract consistency CI verified (100 tests)
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** DESIGN/CONTRACT-LINT VALIDADO EM CI; **R2 VERIFIER NÃO IMPLEMENTADO** · **SHA testado:** `22d71632caa6f7e442af5964561b42b1b4ea8693`.
+
+**Evidência:** [Actions 43201981635](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43201981635) **SUCCESS**: HANDOFF_POLICY_PASS, migrações 0001–0006, **100/100 testes OK** (94 existentes + seis novos testes estáticos de consistência), R1B A/B e R1C rekey/fencing E2E com Mem0 OFF, regressão real MCP/REST/Postgres/Mem0/Ollama PASS. Nenhum segredo efémero exposto nos logs observados.
+
+**Importante:** `tests/test_r2_r0_contract.py` validou somente integridade de documentos/JSON e a ausência de rotas R2. Os 16 casos EV-01..EV-16 permanecem **`synthetic=true, executed=false, observed_decision=null`**. Nenhum verificador GitHub/sigstore/in-toto, reviewer, decisão DONE, efeito externo ou análise criptográfica foi executado. CI verde não é prova R2.
+
+**Documento de evidência:** `docs/work03b/R2_R0_CONTRACT_EVIDENCE.md`. Políticas SEC-R1C-01..04 em `R1C_SECURITY_POLICY_GATE_R0.md` permanecem **RECOMENDAÇÕES PENDENTES DE RATIFICAÇÃO**, não decisões oficiais; contrato `R2_TRUST_CONTRACT_R0` também DRAFT.
+
+**Integridade:** documentação/handoffs apenas nesta adenda, sem alterar `main`, JARVIS/PULSE, vendor Mem0, contratos originais, SQL, APIs, CI ou pacotes. O próprio commit documental terá CI distinta, cujo resultado deve ser confirmado separadamente.
+
+**Próximo passo:** apresentação das quatro decisões SEC-R1C à RIGHTWARE para ratificação; definir provedor GitHub workflow/identity/acceptance-criteria do MVP R2; depois WORK-03B R2 R1 *somente com autorização de implementação e critérios objectivos*. Nunca declarar M01–M18 full-E2E ou EV oracles PASS sem execução real e logs.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
