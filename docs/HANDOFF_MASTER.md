@@ -601,6 +601,21 @@
 
 **Próximo:** verificar CI real do HEAD, mapear testes positivos/negativos e corrigir apenas falhas verificadas; completar gates de provider/identity/privacy e produção antes de qualquer release.
 
+
+---
+
+## SI-MH-0034 — Auditados CI R2 R1C e contagem de testes; correção de duplicação (CI NOVO PENDENTE)
+
+**Data:** 2026-11-12 Africa/Maputo. **Classificação:** AUDITORIA DE RESULTADOS REAIS + TEST HARNESS CORRECTION. **HEAD antes:** `develop@9de64471980ad3826b31c92160072fc8a457bb17`.
+
+**Resultados observados diretamente nas Actions:** SI-MH-0030 [43244269984](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43244269984) SUCCESS; SI-MH-0031 [43247901257](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43247901257) SUCCESS 142 testes; SI-MH-0032 [43249446536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249446536) **FAILURE 174 tests / failures=2** em dois testes antigos de inventário de rotas (nova rota gated tinha decorator); SI-MH-0033 [43249997206](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249997206) **SUCCESS 174 tests / OK**, sete migrações e smoke GitHub live+ledger, R1C A/B e Mem0/Ollama E2E concluídos com sucesso. Falha histórica preservada, não reinterpretada como PASS.
+
+**Achado de qualidade dos testes:** `test_r2_r1c_api_lab.py` importou a classe `VerificationLedgerLabTests` diretamente; `unittest discover` executou os 16 testes R1B **duas vezes**. Eram 174 execuções reais mas somente **158 casos distintos** esperados (131+11+16). A presente alteração troca import direto da classe por import de módulo, sem mudar a suite R1B original nem a lógica do endpoint; CI desta correção **PENDENTE**. Registro: [R2_R1C_SI_MH_0034_CI_EVIDENCE.md](work03b/R2_R1C_SI_MH_0034_CI_EVIDENCE.md).
+
+**Segurança/limites:** nova API REST apenas em laboratório isolado, opt-in, com provider mock na suite HTTP. Prova real GitHub→PostgreSQL existente permanece do R1B. Sem promoção a DONE/review, sem production OIDC/policy lifecycle/source consent/retention/rate limits/outbox, sem mudança a `main`, JARVIS, PULSE ou Mem0. Os 16 EV originais não foram todos executados; o catálogo API-NEG também não está totalmente fechado.
+
+**Próximo:** observar Actions do commit SI-MH-0034, confirmar contagem 158 e markers. Se aprovado, novo SI-MH-0035 append-only regista final; se falhar, investigar e corrigir sem apagar falhas anteriores.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

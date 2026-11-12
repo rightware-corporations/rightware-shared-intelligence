@@ -14,9 +14,10 @@ import httpx
 import psycopg
 from fastapi.testclient import TestClient
 
-from test_r2_r1b_ledger import (
-    _DSN, _SAFE, VerificationLedgerLabTests, provider_record
-)
+# Import the fixture module, not its unittest.TestCase class, so discovery
+# runs the R1B 16 tests only in their original module.
+import test_r2_r1b_ledger as r1b_fixture
+from test_r2_r1b_ledger import _DSN, _SAFE, provider_record
 from rightware_si.verification_ledger import EvidenceLedger
 
 
@@ -24,7 +25,7 @@ from rightware_si.verification_ledger import EvidenceLedger
 class R2R1CVerifiedHTTP(unittest.TestCase):
     def setUp(self):
         os.environ["RW_SI_DATABASE_URL"] = _DSN
-        self.fixture = VerificationLedgerLabTests(
+        self.fixture = r1b_fixture.VerificationLedgerLabTests(
             "test_01_success_is_append_only_and_never_done"
         )
         self.fixture.setUp()

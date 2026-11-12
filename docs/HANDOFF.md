@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0033 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0034 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -205,3 +205,11 @@
 - Tests `test_work03b_contract.py` + `test_r2_r0_contract.py` synchronized to preserve historical draft and avoid false negatives on code-added opt-in route. No runtime/backend/migration changes in this checkpoint.
 - CI deste commit e do SI-MH-0032 não confirmado pelo conector disponível; **158 testes esperados, NÃO COMPROVADOS**. Legacy 131/131 verificado anteriormente. No main/JARVIS/PULSE/production changes.
 - NEXT: observar CI com run+SHA, corrigir erros de teste/implementação, adicionar checkpoint SI-MH-0034 com resultados reais.
+
+## SI-MH-0034 — CI real do SI-MH-0033 comprovado; teste duplicado corrigido
+
+- HEAD de origem: `develop@9de64471980ad3826b31c92160072fc8a457bb17`. CI anterior do SI-MH-0033: [Actions 43249997206](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249997206) **SUCCESS**, 174 execuções/OK, 7 migrações, live GitHub R1A/R1B + R1C A/B + MCP/REST/Mem0/Ollama E2E PASS.
+- Falha histórica SI-MH-0032: [Actions 43249446536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249446536) **FAILURE 2 testes estáticos antigos**; corrigidos SI-MH-0033. SI-MH-0031: [Actions 43247901257](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43247901257) SUCCESS 142.
+- **Atenção:** 174/174 inclui 16 testes R1B coletados duas vezes devido a import de TestCase no módulo R2 R1C. SI-MH-0034 corrige apenas o import; nova contagem prevista **158 casos distintos**, **CI pendente**. Não declarar 158 PASS antes de confirmação.
+- Evidência [R2_R1C_SI_MH_0034_CI_EVIDENCE.md](work03b/R2_R1C_SI_MH_0034_CI_EVIDENCE.md), com graus LIVE vs MOCK, limitações, run IDs e próximo gate. R2 R1C HTTP testado com MockTransport; sem live provider via endpoint, OIDC/prod, policy lifecycle, consent ou DONE.
+- Próximo: ler CI do novo HEAD, registar SI-MH-0035 com run+SHA e 158 teste PASS ou falhas reais, preservar `main`, Jarvis/PULSE e Mem0.
