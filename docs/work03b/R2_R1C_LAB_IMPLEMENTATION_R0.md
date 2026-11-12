@@ -32,3 +32,7 @@ No CI evidence has been observed at the moment of this documentation/code-contra
 ## SI-MH-0034 — GitHub CI verificável e reparação de duplicação
 
 A suite SI-MH-0033 [Actions 43249997206](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249997206) concluiu **174 execuções / OK**, mas 16 testes R1B foram recolhidos pela segunda vez devido a import direto da classe `VerificationLedgerLabTests` em `test_r2_r1c_api_lab.py`. Corrigido no SI-MH-0034 para importar o módulo; nova suíte esperada **158 testes distintos**, CI pendente. O SI-MH-0032 [Actions 43249446536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249446536) falhou por dois testes de contrato incompatíveis corrigidos em SI-MH-0033. Ver [evidência detalhada](R2_R1C_SI_MH_0034_CI_EVIDENCE.md). Isto não concede release/produção.
+
+## SI-MH-0035 — LAB CI VERIFIED (158 distinct tests)
+
+The test discovery correction at `develop@f4732da8de086c9f869b3833a66f168a35e82a40` passed [Actions 43251091244](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43251091244): **158 tests / OK**, migrations 0001–0007, GitHub R1A/R1B LIVE, R1C A/B and WORK02D Mem0/Ollama E2Es PASS. New R2 R1C HTTP tests use MockTransport (NOT live GitHub-through-REST). Read [evidence and API-NEG crosswalk](R2_R1C_SI_MH_0035_VERIFIED_EVIDENCE.md); production gates remain open. SI-MH-0035 is documentation-only and needs its own separate CI verification.

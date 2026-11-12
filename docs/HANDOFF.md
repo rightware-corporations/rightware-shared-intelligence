@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0034 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0035 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -213,3 +213,11 @@
 - **Atenção:** 174/174 inclui 16 testes R1B coletados duas vezes devido a import de TestCase no módulo R2 R1C. SI-MH-0034 corrige apenas o import; nova contagem prevista **158 casos distintos**, **CI pendente**. Não declarar 158 PASS antes de confirmação.
 - Evidência [R2_R1C_SI_MH_0034_CI_EVIDENCE.md](work03b/R2_R1C_SI_MH_0034_CI_EVIDENCE.md), com graus LIVE vs MOCK, limitações, run IDs e próximo gate. R2 R1C HTTP testado com MockTransport; sem live provider via endpoint, OIDC/prod, policy lifecycle, consent ou DONE.
 - Próximo: ler CI do novo HEAD, registar SI-MH-0035 com run+SHA e 158 teste PASS ou falhas reais, preservar `main`, Jarvis/PULSE e Mem0.
+
+## SI-MH-0035 — R2 R1C laboratório: 158/158 testes e E2E validados
+
+- Último código validado `develop@f4732da8de086c9f869b3833a66f168a35e82a40`: [Actions 43251091244](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43251091244) **SUCCESS**, `Ran 158 tests / OK`, sete migrations e smokes GitHub R1A/R1B live, R1C A/B sem Mem0 e E2E real MCP/REST/PostgreSQL/Mem0/Ollama. Correção de import SI-MH-0034 eliminou 16 execuções duplicadas.
+- R2 R1C HTTP: **LAB ONLY FLAGGED OFF BY DEFAULT**; testes HTTP+PostgreSQL usam `SIMULATED_TRANSPORT`, não há prova LIVE GitHub chamada através da nova rota. Sem reviewer/DONE; a prova LIVE GitHub→ledger continua R1B.
+- [Evidência e matriz API-NEG](work03b/R2_R1C_SI_MH_0035_VERIFIED_EVIDENCE.md): API-NEG parcialmente cobertos; expiração/revogação de policy por tenant, provider identity/OIDC/consent/retention e 503/secret-redaction ainda não fechados. Evitar marcação de aceitação integral.
+- Este SI-MH-0035 altera apenas docs+handoffs; **seu próprio CI pendente**. `main`, JARVIS, PULSE, vendor Mem0 preservados.
+- NEXT: R2 R1D-R0 — contratos policy/provider/identity/privacy, ampliar negativos, ensaio LIVE GitHub-through-REST isolado; sem produção.

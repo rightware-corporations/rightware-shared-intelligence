@@ -616,6 +616,23 @@
 
 **Próximo:** observar Actions do commit SI-MH-0034, confirmar contagem 158 e markers. Se aprovado, novo SI-MH-0035 append-only regista final; se falhar, investigar e corrigir sem apagar falhas anteriores.
 
+
+---
+
+## SI-MH-0035 — R2 R1C 158 testes distintos e E2E confirmados; matriz de lacunas
+
+**Data:** 2026-11-12 Africa/Maputo. **Classificação:** VERIFIED LAB CI EVIDENCE + GATE REVIEW (documentation only). **HEAD verificado antes:** `develop@f4732da8de086c9f869b3833a66f168a35e82a40`.
+
+**Resultado comprovado:** [GitHub Actions 43251091244](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43251091244) concluído com **SUCCESS** para commit `f4732da8de086c9f869b3833a66f168a35e82a40`; `Ran 158 tests in 23.501s` / `OK`, sem duplicação da classe de testes R1B, `HANDOFF_POLICY_PASS`, migrações 0001–0007 PASS, `WORK03B_R2_R1A_GITHUB_LIVE_PASS`, `WORK03B_R2_R1B_LEDGER_LIVE_PASS`, `WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS`, `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS`. A falha anterior SI-MH-0032 [43249446536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249446536) com dois asserts de inventário e o sucesso SI-MH-0033 [43249997206](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43249997206) com 174 execuções (16 duplicadas) permanecem registados historicamente.
+
+**Limite de evidência:** testes HTTP do novo endpoint R2 R1C são FastAPI+PostgreSQL com GitHub `MockTransport` (`SIMULATED_TRANSPORT`). As provas LIVE da API GitHub vêm dos E2E R2 R1A/R1B, não de uma chamada real ponta a ponta por esse novo endpoint REST. `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED != DONE`. Não houve alteração da tarefa para DONE nem reviewer independente.
+
+**Relatório:** [R2_R1C_SI_MH_0035_VERIFIED_EVIDENCE.md](work03b/R2_R1C_SI_MH_0035_VERIFIED_EVIDENCE.md) com runs/SHAs/logs, cruzamento API-NEG-01..16 e bloqueios. Os 16 API-NEG permanecem parcialmente cobertos; política de expiração/desativação ainda bloqueada, 503/segredos precisa teste. O original EV fixture de investigação não foi reescrito.
+
+**Mudança neste checkpoint:** documentação e ambos handoffs apenas. Nenhum novo backend, migration, test code, workflow, grant, feature flag, release, `main`, JARVIS, PULSE ou vendor Mem0 foi alterado. CI do **novo commit documental SI-MH-0035** é PENDENTE de observação e não deve ser confundido com o CI 43251091244 do código anterior.
+
+**Próximo:** R2 R1D-R0 laboratório negativo e contratos de provider/identity/privacy por tenant antes de produção; não confundir segurança de laboratório com autorização de release. Ratificação SEC-R1C-01..04 cobre PRINCÍPIOS, não mecanismos operacionais.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
