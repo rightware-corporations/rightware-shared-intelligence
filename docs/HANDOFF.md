@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0011 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0012 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -76,6 +76,10 @@
 - Base `develop@4c6f90feccccb30fa7a6aadb83512f18f50dfdac`: CI 43152798777 SUCCESS para código existente. CI novo após o commit **PENDENTE**.
 - Sem mudanças de backend, DB, Mem0/vendor, model inference, Jarvis/PULSE, `main`, PRs ou deployment.
 - Ratificação do operador para schema, direitos, MCP-write e política de recuperação de leases continua ABERTA antes do R1.
+
+## WORK-03B R0 — CI REAL VALIDADO
+- [Evidence](work03b/EVIDENCE_R0.md) para `develop@c32ab1e7f4b72a27da6c005d04e6825bed62f76e`: Actions [43154026213](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43154026213) SUCCESS; **60/60 testes PASS**, cinco novos testes estáticos do contrato e E2E real **existente** MCP/REST/PostgreSQL/Mem0/Ollama PASS com dados sintéticos.
+- R0 contract/schema, M01–M18, 14 passos continuam DRAFT/propósitos, não implementações completas; R1/R2 e ratificação OPEN. Entrada MASTER SI-MH-0012; novo commit de evidência tem CI PENDENTE.
 
 ## Next exact work
 **Próximo gate: validar CI do contrato WORK-03B R0, rever/ratificar os contratos UC-CORE-01 e iniciar WORK-03B R1** — implementar observações, checkpoints e resume autorizados em laboratório sem alterar JARVIS. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.

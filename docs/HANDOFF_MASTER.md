@@ -215,6 +215,16 @@
 **Não realizado:** nenhuma migração, API/authorization runtime, provider/LLM, benchmark SI-RD-03, produção, Jarvis/PULSE, main, merge ou branch nova. Direitos e entidades propostos ainda exigem ratificação do operador antes de R1.
 **Próximo passo:** confirmar CI do presente HEAD; corrigir se falhar, criar checkpoint; aprovar UC-CORE-01/R0 e implementar WORK-03B R1 mínimo sem quebrar a política de segredo/lease e com teste de processo independente.
 
+
+---
+
+## SI-MH-0012 — WORK-03B R0 GitHub CI verified
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** VERIFICADO · **Commit testado:** `c32ab1e7f4b72a27da6c005d04e6825bed62f76e` · **Ramo:** `develop`.
+**Evidência factual:** [Actions 43154026213](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43154026213) `SUCCESS`, job 130969666674. Logs: `HANDOFF_POLICY_PASS`; `PACKAGE_LAYOUT_PASS`; três `MIGRATION_PASS`; **60 testes OK (55 anteriores + cinco testes estáticos do contrato WORK-03B)**; `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` (synthetic only, MCP real + REST auth + PostgreSQL + Mem0 OSS + Ollama embeddings + negativas).
+**Entrega desta adenda:** [docs/work03b/EVIDENCE_R0.md](work03b/EVIDENCE_R0.md) com marcadores exactos e limitações; actualização simultânea de CURRENT+MASTER. **Sem alterações a runtime/DB/frontend/vendor/main/Jarvis/PULSE**.
+**Interpretação:** contrato R0 documentalmente consistente e regressão do núcleo existente aprovada. Não prova novas operações de observação, checkpoint, resume independente, verifier, DONE, ciclo de vida ou benchmark. Ratificação de schema/roles ainda necessária.
+**Próximo passo:** WORK-03B R1 implementação limitada da jornada, depois de ratificar contrato e garantir matriz de autorização; SI-RD-03 benchmark isolado prossegue como investigação. O CI deste novo checkpoint documental será PENDENTE até consulta.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
