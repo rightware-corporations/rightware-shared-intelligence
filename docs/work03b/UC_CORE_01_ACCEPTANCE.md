@@ -77,3 +77,9 @@ Git SHA; database migration version; test command/environment; independent clien
 - [R2 written trust contract](R2_TRUST_CONTRACT_R0.md) and [machine-readable oracles](R2_TRUST_CONTRACT_R0.json): three separate states ASSERTED, CHECKED_*, REVIEW_*; exact future GitHub evidence provider binding and scoped reviewer; no automatic DONE. The original `UC_CORE_01_CONTRACT.json` is unchanged and still has 18 experimental REST routes, three future R2 routes and M01–M18 `PENDING_FULL_E2E`.
 - `tests/test_r2_r0_contract.py` checks only that 16 SI-RD-03C fixture oracles remain `executed=false` and match the R2 draft and that its routes aren't live. **A static lint PASS must not be reported as EV-01..EV-16 execution.** 
 - Do not initiate evidence verifier, crypto installation, review endpoint or policy-based deployment before operator ratification.
+
+
+## WORK-03B R2 R1A — Limited experimental code (CI pending until observed)
+- Implemented a **standalone** GitHub Workflow Run checker; there is no public verification REST/MCP operation, no SQL verification-attempt record, no registered independent principal, no reviewer or DONE transition.
+- Fifteen new synthetic adapter tests execute the actual decision logic and include the proposed EV-01..EV-07 outcomes using mocked provider responses; the original SI-RD-03C JSONL keeps `executed=false` as historical/specification metadata. The separate live fixed-GitHub-run script is an independent actual-provider check for EV-01..EV-04 when successful, not evidence that all original oracles or customer acceptance criteria passed.
+- `M07`, `M13`, `M14`, `M15` and every M01–M18 final acceptance remain **PENDING_FULL_E2E**. SEC-R1C-01..04 still require explicit operator ratification before operationalizing policy, persistence and reviewer.

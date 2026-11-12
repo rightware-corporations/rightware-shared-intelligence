@@ -45,6 +45,11 @@ pyproject.toml              # editable package at backend/rightware_si
 - [R1C security decision register](docs/work03b/R1C_SECURITY_POLICY_GATE_R0.md): legacy unbound handoffs, administrative reassignment and external-effect reconciliation. **Recommendations only; operator ratification pending.**
 - [R2 trust R0 contract](docs/work03b/R2_TRUST_CONTRACT_R0.md) and [machine-readable draft](docs/work03b/R2_TRUST_CONTRACT_R0.json): evidence verification, independent review and the 16 *unexecuted* synthetic oracles. Six new tests validate only documentation consistency; **no verifier, signed artifact validation or DONE approval exists.**
 
+## R2 R1A — Isolated GitHub evidence-verifier experiment
+- [R2 R1A adapter and limitations](docs/work03b/R2_R1A_GITHUB_VERIFIER_LAB.md): a bounded, read-only GitHub workflow-run checker validating exact repository/workflow/run/attempt/SHA/status. This is **not a production API, not a signed attestation and not task approval**.
+- `backend/rightware_si/evidence_github.py` and `tests/test_r2_r1a_github_lab.py` test provider response logic with a fake transport, including EV-01..EV-07. The separate `scripts/work03b_r2_r1a_github_live.py` uses a real previously completed GitHub Actions run for limited EV-01..EV-04 provider checks.
+- No verifier persistence, evidence API route, reviewer, DONE, or new dependency has been added. Original SI-RD-03C 16-oracle source fixture stays unmodified; EV-08..EV-16 remain unexecuted.
+
 ## Git policy
 - **develop:** all future engineering/checkpoints. Every technical commit updates `docs/HANDOFF_MASTER.md` and `docs/HANDOFF.md`.
 - **main:** explicitly approved releases only. As of this checkpoint, `main` contains only initial README; it is not an installed/shared-intelligence release.

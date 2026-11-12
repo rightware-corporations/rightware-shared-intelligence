@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 jobs:
   real-mcp-mem0:
     runs-on: ubuntu-latest
@@ -102,6 +103,10 @@ jobs:
           PY
       - name: Full deterministic/real PostgreSQL test suite
         run: python -m unittest discover -s tests -v
+      - name: R2-R1A real GitHub workflow-run evidence smoke (read-only)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/work03b_r2_r1a_github_live.py
       - name: Independent subprocess bound handoff, resume and lease recovery without Mem0
         run: python scripts/work03b_r1b_real_resume_e2e.py
       - name: Start ephemeral local Ollama

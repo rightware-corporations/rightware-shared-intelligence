@@ -454,6 +454,28 @@
 
 ---
 
+## SI-MH-0026 — WORK-03B R2 R1A: adaptador experimental de evidência GitHub
+
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** EXPERIMENTO DE CÓDIGO R2 R1A, NÃO DECISÃO OFICIAL OU VERIFICADOR DE PRODUÇÃO · **Base verificada:** `develop@0c63b2f2d3d4cf00926752ab2c58d42ccbd64901`, `main@87c3351055aaf58d37f233dbc96eaa8f0b749c5c` e Mem0 pin `f1791daa86d469249c9b002f62644d58a1eb96a0`. CI base [43202560651](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43202560651) SUCCESS, 100/100 testes, E2E R1C A→B e Mem0/Ollama PASS.
+
+**Objetivo e interpretação de autorização:** na continuidade solicitada para R2, criar **somente prova de conceito isolada, read-only, sem persistência, API pública, approval, revisão, effect execution ou mudança de decisões R1C**; não considerar o simples pedido 'vamos' como ratificação formal de SEC-R1C-01..04, política de providers para clientes ou DONE. R2_TRUST_CONTRACT_R0 continua **DRAFT_OPERATOR_RATIFICATION_REQUIRED_NOT_IMPLEMENTED** para operações externas.
+
+**Código e testes desta entrega:**
+- `backend/rightware_si/evidence_github.py`: política imutável `GithubRunPolicy`, `GithubCheck`, validação de ID estável de repositório 1452533938, workflow ID 415280241, run 43202560651 tentativa 1, SHA 0c63b2f2d3d4cf00926752ab2c58d42ccbd64901, event push, status completed e conclusion success. Resultados `CHECKED_PASS/CHECKED_FAIL/INCONCLUSIVE` com motivo explícito, sem permissões para DONE.
+- Segurança: request apenas a `api.github.com/repos/{owner}/{repo}/actions/runs/{id}` usando slug validado, TLS, timeout 6s, no redirects, `trust_env=False`, resposta JSON limitada, sem URL fornecido por modelo, sem SSRF, sem output de token ou resposta bruta. HEAD repositório também validado, não apenas nome visível.
+- `tests/test_r2_r1a_github_lab.py`: 15 testes **reais do código do verificador**, mas as respostas HTTP da unidade são MOCKED/SYNTHETIC. EV-01..EV-07 mapeados para oráculos JSONL sem alteração à fixture; negativos adicionais para run attempt, event, SHA, forks, repo/workflow, HTTP non-200, redirect, JSON corrupto, payload grande, inputs inseguros.
+- `scripts/work03b_r2_r1a_github_live.py`: E2E de **consulta real à API GitHub**, fixado no run histórico concluído [43202560651](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43202560651) e 4 variantes EV-01..EV-04 (SHAs/repos/workflow trocados) com expected outcomes. A ação CI usa `GITHUB_TOKEN` temporário `actions:read`, nunca escreve em GitHub; não emite segredos ou JSON. **Ainda não executado no momento deste commit**, validar GitHub Actions.
+- `.github/workflows/ci.yml` adiciona permissões mínimas `actions:read` e passo live, mantendo as seis migrations, testes PostgreSQL, R1B/R1C E2E sem Mem0 e E2E Mem0/Ollama reais.
+- Novo `docs/work03b/R2_R1A_GITHUB_VERIFIER_LAB.md`, README, arquitectura e matriz UC-CORE-01 actualizados com os limites. **115 testes esperados** (100 anteriores + 15 de adaptador), não reportar PASS antes do CI. Contrato canónico mantém 18 rotas de laboratório / 3 futuras; o R2 R0 permanece 0 rotas implementadas.
+
+**Limitações e separação:** `CHECKED_PASS` só representa campos exactos devolvidos por API GitHub para run específico, não comprova conteúdo do software, assinatura/attestation, critérios do produto, aprovação `REVIEW_ACCEPTED` ou DONE. Sem SQL `VerificationAttempt`, permissões `evidence:verify`, revisor, source-level ACL, consent/retention, workflows de cliente, deploy, API/MCP de escrita, tool execution ou outras dependências. EV-05..EV-07 em unittest usam mock; EV-08..EV-16 não executados. Ficheiro de investigação EV continua `executed=false` (representa proposta de oráculos, não relatório de CI). M01–M18 full E2E pendentes.
+
+**Integridade:** `main`, JARVIS/PULSE, vendor Mem0 e produção inalterados. SEC-R1C-01..04 continuam recomendações pendentes. Sem branch adicional nem merge. CI do novo HEAD PENDENTE, anotar FAIL ou PASS real numa entrada posterior SI-MH-0027, nunca falsificar resultado histórico.
+
+**Próximo:** verificar CI do commit experimental e registar exactamente quais EV checks eram LIVE vs MOCK; se passar, apresentar opções de ratificação SEC-R1C e política do primeiro provedor/critério R2 R1B antes de schema/endpoint/review.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
