@@ -225,6 +225,28 @@
 **Interpretação:** contrato R0 documentalmente consistente e regressão do núcleo existente aprovada. Não prova novas operações de observação, checkpoint, resume independente, verifier, DONE, ciclo de vida ou benchmark. Ratificação de schema/roles ainda necessária.
 **Próximo passo:** WORK-03B R1 implementação limitada da jornada, depois de ratificar contrato e garantir matriz de autorização; SI-RD-03 benchmark isolado prossegue como investigação. O CI deste novo checkpoint documental será PENDENTE até consulta.
 
+## SI-MH-0013 — WORK-03B R0B: Arquitectura do princípio de funcionamento do produto
+
+**Data:** 2026-11-12 (Africa/Maputo) · **Classificação:** ARQUITECTURA FUNCIONAL / RECOMENDAÇÕES, **NÃO IMPLEMENTAÇÃO** · **Base:** `develop@ac9bcc813b75c6dfe3fb820c72a4316f4b5dd53b`.
+
+**Objectivo:** traduzir a visão RIGHTWARE em funcionamento end-to-end: agente A autenticado cria observação e checkpoint com fontes; handoff com lease/version; agente B em novo processo recebe continuação autorizada sem chat original; verificador confirma checks delimitados; revisor aprova apenas após critérios. O Mem0 é projecção semântica e pode estar indisponível sem tornar estado canónico falso.
+
+**Investigação reutilizada:** SI-RD-01 landscape; SI-RD-02 source code/license; SI-RD-02E Perplexity externa com correcções; SI-FG-01 lacunas; WORK-01 domínio; A2A task/message/artifact, Temporal retries/idempotência, W3C PROV e MCP Authorization. Os relatórios de fornecedor não equivalem a benchmark RIGHTWARE ou decisão oficial.
+
+**Documentos criados:** `docs/product/work03b/README.md`; `00_PRODUCT_OPERATING_PRINCIPLE.md`; `01_COMPONENT_DOMAINS_BOUNDARIES.md`; `02_DOMAIN_PROTOCOL_SECURITY_CONTRACTS.md`; `03_UC_CORE_01_ACCEPTANCE_AND_EXECUTION.md`; `04_RESEARCH_TO_ARCHITECTURE_DECISIONS.md`; `05_CANONICAL_CONTRACT_ALIGNMENT.md`. Referência adicionada ao `docs/ARCHITECTURE.md`.
+
+**Reconciliado com trabalho concorrente:** `docs/work03b/UC_CORE_01_CONTRACT.json`, `WORK03B_R0_FUNCTIONAL_CONTRACT.md`, `UC_CORE_01_ACCEPTANCE.md` e `tests/test_work03b_contract.py` mantêm-se **contrato canónico R0 DRAFT**: 10 rotas existentes, 7 futuras, 14 passos e M01–M18. Os 20 passos UX e endpoints adicionais do blueprint são **horizonte conceptual, não outra API aprovada**. Um Observation não tem necessariamente de aumentar task.version; seguir o contrato canónico. M09 lease secret replay retorna 409 conforme WORK-02D.
+
+**Evidência anterior:** run [43154026213](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43154026213) SUCCESS no commit `c32ab1e7f4b72a27da6c005d04e6825bed62f76e`: 60 testes e E2E sintético Mem0/MCP PASS, cinco testes novos apenas de contrato estático. A documentação do SI-MH-0012 foi preservada. **A criação deste blueprint não adiciona novas funcionalidades nem novos testes executados. CI deste commit PENDENTE.**
+
+**Não alterado:** backend, SQL, vendor Mem0 pin, Jarvis/PULSE, frontend executável, deployments, `main`, branches antigas/PRs. Sem dados privados ou segredos no repo público.
+
+**Status decisão:** propostas de ownership PULSE, RBAC, source/consent, lease recovery, verificação humana e expansão MCP requerem ratificação antes de R1; não transformar visão em aprovação automática.
+
+**Próximo gate recomendado:** ratificar o contrato UC-CORE-01 e executar R1A mínimo (AgentRun + SourceRecord + Observation, ACL/CAS e testes) seguido de checkpoint/resume em nova sessão; SI-RD-03 benchmark permanece independente. Guardar handoffs a cada checkpoint.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

@@ -70,3 +70,12 @@ MCP uses `backend/rightware_si/mcp_bridge.py` as a **read-only stdio bridge**, a
 **Production blockers:** OIDC/workload identity, per-resource authorization, rate limits, TLS, secrets management, history erasure, outbox/consent-aware memory ingestion, secure lease recovery, backups/restore, independent security assessment, real Jarvis staging.
 
 See `docs/work01/` for the original domain model and acceptance hypotheses; implementation coverage is narrower than that proposal.
+
+
+## Evolução funcional proposta (WORK-03B R0B — NÃO implementada)
+
+A fonte da verdade da arquitectura **implementada** permanece nas secções anteriores. O produto de continuidade integral tem um desenho de próxima geração em [`docs/product/work03b/README.md`](product/work03b/README.md), incluindo princípio de funcionamento, read/write paths, entrega de `ContinuationPackage`, bounded contexts, fault/retry/security e pesquisa REUSE/BUILD.
+
+**Contrato canónico machine-readable de MVP:** [`docs/work03b/UC_CORE_01_CONTRACT.json`](work03b/UC_CORE_01_CONTRACT.json) e [`docs/work03b/UC_CORE_01_ACCEPTANCE.md`](work03b/UC_CORE_01_ACCEPTANCE.md). Existem 10 rotas protegidas no laboratório e 7 rotas futuras DRAFT. Os endpoints adicionais do blueprint são ideias do horizonte, não APIs existentes nem aprovadas. Sem novos módulos, migrations, frontend ou produção neste R0B.
+
+Princípio de autoridade: PostgreSQL para estado/eventos/checkpoints/decisões verificados; Mem0 apenas projecção recuperável e não confiável; REST/MCP reutilizam a mesma autorização e o `resume` requer revalidação de ACL/sources. Não confundir os 60 testes históricos com aceitação de UC-CORE-01 completa.
