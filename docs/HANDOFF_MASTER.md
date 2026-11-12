@@ -365,6 +365,20 @@
 
 ---
 
+## SI-MH-0021 — CI da integração SI-RD-03C comprovado
+
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** CI VALIDADO PARA DOCUMENTAÇÃO/REGRESSÃO; **NÃO VERIFICADOR R2** · **SHA realmente testado:** `2db9cd40e1701639434dc0c00cca8cf5282adead` em `develop`.
+
+**Evidência GitHub Actions:** [run 43182746837](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43182746837) **SUCCESS**. Logs observados: `HANDOFF_POLICY_PASS audited_commits=1 both_files_updated=true`, 0001–0005 migrations, `Ran 81 tests` / `OK`, `WORK03B_R1B_RESUME_E2E_PASS` (A termina, B novo processo, PostgreSQL canónico, Mem0 offline, denies para stale lease/intruso/revogação), `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` (MCP/REST/Postgres/Mem0 OSS/Ollama real). Nenhum segredo efémero em claro observado nos logs. Nenhum teste EV-01..EV-16 foi invocado pelo CI.
+
+**O que este resultado prova:** a integração documental do dossier/fixture SI-RD-03C, `docs/work03b/R2_SI_RD_03C_INTEGRATION_REVIEW.md`, os dois handoffs e as regressões anteriores não quebraram o código R1B. **Não demonstra** verificador de evidências, 16 casos PASS, review/DONE, assinatura in-toto, Sigstore ou attestation; são apenas oráculos de investigação com `executed=false`.
+
+**Escopo da adenda:** este commit actualiza **somente** `docs/HANDOFF_MASTER.md` (append-only) e `docs/HANDOFF.md`. Nenhum código, contrato canónico, CI, SQL, pacote, dependência, fixture, submódulo Mem0, branch `main` ou JARVIS/PULSE alterados. Novo commit documental necessita validação do seu próprio CI.
+
+**Próxima ação:** **WORK-03B R1C** continua prioridade: checkpoint-bound handoff, fencing e lease recovery; R2 só após gates e ratificação do contrato/verificador.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

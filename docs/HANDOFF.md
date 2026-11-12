@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0020 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0021 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -116,7 +116,7 @@
 - **Verificação estática de ingestão:** 16 JSONL válidos, IDs EV-01..EV-16 únicos, todas entradas `synthetic=true`, `executed=false`; oráculos NÃO executados. CI do HEAD de origem `9233f8afefa5877e2eec27a5f90ca0a4a00322ad` SUCCESS [43161674536](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43161674536) com **81/81 testes anteriores**, não um teste de verificador R2.
 - **Reuse antes de Build:** R1A/R1B PostgreSQL grants, `si_evidence_refs`, `si_source_records`, `si_observations ASSERTED`, `si_continuity_events`, task `IN_REVIEW`, MCP REST auth; in-toto/Test Result + W3C PROV vocabulário; SLSA/GitHub Attestations/Sigstore opcionais em builds, OTel como correlação sem prompts. OPA e novas dependências adiados.
 - **Trust invariants:** `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED`; CI verde, URL, assinatura ou LLM não autorizam `DONE`. Executor, verificador e reviewer devem ser distintos sob grants atuais. R2 contratual e a fixture exigem gates pós-R1C.
-- **Alterações deste checkpoint:** documentos e handoffs somente. `main`, JARVIS/PULSE, fornecedor Mem0, CI/workflow, backend, SQL, testes e fixture de investigação inalterados. CI deste novo commit ainda por comprovar.
+- **CI verificado para a integração:** `develop@2db9cd40e1701639434dc0c00cca8cf5282adead` [Actions 43182746837](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43182746837) SUCCESS: handoff gate, cinco migrations, **81/81 testes**, R1B A/B E2E com Mem0 desligado e regressão MCP/REST/Mem0/Ollama PASS. **Nenhum EV-01..EV-16 foi executado**. SI-MH-0021 adiciona evidência; o seu commit é apenas documental e precisará de CI própria.
 - **Prioridade inalterada:** WORK-03B R1C (checkpoint-bound handoff, fencing, lease recovery) → avaliação/ratificação R2 → EV-01..EV-16 tests reais com logs/SHAs.
 
 ## Next exact work
