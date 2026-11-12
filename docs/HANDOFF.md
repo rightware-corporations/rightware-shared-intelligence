@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0007 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0008 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -54,8 +54,16 @@
 - CI do commit SI-RD-02: PENDENTE, deve ser consultado e registado em checkpoint posterior; último CI consolidado verificado foi WORK-03A 43121657190 SUCCESS (55 testes + E2E).
 - Próximo gate recomendado: SI-RD-03 isolated benchmark harness (baseline PostgreSQL vs Mem0/Hindsight, Graphiti temporal depois), sem alterar o runtime/ produção.
 
+## SI-FG-01 — Auditoria de fecho funcional (documental)
+- Relatório: [SI_FG_01_FUNCTIONAL_GAP_AUDIT_2026-11-12.md](product/SI_FG_01_FUNCTIONAL_GAP_AUDIT_2026-11-12.md). Base de auditoria `develop@5787579f3b2b936e049d386488bb9671778bae52`; não houve alteração de runtime.
+- Prova actual de laboratório: PostgreSQL/REST/MCP/Mem0/Ollama sintéticos PASS; **não é o produto integral da visão**.
+- Lacunas prioritárias: observação e memória autorizadas, context snapshot, `resume` após crash/restart, handoffs com artefactos, verificação/decisão/approval, memory lifecycle, outbox, Jarvis staging.
+- **RECOMENDAÇÃO:** WORK-03B R0 Functional Contract Closure **antes** do deployment; R1 jornada real de continuidade, R2 trust/lifecycle e só depois staging/infra. A aprovação formal desse roadmap ainda cabe ao operador.
+- A pesquisa SI-RD-02 continua documental (18 oracles sintéticos; nenhum benchmark concluído); SI-RD-03 permanece avaliação de fornecedores separada.
+- CI do novo commit documental PENDENTE; último CI observado para código anterior foi 43122815508 SUCCESS.
+
 ## Next exact work
-**Próximo WORK — desenho do deployment/segurança e SI-RD-02 investigação técnica**; preservar o núcleo com CI verde, depois avaliar staging Jarvis read-only. Antes de qualquer release ou limpeza de branches, reconciliar seis PRs históricos, proteger main/develop e fazer backup externo.
+**Proposta prioritária: WORK-03B R0 Functional Contract Closure** — formalizar lacunas e a jornada de continuidade entre dois agentes antes de avançar para deployment. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

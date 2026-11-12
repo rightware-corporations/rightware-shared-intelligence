@@ -156,6 +156,24 @@
 **Decisão oficial:** nenhuma decisão de produto; apenas recomendação de manter Mem0 enquanto se benchmarka baseline PostgreSQL, Hindsight e Graphiti; workflow engines num track independente.
 **Riscos e limitações:** não auditadas dependências/transitive licenses; implementação dos vendors não executada; avaliação funcional e dados de mercado NÃO VALIDADA. Próximo gate SI-RD-03: harness isolado de avaliação com os fixtures; validação dos oracles por humano, pin de ambientes, repetição e resultados reprodutíveis; segurança com critério zero falhas críticas. Responsável: coordenação técnica RIGHTWARE.
 
+## SI-MH-0008 — SI-FG-01: Auditoria de lacunas funcionais
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** AUDITORIA DOCUMENTAL, RECOMENDAÇÃO (NÃO implementar código) · **Base:** `develop@5787579f3b2b936e049d386488bb9671778bae52`.
+
+**Objetivo:** confrontar a visão original do Shared Intelligence com as funções reais do backend para determinar se WORK-03B deve ser deployment ou fecho funcional. A pedido do operador, desafiar a suposição de que CI verde implica produto completo.
+
+**Resultado:** núcleo PostgreSQL+FastAPI+MCP(read-only)+Mem0/Ollama está comprovado no laboratório (Actions 43122815508 success, 55 testes + E2E). Mas faltam observação e escrita de memória via API autorizada, handoff contextual estruturado/snapshot, recuperação após crash, verificação de evidências e decisão/review a DONE, gestão da memória/retention/erasure, outbox, integrações reais Jarvis/PULSE e frontend. Não confundir demonstração E2E com os 18 critérios MVP originais.
+
+**Ficheiro criado:** `docs/product/SI_FG_01_FUNCTIONAL_GAP_AUDIT_2026-11-12.md` com inventário de código, cobertura conservadora de M01–M18, jornada mínima demonstrável, sequência recomendada, riscos e fontes. Handoff actual actualizado simultaneamente.
+
+**RECOMENDAÇÃO (ainda não aprovada):** alterar próximo passo para WORK-03B R0 Functional Contract Closure → R1 Context/Handoff/Resume vertical slice → R2 Evidência/Decisões/Lifecycle; só depois deployment/operacionalização e staging Jarvis. Continuar SI-RD-03 como investigação e benchmark separado. Não substituir motor sem comparações.
+
+**Não realizado:** nenhum código, DB schema, CI workflow, benchmark, branch, merge, deployment, Jarvis/PULSE, API externa ou testes novos. A execução CI do commit documental fica PENDENTE até ser consultada.
+
+**Próxima ação:** rever/ratificar o escopo funcional e começar os contratos + critérios de aceitação em `develop` com novos checkpoints MASTER/CURRENT. `main` intocada.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
