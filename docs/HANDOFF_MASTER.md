@@ -247,6 +247,20 @@
 
 ---
 
+## SI-MH-0014 — WORK-03B R0B: CI do blueprint validado
+
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** VALIDADO (REGRESSÃO), **NÃO** ACEITAÇÃO FUNCIONAL DE UC-CORE-01 · **Tested SHA:** `387d489b26a1363ec017b9b8eadb3b572008aa2d` em `develop`.
+
+**Evidência:** [Actions run 43154792920](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43154792920) **SUCCESS**; job `real-mcp-mem0`. Logs observados: `HANDOFF_POLICY_PASS audited_commits=1`, três `MIGRATION_PASS`, **60 tests, OK**, e `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` com MCP stdio em processo separado, REST auth, PostgreSQL, Mem0 OSS+Ollama local embeddings, negative scopes e revogação. Key efémera mascarada.
+
+**Verificação de escopo:** diff do commit `387d489b26a1363ec017b9b8eadb3b572008aa2d` contém exclusivamente os 7 documentos `docs/product/work03b/`, `docs/ARCHITECTURE.md` e ambos handoffs. Nenhum código, migração, API, fornecedor, modelo ou deploy mudado; `main` e Jarvis/PULSE não alterados.
+
+**Interpretação correcta:** 60 testes existentes incluindo cinco estáticos do contrato R0; sucesso de regressão no laboratório. Não demonstra Observations, checkpoint, `resume` entre dois agentes com handoff de conteúdo, evidence verifier, DONE review, memory lifecycle, benchmarking comparativo, Jarvis staging ou produção. Esses itens continuam a executar em R1/R2 após ratificação.
+
+**Próximo passo:** revisão de arquitectura e ratificação do contrato canónico `docs/work03b/UC_CORE_01_CONTRACT.json`, respeitando harmonização `docs/product/work03b/05_CANONICAL_CONTRACT_ALIGNMENT.md`. Se autorizado, implementar o **primeiro vertical R1A** (AgentRun + SourceRecord + Observation com ACL, provenance, eventos e testes reais) em `develop`, antes de checkpoint/resume. O CI de documentação desta adenda está pendente até observação.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

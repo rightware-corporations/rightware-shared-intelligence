@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0013 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0014 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -85,7 +85,7 @@
 - Dossier [Blueprint produto](product/work03b/README.md): 7 documentos sobre funcionamento, bounded contexts, autoridade PostgreSQL, Mem0 substituível, Observations/Checkpoint/ContinuationPackage, handoff, resume, verificação, privacidade, risco e research reuse.
 - **O contrato canónico continua em `docs/work03b/UC_CORE_01_CONTRACT.json`** (10 APIs actuais, 7 candidatas, 14 passos, 18 aceitação M01–M18); os restantes endpoints e passos UX do blueprint são backlog, não duas especificações concorrentes.
 - Referência em `docs/ARCHITECTURE.md`; nenhum novo backend/migration/teste de produto foi implementado. Estado: R0B conceptual, não aprovado para produção.
-- `develop@ac9bcc813b75c6dfe3fb820c72a4316f4b5dd53b` inclui prova anterior do contrato: CI 43154026213 SUCCESS 60 testes + E2E real sintético; **CI deste commit de blueprint pendente**.
+- **WORK-03B R0B commit `387d489b26a1363ec017b9b8eadb3b572008aa2d` validado:** [Actions 43154792920](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43154792920) SUCCESS — handoff gate, 3 migrations, 60/60 testes e E2E real sintético MCP/REST/PostgreSQL/Mem0/Ollama PASS. O blueprint é só arquitetura, não novo código de produto. Esta adenda documental precisará do próprio CI.
 - Próximo trabalho proposto: rever/ratificar ownership e permissões; iniciar WORK-03B R1A autorizado (Observation/AgentRun/SourceRef); depois checkpoint/resume em dois processos. Não tocar no Jarvis em produção.
 
 ## Next exact work
