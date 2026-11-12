@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0026 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0027 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -137,7 +137,7 @@
 - Contrato original UC-CORE-01 preservado com 18 rotas laboratório / 3 futuras, M01–M18 `PENDING_FULL_E2E`. Não instaladas dependências nem alterados backend/SQL/workflow/vendor, `main`, JARVIS/PULSE.
 - **Próximo gate:** ratificar/rever SEC-R1C-01..04 e definir provider GitHub Actions/critério exacto para um futuro verificador R2 R1. Não há R2 verifier, review endpoint ou decisão DONE implementados.
 
-## WORK-03B R2 R1A — GitHub Evidence Verifier (EXPERIMENTO ISOLADO, CI PENDENTE)
+## WORK-03B R2 R1A — GitHub Evidence Verifier (VALIDADO EM LABORATÓRIO, 115/115)
 
 - Baseline validada `develop@0c63b2f2d3d4cf00926752ab2c58d42ccbd64901`, [Actions 43202560651](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43202560651) SUCCESS, 100/100 testes PostgreSQL/R1C e Mem0/Ollama real.
 - **Novo** `backend/rightware_si/evidence_github.py`: check limitadíssimo da API de GitHub Workflow Run, vínculo exacto de repo ID/nome, workflow ID, SHA 40 hex, run ID, attempt, event e conclusão; falhas `CHECKED_FAIL/INCONCLUSIVE` sem aprovação de tarefa. Sem endpoints, DB, credenciais persistidas ou chamadas arbitrárias.
@@ -147,8 +147,16 @@
 - **Governança:** SEC-R1C-01..04 mantidos **PENDENTES DE RATIFICAÇÃO**; protótipo não altera essas políticas nem concede poderes. `main`, vendor Mem0, JARVIS/PULSE e produção inalterados.
 - **Próxima ação:** ler CI real e acrescentar SI-MH-0027 com 115-test e os 4 live outcomes se verificados; investigar falhas sem ocultá-las, depois pedir ratificação das políticas de identidade/evidência para a fase R2 R1B.
 
+## R2 R1A verified evidence — SI-MH-0027
+
+- **CI real:** [Actions 43214573166](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43214573166) SUCCESS para `develop@1aa40c0d54c96d7c59bb7118326700a974cbb46e`: **115/115 testes PASS**, migrations 0001–0006, independent R1B/R1C A→B and lease-recovery E2E PASS, full MCP/REST/Postgres/Mem0 OSS/Ollama PASS. `HANDOFF_POLICY_PASS` confirmado.
+- **GitHub live provider checks:** EV-01 `CHECKED_PASS` para ID/commit/workflow/run corretos; EV-02/03/04 `CHECKED_FAIL` nos mismatches esperados. **EV-05/06/07 só MOCK HTTP/inputs simulados** em testes do código. EV-08..16 NÃO EXECUTADOS. Todos `task_approved=false`; nenhum SQL/evento de verificação, review ou DONE.
+- [R2_R1A_EVIDENCE.md](work03b/R2_R1A_EVIDENCE.md) conserva logs, fonte LIVE vs MOCK, identidade exata do run e limites. Original fixture SI-RD-03C `executed=false` inalterado (spec, não journal de testes).
+- **Contratos de segurança ainda abertos:** SEC-R1C-01..04 sem ratificação; R2 R0 DRAFT, sem VerificationAttempt, `evidence:verify` service principal, resource grants/retention, endpoint ou reviewer; M01–M18 pendentes.
+- **Este commit documental:** apenas reporte + dois handoffs; CI separada deve ser observada. Próximo: ratificar políticas de GitHub provider e R1C release; depois R2 R1B persistência/autorização controladas, sem alterar Jarvis, main ou vendor Mem0.
+
 ## Next exact work
-**Próximo gate: validar CI de R2 R1A GitHub verifier isolado e distinguir resultados LIVE/MOCK; depois ratificar SEC-R1C-01..04 e o contrato de autorização/persistência R2 R1B; não implementar DONE ou API antes de aprovação** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: ratificar SEC-R1C-01..04 e política de provedor/critério GitHub para R2 R1B; R2 R1A passou 115/115 com EV-01..04 LIVE e EV-05..07 MOCK, mas o sistema continua sem VerificationAttempt/autoridade/revisor/DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

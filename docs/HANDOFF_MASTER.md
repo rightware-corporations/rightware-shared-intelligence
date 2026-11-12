@@ -476,6 +476,22 @@
 
 ---
 
+## SI-MH-0027 — WORK-03B R2 R1A GitHub verifier: 115 testes e EV-01..04 LIVE validados
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** EXPERIMENTO EM LABORATÓRIO VALIDADO EM CI; **NÃO PRODUÇÃO, NÃO APROVAÇÃO DE TAREFAS**. **SHA testado:** `1aa40c0d54c96d7c59bb7118326700a974cbb46e`; branch `develop`.
+
+**Evidência:** [GitHub Actions 43214573166](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43214573166) **SUCCESS**. Logs reais observados: `HANDOFF_POLICY_PASS`, migrations 0001–0006 PASS, **`Ran 115 tests` / `OK`** (100 anteriores + 15 novos testes determinísticos do adaptador GitHub com transport MOCK); `WORK03B_R2_R1A_GITHUB_LIVE_PASS` para **quatro consultas reais** da API do GitHub usando runner `actions:read` ao run fixo 43202560651, repo 1452533938, workflow 415280241, SHA 0c63b2f2d3d4cf00926752ab2c58d42ccbd64901, attempt 1. Retornos: **EV-01 CHECKED_PASS**, **EV-02 CHECKED_FAIL (wrong SHA)**, **EV-03 CHECKED_FAIL (wrong repo ID)** e **EV-04 CHECKED_FAIL (wrong workflow ID)**, todos `task_approved=false`. R1B A→B Mem0 OFF e R1C bound lease E2E PASS, Mem0 OSS/Ollama/MCP/REST/PG real regression PASS. Não foi observada exposição da chave efémera nos logs.
+
+**Distinguir graus de prova:** EV-01..04 LIVE API de GitHub ao run histórico fixo; EV-05 (workflow pending), EV-06 (external API down), EV-07 (screenshot) foram **simulações/testes reais do código com MockTransport**, não observações de casos reais externos. EV-08..16 **NÃO EXECUTADOS**. A fixture de investigação SI-RD-03C permanece sem alterações, `synthetic=true,executed=false` para todos, pois é definição original dos oráculos. Os resultados reais do código são registados separadamente em `docs/work03b/R2_R1A_EVIDENCE.md`, sem falsificar histórico.
+
+**Componente validado:** `backend/rightware_si/evidence_github.py` consulta somente um endpoint GitHub API fixo construído com owner/repo/run id estritamente validados, HTTPS+TLS, timeout, sem redirects/proxies/URLs arbitrários; compara repo/head repo ID, nome, workflow, run/attempt, SHA, event e status/conclusion. Resultado representa condição concreta; não se atribui direito de DONE nem marca uma observação ASSERTED como verdade. No PostgreSQL não há VerificationAttempt nem permissões `evidence:verify`, nenhuma API REST/MCP do R2 ou serviço independente autorizável; zero writes. `docs/work03b/R2_R1A_GITHUB_VERIFIER_LAB.md` e matriz UC-CORE-01 atualizados após CI.
+
+**Limitações / decisões pendentes:** SEC-R1C-01..04 continuam RECOMENDAÇÕES não ratificadas; R2_TRUST_CONTRACT_R0 permanece DRAFT, `implemented_r2_routes=0`; UC-CORE-01 mantém 18 rotas de laboratório, 3 propostas e M01–M18 PENDING_FULL_E2E. Não foram verificadas assinaturas/SLSA/in-toto, políticas de criteria de cliente, atestação criptográfica, fonte PII/consent, revisor ou DONE. Este commit documental não modifica `main`, JARVIS/PULSE, Mem0, backend, SQL, CI ou dependências, e terá CI própria a verificar.
+
+**Próximo passo:** ratificar com operador o escopo de políticas SEC-R1C-01..04 e a política de GitHub Provider por cliente/critério/identity. Depois R2 R1B (design de VerificationAttempt append-only, autorização de serviço `evidence:verify`, grants/consent, idempotência, revogação) sem habilitar review/DONE automaticamente.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

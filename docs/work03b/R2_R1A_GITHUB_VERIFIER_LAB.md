@@ -43,3 +43,9 @@ Provider: [GitHub REST API — Workflow Runs](https://docs.github.com/en/rest/ac
 At commit time: **CI PENDING**, 115 tests **expected** (100 existing + 15 new); live EV-01..04 checks expected, not claimed PASS before GitHub Actions output. Record actual CI SHA, run ID, count and proof lines in a later SI-MH checkpoint. Do not update the R2-R0 JSON `implemented_r2_routes=0` or the original canonical 18/3 route inventory until real APIs are introduced.
 
 **Next decision (R2 R1B):** operator must ratify/revise SEC-R1C-01..04, choose which policy owner/repository/workflow/criteria apply to clients, approve the independent verifier identity/privacy rules, then authorize a PostgreSQL `VerificationAttempt` append-only table and authenticated verification endpoint. In-toto/SLSA/Sigstore and human review/DONE remain future gates.
+
+## Post-implementation CI result — VERIFIED (SI-MH-0027)
+
+[Actions 43214573166](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43214573166) SUCCESS on `develop@1aa40c0d54c96d7c59bb7118326700a974cbb46e`: **115/115 tests PASS** (100 baseline + 15 synthetic adapter tests), 6 PostgreSQL migrations, real GitHub API EV-01 CHECKED_PASS and EV-02/03/04 CHECKED_FAIL (expected, no DONE), independent R1C E2E and real Mem0/Ollama/MCP regression PASS. Detailed evidence and LIVE/MOCK separation are in [R2_R1A_EVIDENCE.md](R2_R1A_EVIDENCE.md). EV-05..07 are controlled/mock; EV-08..16 not executed.
+
+No R2 verification API, persisted VerificationAttempt, reviewer or approval is implemented by this PASS. Original research fixture remains unchanged.
