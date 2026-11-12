@@ -22,3 +22,9 @@ Baseline `develop@3567c99dfa620f3bf23eaf8fa0b1b030c42f131c`. This is an experime
 ## Rollback
 
 Only three existing files are changed (`http_api.py`, `verification_ledger.py`, static contract + JSON) plus new tests/docs/handoffs. The feature flag is OFF by default. If CI fails or security bug appears, retain failure logs, disable the lab flag and revert this new feature via non-destructive correction commit; do not alter historical checkpoints, `main`, JARVIS or PULSE.
+
+## SI-MH-0033 — Contract inventory reconciliation
+
+The historical R2 R0 draft must remain an immutable record of its time. It previously assumed no R2 routes had decorators; new R2 R1C adds a decorator only when the disposable lab flag is active. The canonical UC-CORE-01 future route inventory now marks the verification route as `IMPLEMENTED_R2_R1C_LAB_FLAGGED_OFF_BY_DEFAULT`; review/memory invalidation remain `PROPOSED_UNIMPLEMENTED`. Static tests in `test_work03b_contract.py` and `test_r2_r0_contract.py` assert this distinction. Full acceptance M01–M18 remains pending, zero production R2 routes.
+
+No CI evidence has been observed at the moment of this documentation/code-contract repair. The previous SI-MH-0032 remains a recorded implementation with pending verification rather than a PASS claim.

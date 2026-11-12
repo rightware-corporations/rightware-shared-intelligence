@@ -227,8 +227,8 @@
       "path": "/v1/projects/{project_id}/evidence/{evidence_id}/verify",
       "permission": "evidence:verify",
       "phase": "R2",
-      "purpose": "Trusted verifier records exactly which check and provider evidence it observed",
-      "implementation": "PROPOSED_UNIMPLEMENTED"
+      "purpose": "Experimental SERVICE-only authenticated verifier (lab flag, disposable database); not production route or approved task",
+      "implementation": "IMPLEMENTED_R2_R1C_LAB_FLAGGED_OFF_BY_DEFAULT"
     },
     {
       "method": "POST",
@@ -522,5 +522,19 @@
   ],
   "r1a_scope": "New AgentRun, SourceRecord, Observation + authorized observation listing. Checkpoint/resume/verifier/DONE remain unimplemented.",
   "r1b_scope": "Immutable checkpoint sequence CAS with source-linked observation IDs; scoped read-only canonical resume after handoff in separate subprocess, offline Mem0, no lease minting. NOT checkpoint-bound handoff, verified DONE or outbox.",
-  "r1c_scope": "For tasks with checkpoints, offer_handoff requires exact latest owned checkpoint id and sequence; accept binds source checkpoint and monotonic persistent lease generation. Same holder with task:recover can query generation and rotate a lost/expired one-time lease (no raw token replay). Legacy tasks without checkpoints remain explicitly LEGACY_UNBOUND. Full UC-CORE-01 remains pending."
+  "r1c_scope": "For tasks with checkpoints, offer_handoff requires exact latest owned checkpoint id and sequence; accept binds source checkpoint and monotonic persistent lease generation. Same holder with task:recover can query generation and rotate a lost/expired one-time lease (no raw token replay). Legacy tasks without checkpoints remain explicitly LEGACY_UNBOUND. Full UC-CORE-01 remains pending.",
+  "r2_r1c_lab": {
+    "checkpoint": "SI-MH-0032",
+    "environment": "lab only",
+    "default_enabled": false,
+    "required_flags": [
+      "RW_SI_ENABLE_R2_R1C_LAB_API=1",
+      "RW_SI_ENVIRONMENT=lab"
+    ],
+    "dsn": "postgresql://...@localhost:5432/rw_test",
+    "status": "CODE_COMMITTED_CI_PENDING",
+    "no_review_or_done": true,
+    "release_approval": false,
+    "reference": "docs/work03b/SEC_R1C_POLICY_RATIFICATION_R1.md"
+  }
 }

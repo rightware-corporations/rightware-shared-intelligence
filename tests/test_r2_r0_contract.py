@@ -78,7 +78,7 @@ class R2DraftIntegrityTests(unittest.TestCase):
         self.assertIn("REVOCATION_RECHECK_BEFORE_WRITE_AND_READ", inv)
         self.assertIn("NO_UNKNOWN_EXTERNAL_EFFECT_REEXECUTION", inv)
 
-    def test_04_future_r2_routes_not_in_actual_fastapi_decorators(self):
+    def test_04_r0_historical_proposals_distinct_from_new_lab_route(self):
         module=ast.parse(API.read_text(encoding="utf-8"))
         actual=set()
         for node in ast.walk(module):
@@ -89,8 +89,19 @@ class R2DraftIntegrityTests(unittest.TestCase):
                                 and dec.func.value.id == "app"
                                 and dec.args and isinstance(dec.args[0], ast.Constant)):
                             actual.add((dec.func.attr.upper(), dec.args[0].value))
+        canonical=json.loads((ROOT/"docs"/"work03b"/"UC_CORE_01_CONTRACT.json").read_text(encoding="utf-8"))
+        self.assertFalse(canonical["r2_r1c_lab"]["default_enabled"])
+        self.assertFalse(canonical["r2_r1c_lab"]["release_approval"])
         for route in self.draft["proposed_routes"]:
-            self.assertNotIn((route["method"], route["path"]), actual)
+            pair=(route["method"], route["path"])
+            if route["path"].endswith("/verify"):
+                # This R0 draft is historical; R1C added a gated LAB-only decorator later.
+                self.assertIn(pair, actual)
+                lab=next(x for x in canonical["future_routes"] if x["path"]==route["path"])
+                self.assertEqual(lab["implementation"],
+                                 "IMPLEMENTED_R2_R1C_LAB_FLAGGED_OFF_BY_DEFAULT")
+            else:
+                self.assertNotIn(pair, actual)
 
     def test_05_security_recommendations_not_mislabelled_official_decisions(self):
         policy = POLICY.read_text(encoding="utf-8")

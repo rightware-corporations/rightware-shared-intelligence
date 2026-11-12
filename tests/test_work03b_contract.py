@@ -55,11 +55,20 @@ class ContractR0Tests(unittest.TestCase):
         actual = declared_routes_from_source()
         future = self.contract["future_routes"]
         self.assertEqual(len(future), 3)
-        self.assertTrue(all(x["implementation"] == "PROPOSED_UNIMPLEMENTED" for x in future))
-        self.assertFalse(any((x["method"], x["path"]) in actual for x in future))
         self.assertEqual(
             len({(x["method"], x["path"]) for x in future}), len(future)
         )
+        for route in future:
+            pair = (route["method"], route["path"])
+            if route["path"].endswith("/verify"):
+                self.assertEqual(route["implementation"],
+                                 "IMPLEMENTED_R2_R1C_LAB_FLAGGED_OFF_BY_DEFAULT")
+                self.assertIn(pair, actual)  # decorator exists, default runtime route does not
+                self.assertFalse(self.contract["r2_r1c_lab"]["default_enabled"])
+                self.assertFalse(self.contract["r2_r1c_lab"]["release_approval"])
+            else:
+                self.assertEqual(route["implementation"], "PROPOSED_UNIMPLEMENTED")
+                self.assertNotIn(pair, actual)
 
     def test_two_agent_journey_authority_and_monotonic_versions(self) -> None:
         steps = self.contract["journey"]

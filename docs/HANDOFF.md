@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0032 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0033 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -198,3 +198,10 @@
 - `tests/test_r2_r1c_api_lab.py`: 16 testes HTTP/DB sintéticos adicionados; contrato estático 11 atualizado; suíte estimada **158 = 131+11+16**, **CI pendente**. Não confundir simulados com LIVE; novo artefacto não comprovado até execução. Última baseline verificada: 131/131 [43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677).
 - Pendentes: CI deste checkpoint, mapping API-NEG por caso, identity OIDC, gestão da policy/pin/expiry/disable, privacidade por fonte, rate-limit, outbox, reviewer, DONE, M01–M18. Sem alterações a `main`, JARVIS/PULSE, Mem0 pinned.
 - NEXT: confirmar CI real e corrigir falhas se existirem; depois checkpoint de evidência com SHA/logs, sem promover para produção.
+
+## SI-MH-0033 — R2 R1C contract route inventory corrected (CI pendente)
+
+- Parent `develop@2cec2c26bdbf63f0ae4b33986ad087c8a70c30b9`; canonical `UC_CORE_01_CONTRACT.json` now separates 18 original regular routes, 1 `LAB_FLAGGED_OFF_BY_DEFAULT` verify decorator and 2 future unimplemented routes; M01–M18 unchanged.
+- Tests `test_work03b_contract.py` + `test_r2_r0_contract.py` synchronized to preserve historical draft and avoid false negatives on code-added opt-in route. No runtime/backend/migration changes in this checkpoint.
+- CI deste commit e do SI-MH-0032 não confirmado pelo conector disponível; **158 testes esperados, NÃO COMPROVADOS**. Legacy 131/131 verificado anteriormente. No main/JARVIS/PULSE/production changes.
+- NEXT: observar CI com run+SHA, corrigir erros de teste/implementação, adicionar checkpoint SI-MH-0034 com resultados reais.

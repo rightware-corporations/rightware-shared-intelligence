@@ -586,6 +586,21 @@
 **Próximo:** verificar CI do SHA novo; se PASS, criar SI-MH-0033 com resultados de execução reais; se FAIL, preservar causa e corrigir. Só depois avaliar piloto com autorização de policy/identity/privacy formal, hardening e testes de tentativas de exploração. Nunca liberar DONE automaticamente.
 
 
+
+---
+
+## SI-MH-0033 — Corrigir matriz de rotas R2 R1C vs contrato R0 histórico (CI PENDENTE)
+
+**Data:** 2026-11-12 Africa/Maputo. **Classe:** CORREÇÃO ESTÁTICA / COMPATIBILIDADE DE CONTRATO, NÃO NOVA IMPLEMENTAÇÃO FUNCIONAL. **Base:** `develop@2cec2c26bdbf63f0ae4b33986ad087c8a70c30b9`.
+
+**Motivo:** depois do SI-MH-0032 foi identificada incompatibilidade em dois testes estáticos preexistentes: `test_work03b_contract.py` e `test_r2_r0_contract.py` ainda exigiam que o endpoint de verificação R2 não tivesse decorator FastAPI. O R2 R1C possui decorator somente dentro de um gate de laboratório desativado por padrão. Sem a reparação, a suite teria falsos negativos de inventário, ainda que o runtime não ativasse a rota.
+
+**Alterado:** `docs/work03b/UC_CORE_01_CONTRACT.json` classifica somente a rota de verificação como `IMPLEMENTED_R2_R1C_LAB_FLAGGED_OFF_BY_DEFAULT`, preserva as 18 rotas regulares e as 3 candidatas (duas ainda UNIMPLEMENTED) e M01–M18 pending. `tests/test_work03b_contract.py` e `tests/test_r2_r0_contract.py` agora distinguem decorator existente do registro de rota em runtime, sem falsificar o draft R2 R0. Adenda em `R2_R1C_LAB_IMPLEMENTATION_R0.md` e ambos handoffs.
+
+**Não alterado:** backend SQL/API, permissões, testes HTTP, feature flags, políticas ratificadas em SI-MH-0032, histórico R2 R0, `main`, Jarvis/PULSE/vendor Mem0. CI desta reparação **PENDENTE**; suíte esperada segue 158 mas não observada. Nenhuma alegação de PASS do SI-MH-0032 nem nova prova live.
+
+**Próximo:** verificar CI real do HEAD, mapear testes positivos/negativos e corrigir apenas falhas verificadas; completar gates de provider/identity/privacy e produção antes de qualquer release.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
