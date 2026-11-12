@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0017 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0018 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -100,14 +100,14 @@
 - Base original validada `develop@9080bbe1d73b91fe752159354000e39e20eb2234`: [CI 43158313613](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43158313613) SUCCESS, 69/69 + E2E real Mem0/MCP/Ollama em laboratório.
 - **R1B neste commit:** `0005_work03b_r1b_checkpoints.sql` com checkpoints imutáveis (DB triggers), CAS por seq, FKs mesmo task, eventos auditáveis; métodos `ContinuityCore.record_checkpoint` e `resume_task` (PostgreSQL repeatable read, read-only e project grants).
 - REST POST checkpoint + GET resume e MCP `resume_task` apenas de leitura. **16 rotas implementadas / 4 rotas futuras** em `docs/work03b/UC_CORE_01_CONTRACT.json`.
-- Novos testes: 9 PostgreSQL/REST, 2 MCP e 1 estático; E2E verdadeiro com subprocessos A/B independentes e Mem0 desligado antes do lab Mem0 existente. Contagem esperada 81, mas **CI ainda não comprovado para este SHA**.
+- **R1B CI validado:** [Actions 43160672177](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43160672177) SUCCESS para `develop@5c98e9f42a481709762550d9d451cb64f7d65b31`: cinco migrations, **81/81 testes PASS**, E2E A/B processos independentes com Mem0 offline, e E2E Mem0/Ollama/MCP real PASS. Provas em [R1B_EVIDENCE.md](work03b/R1B_EVIDENCE.md). A adenda documental necessita CI própria.
 - `docs/work03b/R1B_IMPLEMENTATION.md` explica a mecânica, limitações e os riscos. Snapshot de observações **ASSERTED**, não VERIFIED. Não emite lease nem executa next_actions; apresenta `checkpoint_binding=NOT_IMPLEMENTED_R1B`.
 - `main`, Jarvis/PULSE, pinned vendor Mem0 inalterados. Nenhum release, deploy, dado privado ou inferência de modelo neste trabalho.
 - Progresso UC-CORE-01 **PARCIAL**. Sem checkpoint-bound handoff (R1C), lease lost-response recovery, outbox/ingest, per-source consent, independent reviewer e DONE.
-- Próximo passo: rever CI de `develop`, acrescentar SI-MH-0018 de evidência e confirmar passagem do teste real dois processos; depois R1C.
+- Próximo passo: R1C handoff vinculado ao checkpoint, fencing e recuperação segura de lease; sem declarar o UC-CORE-01 concluído.
 
 ## Next exact work
-**Próximo gate: validar CI real WORK-03B R1B e persistir evidência; depois implementar WORK-03B R1C — checkpoint-bound Handoff + fencing/lease recovery** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: WORK-03B R1C após R1B 81/81 PASS — checkpoint-bound Handoff + fencing/lease recovery** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

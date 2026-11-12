@@ -318,6 +318,22 @@
 
 ---
 
+## SI-MH-0018 — WORK-03B R1B CI e continuação multi-processo validados
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** VALIDADO EM LABORATÓRIO · **SHA testado:** `5c98e9f42a481709762550d9d451cb64f7d65b31`.
+
+**Evidência:** [Actions run 43160672177](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43160672177) **SUCCESS**. Logs: HANDOFF_POLICY_PASS, 0001–0005 MIGRATION_PASS, **81/81 testes PASS**, `WORK03B_R1B_RESUME_E2E_PASS` com A terminado/B novo processo, REST autenticada, checkpoint PostgreSQL, Mem0 desligado, lease antigo negado, intruso negado e revogação de grant efectiva; `WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS` com Mem0 OSS/Ollama/pgvector real. Nenhum segredo efémero em claro observado.
+
+**Entrega técnica:** checkpoint sequencial imutável, CAS, ligação a Observations e leitura resume transacional/autorizada. MCP read-only encaminha pela mesma REST API. O segundo processo recuperou informação canónica sem a conversa de A. `memory_status=NOT_QUERIED`, `checkpoint_binding=NOT_IMPLEMENTED_R1B`, `verified_completion=false` para impedir falsas garantias.
+
+**Detalhes e limitações:** `docs/work03b/R1B_EVIDENCE.md`. Handoff ainda não está vinculado atomicamente a checkpoint; não há recuperação segura de lease, outbox/memória consentida, verificador independente, revisão DONE, UI nem produção. UC-CORE-01 e M01–M18 continuam incompletos.
+
+**Integridade:** este commit de evidências só modifica `docs/` e ambos os handoffs; `main`, Jarvis/PULSE e submódulo Mem0 inalterados. O seu CI deve ser verificado separadamente.
+
+**Próximo passo:** WORK-03B R1C — binding do handoff à versão do checkpoint, fencing e recuperação segura sob autoridade, com testes de restart e negativos.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
