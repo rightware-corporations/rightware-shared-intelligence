@@ -401,6 +401,22 @@
 
 ---
 
+## SI-MH-0023 — WORK-03B R1C validado: 94 testes, binding e fencing E2E
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** VALIDADO EM LABORATÓRIO (não production-ready) · **SHA testado:** `0eb985a02d34a55db2cafe721978bd96abbbeac2`.
+
+**Evidência:** [Actions 43196082372](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43196082372) **SUCCESS**. Logs: HANDOFF_POLICY_PASS; migrações 0001–0006, incluindo `MIGRATION_PASS 0006_work03b_r1c_handoff_fencing.sql`; **`Ran 94 tests`, `OK`**. `WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS` confirma B noutra sessão, vinculação exacta, geração crescente, recuperação one-time de token após perda de resposta, replay 409 com Mem0 desligado; R1B E2E e real MCP/REST/Postgres/Mem0/Ollama PASS. Sem chave efémera em claro nos logs observados.
+
+**Resumo do produto validado:** checkpoint ligado ao handoff de tarefas com checkpoint; PostgreSQL FK/trigger e task CAS, lease fence persistente, holder-only `task:recover` com status nonsecret e rotação de credencial não recuperável da idempotency; reautorização B e resume que distingue estado corrente e checkpoint histórico do handoff. Testes negativos cobrem grants, cross-task, stale, concorrência e expiração. Contrato 18 rotas laboratório / 3 futuras, M01–M18 ainda PENDING_FULL_E2E.
+
+**Registo de evidências:** `docs/work03b/R1C_EVIDENCE.md` (SHA, run, log markers e limitações), ambos handoffs actualizados no presente commit documental.
+
+**Limites expressos:** `LEGACY_UNBOUND` continua permitido para tarefas sem cp; recovery apenas do próprio holder com grant privilegiado, nunca takeover de outro actor; fencing externo/idempotência de ferramentas, consent/PII, R2 verification/review e produção pendentes. CI verde não converte `ASSERTED` em `CHECKED_PASS` nem DONE. Os 16 EV-01..EV-16 do SI-RD-03C continuam não executados e sem implementador R2.
+
+**Próxima decisão:** ratificar o encerramento da compatibilidade LEGACY_UNBOUND, políticas de recovery/step-up e boundary de efeitos externos; depois começar R2 design/contrato com o dossier SI-RD-03C (sem instalar dependências ou implementar verifier por impulso). Este commit de documentação requer sua própria confirmação CI.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

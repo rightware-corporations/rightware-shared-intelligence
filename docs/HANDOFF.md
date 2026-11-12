@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0022 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0023 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -124,13 +124,13 @@
 - **Novo código:** migration `0006_work03b_r1c_handoff_fencing.sql`; `si_handoffs` checkpoint id/seq/task.version com FK/trigger; `si_lease_fences` garante geração persistente monotónica. Oferta ligada a checkpoint *exato e do writer* quando tarefa já tem checkpoint; nenhuma auto-substituição de estado. Sem checkpoint, modo histórico `LEGACY_UNBOUND`, não é handoff verificável.
 - **Leases:** aceitação revê checkpoint/grants, fencing generation crescente; holder autenticado e com `task:recover` consulta nonsecret generation e roda token one-time por `expected_generation`. Replays 409; sem usurpação de outro holder nem armazenamento de segredo bruto no audit/idempotency.
 - **API:** 2 rotas novas GET `lease-status` / POST `lease-recovery`; resume inclui id do checkpoint bound/historical sem emitir lease. Contrato canónico 18 rotas atuais de laboratório + 3 R2 futuras.
-- **Novos testes por validar:** `tests/test_work03b_r1c.py` 12 reais +1 contract gate, regressões R1B actualizadas e cenário real subprocesso A→B com lost-accept lease recovery e Mem0 offline. **94/94 é expectativa, NÃO resultado**. CI 0006 e E2E da memória adicional pendentes.
+- **CI R1C comprovado:** [Actions 43196082372](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43196082372) SUCCESS no `develop@0eb985a02d34a55db2cafe721978bd96abbbeac2`: 0001–0006 MIGRATION_PASS, **94/94 testes PASS**, R1C B recovered lease in separate subprocess/without Mem0, replay denied, R1B e Mem0/Ollama E2E regressão PASS. Evidência [R1C_EVIDENCE.md](work03b/R1C_EVIDENCE.md). O commit documental desta adenda requer nova validação CI.
 - [R1C_IMPLEMENTATION.md](work03b/R1C_IMPLEMENTATION.md) documenta contratos e limites. Nenhum R2 verifier implementado; EV-01..EV-16 `executed=false`, decisões `ASSERTED` não `CHECKED_PASS` nem `REVIEW_ACCEPTED`.
 - Não mexer `main`, JARVIS/PULSE, Mem0 pinned, deploy, frontend. Riscos: modo LEGACY_UNBOUND, token recovery de holder com bearer privilegiado, nenhum fencing sobre efeitos externos, sem consent/retention/verified DONE. **R1C CI ainda pendente.**
-- Próximo: verificar CI commit real, corrigir falhas e adicionar MASTER/cURRENT adenda de evidência; só depois discutir gates R2.
+- Próximo: decidir política R1C LEGACY_UNBOUND, grant holder-only recovery/step-up e fencing de side-effects externos; depois **R2 design/contrato**, usando SI-RD-03C sem executar os 16 EV até ao gate aprovado.
 
 ## Next exact work
-**Próximo gate: validar CI do WORK-03B R1C; se passar, formalizar a evidência e rever política do LEGACY_UNBOUND/holder-only recovery antes dos gates R2** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: rever/ratificar segurança e compatibilidade R1C (LEGACY_UNBOUND/holder-only recovery); depois preparar contrato R2 Evidence Verification & Trust baseado em SI-RD-03C, sem declarar EV-01..EV-16 PASS** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
