@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0018 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0019 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -105,6 +105,11 @@
 - `main`, Jarvis/PULSE, pinned vendor Mem0 inalterados. Nenhum release, deploy, dado privado ou inferência de modelo neste trabalho.
 - Progresso UC-CORE-01 **PARCIAL**. Sem checkpoint-bound handoff (R1C), lease lost-response recovery, outbox/ingest, per-source consent, independent reviewer e DONE.
 - Próximo passo: R1C handoff vinculado ao checkpoint, fencing e recuperação segura de lease; sem declarar o UC-CORE-01 concluído.
+
+## SI-RD-03C — Investigação de evidências importada para futuro R2
+- [Dossier técnico](research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md) e [16 casos sintéticos](research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl) documentados e versionados em `develop`. Não são implementações, benchmarks ou decisões aprovadas; todos os 16 oracles foram validados estruturalmente mas **NÃO EXECUTADOS**.
+- Áreas: in-toto/Test Result, SLSA, Sigstore/GitHub attestations, W3C PROV, OpenTelemetry e autorização de verificador/revisor. Preservar `ASSERTED` vs `CHECKED_PASS` vs `REVIEW_ACCEPTED`, e não atribuir DONE por CI simples.
+- Último HEAD lido antes desta importação: `develop@ea7cd5f6d9c01a3298ed204fd5b25cbfe8de18f0`; checkpoint MASTER SI-MH-0019; CI específico deste commit PENDENTE. Nenhum runtime/DB/JARVIS/MAIN alterado e **WORK-03B R1C continua a prioridade de engenharia em sessão separada**.
 
 ## Next exact work
 **Próximo gate: WORK-03B R1C após R1B 81/81 PASS — checkpoint-bound Handoff + fencing/lease recovery** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.

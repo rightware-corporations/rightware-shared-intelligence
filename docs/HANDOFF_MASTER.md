@@ -334,6 +334,19 @@
 
 ---
 
+
+---
+
+## SI-MH-0019 — SI-RD-03C — Evidence verification external research intake
+**Data:** 2026-11-12 Africa/Maputo · **Classificação:** INVESTIGAÇÃO INDEPENDENTE / RECOMENDAÇÃO, SEM DECISÃO DE PRODUTO OU EXECUÇÃO DE TESTES DE VERIFICADOR · **Base real:** `develop@ea7cd5f6d9c01a3298ed204fd5b25cbfe8de18f0`.
+
+**Objetivo:** arquivar na branch de desenvolvimento o dossier previamente criado fora do GitHub enquanto outra sessão implementa WORK-03B R1B/R1C. Disponibilizar ao próximo implementador R2 a engenharia reversa de in-toto, Test Result Predicate, SLSA, GitHub attestations, Sigstore, W3C PROV, OpenTelemetry GenAI e OPA, sem copiar código de fornecedores nem introduzir dependências.
+**Ficheiros entregues:** [docs/research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md](../research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md) e [docs/research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl](../research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl); 16 casos JSONL (`EV-01..EV-16`) com IDs únicos, todos `synthetic=true` e `executed=false`.
+**Recomendação, ainda não aprovada:** R2 separar `ASSERTED -> SOURCE_RESOLVED -> CHECKED_* -> REVIEW_ACCEPTED/REJECTED`; verificadores independentes read-only, matching exacto de repositório/commit/workflow/run attempt, autorização de reviewer distinta do executor; manter `IN_REVIEW` até prova e aceitação efectiva. `exactly-once` externo não decorre de CI verde nem recibos.
+**Verificações feitas:** leitura integral dos 2 ficheiros, validação JSON estrutural/IDs/campos sintéticos; o restante dossier é investigação documental, não execução de 16 cenários contra backend/fornecedor. O CI existente da branch `develop@ea7cd5f6d9c01a3298ed204fd5b25cbfe8de18f0` é SUCCESS (run 43161267399), mas testa outro âmbito; o CI deste commit novo fica PENDENTE.
+**Isolamento de trabalho:** somente dois documentos de investigação + `docs/HANDOFF.md` e `docs/HANDOFF_MASTER.md`. Nada em backend, DB/migrations, tests, workflows, Mem0, main, Jarvis/PULSE, R1C ou PRs antigos. Não implementar R2 automaticamente nem alterar o contrato canónico antes do gate de design.
+**Próximo passo:** depois de estabilizar R1C, a outra sessão deverá ler o dossier/fixture, rever os oracles com fonte e dono de política, confrontar com `docs/work03b/UC_CORE_01_CONTRACT.json` e preparar R2 design/validação, com novo checkpoint de handoff quando houver alterações.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
