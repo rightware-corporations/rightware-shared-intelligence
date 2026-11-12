@@ -112,6 +112,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/work03b_r2_r1b_live_ledger.py
+      - name: R2-R1D SERVICE REST to live GitHub and PostgreSQL (disposable lab)
+        env:
+          RW_SI_ENVIRONMENT: lab
+          RW_SI_ENABLE_R2_R1C_LAB_API: "1"
+          RW_SI_GITHUB_PROVIDER_TOKEN: ${{ github.token }}
+        run: python scripts/work03b_r2_r1d_live_http.py
       - name: Independent subprocess bound handoff, resume and lease recovery without Mem0
         run: python scripts/work03b_r1b_real_resume_e2e.py
       - name: Start ephemeral local Ollama

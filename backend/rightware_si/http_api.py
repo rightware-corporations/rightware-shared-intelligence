@@ -369,6 +369,9 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
                     project_id, actor, str(body.policy_id),
                     body.expected_task_version, idem,
                     expected_evidence_id=str(evidence_id),
+                    # Server-side only: never accept provider tokens from HTTP.
+                    # This is a lab-only route; no production secret policy yet.
+                    github_token=os.environ.get("RW_SI_GITHUB_PROVIDER_TOKEN") or None,
                 ))
             except psycopg.OperationalError:
                 raise HTTPException(status_code=503, detail="Verification service unavailable") from None

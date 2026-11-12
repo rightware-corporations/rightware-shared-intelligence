@@ -661,6 +661,21 @@
 
 **Próximo:** observar logs CI do SI-MH-0037. Se PASS, registar SHA/run/contagem e seguir G03 com ensaio provider LIVE via novo endpoint, ainda em `rw_test` isolado; G01/G04/G05 continuam sujeitos a definição e ratificação de regras.
 
+
+---
+
+## SI-MH-0038 — R2 R1D-G03 GitHub LIVE através do endpoint REST de laboratório (CI PENDENTE)
+
+**Data:** 2026-11-12 Africa/Maputo. **Classe:** LAB ENGINEERING IMPLEMENTATION, NOT YET VALIDATED AT NEW SHA. **Baseline:** `develop@a3a29dfba16b2bcfca1c523ac7c1229b46c10735`.
+
+**Antes comprovado:** [Actions SI-MH-0037 43256900860](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43256900860) **SUCCESS**, `Ran 174 tests in 20.220s / OK`, sete migrations, GitHub R1A/R1B live, R1C A/B e Mem0/Ollama regressions PASS. Os 16 testes G02 negativos novos passaram; nenhuma produção.
+
+**Código e workflow:** `http_api.py` lê token GitHub somente do ambiente do SERVIDOR (`RW_SI_GITHUB_PROVIDER_TOKEN`), nunca HTTP; `scripts/work03b_r2_r1d_live_http.py` novo testa TestClient → SERVICE bearer → GitHub API HTTPS real → ledger PostgreSQL append-only, idempotência, revogação e tarefa sem DONE, no `rw_test` sintético. `.github/workflows/ci.yml` injecta `github.token` só no passo G03, entre R1B LIVE e R1C A/B. Relatório [R2_R1D_G03_LIVE_HTTP_R0.md](work03b/R2_R1D_G03_LIVE_HTTP_R0.md).
+
+**Expectativa, não afirmação:** marker `WORK03B_R2_R1D_LAB_HTTP_GITHUB_LIVE_PASS` e 174 testes na CI deste commit; **PENDENTE** até observar job completo. Nunca afirmar G03 LIVE ou libertar endpoint se GitHub estiver indisponível. Feature gate LAB permanece desligada por default; G01/G04/G05 sem ratificação/implementação, sem review/DONE.
+
+**Não alterado:** SQL migrations, main, JARVIS, PULSE, vendor Mem0, produção ou novas dependências. Próximo: verificar CI, registar resultado em SI-MH-0039 e, se necessário, corrigir failure com evidência.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

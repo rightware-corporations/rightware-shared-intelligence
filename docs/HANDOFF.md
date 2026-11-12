@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0037 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0038 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -236,3 +236,11 @@
 - Esperados **174 testes** (158+16), **NÃO VALIDADOS ATÉ CI**. Provider destes HTTP tests = MOCK, nunca LIVE. R2 R1D-G01 lifecycle e G03 LIVE REST continuam por implementar/ratificar, R1D-G04/G05 release bloqueados.
 - Documento [R2_R1D_G02_NEGATIVE_TESTS_R0.md](work03b/R2_R1D_G02_NEGATIVE_TESTS_R0.md), MASTER append-only. Sem mudanças a SQL migrations, main, JARVIS, PULSE, vendor Mem0 ou produção.
 - Próximo: CI real deste SHA e correções, depois G03 live REST smoke em laboratório.
+
+## SI-MH-0038 — R2 R1D-G03 GitHub LIVE REST pipeline (CI PENDING)
+
+- Baseline `develop@a3a29dfba16b2bcfca1c523ac7c1229b46c10735` [Actions 43256900860](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43256900860) **SUCCESS 174/174**, seven migrations and GitHub R1A/R1B live + R1C A/B + Mem0/Ollama PASS.
+- [G03 live HTTP lab](work03b/R2_R1D_G03_LIVE_HTTP_R0.md): `http_api.py` now sources optional provider token only from SERVER env; new guarded `scripts/work03b_r2_r1d_live_http.py` exercises SERVICE REST → actual GitHub API → PostgreSQL append-only + replay/revocation/no-DONE. CI workflow adds a separate step with GitHub Actions token not visible to caller.
+- **CI desse commit PENDENTE:** expected 174 tests plus unique G03 marker; do NOT claim G03 LIVE success without observing logs. LAB-only feature flag remains OFF by default, no prod.
+- SEC-R1C principles ratified, policy lifecycle G01, identity/consent G04, release G05 and 16 original EV oracles not fully closed. No changes main/JARVIS/PULSE/vendor Mem0.
+- NEXT: inspect G03 GitHub Actions logs, preserve evidence, rectify failure if needed, checkpoint SI-MH-0039.
