@@ -1,0 +1,278 @@
+{
+  "document_id": "RW_SI_WORK03B_R2_R1C_REST_VERIFY_CONTRACT",
+  "revision": "0.1.0-preimplementation",
+  "date": "2026-11-12",
+  "status": "DRAFT_NOT_RATIFIED_NOT_IMPLEMENTED",
+  "baseline_develop_sha": "0eb4e662490ffb22a18cdb5e21ac4c85c14066d4",
+  "implementation_scope": "R2_R1C_REST_EVIDENCE_VERIFY_ONLY",
+  "depends_on": [
+    "R2_R1B_EVIDENCE_LEDGER",
+    "R2_R0_TRUST_CONTRACT",
+    "SEC_R1C_SECURITY_GATES"
+  ],
+  "api": {
+    "method": "POST",
+    "path": "/v1/projects/{project_id}/evidence/{evidence_id}/verify",
+    "response_http_status": 200,
+    "request": {
+      "path_fields": [
+        "project_id",
+        "evidence_id"
+      ],
+      "body_fields": [
+        "policy_id",
+        "expected_task_version"
+      ],
+      "required_header": "Idempotency-Key",
+      "forbidden_body_fields": [
+        "actor_id",
+        "principal_id",
+        "github_token",
+        "client",
+        "source_url",
+        "observation_channel",
+        "expected_head_sha",
+        "repository_id",
+        "workflow_id",
+        "task_status",
+        "review_decision"
+      ]
+    },
+    "response_fields": [
+      "attempt_id",
+      "project_id",
+      "task_id",
+      "evidence_id",
+      "policy_id",
+      "policy_version",
+      "criteria_index",
+      "task_version_checked",
+      "verified_by",
+      "result",
+      "reason_code",
+      "observation_channel",
+      "observed_at",
+      "task_approved",
+      "review_decision"
+    ],
+    "error_http_status": {
+      "unauthenticated": 401,
+      "unauthorized": 403,
+      "not_found": 404,
+      "state_conflict": 409,
+      "invalid_request": 422,
+      "service_unavailable": 503
+    },
+    "privacy_note": "Return only scoped bounded result metadata; never return secrets or provider response body"
+  },
+  "authorization": {
+    "operator_ratified": false,
+    "principal_source": "server_resolved_bearer",
+    "allowed_principal_kinds": [
+      "SERVICE"
+    ],
+    "required_grants": [
+      "evidence:verify",
+      "task:read"
+    ],
+    "reject_task_creator": true,
+    "reject_evidence_submitter": true,
+    "reject_policy_author": true,
+    "review_grant_not_in_scope": "task:review"
+  },
+  "binding": {
+    "require_path_evidence_policy_match_before_network": true,
+    "require_task_project_scope_match": true,
+    "require_recheck_after_network": true,
+    "required_future_ledger_argument": "expected_evidence_id",
+    "require_policy_version_cas": true,
+    "require_allowlist_by_project": true,
+    "require_expiry_disable_revocation_lifecycle_before_release": true,
+    "gap_in_current_ledger": "EvidenceLedger.verify_and_record accepts policy_id but not evidence_id; API must not ignore path evidence_id"
+  },
+  "provider": {
+    "kind": "GITHUB_WORKFLOW_RUN",
+    "network_target_source": "trusted_pinned_policy_only",
+    "live_channel": "LIVE_HTTPS",
+    "simulated_channel": "SIMULATED_TRANSPORT",
+    "provider_failure_result": "INCONCLUSIVE",
+    "fixed_host": "api.github.com",
+    "arbitrary_url_fetch": false,
+    "redirects_allowed": false,
+    "proxy_from_environment": false,
+    "credentials_from_request": false,
+    "verification_claim": "Only exact provider workflow-run fields; not acceptance of software or business result"
+  },
+  "safety": {
+    "verification_results": [
+      "CHECKED_PASS",
+      "CHECKED_FAIL",
+      "INCONCLUSIVE"
+    ],
+    "task_status_after_any_result": "IN_REVIEW",
+    "evidence_status_after_any_result": "REFERENCED",
+    "may_write_review_decision": false,
+    "may_update_agent_assertion": false,
+    "auto_task_done": false
+  },
+  "runtime": {
+    "route_enabled": false,
+    "auto_done": false,
+    "release_mode": false
+  },
+  "required_operator_gates": [
+    {
+      "id": "SEC-R1C-01",
+      "status": "NOT_RATIFIED"
+    },
+    {
+      "id": "SEC-R1C-02",
+      "status": "NOT_RATIFIED"
+    },
+    {
+      "id": "SEC-R1C-03",
+      "status": "NOT_RATIFIED"
+    },
+    {
+      "id": "SEC-R1C-04",
+      "status": "NOT_RATIFIED"
+    },
+    {
+      "id": "R2-PROVIDER",
+      "status": "NOT_RATIFIED"
+    },
+    {
+      "id": "R2-IDENTITY",
+      "status": "NOT_RATIFIED"
+    },
+    {
+      "id": "R2-PRIVACY",
+      "status": "NOT_RATIFIED"
+    }
+  ],
+  "acceptance_cases": [
+    {
+      "id": "API-NEG-01",
+      "scenario": "No bearer",
+      "http_code": 401,
+      "oracle": "No provider call, no verification insert",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-02",
+      "scenario": "AGENT or HUMAN holds evidence:verify",
+      "http_code": 403,
+      "oracle": "Principal-kind SERVICE required",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-03",
+      "scenario": "SERVICE lacks task:read or evidence:verify",
+      "http_code": 403,
+      "oracle": "Both project grants required",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-04",
+      "scenario": "Cross-project task, policy or evidence",
+      "http_code": 404,
+      "oracle": "No resource details leaked",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-05",
+      "scenario": "Path evidence_id differs from policy.evidence_id",
+      "http_code": 409,
+      "oracle": "Reject before GitHub request",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-06",
+      "scenario": "Policy not bound to current project/task/evidence",
+      "http_code": 404,
+      "oracle": "Fail closed before network",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-07",
+      "scenario": "Expected task version is stale or task not IN_REVIEW",
+      "http_code": 409,
+      "oracle": "No record committed",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-08",
+      "scenario": "Grant revoked while provider request is in flight",
+      "http_code": 403,
+      "oracle": "Recheck under lock; no record",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-09",
+      "scenario": "GitHub workflow has wrong SHA/repo/workflow/attempt",
+      "http_code": 200,
+      "oracle": "CHECKED_FAIL; no review or DONE",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-10",
+      "scenario": "GitHub unavailable/redirect/pending",
+      "http_code": 200,
+      "oracle": "INCONCLUSIVE; never PASS",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-11",
+      "scenario": "Replay same idempotency key and same bound request",
+      "http_code": 200,
+      "oracle": "Exactly one append-only attempt",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-12",
+      "scenario": "Replay key reused across evidence/policy/version",
+      "http_code": 409,
+      "oracle": "No second insert or mismatched result",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-13",
+      "scenario": "Request tries to supply actor_id/token/client/source URL/channel",
+      "http_code": 422,
+      "oracle": "No identity/provider override",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-14",
+      "scenario": "Policy expired, superseded or disabled",
+      "http_code": 409,
+      "oracle": "Release blocker until policy lifecycle exists",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-15",
+      "scenario": "Simulated client reports success",
+      "http_code": 200,
+      "oracle": "SIMULATED_TRANSPORT; cannot claim LIVE_HTTPS",
+      "execution": "NOT_EXECUTED"
+    },
+    {
+      "id": "API-NEG-16",
+      "scenario": "Service cannot reach PostgreSQL or secret leak attempt",
+      "http_code": 503,
+      "oracle": "Sanitized error; no token/log disclosure",
+      "execution": "NOT_EXECUTED"
+    }
+  ],
+  "out_of_scope": [
+    "REST REVIEW",
+    "DONE",
+    "SOURCE_LEVEL_CONSENT_IMPLEMENTATION",
+    "EXTERNAL_EFFECT_OUTBOX",
+    "OIDC_PRODUCTION",
+    "JARVIS_INTEGRATION",
+    "PRODUCTION_DEPLOYMENT",
+    "MAIN_RELEASE"
+  ],
+  "warning": "This JSON is a proposal and its tests are static contract lint; no API security is proven"
+}

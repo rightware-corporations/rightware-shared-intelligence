@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0030 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0031 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -182,3 +182,11 @@
 - **Recuperação:** [R2 R1C DECISION AND API GATE R0](work03b/R2_R1C_DECISION_AND_API_GATE_R0.md) consolida progressos, recomendações SEC-R1C-01..04, provider GitHub por tenant, identity, criteria, privacy, autorização SERVICE e matriz de testes a exigir antes do endpoint R2 R1C. **Documento apenas; nada ratificado nem implementado.**
 - **Próximo passo operacional:** ratificar/rever SEC-R1C-01..04 e política de fornecedor/critério/consentimento; consultar CI deste commit; só então autorizar API REST de `evidence:verify` (sem reviewer/DONE). Manter `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED != DONE`.
 - **Preservado:** zero alterações a backend/migrations/workflows/runtime, `main`, JARVIS, PULSE e vendor Mem0. Não repetir commits nem aplicar PRs históricos destrutivamente.
+
+## SI-MH-0031 — R2 R1C contract lint / evidence path safety (NÃO API)
+
+- HEAD inicial conferido: `develop@0eb4e662490ffb22a18cdb5e21ac4c85c14066d4`. Novo [REST contract R0](work03b/R2_R1C_REST_VERIFY_CONTRACT_R0.md) e [JSON](work03b/R2_R1C_REST_VERIFY_CONTRACT_R0.json), 16 oráculos negativos API-NEG-01..16 **NÃO EXECUTADOS**.
+- **Gap de código encontrado:** o path futuro usa `evidence_id`, mas `EvidenceLedger.verify_and_record` só usa `policy_id`. Exigir `expected_evidence_id` e binding/recheck transacional ANTES de implementação REST; não passar adiante um path ignorado.
+- `tests/test_r2_r1c_contract.py` adiciona **11 static lint tests** sem PostgreSQL ou API E2E. Suite estimada 142 (131 baseline +11); **CI do novo commit pendente**, não declarar 142 PASS sem observação.
+- SEC-R1C-01..04, R2-PROVIDER, R2-IDENTITY, R2-PRIVACY aguardam ratificação; nenhuma rota R2, review ou DONE disponível. `main`, JARVIS, PULSE e pinned Mem0 preservados.
+- **Next:** verificar CI do SI-MH-0031; ratificar políticas; só depois autorizar endpoint SERVICE-only e executar API negative integration, revocation, concurrency e live provider tests.

@@ -551,6 +551,23 @@
 
 **Próxima ação:** consultar CI deste commit; ratificar ou corrigir SEC-R1C-01..04 e as escolhas de provider/criteria/identity/retention. Só depois autorizar e implementar R2 R1C REST verifier; reviewer/DONE em gate separado. Nunca trocar uma recomendação por decisão automática.
 
+
+---
+
+## SI-MH-0031 — R2 R1C contract lint and evidence/path identity safety gate (sem API)
+
+**Data:** 2026-11-12 Africa/Maputo. **Classificação:** INVESTIGAÇÃO / ESPECIFICAÇÃO TÉCNICA / TESTES ESTÁTICOS; **SEM aprovação de política, SEM rota operacional.** HEAD antes: `develop@0eb4e662490ffb22a18cdb5e21ac4c85c14066d4`; última implementação validada permanece R2 R1B 131/131 no [Actions 43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677).
+
+**Descoberta por leitura do código real:** `backend/rightware_si/http_api.py` possui 18 rotas laboratoriais mas não uma rota de verificação/review; `verification_ledger.py::verify_and_record` aceita policy_id mas não evidence_id, por isso o futuro `/evidence/{evidence_id}/verify` precisa de binding explícito na fronteira do ledger e revalidação sob lock antes de registrar tentativa; caso contrário o path pode ser ignorado. As regras de SERVICE/evidence:verify+task:read, separação de autoria, API fixa GitHub, provenance LIVE_HTTPS/SIMULATED_TRANSPORT, idempotência e revogação já existem internamente, não se duplicam.
+
+**Artefactos deste checkpoint:** [R2_R1C_REST_VERIFY_CONTRACT_R0.md](work03b/R2_R1C_REST_VERIFY_CONTRACT_R0.md), JSON homólogo, 16 cenários negativos API-NEG-01..16 definidos (NÃO EXECUTADOS) e `tests/test_r2_r1c_contract.py` com **11 testes de consistência estática**. O script não tem dependência externa e não valida HTTP/DB nem autoria de operador. Código funcional, migrations, tokens, credenciais, CI workflow e branches de release intactos. Contagem de suíte completa: 131 anteriores +11 propostos = **142 ESPERADOS, NÃO COMPROVADOS** antes de CI. Não confundir lint com prova do endpoint.
+
+**Governança:** SEC-R1C-01..04 e R2-PROVIDER/IDENTITY/PRIVACY continuam NÃO RATIFICADOS. `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED != DONE`. Nenhum REST verification endpoint, reviewer, DONE, policy admin, OIDC, source-level consent/retention, external-effect outbox ou produção implementado. `main`, JARVIS, PULSE, Mem0 pinned sem alterações.
+
+**CI deste commit:** PENDENTE DE OBSERVAÇÃO. Validar HEAD, static test, suite 142 prevista, migrations e E2E anteriores, registar resultado real em novo checkpoint. Se falhar, corrigir e preservar evidências sem declarar aprovação. Não afirmar execução dos 16 API-NEG, EV-08..EV-16 ou M01–M18 completos.
+
+**Próximo gate:** ratificação explícita das políticas e de condições por projecto/tenant; depois implementação mínima de binding `expected_evidence_id` + FastAPI SERVICE-only em checkpoint de engenharia separado com real negative tests. DONE e reviewer continuam separados.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
