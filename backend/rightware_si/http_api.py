@@ -145,6 +145,14 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
         debug=False,
     )
 
+    @app.exception_handler(psycopg.OperationalError)
+    async def db_unavailable(request, exc):
+        # Fail closed on DB outages, including auth lookup failures before a
+        # route runs. Never serialize SQL, DSNs, access tokens or driver errors.
+        return JSONResponse(status_code=503,
+                            content={"detail": "Service unavailable"},
+                            headers={"Cache-Control": "no-store"})
+
     @app.middleware("http")
     async def no_store(request, call_next):
         response = await call_next(request)

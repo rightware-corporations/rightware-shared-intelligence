@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0036 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0037 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -228,3 +228,11 @@
 - **Plano R2 R1D-R0:** [R2_R1D_SECURITY_GATES_R0.md](work03b/R2_R1D_SECURITY_GATES_R0.md): Policy lifecycle/tenant ownership, completar negativos API-NEG, ensaio LIVE GitHub-through-REST em CI isolado, identity/OIDC/privacy/consent, release gates; **RECOMENDAÇÃO não ratificada, nada implementado em R1D**.
 - Este checkpoint apenas documentos; CI dele **PENDENTE**. Endpoint R2 R1C continua opt-in só laboratório, nunca DONE, main/JARVIS/PULSE/vendor Mem0 preservados.
 - NEXT: ratificação dos contratos de provider/identity/privacy por tenant; depois testes R1D negativos e LIVE REST em laboratório sem deploy.
+
+## SI-MH-0037 — R2 R1D-G02 laboratory negative tests (CI pendente)
+
+- Baseline `develop@1cc93652669e1ff8d7377bd5f1474229a971980e`. SI-MH-0036 [Actions 43252805427](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43252805427) **SUCCESS**. Último total certo 158/158 em [43252042999](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43252042999).
+- `tests/test_r2_r1c_api_lab.py` recebeu +16 testes (17..32) em HTTP/PG testando gaps API-NEG-02/03/06/07/09/10/12/13/16, autorizacao de policy creator e validação de Idempotency-Key; `http_api.py` agora sanitiza falhas `psycopg.OperationalError` também em bearer dependency.
+- Esperados **174 testes** (158+16), **NÃO VALIDADOS ATÉ CI**. Provider destes HTTP tests = MOCK, nunca LIVE. R2 R1D-G01 lifecycle e G03 LIVE REST continuam por implementar/ratificar, R1D-G04/G05 release bloqueados.
+- Documento [R2_R1D_G02_NEGATIVE_TESTS_R0.md](work03b/R2_R1D_G02_NEGATIVE_TESTS_R0.md), MASTER append-only. Sem mudanças a SQL migrations, main, JARVIS, PULSE, vendor Mem0 ou produção.
+- Próximo: CI real deste SHA e correções, depois G03 live REST smoke em laboratório.

@@ -648,6 +648,19 @@
 
 **Riscos e próximo passo:** branch `develop` ainda sem proteção remota confirmada, política de tenant/consent/OIDC e reviewer/DONE ausentes. Antes de R1D técnico, ratificar scope e autoridade; continuar a manter a rota R2 R1C desligada por padrão e restrita ao `rw_test` local.
 
+
+---
+
+## SI-MH-0037 — R2 R1D-G02 ampliou 16 testes HTTP negativos e sanitização de DB (CI PENDENTE)
+
+**Data:** 2026-11-12 Africa/Maputo. **Classificação:** LAB IMPLEMENTATION + TEST MATRIX; AINDA NÃO VALIDADO NESTE COMMIT. **Baseline:** `develop@1cc93652669e1ff8d7377bd5f1474229a971980e`; [CI SI-MH-0036 43252805427](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43252805427) SUCCESS na verificação do metadata. Baseline CI 158/158 comprovada em [43252042999](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43252042999).
+
+**Código:** `tests/test_r2_r1c_api_lab.py` +16 testes (17–32) em HTTP/PG descartável cobrindo HUMAN mesmo com grants, missing task:read, bindings cross-task, estado não-IN_REVIEW, mismatches repo/workflow/attempt, pending/redirect/timeout, idempotência stale, campos proibidos, chave inválida, policy-author self-check, DB failures. `http_api.py` ganhou exception handler para `psycopg.OperationalError` → HTTP 503 genérico sem serializar credenciais/DSN (inclui falha de autenticação antes da rota). [Relatório e escopo](work03b/R2_R1D_G02_NEGATIVE_TESTS_R0.md).
+
+**Qualidade/evidência:** `158 + 16 = 174` testes **ESPERADOS**, CI desta implementação PENDENTE. Provedor HTTP é MOCK `SIMULATED_TRANSPORT`; GitHub LIVE existente no R1B não equivale a G03 LIVE-through-REST. Nenhum DONE/review, produção, policy expiry/disable, OIDC, source consent ou tenant lifecycle implementado.
+
+**Próximo:** observar logs CI do SI-MH-0037. Se PASS, registar SHA/run/contagem e seguir G03 com ensaio provider LIVE via novo endpoint, ainda em `rw_test` isolado; G01/G04/G05 continuam sujeitos a definição e ratificação de regras.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

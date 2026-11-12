@@ -186,5 +186,169 @@ class R2R1CVerifiedHTTP(unittest.TestCase):
         self.assertEqual(out.status_code, 403)
         self.assertEqual(self.fixture.rows(), [])
 
+
+    def test_17_human_with_both_grants_denied(self):
+        from rightware_si.token_admin import issue_api_token
+        self.fixture.tokens["operator"] = issue_api_token(_DSN, "operator", 4)[1]
+        with psycopg.connect(_DSN) as conn:
+            for perm in ("task:read", "evidence:verify"):
+                conn.execute("INSERT INTO si_project_grants "
+                             "(project_id,principal_id,permission) "
+                             "VALUES('alpha','operator',%s)", (perm,))
+        seen = []
+        with self.fake_provider(on_fetch=lambda r: seen.append(1)):
+            out = self.request(actor="operator")
+        self.assertEqual(out.status_code, 403)
+        self.assertEqual(seen, [])
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_18_missing_task_read_grant_denied(self):
+        with psycopg.connect(_DSN) as conn:
+            conn.execute("DELETE FROM si_project_grants WHERE project_id='alpha' "
+                         "AND principal_id='verifier' AND permission='task:read'")
+        seen = []
+        with self.fake_provider(on_fetch=lambda r: seen.append(1)):
+            out = self.request()
+        self.assertEqual(out.status_code, 403)
+        self.assertEqual(seen, [])
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_19_other_task_evidence_cannot_borrow_first_policy(self):
+        other = self.fixture.core.create_task(
+            "alpha", "worker", "Unrelated task", ["Unrelated acceptance criterion"],
+            f"cross-create-{uuid4().hex[:12]}")
+        tid = other["task_id"]
+        self.fixture.core.publish_task(
+            "alpha", "worker", tid, 1, f"cross-pub-{uuid4().hex[:12]}")
+        lease = self.fixture.core.claim_task(
+            "alpha", "worker", tid, 2, f"cross-claim-{uuid4().hex[:12]}")["lease_token"]
+        evidence = self.fixture.core.submit_result(
+            "alpha", "worker", tid, 3, lease,
+            r1b_fixture._URL, f"cross-submit-{uuid4().hex[:12]}")
+        seen = []
+        with self.fake_provider(on_fetch=lambda r: seen.append(1)):
+            out = self.request(
+                path=f"/v1/projects/alpha/evidence/{evidence['evidence_id']}/verify")
+        self.assertEqual(out.status_code, 409)
+        self.assertEqual(seen, [])
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_20_task_outside_in_review_cannot_be_verified(self):
+        with psycopg.connect(_DSN) as conn:
+            conn.execute("UPDATE si_tasks SET status='BLOCKED' "
+                         "WHERE id=%s::uuid", (self.fixture.task_id,))
+        seen = []
+        with self.fake_provider(on_fetch=lambda r: seen.append(1)):
+            out = self.request()
+        self.assertEqual(out.status_code, 409)
+        self.assertEqual(seen, [])
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_21_wrong_repository_id_is_checked_fail(self):
+        record = provider_record(repository={
+            "id": 987654321,
+            "full_name": "rightware-corporations/rightware-shared-intelligence"})
+        with self.fake_provider(response=record):
+            out = self.request()
+        self.assertEqual(out.status_code, 200, out.text)
+        self.assertEqual(out.json()["result"], "CHECKED_FAIL")
+        self.assertEqual(out.json()["reason_code"], "WRONG_REPOSITORY")
+        self.assertFalse(out.json()["task_approved"])
+
+    def test_22_wrong_workflow_id_is_checked_fail(self):
+        with self.fake_provider(response=provider_record(workflow_id=999999)):
+            out = self.request()
+        self.assertEqual(out.status_code, 200, out.text)
+        self.assertEqual(out.json()["reason_code"], "WRONG_WORKFLOW")
+        self.assertEqual(out.json()["result"], "CHECKED_FAIL")
+
+    def test_23_wrong_run_attempt_is_checked_fail(self):
+        with self.fake_provider(response=provider_record(run_attempt=2)):
+            out = self.request()
+        self.assertEqual(out.status_code, 200, out.text)
+        self.assertEqual(out.json()["reason_code"], "WRONG_RUN_ATTEMPT")
+        self.assertEqual(out.json()["result"], "CHECKED_FAIL")
+
+    def test_24_pending_workflow_is_inconclusive(self):
+        with self.fake_provider(response=provider_record(status="queued", conclusion=None)):
+            out = self.request()
+        self.assertEqual(out.status_code, 200, out.text)
+        self.assertEqual(out.json()["result"], "INCONCLUSIVE")
+        self.assertEqual(out.json()["reason_code"], "WORKFLOW_NOT_COMPLETED")
+
+    def test_25_provider_redirect_is_inconclusive(self):
+        with self.fake_provider(status=302):
+            out = self.request()
+        self.assertEqual(out.status_code, 200, out.text)
+        self.assertEqual(out.json()["result"], "INCONCLUSIVE")
+        self.assertEqual(out.json()["reason_code"], "PROVIDER_REDIRECT_DENIED")
+
+    def test_26_provider_network_timeout_is_inconclusive(self):
+        def timeout(_):
+            raise httpx.ReadTimeout("synthetic network timeout")
+        with self.fake_provider(on_fetch=timeout):
+            out = self.request()
+        self.assertEqual(out.status_code, 200, out.text)
+        self.assertEqual(out.json()["result"], "INCONCLUSIVE")
+        self.assertEqual(out.json()["reason_code"], "PROVIDER_UNAVAILABLE")
+
+    def test_27_idempotency_replay_with_stale_version_rejected(self):
+        with self.fake_provider():
+            first = self.request(idem="r1d-version-replay-001")
+            self.assertEqual(first.status_code, 200, first.text)
+            stale = self.request(
+                idem="r1d-version-replay-001",
+                body={"policy_id": self.fixture.policy_id, "expected_task_version": 3})
+        self.assertEqual(stale.status_code, 409)
+        self.assertEqual(len(self.fixture.rows()), 1)
+
+    def test_28_all_forbidden_request_controls_rejected(self):
+        forbidden = ("principal_id", "github_token", "client", "source_url",
+                     "observation_channel", "expected_head_sha", "repository_id",
+                     "workflow_id", "task_status", "review_decision")
+        for field in forbidden:
+            with self.subTest(field=field):
+                out = self.request(body={**self.body, field: "unauthorized"})
+                self.assertEqual(out.status_code, 422)
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_29_ledger_db_outage_returns_sanitized_503(self):
+        secret = "driver-password-should-never-appear"
+        with patch.object(EvidenceLedger, "verify_and_record",
+                          side_effect=psycopg.OperationalError(secret)):
+            out = self.request()
+        self.assertEqual(out.status_code, 503)
+        self.assertNotIn(secret, out.text)
+        self.assertNotIn(self.fixture.tokens["verifier"], out.text)
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_30_auth_db_outage_returns_sanitized_503(self):
+        secret = "auth-db-secret-must-be-redacted"
+        with patch("rightware_si.api_auth.resolve_principal",
+                   side_effect=psycopg.OperationalError(secret)):
+            out = self.request()
+        self.assertEqual(out.status_code, 503)
+        self.assertNotIn(secret, out.text)
+        self.assertNotIn(self.fixture.tokens["verifier"], out.text)
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_31_invalid_idempotency_header_rejected_without_provider(self):
+        seen = []
+        with self.fake_provider(on_fetch=lambda r: seen.append(1)):
+            out = self.request(idem="$$$$")
+        self.assertEqual(out.status_code, 422)
+        self.assertEqual(seen, [])
+        self.assertEqual(self.fixture.rows(), [])
+
+    def test_32_service_cannot_verify_policy_it_created(self):
+        own = self.fixture.seed_policy(version=2, created_by="verifier")
+        seen = []
+        with self.fake_provider(on_fetch=lambda r: seen.append(1)):
+            out = self.request(body={
+                "policy_id": own, "expected_task_version": 4})
+        self.assertEqual(out.status_code, 403)
+        self.assertEqual(seen, [])
+        self.assertEqual(self.fixture.rows(), [])
+
 if __name__ == "__main__":
     unittest.main()
