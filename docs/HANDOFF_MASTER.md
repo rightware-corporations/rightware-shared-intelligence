@@ -514,6 +514,24 @@
 
 ---
 
+## SI-MH-0029 — WORK-03B R2 R1B: CI 131 testes e verificador LIVE→PostgreSQL validados
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** VALIDAÇÃO EXPERIMENTAL REAL EM LABORATÓRIO, NÃO PRODUTO/PRODUÇÃO. **SHA real testado:** develop@cfa6153c4e8bbebd27d30f629e1681966312663f.
+
+**Fonte primária:** [Actions run 43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677) **SUCCESS**: HANDOFF_POLICY_PASS, migrações 0001–0007 MIGRATION_PASS, **Ran 131 tests / OK** (115 prévios +16 reais PostgreSQL/adapter com fonte mock), R2 R1A EV-01 live CHECKED_PASS e EV-02..04 live CHECKED_FAIL esperado, **WORK03B_R2_R1B_LEDGER_LIVE_PASS** com GitHub API real + SERVICE autorizado por bearer + PostgreSQL append-only; confirmou idempotência, current grant/revoked read negado, task=IN_REVIEW, evidence=REFERENCED, no_review=true, no_done=true. R1C two-process bound handoff/lease recovery E2E PASS, Mem0 OSS/Ollama/MCP/REST/PostgreSQL real E2E PASS. Nenhuma chave efémera detectada em claro nos logs observados.
+
+**O que efectivamente ficou verificado:** tabela de políticas imutáveis pre-seeded em laboratório e tentativas append-only, FKs de project/task/evidence, razão e canal LIVE_HTTPS vs SIMULATED_TRANSPORT, separação SERVICE de criador/agente, duas validações de grants/versão antes/depois de consulta externa, idempotência, leitura autorizada, preservação de estado independente de revisão. Registos de verificação não promovem ASSERTED nem automaticamente DONE.
+
+**Hierarquia de provas:** EV-01..04 live GitHub contra run fixo; EV-05..07 simulados em testes do R1A; R2 R1B inclui uma nova prova separada LIVE API→SERVICE→PostgreSQL mais 16 testes PostgreSQL com respostas provider simuladas. EV-08..16 não executados. Original fixture SI-RD-03C permanece synthetic=true/executed=false como contrato de investigação, não é jornal de resultados de implementação.
+
+**Documentos:** [R2_R1B_EVIDENCE.md](work03b/R2_R1B_EVIDENCE.md) contém run, SHA, observações exatas, métodos/live/mock/limites; [R2_R1B_VERIFICATION_LEDGER.md](work03b/R2_R1B_VERIFICATION_LEDGER.md) e UC_CORE_01_ACCEPTANCE actualizados. Ambos os handoffs preservados no mesmo commit.
+
+**Bloqueios / integridade:** R2 R0 DRAFT (zero endpoints operacionais R2); SEC-R1C-01..04 recomendações NÃO RATIFICADAS; nenhum endpoint POST verify ou review, nenhuma aprovação independente/DONE, sem policy/admin UI, OIDC, source-level consent/privacy, retention, RLS prod, Sigstore/in-toto ou external-effect outbox. M01–M18 PENDING_FULL_E2E. main, JARVIS, PULSE e vendor Mem0 inalterados. Este commit de evidências é apenas documentação, e necessita CI própria antes de se declarar validado.
+
+**Próximo passo:** ratificar políticas de autorização/persistência e critérios do primeiro provider por projecto; depois planear rota REST verificadora operacional com serviço credenciado e revisão separada. Não abrir DONE automático. Guardar CI desta adenda como run de documentação separada.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

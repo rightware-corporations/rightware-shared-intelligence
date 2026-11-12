@@ -36,3 +36,8 @@
 ## Next engineering gate
 
 Verify CI results, record actual observations in a new MASTER/CURRENT handoff addendum. Then obtain explicit operator ratification of production security/defaults and provider+criteria policy before enabling authorized public verification API or a separate review decision workflow. Never use this lab PASS to auto-DONE.
+
+
+## Verified implementation CI — SI-MH-0029
+
+[Actions 43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677) SUCCESS at develop@cfa6153c4e8bbebd27d30f629e1681966312663f: **131/131 tests PASS**, migration 0007, real GitHub provider → SERVICE authenticated append-only PostgreSQL ledger smoke PASS, idempotency/revocation checks, R1C two-process and real Mem0/MCP/Ollama regressions PASS. This is lab evidence, no public verifier/reviewer/approval. [Read actual CI evidence](R2_R1B_EVIDENCE.md). EV-08..EV-16 remain unexecuted.

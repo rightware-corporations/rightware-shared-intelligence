@@ -96,3 +96,8 @@ Git SHA; database migration version; test command/environment; independent clien
 - 16 real PostgreSQL unit/integration tests were added to verify mock PASS/FAIL/INCONCLUSIVE, authorization, revocation during slow check, no DONE, immutability, idempotent replay, cross-project isolation, criteria binding, source URI policy, and concurrent new attempts. Separate live lab script verifies actual GitHub provider run and stores a scoped result in disposable PostgreSQL.
 - **Expected count: 131 tests (115 prior + 16 new)** at time of implementation; do NOT mark PASS until actual CI. The original EV-01..EV-16 research fixture remains unchanged (proposal oracles, not execution journal); R2 R1B tests do not execute all EV scenarios. No public REST verify route or review/DONE exists.
 - SEC-R1C-01..04 and official R2 provider/criteria/consent policies remain pending. M01–M18 FINAL status PENDING_FULL_E2E remains unchanged. See [R2_R1B_VERIFICATION_LEDGER.md](R2_R1B_VERIFICATION_LEDGER.md).
+
+
+## WORK-03B R2 R1B CI verified — scoped ledger only
+
+[GitHub Actions 43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677) SUCCESS with 131/131 tests, real GitHub API → SERVICE authorized → PostgreSQL immutable attempt, source read revocation, idempotency, and regression R1C/Mem0. **No reviewer or DONE**. Original si_evidence_refs stays REFERENCED and si_observations ASSERTED; new checks do not alter task IN_REVIEW. Only the narrow ledger capability was proven; M01–M18 final acceptance remain PENDING_FULL_E2E and SEC-R1C-01..04 are not ratified. [Evidence detail](R2_R1B_EVIDENCE.md).
