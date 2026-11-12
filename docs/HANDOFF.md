@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0010 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0011 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -68,8 +68,17 @@
 - Hipótese principal permanece UC-CORE-01 (transferência entre dois agentes com contexto autorizado, evidência independente e recuperação sem efeitos externos duplicados); manter WORK-03B R0 antes de produção, SI-RD-03 como laboratório isolado.
 - Parent anterior `develop@7b719f7411cc7da042faae70c3f5198c4d8a0fc3` tem CI SUCCESS run 43151308140; CI deste novo commit documental PENDENTE. MASTER checkpoint SI-MH-0010.
 
+## WORK-03B R0 — Functional Contract Closure (DRAFT / CI PENDENTE)
+- [Functional contract](work03b/WORK03B_R0_FUNCTIONAL_CONTRACT.md), [machine-readable contract](work03b/UC_CORE_01_CONTRACT.json), [M01-M18 acceptance crosswalk](work03b/UC_CORE_01_ACCEPTANCE.md), `tests/test_work03b_contract.py`.
+- UC-CORE-01: Agent A context-write/checkpoint -> release/handoff -> Agent B independent new-process `resume` -> `IN_REVIEW` evidence -> external verifier + authorized reviewer DONE; separated permissions and revoked-scope checks.
+- Inventariados **10 endpoints protegidos existentes** e **7 endpoints propostos**, sem reivindicar novas APIs funcionais. **14 passos de cenário** e **18 critérios originais**, todos PENDING_FULL_E2E, sem produto completo.
+- Os 5 testes estáticos novos verificam inventário API real por AST, IDs e oráculos, distinção de rotas não implementadas, sequenciamento, protecções/semântica 409 de segredo. Não demonstram execução da jornada.
+- Base `develop@4c6f90feccccb30fa7a6aadb83512f18f50dfdac`: CI 43152798777 SUCCESS para código existente. CI novo após o commit **PENDENTE**.
+- Sem mudanças de backend, DB, Mem0/vendor, model inference, Jarvis/PULSE, `main`, PRs ou deployment.
+- Ratificação do operador para schema, direitos, MCP-write e política de recuperação de leases continua ABERTA antes do R1.
+
 ## Next exact work
-**Proposta prioritária: WORK-03B R0 Functional Contract Closure** — formalizar lacunas e a jornada de continuidade entre dois agentes antes de avançar para deployment. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: validar CI do contrato WORK-03B R0, rever/ratificar os contratos UC-CORE-01 e iniciar WORK-03B R1** — implementar observações, checkpoints e resume autorizados em laboratório sem alterar JARVIS. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

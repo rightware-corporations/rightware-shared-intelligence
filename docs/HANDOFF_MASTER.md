@@ -201,6 +201,20 @@
 **Verificação:** aritmética recomputada dos scores conforme pesos do PDF, fontes GitHub/arxiv verificadas; não houve execução de benchmarks nem novos testes. Último CI do projecto no parent `develop@7b719f7411cc7da042faae70c3f5198c4d8a0fc3` SUCCESS (run 43151308140). CI do commit documental PENDENTE até observação posterior.
 **Próximo passo:** reler CI deste commit, adicionar adenda se necessário; programa SI-RD-03A/B e WORK-03B R0, mantendo dados sintéticos e critérios de segurança.
 
+
+---
+
+## SI-MH-0011 — WORK-03B R0: Functional Contract Closure
+**Data:** 2026-11-12 (Africa/Maputo) · **Classificação:** IMPLEMENTAÇÃO DE ESPECIFICAÇÃO E TESTES ESTÁTICOS / PROPOSTA FUNCIONAL (NÃO HOMOLOGADA) · **Parent:** `develop@4c6f90feccccb30fa7a6aadb83512f18f50dfdac`.
+**Objectivo:** fechar ambiguidades da jornada sintética UC-CORE-01 (dois agentes, duas sessões, observação + checkpoint + transferência + resume + evidência + revisão independente) sem construir novas features antes dos contratos.
+**Ficheiros:** `docs/work03b/WORK03B_R0_FUNCTIONAL_CONTRACT.md`, `docs/work03b/UC_CORE_01_CONTRACT.json`, `docs/work03b/UC_CORE_01_ACCEPTANCE.md`, `tests/test_work03b_contract.py` + ambos HANDOFFs no mesmo commit.
+**Implementado:** contratos de 10 endpoints existentes vs 7 futuros, 14 passos da jornada, matriz M01–M18 sem falsos PASS, papéis e grants propostos, SourceRecord/Observation/AgentRun/ContextSnapshot/Checkpoint/Verification/Review/Outbox, semântica de restart/fail-closed e gates de autoridade.
+**Segurança:** M09 ajustado à segurança WORK-02D: claim/accept com lease secreto devolve 409 ao repetir; não reemitir secret/idempotency response. DONE exige autorização independente, não agent claim. Não prometer exatamente uma execução externa fora de reconciliação.
+**Verificação local do conteúdo:** JSON serializado de objectos estruturados e invariantes checadas na autoria (M01–M18, 14 passos únicos, 10 rotas live, 7 propostas); cinco novos testes `unittest` estáticos aguardam execução de CI; não representam cobertura funcional R1/R2.
+**Evidência preexistente:** GitHub Actions 43152798777 `SUCCESS` na base `4c6f90feccccb30fa7a6aadb83512f18f50dfdac` (55 testes + E2E sintético real); este novo commit CI PENDENTE até observar logs, contagem esperada 60 testes se 5 novos rodarem.
+**Não realizado:** nenhuma migração, API/authorization runtime, provider/LLM, benchmark SI-RD-03, produção, Jarvis/PULSE, main, merge ou branch nova. Direitos e entidades propostos ainda exigem ratificação do operador antes de R1.
+**Próximo passo:** confirmar CI do presente HEAD; corrigir se falhar, criar checkpoint; aprovar UC-CORE-01/R0 e implementar WORK-03B R1 mínimo sem quebrar a política de segredo/lease e com teste de processo independente.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

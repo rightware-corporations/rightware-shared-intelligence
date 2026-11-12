@@ -1,0 +1,503 @@
+{
+  "document_id": "WORK03B_R0_UC_CORE_01",
+  "revision": "0.1.0",
+  "date": "2026-11-12",
+  "status": "DRAFT_FOR_OPERATOR_RATIFICATION",
+  "scope": "synthetic_two_independent_agent_clients",
+  "authoritative_store": "RIGHTWARE_PostgreSQL",
+  "semantic_provider": "Mem0_unverified_replaceable",
+  "actors": {
+    "MANAGER": {
+      "kind": "HUMAN",
+      "privileges": [
+        "task:create",
+        "task:manage",
+        "task:read"
+      ]
+    },
+    "AGENT_A": {
+      "kind": "AGENT",
+      "privileges": [
+        "task:execute",
+        "handoff:offer",
+        "observation:write",
+        "context:read",
+        "task:read"
+      ]
+    },
+    "AGENT_B": {
+      "kind": "AGENT",
+      "privileges": [
+        "handoff:accept",
+        "task:execute",
+        "task:read",
+        "context:read",
+        "observation:write"
+      ]
+    },
+    "VERIFIER": {
+      "kind": "SERVICE",
+      "privileges": [
+        "evidence:verify",
+        "task:read"
+      ]
+    },
+    "REVIEWER": {
+      "kind": "HUMAN",
+      "privileges": [
+        "task:review",
+        "task:read"
+      ]
+    },
+    "UNAUTHORIZED_C": {
+      "kind": "AGENT",
+      "privileges": []
+    }
+  },
+  "invariants": [
+    "NO_AUTHORITY_FROM_MEMORY",
+    "SERVER_DERIVED_IDENTITY_SCOPE",
+    "CAS_EXPECTED_VERSION_ON_TASK_MUTATIONS",
+    "ONE_EXCLUSIVE_ACTIVE_LEASE",
+    "HANDOFF_ACCEPT_LEASE_AND_EVENT_ATOMIC",
+    "REAUTH_CONTEXT_ON_EVERY_READ",
+    "NO_CROSS_PROJECT_DATA",
+    "RESULT_SUBMISSION_ONLY_IN_REVIEW",
+    "NO_AGENT_SELF_APPROVAL",
+    "EXTERNAL_EFFECTS_REQUIRE_RECONCILIATION",
+    "NO_SECRET_REPLAY_FOR_LEASE_ISSUING_COMMANDS",
+    "EVENTS_APPEND_ONLY",
+    "DERIVED_MEMORY_NOT_SOURCE_OF_TRUTH",
+    "GRANTS_CHECKED_ON_RETRIEVAL"
+  ],
+  "task_states": [
+    "DRAFT",
+    "READY",
+    "IN_PROGRESS",
+    "BLOCKED",
+    "IN_REVIEW",
+    "DONE",
+    "CANCELLED"
+  ],
+  "evidence_states": [
+    "REFERENCED",
+    "CHECKING",
+    "PASS",
+    "FAIL",
+    "INCONCLUSIVE"
+  ],
+  "assertion_states": [
+    "ASSERTED",
+    "SOURCE_LINKED",
+    "CHECKED_PASS",
+    "CHECKED_FAIL",
+    "INCONCLUSIVE"
+  ],
+  "decision_states": [
+    "PROPOSED",
+    "APPROVED",
+    "REJECTED",
+    "SUPERSEDED"
+  ],
+  "existing_routes": [
+    {
+      "method": "GET",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}",
+      "permission": "task:read",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/events",
+      "permission": "audit:read",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks",
+      "permission": "task:create",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/publish",
+      "permission": "task:manage",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/claim",
+      "permission": "task:execute",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/handoffs",
+      "permission": "handoff:offer",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/handoffs/{handoff_id}/accept",
+      "permission": "handoff:accept",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/submit",
+      "permission": "task:execute",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/{project_id}/context",
+      "permission": "context:read",
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/memories/search",
+      "permission": "memory:read",
+      "implementation": "IMPLEMENTED_LAB"
+    }
+  ],
+  "future_routes": [
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/observations",
+      "permission": "observation:write",
+      "phase": "R1",
+      "purpose": "Append assertion with source linkage; no memory trust promotion",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/checkpoints",
+      "permission": "task:execute",
+      "phase": "R1",
+      "purpose": "Lease-bound versioned step progress; external effects remain unverified",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/resume",
+      "permission": "task:read+context:read",
+      "phase": "R1",
+      "purpose": "Fresh scoped continuation manifest; read-only; does not mint lease",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/review",
+      "permission": "task:review",
+      "phase": "R2",
+      "purpose": "Independent authorized reviewer accepts or requests changes",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/evidence/{evidence_id}/verify",
+      "permission": "evidence:verify",
+      "phase": "R2",
+      "purpose": "Trusted verifier records exactly which check and provider evidence it observed",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/memories/{memory_id}/invalidate",
+      "permission": "memory:manage",
+      "phase": "R2",
+      "purpose": "Revocation/projection invalidation with audit and no stale read",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/lease-recovery",
+      "permission": "task:recover",
+      "phase": "DEFERRED",
+      "purpose": "Explicit tightly controlled lost-secret reconciliation; never replay secret",
+      "implementation": "PROPOSED_UNIMPLEMENTED"
+    }
+  ],
+  "journey": [
+    {
+      "id": "S01",
+      "actor": "MANAGER",
+      "operation": "create_task",
+      "expected_state": "DRAFT",
+      "expected_version": 1,
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "id": "S02",
+      "actor": "MANAGER",
+      "operation": "publish_task",
+      "expected_state": "READY",
+      "expected_version": 2,
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "id": "S03",
+      "actor": "AGENT_A",
+      "operation": "claim_task",
+      "expected_state": "IN_PROGRESS",
+      "expected_version": 3,
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "id": "S04",
+      "actor": "AGENT_A",
+      "operation": "write_observation",
+      "expected_state": "IN_PROGRESS",
+      "expected_version": 3,
+      "implementation": "PROPOSED_R1"
+    },
+    {
+      "id": "S05",
+      "actor": "AGENT_A",
+      "operation": "write_checkpoint",
+      "expected_state": "IN_PROGRESS",
+      "expected_version": 3,
+      "implementation": "PROPOSED_R1"
+    },
+    {
+      "id": "S06",
+      "actor": "AGENT_A",
+      "operation": "offer_handoff",
+      "expected_state": "BLOCKED",
+      "expected_version": 4,
+      "implementation": "IMPLEMENTED_BASIC_BUNDLE_PENDING"
+    },
+    {
+      "id": "S07",
+      "actor": "AGENT_A",
+      "operation": "attempt_stale_lease_write",
+      "expected_state": "BLOCKED",
+      "expected_version": 4,
+      "implementation": "NEGATIVE_TEST_PENDING_R1"
+    },
+    {
+      "id": "S08",
+      "actor": "AGENT_B",
+      "operation": "accept_handoff",
+      "expected_state": "IN_PROGRESS",
+      "expected_version": 5,
+      "implementation": "IMPLEMENTED_BASIC_BUNDLE_PENDING"
+    },
+    {
+      "id": "S09",
+      "actor": "AGENT_B",
+      "operation": "restart_process_and_resume",
+      "expected_state": "IN_PROGRESS",
+      "expected_version": 5,
+      "implementation": "PROPOSED_R1"
+    },
+    {
+      "id": "S10",
+      "actor": "AGENT_B",
+      "operation": "submit_result",
+      "expected_state": "IN_REVIEW",
+      "expected_version": 6,
+      "implementation": "IMPLEMENTED_LAB"
+    },
+    {
+      "id": "S11",
+      "actor": "VERIFIER",
+      "operation": "verify_evidence",
+      "expected_state": "IN_REVIEW",
+      "expected_version": 6,
+      "implementation": "PROPOSED_R2"
+    },
+    {
+      "id": "S12",
+      "actor": "REVIEWER",
+      "operation": "accept_result",
+      "expected_state": "DONE",
+      "expected_version": 7,
+      "implementation": "PROPOSED_R2"
+    },
+    {
+      "id": "S13",
+      "actor": "UNAUTHORIZED_C",
+      "operation": "try_cross_project_read",
+      "expected_state": "NO_MUTATION",
+      "expected_version": null,
+      "implementation": "NEGATIVE_TEST_PENDING_R1"
+    },
+    {
+      "id": "S14",
+      "actor": "AGENT_B",
+      "operation": "retry_revoked_snapshot",
+      "expected_state": "DENIED",
+      "expected_version": null,
+      "implementation": "NEGATIVE_TEST_PENDING_R2"
+    }
+  ],
+  "work01_acceptance": [
+    {
+      "id": "M01",
+      "description": "Task created/published/claimed",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M02",
+      "description": "Observation appended as ASSERTED, with source",
+      "preexisting_coverage": "MISSING",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M03",
+      "description": "Handoff offer blocks and releases old lease",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M04",
+      "description": "Atomic acceptance to B / old lease invalid",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M05",
+      "description": "Scoped context includes versioned and authorized refs",
+      "preexisting_coverage": "MISSING",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M06",
+      "description": "Submission enters IN_REVIEW, never DONE",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M07",
+      "description": "Independent verification and authorized DONE acceptance",
+      "preexisting_coverage": "MISSING",
+      "target_phase": "R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M08",
+      "description": "Optimistic task version conflict",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M09",
+      "description": "Idempotency under lost secret response",
+      "preexisting_coverage": "SPEC_CONFLICT",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M10",
+      "description": "Cross-project denial for all reads/mutations/MCP",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1_R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M11",
+      "description": "Concurrent accepted handoff / one lease",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M12",
+      "description": "Memory offline degrades without losing task state",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M13",
+      "description": "Revoked source or grant blocks snapshot replay",
+      "preexisting_coverage": "MISSING",
+      "target_phase": "R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M14",
+      "description": "Prompt injection in memory cannot authorize action",
+      "preexisting_coverage": "UNPROVEN",
+      "target_phase": "R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M15",
+      "description": "Misleading evidence fails specific verification",
+      "preexisting_coverage": "MISSING",
+      "target_phase": "R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M16",
+      "description": "New process restart reconstructs progress and outbox",
+      "preexisting_coverage": "MISSING",
+      "target_phase": "R1_R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M17",
+      "description": "REST/MCP parity without policy bypass",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1_R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    },
+    {
+      "id": "M18",
+      "description": "All mutations have actor/version/correlation/audit",
+      "preexisting_coverage": "LAB_PARTIAL",
+      "target_phase": "R1_R2",
+      "final_acceptance": "PENDING_FULL_E2E"
+    }
+  ],
+  "gates": {
+    "critical_unauthorized_disclosures": 0,
+    "critical_false_approvals": 0,
+    "critical_duplicate_external_effects": 0,
+    "required_full_acceptance_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M14",
+      "M15",
+      "M16",
+      "M17",
+      "M18"
+    ]
+  },
+  "idempotency": {
+    "safe_replay_for_non_secret_commands": "SAME_KEY_SAME_PAYLOAD_REPLAY_IF_SUPPORTED",
+    "secret_lease_issuance": "CONFLICT_409_NO_RAW_TOKEN_REPLAY",
+    "lost_reply": "BLOCKED_PENDING_AUTHORIZED_RECOVERY_CONTRACT",
+    "different_payload_same_key": "CONFLICT_409"
+  },
+  "explicit_non_goals": [
+    "replace_PULSE_workflow",
+    "replace_Mem0_provider_without_benchmark",
+    "production_launch",
+    "automatic_vendor_chat_memory_sync",
+    "LLM_only_verification",
+    "adopt_new_orchestrator_in_R0"
+  ]
+}
