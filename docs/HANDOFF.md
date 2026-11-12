@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0009 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0010 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -61,6 +61,12 @@
 - **RECOMENDAÇÃO:** WORK-03B R0 Functional Contract Closure **antes** do deployment; R1 jornada real de continuidade, R2 trust/lifecycle e só depois staging/infra. A aprovação formal desse roadmap ainda cabe ao operador.
 - A pesquisa SI-RD-02 continua documental (18 oracles sintéticos; nenhum benchmark concluído); SI-RD-03 permanece avaliação de fornecedores separada.
 - **SI-FG-01 commit `12ea7c3b299b5a84b0d1a96d59a4c78401cbe40b` validado:** [Actions 43151016529](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43151016529) SUCCESS: HANDOFF_POLICY_PASS, **55/55 testes PASS e E2E sintético real PASS**. A documentação evidencia as lacunas; não entrega funcionalidades ausentes.
+
+## SI-RD-02E — Triagem da investigação externa Perplexity (PDF, 11 páginas)
+- [Dossier da triagem](research/SI_RD_02_EXTERNAL_PERPLEXITY_TRIAGE_2026-11-12.md): fonte externa PARCIAL, sem acesso ao repo RIGHTWARE; fact-check GitHub/arxiv, confronto SI-RD-02/SI-FG-01, 3 erros de aritmética no top-10, Kuzu arquivado, SoMem/DBOS e caminhos experimentais.
+- **Nenhuma tecnologia adoptada, dependência alterada ou benchmark executado.** Documento é investigação, não decisão oficial de produto.
+- Hipótese principal permanece UC-CORE-01 (transferência entre dois agentes com contexto autorizado, evidência independente e recuperação sem efeitos externos duplicados); manter WORK-03B R0 antes de produção, SI-RD-03 como laboratório isolado.
+- Parent anterior `develop@7b719f7411cc7da042faae70c3f5198c4d8a0fc3` tem CI SUCCESS run 43151308140; CI deste novo commit documental PENDENTE. MASTER checkpoint SI-MH-0010.
 
 ## Next exact work
 **Proposta prioritária: WORK-03B R0 Functional Contract Closure** — formalizar lacunas e a jornada de continuidade entre dois agentes antes de avançar para deployment. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.

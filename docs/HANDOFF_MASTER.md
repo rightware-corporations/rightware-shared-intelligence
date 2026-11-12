@@ -188,6 +188,19 @@
 
 ---
 
+
+---
+
+## SI-MH-0010 — SI-RD-02E: Perplexity external report triage
+**Data:** 2026-11-12 (Africa/Maputo) · **Classificação:** INVESTIGAÇÃO DOCUMENTAL / FACT-CHECK / RECOMENDAÇÃO · **Base:** `develop@7b719f7411cc7da042faae70c3f5198c4d8a0fc3`.
+**Material de entrada:** PDF Perplexity de 11 páginas fornecido pelo operador; identificado pelo próprio fornecedor como SI_RD_02_PARTIAL. O PDF não continha estado de código interno RIGHTWARE nem tinha inspecção robusta dos principais candidatos. Não publicar PDF original no repo público.
+**Entrega:** [docs/research/SI_RD_02_EXTERNAL_PERPLEXITY_TRIAGE_2026-11-12.md](research/SI_RD_02_EXTERNAL_PERPLEXITY_TRIAGE_2026-11-12.md): confronto com SI-RD-01, SI-RD-02 e SI-FG-01, validações externas directas, oportunidades de reúso, limites comerciais e sequência de experiências.
+**Resultados importantes:** Kuzu arquivado (não escolher como nova dependência activa; avaliar LadybugDB); SoMem paper 2026-11-09 + código MIT relevante para memória documental; DBOS Python activo como benchmark de durabilidade; XTDB MPL-2.0; Restate/Langfuse/Phoenix licença principal não classificada via GitHub, requer revisão. PDF pontuou incorrectamente três oportunidades: #3 4.40→4.35, #6 4.05→4.15, #9 4.10→4.05; ranking proposto não está ordenado. Não afirmar `exactly once` de efeitos externos apenas por receipts.
+**Classificação:** NENHUMA NOVA DECISÃO DE PRODUTO; hipóteses/recomendações permanecem não aprovadas. Seguir WORK-03B R0 para contrato `UC-CORE-01` e SI-RD-03 para benchmark isolado, sem trocar Mem0/WorkCore sem evidência.
+**Mudanças:** dossier externo + ambos handoffs no mesmo commit, sem alterar código, dependências, migrações, vendor, CI workflow, JARVIS, PULSE ou `main`.
+**Verificação:** aritmética recomputada dos scores conforme pesos do PDF, fontes GitHub/arxiv verificadas; não houve execução de benchmarks nem novos testes. Último CI do projecto no parent `develop@7b719f7411cc7da042faae70c3f5198c4d8a0fc3` SUCCESS (run 43151308140). CI do commit documental PENDENTE até observação posterior.
+**Próximo passo:** reler CI deste commit, adicionar adenda se necessário; programa SI-RD-03A/B e WORK-03B R0, mantendo dados sintéticos e critérios de segurança.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
