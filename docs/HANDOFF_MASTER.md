@@ -532,6 +532,25 @@
 
 ---
 
+
+---
+
+## SI-MH-0030 — Recuperação do chat e gate R2 R1C preparado (somente documentação)
+
+**Data:** 2026-11-12 (Africa/Maputo). **Classe:** CONTINUIDADE / RECOMENDAÇÃO / DECISION PACKET; nenhuma ratificação ou implementação de R2 R1C. **HEAD inicial verificado:** `develop@e43a653b3c5999028abe4571fb9730b7f9b25dea`. Comparação inicial `develop` vs baseline: identical.
+
+**Motivo:** atingido limite do chat anterior. O operador forneceu o registo histórico e pediu preservação em handoffs e continuação sem perder o progresso. Handoff oficial e GitHub foram usados como fonte de verdade; texto do chat não foi copiado integralmente para o repo público.
+
+**Evidências pré-existentes confirmadas:** WORK-03B R1C 94/94 PASS [43196082372](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43196082372); R2 R0 contrato 100/100 PASS [43201981635](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43201981635); R2 R1A 115/115 PASS [43214573166](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43214573166); R2 R1B 131/131 PASS [43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677). Job do [CI documental SI-MH-0029](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43238519552) observado como success. EV-01..04 LIVE; EV-05..07 transport MOCK; EV-08..16 não executados. `main` segue README inicial; sem produto pronto para produção.
+
+**Ficheiros no mesmo commit deste checkpoint:** novo [decision packet R2 R1C](work03b/R2_R1C_DECISION_AND_API_GATE_R0.md), [HANDOFF.md](HANDOFF.md) e este MASTER. Nenhum código SQL, backend, provider, policy de runtime, workflow, teste, PR, dependência, JARVIS/PULSE, Mem0 ou `main` alterado. Novo CI deste commit: **PENDENTE DE OBSERVAÇÃO**, não afirmar PASS até logs reais.
+
+**Decisões oficiais preservadas:** dois ramos de trabalho `develop/main` e handoffs obrigatórios por checkpoint; nenhuma decisão SEC-R1C-01..04 ou política R2 de provider/tenant/consent foi aprovada por este documento. `ASSERTED`, `CHECKED_*`, `REVIEW_*` e `DONE` continuam rigorosamente separados.
+
+**Riscos/gates:** lease takeover e external-effect reconciliation não resolvidos; workload identity/OIDC, RLS/PII/source-level ACL, retenção, reviewer, review/DONE, endpoints R2 e full UC-CORE-01 pendentes. O novo pacote contém opções a ratificar, especificação de negative tests e critérios para uma API SERVICE-only restrita (sem autorizar a implementação).
+
+**Próxima ação:** consultar CI deste commit; ratificar ou corrigir SEC-R1C-01..04 e as escolhas de provider/criteria/identity/retention. Só depois autorizar e implementar R2 R1C REST verifier; reviewer/DONE em gate separado. Nunca trocar uma recomendação por decisão automática.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

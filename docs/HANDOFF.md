@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0029 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0030 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -174,3 +174,11 @@
 3. Review last GitHub Actions result + diff and any open blockers.
 4. Execute limited work; commit output and both handoffs atomically; review actual CI and append follow-up if outcome arrives later.
 
+
+## SI-MH-0030 — Estado para novo chat / gate R2 R1C (DOCUMENTAL)
+
+- **Baseline remoto confirmado:** `develop@e43a653b3c5999028abe4571fb9730b7f9b25dea`; `main` continua com README inicial. [SI-MH-0029](HANDOFF_MASTER.md) e [R2 R1B evidence](work03b/R2_R1B_EVIDENCE.md) são a última implementação comprovada.
+- **Última suite efectiva:** 131/131 PASS [43237504677](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43237504677), GitHub LIVE API → SERVICE → PostgreSQL append-only; regressão R1C e Mem0/Ollama. CI documental [43238519552](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43238519552) job success observado. CI deste SI-MH-0030 **PENDENTE DE VERIFICAÇÃO**.
+- **Recuperação:** [R2 R1C DECISION AND API GATE R0](work03b/R2_R1C_DECISION_AND_API_GATE_R0.md) consolida progressos, recomendações SEC-R1C-01..04, provider GitHub por tenant, identity, criteria, privacy, autorização SERVICE e matriz de testes a exigir antes do endpoint R2 R1C. **Documento apenas; nada ratificado nem implementado.**
+- **Próximo passo operacional:** ratificar/rever SEC-R1C-01..04 e política de fornecedor/critério/consentimento; consultar CI deste commit; só então autorizar API REST de `evidence:verify` (sem reviewer/DONE). Manter `ASSERTED != CHECKED_PASS != REVIEW_ACCEPTED != DONE`.
+- **Preservado:** zero alterações a backend/migrations/workflows/runtime, `main`, JARVIS, PULSE e vendor Mem0. Não repetir commits nem aplicar PRs históricos destrutivamente.
