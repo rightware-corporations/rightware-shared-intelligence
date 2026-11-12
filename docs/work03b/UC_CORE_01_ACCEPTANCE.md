@@ -10,7 +10,7 @@
 | ID | Required result | Existing coverage | Target | Full result |
 |---|---|---|---|---|
 | M01 | Task created/published/claimed | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
-| M02 | Observation appended as ASSERTED, with source | MISSING | R1 | PENDING_FULL_E2E |
+| M02 | Observation appended as ASSERTED, with source | R1A_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M03 | Handoff offer blocks and releases old lease | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M04 | Atomic acceptance to B / old lease invalid | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M05 | Scoped context includes versioned and authorized refs | MISSING | R1 | PENDING_FULL_E2E |
@@ -52,3 +52,9 @@ For M09, **secret issuance claim/accept replay** cannot return the same lease to
 
 ## 6. Required evidence artifacts for the future E2E
 Git SHA; database migration version; test command/environment; independent client process logs sanitized; scoped tokens NEVER logged; current and previous task states; event versions; handoff status, lease generation but no token; source IDs; verifier details; reviewer verdict; negative-case counts and projection watermark. Handoffs and evidence status committed in the same engineering checkpoint with exact run links. This document alone has no actual run results.
+
+## WORK-03B R1A laboratory progress (not full acceptance)
+- Implemented four experimental authenticated REST operations for AgentRun start, SourceRecord registration, source-linked Observation write and authorized task Observation reads. They do not expose generic memory writing or verification.
+- PostgreSQL 0004 keeps observations in an independent append-only continuity event stream and keeps task.version unchanged. Mutations require task lease, effective principal and project grants. Source URI is a pointer and is never fetched by this service.
+- Original M02 is **R1A_LAB_PARTIAL**; M01–M18 remain **PENDING_FULL_E2E**. Nothing yet proves ContextSnapshot, checkpoint, resume, outbox, verifier, review, Jarvis staging or production.
+- SourceRecord GIT_REF currently accepts HTTPS github.com URL; TOOL_RECEIPT accepts a safe local urn:rw: reference only. Privacy/retention, real source verification and resource-level ACL still require design.

@@ -5,6 +5,7 @@ All RIGHTWARE-owned migrations live in `database/migrations/`, in numeric order:
 1. `0001_work02_core.sql` — identity/grants, task state/leases/handoffs/events/idempotency.
 2. `0002_work02b_api_credentials.sql` — experimental API token hash, expiry and revocation.
 3. `0003_work02d_scrub_lease_replays.sql` — scrub legacy replayable lease secret fields.
+4. `0004_work03b_r1a_continuity.sql` — task-bound AgentRun, SourceRecord, Observation, associations, continuation event stream.
 
 `database/` owns RIGHTWARE operational schema; the vendored Mem0 library controls its own memory index/schema and is **not** allowed to rewrite RIGHTWARE task state.
 

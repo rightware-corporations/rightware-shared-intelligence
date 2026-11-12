@@ -47,14 +47,14 @@ class ContractR0Tests(unittest.TestCase):
         declared = self.contract["existing_routes"]
         pairs = [(x["method"], x["path"]) for x in declared]
         self.assertEqual(len(pairs), len(set(pairs)))
-        self.assertEqual(len(pairs), 10)
-        self.assertTrue(all(x["implementation"] == "IMPLEMENTED_LAB" for x in declared))
+        self.assertEqual(len(pairs), 14)
+        self.assertTrue(all(x["implementation"] in {"IMPLEMENTED_LAB", "IMPLEMENTED_R1A_LAB"} for x in declared))
         self.assertTrue(set(pairs).issubset(actual))
 
     def test_future_routes_not_misrepresented_as_live(self) -> None:
         actual = declared_routes_from_source()
         future = self.contract["future_routes"]
-        self.assertEqual(len(future), 7)
+        self.assertEqual(len(future), 6)
         self.assertTrue(all(x["implementation"] == "PROPOSED_UNIMPLEMENTED" for x in future))
         self.assertFalse(any((x["method"], x["path"]) in actual for x in future))
         self.assertEqual(
@@ -70,7 +70,26 @@ class ContractR0Tests(unittest.TestCase):
         self.assertEqual(next(x for x in steps if x["operation"] == "submit_result")["expected_state"], "IN_REVIEW")
         self.assertEqual(next(x for x in steps if x["operation"] == "accept_result")["actor"], "REVIEWER")
         self.assertEqual(next(x for x in steps if x["operation"] == "restart_process_and_resume")["actor"], "AGENT_B")
-        self.assertEqual(self.contract["status"], "DRAFT_FOR_OPERATOR_RATIFICATION")
+        self.assertEqual(self.contract["status"], "DRAFT_FOR_OPERATOR_RATIFICATION_PARTIAL_R1A_LAB")
+
+    def test_r1a_routes_present_and_no_full_product_pass(self):
+        r1a = [r for r in self.contract["existing_routes"]
+               if r["implementation"] == "IMPLEMENTED_R1A_LAB"]
+        self.assertEqual(len(r1a), 4)
+        self.assertEqual(
+            {r["permission"] for r in r1a},
+            {"task:execute", "source:write", "observation:write",
+             "task:read+context:read"},
+        )
+        self.assertEqual(
+            next(x for x in self.contract["work01_acceptance"]
+                 if x["id"] == "M02")["preexisting_coverage"],
+            "R1A_LAB_PARTIAL",
+        )
+        self.assertTrue(all(
+            x["final_acceptance"] == "PENDING_FULL_E2E"
+            for x in self.contract["work01_acceptance"]
+        ))
 
     def test_critical_policy_guards_present(self) -> None:
         inv = set(self.contract["invariants"])

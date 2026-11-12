@@ -261,6 +261,26 @@
 
 ---
 
+## SI-MH-0015 — WORK-03B R1A: Operational Continuity Foundation implementation
+
+**Data:** 2026-11-12 Africa/Maputo · **Tipo:** IMPLEMENTADO no Git / CI AINDA PENDENTE · **Base de trabalho:** `develop@ad1bc5dcf604bf3fed58846a5fed29ca8fa39917` (Actions 43155153394 SUCCESS, 60/60 testes + E2E sintético real).
+
+**Autorização/âmbito:** após definição da visão e pedido explícito de avançar para R1A, executar somente infraestrutura funcional de AgentRun, SourceRecord e ASSERTED Observation em laboratório. Mantidas as decisões oficiais: trabalhar só em `develop`, `main` para release aprovado, dois handoffs por output, Jarvis e PULSE de produção intactos.
+
+**Implementação:**
+- `database/migrations/0004_work03b_r1a_continuity.sql`: si_agent_runs com actor/correlation/task_version, si_source_records revisionados com FK do mesmo task/run, si_observations ASSERTED, si_observation_sources FK composta para impedir cross-task, si_continuity_events separado de si_events(task_id,task_version). Nenhum índice Mem0 ou migração de dados privados.
+- `backend/rightware_si/continuity.py`: operações transacionais autenticadas pelo gateway, autorização por grant, task-lock/expected_version, lease vigente, idempotência, fonte segura (GitHub HTTPS ou urn:rw: de receipt), source-linked assertion, leitura restrita a task:read+context:read; conteúdo não verificado e sem incremento de task.version.
+- `backend/rightware_si/http_api.py`: 4 operações REST — start_run, register_source, record_observation, list_task_observations. Identidade efetiva do bearer, não de campos do request.
+- `.github/workflows/ci.yml`: aplica migração 0004 antes dos testes; `tests/test_work03b_r1a.py` acrescenta 8 testes reais PostgreSQL/TestClient de autorização, proveniência, grants, isolamento, no-stale-lease, handoff, idempotência, falhas e revogação.
+- Atualizados `tests/test_repository_layout.py`, teste estático canónico `tests/test_work03b_contract.py` (+1 teste), contrato machine-readable `docs/work03b/UC_CORE_01_CONTRACT.json` (14 routes live / 6 future), matriz M02 LAB_PARTIAL, documentação da arquitectura e `docs/work03b/R1A_IMPLEMENTATION.md`. Os 18 critérios M01–M18 continuam PENDING_FULL_E2E.
+
+**Fonte de prova anterior:** Actions 43155153394 SUCCESS na base. **R1A pós-commit NÃO foi executado ao registar esta entrada**. O total esperado é cerca de 69 testes (60 baseline +8 novos de integração +1 novo teste do contrato); somente logs da nova run podem confirmar.
+
+**Limites / riscos expressos:** nenhuma API de checkpoint/resume, outbox/MemoryWrite, source-level ACL/consent, verificador, DONE reviewer ou Jarvis staging. Source URIs são meros pointers e não prova; `run` não tem heartbeats nem close-on-handoff. Retenção/PII e OAuth/OIDC não implementados. Não executar dados reais no CI ou em serviço exposto. Falha CI deve criar adenda e fix em `develop` sem apagar entradas antigas.
+
+**Próxima ação:** inspecionar execução GitHub Actions para o commit R1A; reportar PASS/FAIL com evidências em nova entrada; depois WORK-03B R1B (checkpoint versionado + resume canónico sob ACL), sem alterar o Jarvis.
+
+---
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

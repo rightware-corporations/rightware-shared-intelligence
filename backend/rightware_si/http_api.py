@@ -9,6 +9,7 @@ from __future__ import annotations
 import os
 from typing import Annotated
 from uuid import UUID
+from typing import Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import JSONResponse
@@ -17,6 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from rightware_si.api_auth import make_principal_dependency
 from rightware_si.core import AccessDenied, Conflict, InvalidTransition, Missing, WorkCore
 from rightware_si.context_service import ScopedContextReader, SemanticUnavailable
+from rightware_si.continuity import ContinuityCore
 from rightware_si.memory import Mem0HTTPClient, SharedMemory
 
 
@@ -49,6 +51,29 @@ class SubmitResult(Versioned):
     evidence_url: str = Field(min_length=10, max_length=2048)
 
 
+class StartAgentRun(Versioned):
+    lease_token: str = Field(min_length=20, max_length=256)
+    runtime_label: str = Field(min_length=1, max_length=120)
+
+
+class RegisterSource(Versioned):
+    task_id: UUID
+    agent_run_id: UUID
+    lease_token: str = Field(min_length=20, max_length=256)
+    source_kind: Literal["GIT_REF", "TOOL_RECEIPT"]
+    source_uri: str = Field(min_length=1, max_length=2048)
+    source_revision: str = Field(min_length=1, max_length=128)
+    digest_sha256: str | None = None
+
+
+class RecordObservation(Versioned):
+    task_id: UUID
+    agent_run_id: UUID
+    lease_token: str = Field(min_length=20, max_length=256)
+    claim: str = Field(min_length=1, max_length=2000)
+    source_ids: list[UUID] = Field(min_length=1, max_length=10)
+
+
 def _invoke(operation):
     try:
         return operation()
@@ -67,6 +92,7 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     if not dsn:
         raise RuntimeError("RW_SI_DATABASE_URL is required; refusing to start unconfigured")
     core = WorkCore(dsn)
+    continuity = ContinuityCore(dsn)
     principal_dep = make_principal_dependency(dsn)
     if memory_provider is None:
         mem0_url = os.environ.get("RW_SI_MEM0_URL", "")
@@ -192,6 +218,50 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
             ))
         except SemanticUnavailable:
             raise HTTPException(status_code=503, detail="Semantic memory unavailable") from None
+
+    @app.post("/v1/projects/{project_id}/tasks/{task_id}/runs", status_code=201)
+    def start_agent_run(
+        project_id: str, task_id: UUID, body: StartAgentRun,
+        idem: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=128)],
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: continuity.start_run(
+            project_id, actor, str(task_id), body.expected_version,
+            body.lease_token, body.runtime_label, idem
+        ))
+
+    @app.post("/v1/projects/{project_id}/sources", status_code=201)
+    def register_source(
+        project_id: str, body: RegisterSource,
+        idem: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=128)],
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: continuity.register_source(
+            project_id, actor, str(body.task_id), str(body.agent_run_id),
+            body.expected_version, body.lease_token, body.source_kind,
+            body.source_uri, body.source_revision, body.digest_sha256, idem
+        ))
+
+    @app.post("/v1/projects/{project_id}/observations", status_code=201)
+    def record_observation(
+        project_id: str, body: RecordObservation,
+        idem: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=128)],
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: continuity.record_observation(
+            project_id, actor, str(body.task_id), str(body.agent_run_id),
+            body.expected_version, body.lease_token, body.claim,
+            [str(s) for s in body.source_ids], idem
+        ))
+
+    @app.get("/v1/projects/{project_id}/tasks/{task_id}/observations")
+    def list_task_observations(
+        project_id: str, task_id: UUID,
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: continuity.list_observations(
+            project_id, actor, str(task_id)
+        ))
 
     return app
 

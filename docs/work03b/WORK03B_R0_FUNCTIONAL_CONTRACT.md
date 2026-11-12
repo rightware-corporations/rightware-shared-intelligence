@@ -96,3 +96,7 @@ The comparison SI-RD-03 must not block deterministic authority. Keep Mem0 pinned
 **Requires explicit operator ratification before R1:** schema/migration names and retention model, whether R1 exposes write-observation over MCP or REST only (recommend REST first), exact reviewer vs verifier policies, partial snapshot failure behavior, lost-lease recovery and chosen initial customer use case. Recommended baseline: synthetic first user two coding agents, no external business/customer data.
 
 **What was NOT done:** no migration, auth change, API added, runtime execution, Jarvis integration, SI-RD-03 benchmark, production CI pass assumption, client execution, commercial validation.
+
+
+## R1A progress — later implementation (not R0 historical state)
+The R0 baseline above documented 10 existing routes and 7 future proposals. The canonical JSON has since been updated to **14 implemented laboratory routes and 6 proposed routes**: new AgentRun start, SourceRecord register, Observation assertion and authorized observation read. M02 is R1A_LAB_PARTIAL, while M01-M18 full acceptance remains PENDING_FULL_E2E. See R1A_IMPLEMENTATION.md. No checkpoint/resume, independent verification, reviewer DONE or production deployment is implied.

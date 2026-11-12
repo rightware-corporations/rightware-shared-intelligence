@@ -93,7 +93,8 @@ jobs:
           import psycopg
           with psycopg.connect(os.environ["RW_TEST_DATABASE_URL"],autocommit=True) as conn:
               for name in ("0001_work02_core.sql","0002_work02b_api_credentials.sql",
-                           "0003_work02d_scrub_lease_replays.sql"):
+                           "0003_work02d_scrub_lease_replays.sql",
+                           "0004_work03b_r1a_continuity.sql"):
                   conn.execute(Path("database/migrations",name).read_text(encoding="utf-8"))
                   print("MIGRATION_PASS",name)
           PY

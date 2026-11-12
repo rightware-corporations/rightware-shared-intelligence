@@ -79,3 +79,10 @@ A fonte da verdade da arquitectura **implementada** permanece nas secções ante
 **Contrato canónico machine-readable de MVP:** [`docs/work03b/UC_CORE_01_CONTRACT.json`](work03b/UC_CORE_01_CONTRACT.json) e [`docs/work03b/UC_CORE_01_ACCEPTANCE.md`](work03b/UC_CORE_01_ACCEPTANCE.md). Existem 10 rotas protegidas no laboratório e 7 rotas futuras DRAFT. Os endpoints adicionais do blueprint são ideias do horizonte, não APIs existentes nem aprovadas. Sem novos módulos, migrations, frontend ou produção neste R0B.
 
 Princípio de autoridade: PostgreSQL para estado/eventos/checkpoints/decisões verificados; Mem0 apenas projecção recuperável e não confiável; REST/MCP reutilizam a mesma autorização e o `resume` requer revalidação de ACL/sources. Não confundir os 60 testes históricos com aceitação de UC-CORE-01 completa.
+
+
+## WORK-03B R1A — Implemented experimental continuity primitives
+- The new backend/rightware_si/continuity.py exposes lease-bound AgentRun, SourceRecord and ASSERTED Observation; source references are not verified, and task.version remains unchanged by observation writes.
+- The 0004 migration adds immutable-by-app records with task-scoped composite FKs, plus a separate continuity event stream that does not conflict with task lifecycle version events.
+- FastAPI has **14 implemented protected routes**; the canonical R0 contract now lists **6 future routes**. All R1A additions require existing server bearer authorization, correct task lease and project grants; observation reads require both task:read and context:read.
+- Full checkpoint, resume across new process, review/DONE and source-level privacy remain **unimplemented**. See docs/work03b/R1A_IMPLEMENTATION.md. This is not production-ready.

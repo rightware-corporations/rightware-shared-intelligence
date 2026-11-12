@@ -1,8 +1,8 @@
 {
   "document_id": "WORK03B_R0_UC_CORE_01",
-  "revision": "0.1.0",
+  "revision": "0.1.1-r1a-lab",
   "date": "2026-11-12",
-  "status": "DRAFT_FOR_OPERATOR_RATIFICATION",
+  "status": "DRAFT_FOR_OPERATOR_RATIFICATION_PARTIAL_R1A_LAB",
   "scope": "synthetic_two_independent_agent_clients",
   "authoritative_store": "RIGHTWARE_PostgreSQL",
   "semantic_provider": "Mem0_unverified_replaceable",
@@ -159,17 +159,33 @@
       "path": "/v1/projects/{project_id}/memories/search",
       "permission": "memory:read",
       "implementation": "IMPLEMENTED_LAB"
-    }
-  ],
-  "future_routes": [
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/runs",
+      "permission": "task:execute",
+      "implementation": "IMPLEMENTED_R1A_LAB"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/projects/{project_id}/sources",
+      "permission": "source:write",
+      "implementation": "IMPLEMENTED_R1A_LAB"
+    },
     {
       "method": "POST",
       "path": "/v1/projects/{project_id}/observations",
       "permission": "observation:write",
-      "phase": "R1",
-      "purpose": "Append assertion with source linkage; no memory trust promotion",
-      "implementation": "PROPOSED_UNIMPLEMENTED"
+      "implementation": "IMPLEMENTED_R1A_LAB"
     },
+    {
+      "method": "GET",
+      "path": "/v1/projects/{project_id}/tasks/{task_id}/observations",
+      "permission": "task:read+context:read",
+      "implementation": "IMPLEMENTED_R1A_LAB"
+    }
+  ],
+  "future_routes": [
     {
       "method": "POST",
       "path": "/v1/projects/{project_id}/tasks/{task_id}/checkpoints",
@@ -250,7 +266,7 @@
       "operation": "write_observation",
       "expected_state": "IN_PROGRESS",
       "expected_version": 3,
-      "implementation": "PROPOSED_R1"
+      "implementation": "IMPLEMENTED_R1A_LAB_PARTIAL"
     },
     {
       "id": "S05",
@@ -344,7 +360,7 @@
     {
       "id": "M02",
       "description": "Observation appended as ASSERTED, with source",
-      "preexisting_coverage": "MISSING",
+      "preexisting_coverage": "R1A_LAB_PARTIAL",
       "target_phase": "R1",
       "final_acceptance": "PENDING_FULL_E2E"
     },
@@ -499,5 +515,6 @@
     "automatic_vendor_chat_memory_sync",
     "LLM_only_verification",
     "adopt_new_orchestrator_in_R0"
-  ]
+  ],
+  "r1a_scope": "New AgentRun, SourceRecord, Observation + authorized observation listing. Checkpoint/resume/verifier/DONE remain unimplemented."
 }

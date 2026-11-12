@@ -2,7 +2,7 @@
 
 Independent RIGHTWARE infrastructure for authorized AI agents and applications to share **contextual memory**, **task continuity** and **evidence-aware handoffs**.
 
-**Status:** experimental Python backend validated with synthetic end-to-end data. **Not a production service.** Jarvis and PULSE production remain unchanged. No working frontend UI exists.
+**Status:** experimental Python backend validated in synthetic lab. R1A adds source-linked, unverified observations; no checkpoint/resume yet. **Not a production service.** Jarvis and PULSE unchanged; no frontend UI.
 
 ## Start here
 - [Current HANDOFF](docs/HANDOFF.md) — last state, evidence, blockers and next action.
@@ -19,7 +19,7 @@ backend/
   rightware_si/             # FastAPI, PostgreSQL core, contextual memory, MCP
   requirements/             # core.txt, api.txt, memory.txt
 database/
-  migrations/               # 0001–0003 authoritative PostgreSQL schema
+  migrations/               # 0001–0004 authoritative PostgreSQL schema
 frontend/
   README.md                 # FUTURE: admin panel, not implemented
 infrastructure/
@@ -31,6 +31,10 @@ vendor/mem0/                # pinned Apache-2.0 Git submodule
 .github/workflows/ci.yml    # one active CI workflow on develop
 pyproject.toml              # editable package at backend/rightware_si
 ```
+
+## WORK-03B R1A
+- Four new experimental authenticated REST operations: start AgentRun, register SourceRecord, append ASSERTED Observation and list observations on an authorized task.
+- See [R1A implementation scope](docs/work03b/R1A_IMPLEMENTATION.md), including migration 0004 and known limitations. No memory ingestion, verifier, approval, resume or production deployment.
 
 ## Git policy
 - **develop:** all future engineering/checkpoints. Every technical commit updates `docs/HANDOFF_MASTER.md` and `docs/HANDOFF.md`.
