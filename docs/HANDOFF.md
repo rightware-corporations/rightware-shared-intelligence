@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0039 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0040 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -251,3 +251,11 @@
 - **G03 comprovado:** HTTP TestClient via SERVIÇO independente autenticado, provider GitHub HTTPS REAL com token só de servidor, PostgreSQL append-only `LIVE_HTTPS`, idempotência e revoked verify grant negado, IN_REVIEW/REFERENCED/no-DONE. Não é servidor público implantado. [Evidência do job](work03b/R2_R1D_G03_SI_MH_0039_VERIFIED.md).
 - G02 negativos 174/174 incluídos, mas G01 policy lifecycle/tenant expiry/revocation ainda sem ratificação nem código; G04 identity/OIDC/privacy/consent/retention/rate limits e G05 release/M01..M18 bloqueados. Nenhum reviewer/DONE, prod, JARVIS/PULSE/main/vendor Mem0.
 - Este checkpoint **só documentação**, CI próprio ainda PENDENTE. Próximo gate: G01 contract/decisões de autoridade para policy por tenant, depois migration/tests sob aprovação.
+
+## SI-MH-0040 — G01 lifecycle decision packet prepared; G03 documentary CI confirmed
+
+- **Baseline `b101aa8f64970524aab496e62e3032862fcf4b6c`**, [Actions 43258863694](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43258863694) **SUCCESS, 174/174 tests**, 7 migrations and LIVE GitHub via R1D SERVICE REST TestClient + existing R1A/R1B/R1C/Mem0/Ollama regressions PASS. No reviewer/DONE.
+- **G01 proposal:** [R2_R1D_G01_POLICY_LIFECYCLE_DECISION_R0.md](work03b/R2_R1D_G01_POLICY_LIFECYCLE_DECISION_R0.md). Append-only activation/disable/supersede, DB-clock expiry, shared task row lock, 14 future negative cases **NOT EXECUTED**. Proposed ONLY; no ratification/SQL implementation.
+- Pending explicit choices: activation authority/quorum, first internal tenant, expiry, disable/revocation, named legacy lab exceptions, source ACL/consent/retention; G04/G05 production still blocked.
+- Docs+two handoffs only in SI-MH-0040, own CI pending; no code/new privileges/main/JARVIS/PULSE/vendor Mem0 changes. R2 R1C lab flag remains OFF by default.
+- NEXT: ratify G01 then implement lifecycle transactionally with tests; do not advance production/DONE.

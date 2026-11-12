@@ -693,6 +693,21 @@
 
 **Próxima decisão:** desenho exato de policy lifecycle G01 num tenant interno RIGHTWARE (eventos append-only e revogação em transação), submetendo autoridade/prazos ao operador antes de implementar qualquer schema novo. Nenhum deployment de produção.
 
+
+---
+
+## SI-MH-0040 — CI SI-MH-0039 SUCCESS; G01 lifecycle policy decision packet (DESIGN ONLY)
+
+**Data:** 2026-11-12 Africa/Maputo. **Baseline:** `develop@b101aa8f64970524aab496e62e3032862fcf4b6c`. **Classificação:** CI VERIFIED + INVESTIGATION / RECOMMENDATION, NOT RATIFICATION.
+
+**CI comprovado:** [Actions 43258863694](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43258863694) **SUCCESS**, `Ran 174 tests in 26.358s / OK`, migrações 0001–0007, handoff policy e GitHub LIVE R1A/R1B/G03, R1C A/B e Mem0/Ollama regressions PASS. R2 R1D G03 LAB HTTP TestClient → GitHub REAL → PostgreSQL append-only com token do SERVIDOR, idempotência e revoked grant, sem review/DONE.
+
+**Proposta G01:** [R2_R1D_G01_POLICY_LIFECYCLE_DECISION_R0.md](work03b/R2_R1D_G01_POLICY_LIFECYCLE_DECISION_R0.md) define PolicyActivation e PolicyLifecycleEvent append-only sem alterar a policy imutável, expire por tempo PostgreSQL, disable/supersede terminal, mesma task row lock entre admin control e verificador para bloquear midflight, separação author/approver/SERVICE, 14 casos G01-01..14 TODOS NOT_EXECUTED. Autoridade/quorum, prazo/retention/tenant/legacy e consent requerem ratificação explícita. Nada é oficialmente aprovado só por escrever estas recomendações.
+
+**Mudanças neste checkpoint:** apenas documento de decisão G01 e atualização de `docs/HANDOFF.md` e `docs/HANDOFF_MASTER.md`; sem código/SQL/test/workflow/new privileges/main/Jarvis/PULSE/vendor Mem0. CI próprio desta adenda documental ainda PENDENTE.
+
+**Próxima ação:** ratificar ou rever o modelo G01 antes de implementação. G02 174 testes e G03 live REST validados apenas em laboratório; G04 identity/privacy e G05 release continuam bloqueados.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
