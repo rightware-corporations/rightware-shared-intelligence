@@ -97,3 +97,15 @@ Princípio de autoridade: PostgreSQL para estado/eventos/checkpoints/decisões v
 - Canonical contract: **16 implemented routes, 4 future**, 14-step UC-CORE-01 still **PENDING_FULL_E2E**. Proof is in `docs/work03b/R1B_IMPLEMENTATION.md` and CI evidence after execution.
 
 **Limitation:** existing handoff is NOT tied to a specific checkpoint; target agent sees latest authorized checkpoint, and its `task_version_recorded` can differ from current task version after the handoff. R1C will bind handoff+checkpoint and address lost lease secrets. Production resource-level privacy/consent, outbox, external verification and DONE review remain missing.
+
+
+## WORK-03B R1C — Checkpoint-bound Handoff and monotonic lease fencing (experimental)
+
+- `database/migrations/0006_work03b_r1c_handoff_fencing.sql`: `si_handoffs.checkpoint_id/seq/task_version` with project/task FK and trigger that prevents metadata forgery/rebinding; `si_lease_fences` persists monotonic generation even when an active lease row is deleted. Existing legacy unbound handoffs remain readable.
+- `WorkCore.offer_handoff` now requires explicit latest checkpoint ID+sequence whenever the task has any checkpoint, and checks recorded_by/expected task version/current lease/target read grants before changing task or releasing A's lease. Tasks with **no checkpoint** retain a clearly labelled `LEGACY_UNBOUND` compatibility path; it is not a proof of continuity.
+- `WorkCore.accept_handoff` validates the bound checkpoint and target permissions again. New lease generation is monotonic across handoff and holder-only rekey. `get_lease_state` never returns a token; `recover_lease` rotates one-time secrets only for **the current holder** with `task:recover`, matching expected task version and lease generation. Replay of the secret-bearing result returns HTTP 409.
+- `ContinuityCore.resume_task` includes the exact handoff checkpoint identity and a retained historical checkpoint view if the latest checkpoint has subsequently advanced; all remain ASSERTED, not independently checked. Resume is read-only, rechecks grants and has no Mem0 dependency.
+- Two additional REST endpoints are implemented for lease-status/recovery, making **18 implemented routes and 3 proposed R2 routes** in the canonical contract. No MCP mutation tools were added; a restart after lost acceptance can be recovered by a holder-specific API call, not autonomously by another agent.
+- R1C synthetic CI and security negative tests are documented in `docs/work03b/R1C_IMPLEMENTATION.md` and associated evidence once the run is observed.
+
+**Remaining:** No administrator-driven take-over when owner gone, no token recovery without `task:recover` grant, no fencing enforced against external tools (they need protocol support), no source-level consent/retention, no outbox, independent evidence verification, reviewer DONE, production deployment or Jarvis modifications. CI success only validates the tested synthetic paths.

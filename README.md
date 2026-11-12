@@ -2,7 +2,7 @@
 
 Independent RIGHTWARE infrastructure for authorized AI agents and applications to share **contextual memory**, **task continuity** and **evidence-aware handoffs**.
 
-**Status:** experimental Python backend validated in synthetic lab. R1A adds source-linked, unverified observations; R1B checkpoint/resume read-only in synthetic lab; no checkpoint-bound handoff or full verification. **Not a production service.** Jarvis and PULSE unchanged; no frontend UI.
+**Status:** experimental Python backend validated in synthetic lab. R1A adds source-linked, unverified observations; R1B checkpoint/resume read-only and R1C checkpoint-bound handoff/fenced holder-only rekey in synthetic lab; full verification remains unimplemented. **Not a production service.** Jarvis and PULSE unchanged; no frontend UI.
 
 ## Start here
 - [Current HANDOFF](docs/HANDOFF.md) — last state, evidence, blockers and next action.
@@ -19,7 +19,7 @@ backend/
   rightware_si/             # FastAPI, PostgreSQL core, contextual memory, MCP
   requirements/             # core.txt, api.txt, memory.txt
 database/
-  migrations/               # 0001–0005 authoritative PostgreSQL schema
+  migrations/               # 0001–0006 authoritative PostgreSQL schema
 frontend/
   README.md                 # FUTURE: admin panel, not implemented
 infrastructure/
@@ -34,7 +34,12 @@ pyproject.toml              # editable package at backend/rightware_si
 
 ## WORK-03B R1A
 - Six experimental continuity REST operations: R1A start AgentRun, register SourceRecord, append ASSERTED Observation, list observations; R1B record immutable checkpoint and read current scoped resume.
-- See [R1A implementation scope](docs/work03b/R1A_IMPLEMENTATION.md), including migration 0004 and known limitations. No memory ingestion/outbox, independent verifier, approval, checkpoint-bound handoff or production deployment.
+- See [R1A implementation scope](docs/work03b/R1A_IMPLEMENTATION.md), including migration 0004 and known limitations. No memory ingestion/outbox, independent verifier, approved DONE or production deployment. R1C exact checkpoint binding applies only when the task has checkpoints; zero-checkpoint legacy handoffs remain clearly UNBOUND.
+
+## WORK-03B R1C
+- Checkpointed task handoffs require explicit latest owned checkpoint ID/sequence; same-task immutable FK and PostgreSQL trigger prevent rebinding.
+- Persistent lease fence generation never regresses across acceptance, removal or holder-only rekey. Authenticated current holder can inspect generation and obtain a new one-time token with a dedicated `task:recover` grant; raw lease secrets are never stored or replayed.
+- See [R1C implementation](docs/work03b/R1C_IMPLEMENTATION.md). This is a lab capability only; external effects, multi-tenant resource ACL and Jarvis production are out of scope.
 
 ## Git policy
 - **develop:** all future engineering/checkpoints. Every technical commit updates `docs/HANDOFF_MASTER.md` and `docs/HANDOFF.md`.

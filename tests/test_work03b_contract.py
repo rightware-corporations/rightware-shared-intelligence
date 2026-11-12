@@ -47,14 +47,14 @@ class ContractR0Tests(unittest.TestCase):
         declared = self.contract["existing_routes"]
         pairs = [(x["method"], x["path"]) for x in declared]
         self.assertEqual(len(pairs), len(set(pairs)))
-        self.assertEqual(len(pairs), 16)
-        self.assertTrue(all(x["implementation"] in {"IMPLEMENTED_LAB", "IMPLEMENTED_R1A_LAB", "IMPLEMENTED_R1B_LAB"} for x in declared))
+        self.assertEqual(len(pairs), 18)
+        self.assertTrue(all(x["implementation"] in {"IMPLEMENTED_LAB", "IMPLEMENTED_R1A_LAB", "IMPLEMENTED_R1B_LAB", "IMPLEMENTED_R1C_LAB"} for x in declared))
         self.assertTrue(set(pairs).issubset(actual))
 
     def test_future_routes_not_misrepresented_as_live(self) -> None:
         actual = declared_routes_from_source()
         future = self.contract["future_routes"]
-        self.assertEqual(len(future), 4)
+        self.assertEqual(len(future), 3)
         self.assertTrue(all(x["implementation"] == "PROPOSED_UNIMPLEMENTED" for x in future))
         self.assertFalse(any((x["method"], x["path"]) in actual for x in future))
         self.assertEqual(
@@ -70,7 +70,7 @@ class ContractR0Tests(unittest.TestCase):
         self.assertEqual(next(x for x in steps if x["operation"] == "submit_result")["expected_state"], "IN_REVIEW")
         self.assertEqual(next(x for x in steps if x["operation"] == "accept_result")["actor"], "REVIEWER")
         self.assertEqual(next(x for x in steps if x["operation"] == "restart_process_and_resume")["actor"], "AGENT_B")
-        self.assertEqual(self.contract["status"], "DRAFT_FOR_OPERATOR_RATIFICATION_PARTIAL_R1B_LAB")
+        self.assertEqual(self.contract["status"], "DRAFT_FOR_OPERATOR_RATIFICATION_PARTIAL_R1C_LAB")
 
     def test_r1a_routes_present_and_no_full_product_pass(self):
         r1a = [r for r in self.contract["existing_routes"]
@@ -104,6 +104,24 @@ class ContractR0Tests(unittest.TestCase):
         )
         self.assertTrue(all(x["final_acceptance"] == "PENDING_FULL_E2E"
                             for x in self.contract["work01_acceptance"]))
+
+    def test_r1c_fenced_recovery_and_checkpoint_binding_registered(self):
+        live = [x for x in self.contract["existing_routes"]
+                if x["implementation"] == "IMPLEMENTED_R1C_LAB"]
+        self.assertEqual(len(live),2)
+        self.assertEqual({x["path"].split("/")[-1] for x in live},
+                         {"lease-recovery","lease-status"})
+        self.assertEqual({x["method"] for x in live},{"GET","POST"})
+        self.assertIn("PERSISTENT_MONOTONIC_LEASE_GENERATION",
+                      self.contract["invariants"])
+        self.assertIn("EXPLICIT_CHECKPOINT_BINDING_FOR_CHECKPOINTED_TASKS",
+                      self.contract["invariants"])
+        self.assertEqual(self.contract["idempotency"]["secret_lease_issuance"],
+                         "CONFLICT_409_NO_RAW_TOKEN_REPLAY")
+        self.assertTrue(all(
+            x["final_acceptance"] == "PENDING_FULL_E2E"
+            for x in self.contract["work01_acceptance"]
+        ))
 
     def test_critical_policy_guards_present(self) -> None:
         inv = set(self.contract["invariants"])

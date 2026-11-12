@@ -39,6 +39,13 @@ class OfferHandoff(Versioned):
     to_principal_id: str = Field(min_length=1, max_length=64)
     summary: str = Field(min_length=1, max_length=8000)
     lease_token: str = Field(min_length=20, max_length=256)
+    # Optional only for legacy tasks with NO checkpoint. Required when one exists.
+    checkpoint_id: UUID | None = None
+    expected_checkpoint_seq: int | None = Field(default=None, gt=0, strict=True)
+
+
+class RecoverLease(Versioned):
+    expected_generation: int = Field(gt=0, strict=True)
 
 
 class MemorySearch(StrictModel):
@@ -181,7 +188,9 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     ):
         return _invoke(lambda: core.offer_handoff(
             project_id, actor, str(task_id), body.to_principal_id,
-            body.summary, body.lease_token, body.expected_version, idem
+            body.summary, body.lease_token, body.expected_version, idem,
+            checkpoint_id=(str(body.checkpoint_id) if body.checkpoint_id else None),
+            expected_checkpoint_seq=body.expected_checkpoint_seq,
         ))
 
     @app.post("/v1/projects/{project_id}/handoffs/{handoff_id}/accept")
@@ -192,6 +201,26 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     ):
         return _invoke(lambda: core.accept_handoff(
             project_id, actor, str(handoff_id), body.expected_version, idem
+        ))
+
+    @app.get("/v1/projects/{project_id}/tasks/{task_id}/lease-status")
+    def get_lease_status(
+        project_id: str, task_id: UUID,
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: core.get_lease_state(
+            project_id, actor, str(task_id),
+        ))
+
+    @app.post("/v1/projects/{project_id}/tasks/{task_id}/lease-recovery")
+    def recover_lease(
+        project_id: str, task_id: UUID, body: RecoverLease,
+        idem: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=128)],
+        actor: str = Depends(principal_dep),
+    ):
+        return _invoke(lambda: core.recover_lease(
+            project_id, actor, str(task_id),
+            body.expected_version, body.expected_generation, idem,
         ))
 
     @app.post("/v1/projects/{project_id}/tasks/{task_id}/submit")

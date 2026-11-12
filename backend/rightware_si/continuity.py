@@ -446,17 +446,65 @@ class ContinuityCore(WorkCore):
                         "observations": observations,
                     }
                 h = conn.execute(
-                    "SELECT id,status,from_principal_id,to_principal_id "
+                    "SELECT id,status,from_principal_id,to_principal_id,"
+                    "checkpoint_id,checkpoint_seq,checkpoint_task_version "
                     "FROM si_handoffs WHERE project_id=%s AND task_id=%s::uuid "
                     "ORDER BY offered_at DESC,id DESC LIMIT 1",
                     (project, task_id),
                 ).fetchone()
+                bound_id = str(h["checkpoint_id"]) if h and h["checkpoint_id"] else None
                 handoff = ({
                     "handoff_id": str(h["id"]), "status": h["status"],
                     "from_principal_id": h["from_principal_id"],
                     "to_principal_id": h["to_principal_id"],
-                    "checkpoint_binding": "NOT_IMPLEMENTED_R1B",
+                    "checkpoint_binding": (
+                        "BOUND_R1C" if bound_id else "LEGACY_UNBOUND"
+                    ),
+                    "checkpoint_id": bound_id,
+                    "checkpoint_seq": h["checkpoint_seq"],
+                    "checkpoint_task_version": h["checkpoint_task_version"],
+                    "checkpoint_is_latest": (
+                        checkpoint is not None
+                        and bound_id is not None
+                        and checkpoint["checkpoint_id"] == bound_id
+                    ),
                 } if h else None)
+                # If B has added a later checkpoint, preserve the original
+                # *offered* snapshot. Never silently substitute latest for bound.
+                handoff_checkpoint = None
+                if bound_id:
+                    if checkpoint and checkpoint["checkpoint_id"] == bound_id:
+                        handoff_checkpoint = checkpoint
+                    else:
+                        bound = conn.execute(
+                            "SELECT id,checkpoint_seq,agent_run_id,recorded_by,"
+                            "task_version_recorded,summary,next_actions,blockers,"
+                            "trust_state,created_at FROM si_task_checkpoints "
+                            "WHERE project_id=%s AND task_id=%s::uuid AND id=%s::uuid",
+                            (project, task_id, bound_id),
+                        ).fetchone()
+                        if not bound:
+                            raise Conflict("bound checkpoint no longer available")
+                        linked_ids = conn.execute(
+                            "SELECT observation_id FROM si_checkpoint_observations "
+                            "WHERE project_id=%s AND task_id=%s::uuid "
+                            "AND checkpoint_id=%s::uuid ORDER BY observation_id",
+                            (project, task_id, bound_id),
+                        ).fetchall()
+                        handoff_checkpoint = {
+                            "checkpoint_id": str(bound["id"]),
+                            "checkpoint_seq": bound["checkpoint_seq"],
+                            "agent_run_id": str(bound["agent_run_id"]),
+                            "recorded_by": bound["recorded_by"],
+                            "task_version_recorded": bound["task_version_recorded"],
+                            "summary": bound["summary"],
+                            "next_actions": bound["next_actions"],
+                            "blockers": bound["blockers"],
+                            "trust_state": bound["trust_state"],
+                            "created_at": bound["created_at"].isoformat(),
+                            "observation_ids": [str(x["observation_id"]) for x in linked_ids],
+                            "detail": "BOUND_HISTORICAL_REF_NOT_CURRENT_LATEST",
+                        }
                 return {
                     "source_of_truth": "postgresql",
                     "project_id": project,
@@ -471,6 +519,7 @@ class ContinuityCore(WorkCore):
                     ),
                     "checkpoint": checkpoint,
                     "last_handoff": handoff,
+                    "handoff_checkpoint": handoff_checkpoint,
                     "memory_status": "NOT_QUERIED",
                     "verified_completion": False,
                     "read_only": True,

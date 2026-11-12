@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0021 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0022 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -119,8 +119,18 @@
 - **CI verificado para a integração:** `develop@2db9cd40e1701639434dc0c00cca8cf5282adead` [Actions 43182746837](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43182746837) SUCCESS: handoff gate, cinco migrations, **81/81 testes**, R1B A/B E2E com Mem0 desligado e regressão MCP/REST/Mem0/Ollama PASS. **Nenhum EV-01..EV-16 foi executado**. SI-MH-0021 adiciona evidência; o seu commit é apenas documental e precisará de CI própria.
 - **Prioridade inalterada:** WORK-03B R1C (checkpoint-bound handoff, fencing, lease recovery) → avaliação/ratificação R2 → EV-01..EV-16 tests reais com logs/SHAs.
 
+## WORK-03B R1C — Checkpoint Bound Handoff & Lease Fencing (IMPLEMENTADO; CI PENDENTE)
+- Base `develop@5fa303487fb4df92d5938c1c84ae2384fd3f882e` e CI [43183197724](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43183197724) SUCCESS (81/81, R1B A→B e Mem0/Ollama real E2E).
+- **Novo código:** migration `0006_work03b_r1c_handoff_fencing.sql`; `si_handoffs` checkpoint id/seq/task.version com FK/trigger; `si_lease_fences` garante geração persistente monotónica. Oferta ligada a checkpoint *exato e do writer* quando tarefa já tem checkpoint; nenhuma auto-substituição de estado. Sem checkpoint, modo histórico `LEGACY_UNBOUND`, não é handoff verificável.
+- **Leases:** aceitação revê checkpoint/grants, fencing generation crescente; holder autenticado e com `task:recover` consulta nonsecret generation e roda token one-time por `expected_generation`. Replays 409; sem usurpação de outro holder nem armazenamento de segredo bruto no audit/idempotency.
+- **API:** 2 rotas novas GET `lease-status` / POST `lease-recovery`; resume inclui id do checkpoint bound/historical sem emitir lease. Contrato canónico 18 rotas atuais de laboratório + 3 R2 futuras.
+- **Novos testes por validar:** `tests/test_work03b_r1c.py` 12 reais +1 contract gate, regressões R1B actualizadas e cenário real subprocesso A→B com lost-accept lease recovery e Mem0 offline. **94/94 é expectativa, NÃO resultado**. CI 0006 e E2E da memória adicional pendentes.
+- [R1C_IMPLEMENTATION.md](work03b/R1C_IMPLEMENTATION.md) documenta contratos e limites. Nenhum R2 verifier implementado; EV-01..EV-16 `executed=false`, decisões `ASSERTED` não `CHECKED_PASS` nem `REVIEW_ACCEPTED`.
+- Não mexer `main`, JARVIS/PULSE, Mem0 pinned, deploy, frontend. Riscos: modo LEGACY_UNBOUND, token recovery de holder com bearer privilegiado, nenhum fencing sobre efeitos externos, sem consent/retention/verified DONE. **R1C CI ainda pendente.**
+- Próximo: verificar CI commit real, corrigir falhas e adicionar MASTER/cURRENT adenda de evidência; só depois discutir gates R2.
+
 ## Next exact work
-**Próximo gate: WORK-03B R1C após R1B 81/81 PASS — checkpoint-bound Handoff + fencing/lease recovery** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**Próximo gate: validar CI do WORK-03B R1C; se passar, formalizar a evidência e rever política do LEGACY_UNBOUND/holder-only recovery antes dos gates R2** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.

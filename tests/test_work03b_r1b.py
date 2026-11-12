@@ -213,7 +213,9 @@ class CheckpointResumeTests(unittest.TestCase):
         self.assertEqual(cp.status_code,201,cp.text)
         offered=self.post(f"/v1/projects/alpha/tasks/{tid}/handoffs",{
             "to_principal_id":"agent-b","summary":"Checkpoint persisted and B may read",
-            "expected_version":3,"lease_token":lease})
+            "expected_version":3,"lease_token":lease,
+            "checkpoint_id":cp.json()["checkpoint_id"],
+            "expected_checkpoint_seq":cp.json()["checkpoint_seq"]})
         self.assertEqual(offered.status_code,201,offered.text)
         stale=self.checkpoint(tid,lease,runid,[obs],seq=1)
         self.assertEqual(stale.status_code,409)
@@ -222,7 +224,9 @@ class CheckpointResumeTests(unittest.TestCase):
         self.assertEqual(b.status_code,200,b.text)
         state=self.resume(tid,"agent-b").json()
         self.assertEqual(state["last_handoff"]["status"],"ACCEPTED")
-        self.assertEqual(state["last_handoff"]["checkpoint_binding"],"NOT_IMPLEMENTED_R1B")
+        self.assertEqual(state["last_handoff"]["checkpoint_binding"],"BOUND_R1C")
+        self.assertEqual(state["last_handoff"]["checkpoint_id"],cp.json()["checkpoint_id"])
+        self.assertEqual(state["handoff_checkpoint"]["checkpoint_id"],cp.json()["checkpoint_id"])
         self.assertEqual(state["task"]["version"],5)
         self.assertEqual(state["checkpoint"]["task_version_recorded"],3)
         self.assertFalse(state["checkpoint_version_matches_task"])

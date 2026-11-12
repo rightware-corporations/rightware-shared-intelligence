@@ -72,8 +72,13 @@ def agent_a():
             "expected_version":3,"to_principal_id":"agent-b",
             "summary":"Handoff after immutable checkpoint",
             "lease_token":lease,
+            "checkpoint_id":checkpoint["checkpoint_id"],
+            "expected_checkpoint_seq":checkpoint["checkpoint_seq"],
         },"r1b-e2e-handoff-a",201)
         require(offer["status"]=="BLOCKED", "handoff did not block A")
+        require(offer["checkpoint_binding"]=="BOUND_R1C"
+                and offer["checkpoint_id"]==checkpoint["checkpoint_id"],
+                "checkpoint was not bound atomically")
         denied = client.post(
             URL+f"/v1/projects/alpha/tasks/{task}/checkpoints",
             headers={"Authorization":f"Bearer {token}",
@@ -102,6 +107,34 @@ def agent_b():
                 "expected_version":4,
             },"r1b-e2e-accept-b",200)
         require(accepted["version"]==5, "handoff acceptance version wrong")
+        require(accepted["checkpoint_binding"]=="BOUND_R1C",
+                "B accepted unbound handoff")
+        # Simulate the holder losing the one-time lease response: do not use
+        # accepted['lease_token'] to continue. Generation is nonsecret and can
+        # be retrieved by the same authenticated holder.
+        original_lease=accepted.pop("lease_token")
+        status=request(client,"GET",
+            f"/v1/projects/alpha/tasks/{task}/lease-status",token,expected=200)
+        require(status["lease_generation"]==accepted["lease_generation"],
+                "holder lease generation not recoverable")
+        recovered=request(client,"POST",
+            f"/v1/projects/alpha/tasks/{task}/lease-recovery",token,{
+                "expected_version":5,
+                "expected_generation":status["lease_generation"],
+            },"r1c-e2e-rekey-b",200)
+        require(recovered["lease_generation"]>accepted["lease_generation"],
+                "fencing generation failed to advance")
+        require(recovered["lease_token"]!=original_lease,
+                "lost-response rekey reused the same secret")
+        replay=client.post(
+            URL+f"/v1/projects/alpha/tasks/{task}/lease-recovery",
+            headers={"Authorization":f"Bearer {token}",
+                     "Idempotency-Key":"r1c-e2e-rekey-b"},
+            json={"expected_version":5,
+                  "expected_generation":status["lease_generation"]},
+        )
+        require(replay.status_code==409,"one-time lease secret was replayed")
+        # The recovered token is not logged, and resume remains read-only.
         snap = request(client,"GET",
             f"/v1/projects/alpha/tasks/{task}/resume",token,expected=200)
         require(snap["snapshot_status"]=="CHECKPOINT_AVAILABLE",
@@ -119,8 +152,14 @@ def agent_b():
         require(snap["read_only"] and not snap["lease_issued"]
                 and not snap["verified_completion"],
                 "resume mistakenly minted authority or approval")
-        require(snap["last_handoff"]["checkpoint_binding"]=="NOT_IMPLEMENTED_R1B",
-                "false claim that checkpoint is bound to handoff")
+        require(snap["last_handoff"]["checkpoint_id"]==
+                accepted["checkpoint_id"],
+                "handoff bound checkpoint changed during rekey")
+        require(snap["last_handoff"]["checkpoint_binding"]=="BOUND_R1C",
+                "handoff checkpoint binding missing")
+        require(snap["handoff_checkpoint"]["checkpoint_id"]==
+                snap["checkpoint"]["checkpoint_id"],
+                "resumed checkpoint is not the bound one")
         require("lease_token" not in json.dumps(snap), "lease secret leaked by resume")
         print(json.dumps({
             "checkpoint_id":snap["checkpoint"]["checkpoint_id"],
@@ -142,7 +181,7 @@ def prepare(dsn):
                        "context:read","source:write","observation:write",
                        "checkpoint:write","handoff:offer"],
             "agent-b":["task:execute","task:read","context:read",
-                       "handoff:accept","checkpoint:write"],
+                       "handoff:accept","checkpoint:write","task:recover"],
         }
         for actor,grants in permissions.items():
             for grant in grants:
@@ -243,8 +282,12 @@ def main():
         print("WORK03B_R1B_RESUME_E2E_PASS "
               "a_process_exited=true b_new_process=true rest_auth=true "
               "postgres_checkpoint=true independent_context=true "
-              "memory_offline=true a_lease_denied=true "
+              "memory_offline=true bound_checkpoint=true a_lease_denied=true "
               "intruder_denied=true revocation_denied=true synthetic_only=true")
+        print("WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS "
+              "bound_checkpoint=true independent_agents=true "
+              "fencing_rekey=true secret_replay_denied=true "
+              "memory_offline=true synthetic_only=true")
     finally:
         proc.terminate()
         try:

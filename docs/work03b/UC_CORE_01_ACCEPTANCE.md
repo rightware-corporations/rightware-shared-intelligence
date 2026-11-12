@@ -11,15 +11,15 @@
 |---|---|---|---|---|
 | M01 | Task created/published/claimed | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M02 | Observation appended as ASSERTED, with source | R1A_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
-| M03 | Handoff offer blocks and releases old lease | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
-| M04 | Atomic acceptance to B / old lease invalid | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
+| M03 | Handoff offer blocks and releases old lease | R1C_BOUND_HANDOFF_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
+| M04 | Atomic acceptance to B / old lease invalid | R1C_BOUND_ACCEPT_FENCED_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M05 | Scoped context includes versioned and authorized refs | R1B_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M06 | Submission enters IN_REVIEW, never DONE | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M07 | Independent verification and authorized DONE acceptance | MISSING | R2 | PENDING_FULL_E2E |
 | M08 | Optimistic task version conflict | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M09 | Idempotency under lost secret response | SPEC_CONFLICT | R1 | PENDING_FULL_E2E |
 | M10 | Cross-project denial for all reads/mutations/MCP | LAB_PARTIAL | R1_R2 | PENDING_FULL_E2E |
-| M11 | Concurrent accepted handoff / one lease | LAB_PARTIAL | R1 | PENDING_FULL_E2E |
+| M11 | Concurrent accepted handoff / one lease | R1C_MONOTONIC_LEASE_LAB_PARTIAL | R1 | PENDING_FULL_E2E |
 | M12 | Memory offline degrades without losing task state | R1B_CANONICAL_FALLBACK_PARTIAL | R1 | PENDING_FULL_E2E |
 | M13 | Revoked source or grant blocks snapshot replay | MISSING | R2 | PENDING_FULL_E2E |
 | M14 | Prompt injection in memory cannot authorize action | UNPROVEN | R2 | PENDING_FULL_E2E |
@@ -63,3 +63,9 @@ Git SHA; database migration version; test command/environment; independent clien
 - Implemented lease-bound immutable TaskCheckpoint with `expected_checkpoint_seq` CAS and source-linked Observation refs, plus current-grant and project-scoped read-only Resume. Checkpoint seq is separate from task.version.
 - MCP read-only `resume_task` delegates to the same authenticated REST route, no write tools. A new independent process B accepts the handoff and reconstructs A's checkpoint without A's chat or credentials; Mem0 service is deliberately unavailable in this test.
 - **Limit:** existing handoff does NOT bind a specific checkpoint (R1C), not all source-level revocations/consent/outbox or verification/review implemented. The entire M01-M18 remains PENDING_FULL_E2E.
+
+## WORK-03B R1C — Bounded laboratory progress, not complete acceptance
+- Handoff of a task **with an existing checkpoint** requires exact immutable latest checkpoint ID/sequence, same current writer and task version, checked before deleting A's lease. B is reauthorized for task:read/context:read on offer and accept. New bounded handoffs carry a DB-enforced checkpoint foreign key with frozen checkpoint seq/version.
+- No-checkpoint historical flows remain `LEGACY_UNBOUND` for backward compatibility; never claim them as a complete continuity transfer. Any later product release should deliberately phase out this legacy mode.
+- Task leases now have persistent per-task monotonic `si_lease_fences` generations across handoffs and rekeys. Holder-only `GET lease-status` and `POST lease-recovery` require explicit `task:recover` plus execution/ownership and expected generation; one-time secrets cannot be replayed. No automatic takeover by another agent/administrator is implemented.
+- Test real PostgreSQL/REST interleaving and independent subprocess A→B: exact binding, stale rejection, CAS, lost-reply rekey, monotonic fencing, revocation and Mem0-offline read-only resume. Full M01–M18 acceptance remains `PENDING_FULL_E2E`; no source-level consent, R2 independent verification or DONE.

@@ -379,6 +379,28 @@
 
 ---
 
+## SI-MH-0022 — WORK-03B R1C: checkpoint-bound Handoff e lease fencing implementados
+
+**Data:** 2026-11-12 Africa/Maputo · **Estado:** IMPLEMENTADO NO GITHUB / **CI PENDENTE** ao preparar este commit · **HEAD base verificado:** `develop@5fa303487fb4df92d5938c1c84ae2384fd3f882e`; `main@87c3351055aaf58d37f233dbc96eaa8f0b749c5c`. [CI base 43183197724](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43183197724) SUCCESS (81/81 testes + R1B A/B e Mem0 real E2E).
+
+**Objetivo e autorização:** concluir R1C, antes do R2, sem alterações à produção JARVIS/PULSE, `main`, vendor Mem0 ou branched work. Reutilizar WorkCore/R1A/B, PostgreSQL e REST, sem novas dependências.
+
+**Implementação:**
+- `database/migrations/0006_work03b_r1c_handoff_fencing.sql`: `si_handoffs` agora pode vincular exatamente `checkpoint_id,seq,task_version` sob FK do mesmo task e trigger de integridade/imutabilidade. `si_lease_fences` persiste geração monótona mesmo após eliminação da lease activa. `LEASE_REKEYED` entra nos eventos auditáveis, sem credenciais.
+- `backend/rightware_si/core/postgres.py`: `offer_handoff` exige ID+seq do checkpoint mais recente e criado pelo writer se existirem checkpoints, compara versão e grants do destinatário antes da transição atómica. Handoff de tarefas sem checkpoint continua **LEGACY_UNBOUND**, identificado explicitamente. `accept_handoff` verifica novamente grants/ligação/versão e emite uma única lease com geração monotónica.
+- Recuperação: `get_lease_state` oferece só generation/expiry ao holder autenticado com `task:recover/task:execute/task:read`; `recover_lease` reemite credencial one-time *somente ao próprio holder* com expected_version e expected_generation, até após expiração. Token bruto não persiste na idempotency/audit, replay 409, geração sempre incrementada. Não existe takeover automático de outro principal.
+- `backend/rightware_si/http_api.py`: GET `.../lease-status` e POST `.../lease-recovery` sem aceitar principal_id do corpo, e extensão aditiva ao POST .../handoffs com checkpoint fields. `backend/rightware_si/continuity.py` devolve `last_handoff` e `handoff_checkpoint` explícitos, mesmo após B criar checkpoint mais recente; mantém `ASSERTED` e leitura apenas.
+- Testes: novo `tests/test_work03b_r1c.py` (12 PostgreSQL/TestClient reais + concorrência), actualiza `tests/test_work03b_r1b.py` e `scripts/work03b_r1b_real_resume_e2e.py` (processos independentes A/B com binding real, B lost response e rekey sem Mem0); +1 teste estático em `tests/test_work03b_contract.py`. CI executa SQL 0006; **94 testes esperados** (81+12+1), A→B E2E e regressão real Mem0/Ollama. **Não foram declarados PASS antes da run nova**.
+- Contrato `docs/work03b/UC_CORE_01_CONTRACT.json` passa a 18 rotas implementadas em laboratório / 3 rotas futuras (R2), mantendo M01–M18 `PENDING_FULL_E2E`, `M09 SPEC_CONFLICT` e prioridade R1C. Actualizadas matriz, tests/layout, README, documentação de arquitectura e `docs/work03b/R1C_IMPLEMENTATION.md`.
+
+**Limites e riscos:** mono geração só dentro do Core; efeitos externos requerem idempotência e reconciliação. `task:recover` é altamente privilegiado; bearer comprometido pode usá-la: requer OIDC, rate-limit e step-up antes de produção. Handoffs LEGACY_UNBOUND (tarefa sem cp) ainda permitidos por compatibilidade. Não há takeover quando holder perdeu conta, source-level grants/consent, memory outbox, evidence verifier, review DONE, UI nem deployment. SI-RD-03C e 16 EV oráculos permanecem apenas investigação não executada.
+
+**Integridade:** este commit é um fast-forward em `develop` com ficheiros de código/testes/docs e os dois handoffs actualizados; `main`, JARVIS/PULSE, `vendor/mem0` inalterados. Se CI falhar, acrescentar nova entrada MASTER com falha, corrigir sem reescrever entradas anteriores.
+
+**Próxima acção:** consultar CI do novo SHA; validar 0006, 94 testes e E2E R1C; se tudo passar, adicionar evidência SI-MH-0023. Só então rever segurança R1C e abrir o desenho/ratificação R2 — não executar automaticamente EV-01..EV-16.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

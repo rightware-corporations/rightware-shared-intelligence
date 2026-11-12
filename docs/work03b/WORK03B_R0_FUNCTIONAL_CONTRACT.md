@@ -104,3 +104,7 @@ The R0 baseline above documented 10 existing routes and 7 future proposals. The 
 
 ## WORK-03B R1B — Execution update (experimental)
 The original R0 10/7 route counts above are historical. After R1A and R1B the DRAFT machine contract describes **16 live experimental routes and 4 proposed routes**, including POST checkpoint and GET resume. S05 and S09 are **R1B_LAB_PARTIAL**; M05/M12/M16/M17 partial as detailed in the current acceptance matrix. Full UC-CORE-01 acceptance and model-independent evidence verification are **not implemented**.
+
+
+## WORK-03B R1C — execution update (experimental)
+The historical R0 and R1A/B route counts above are intentionally preserved as the history at those commits. Canonical JSON now describes **18 laboratory routes / 3 future R2 routes** (two R1C endpoints: lease-status and lease-recovery). Handoff operations share their original routes but bind exact checkpoint ID/sequence when a task contains checkpoints, prevent generation regression and allow authorized current-holder-only lost/expired secret rotation. Tasks without any checkpoint retain an explicitly `LEGACY_UNBOUND` path for historical compatibility. No full UC-CORE-01 acceptance or R2 verifier/reviewer was added.
