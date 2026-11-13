@@ -1,0 +1,92 @@
+{
+  "schema": "RIGHTWARE_SI_RD_03A_A0_V06_AUDITED_SCORECARD",
+  "date": "2026-11-13",
+  "classification": "EXP_UNRATIFIED_POST_HOC",
+  "evidence_zip_sha256": "ac24694e9a0baa36d88646c741f203e1d890e7ed321c6105bc9bebef2566e1b9",
+  "result_json_sha256": "d974631c755d54b31c3ef7e8dedb3f90abbca5a55965d7ae9f91b330389e0ea6",
+  "fixture_sha256": "c5d3c01e3b3d6dd422a6dc7a09eed84dcf09cfeed7fd5893d2c59e292a202ac4",
+  "provenance": "user-uploaded Kaggle ZIP; audit recalculated counts; runtime version not independently attested",
+  "engine_observed": "PostgreSQL 18.3 via PGlite 0.5.8 WASM",
+  "source_documents": 11,
+  "queries": 18,
+  "scored_queries": 15,
+  "abstention_not_scored": 3,
+  "query_executions": 144,
+  "method_bias": [
+    "POST_HOC_OR",
+    "GROUND_TRUTH_CASE_ID_FILTER",
+    "TINY_CORRELATED_CORPUS"
+  ],
+  "runs": [
+    {
+      "dictionary": "simple",
+      "method": "strict_AND",
+      "k": 1,
+      "hits": 0,
+      "n": 15,
+      "candidate_queries": 0
+    },
+    {
+      "dictionary": "simple",
+      "method": "strict_AND",
+      "k": 2,
+      "hits": 0,
+      "n": 15,
+      "candidate_queries": 0
+    },
+    {
+      "dictionary": "simple",
+      "method": "post_hoc_OR",
+      "k": 1,
+      "hits": 7,
+      "n": 15,
+      "candidate_queries": 16
+    },
+    {
+      "dictionary": "simple",
+      "method": "post_hoc_OR",
+      "k": 2,
+      "hits": 13,
+      "n": 15,
+      "candidate_queries": 16
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "strict_AND",
+      "k": 1,
+      "hits": 0,
+      "n": 15,
+      "candidate_queries": 1
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "strict_AND",
+      "k": 2,
+      "hits": 0,
+      "n": 15,
+      "candidate_queries": 1
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "post_hoc_OR",
+      "k": 1,
+      "hits": 9,
+      "n": 15,
+      "candidate_queries": 16
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "post_hoc_OR",
+      "k": 2,
+      "hits": 13,
+      "n": 15,
+      "candidate_queries": 16
+    }
+  ],
+  "failures_OR_top2": [
+    "MEM-01:stress:2",
+    "MEM-06:stress:2"
+  ],
+  "no_provider_choice": true,
+  "next_gate": "A0-G01 no oracle-derived case filter; pre-register global scope benchmark"
+}

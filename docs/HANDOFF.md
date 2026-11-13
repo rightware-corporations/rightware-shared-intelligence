@@ -165,6 +165,12 @@
 - **Gates pendentes:** SEC-R1C-01..04 sem ratificação, critérios/provider por cliente, consent/privacy/source ACL, OIDC, rate limits, policy lifecycle, REST/MCP verify e revisor independente. Sem main/JARVIS/PULSE/vendor changes, sem paid services/deploy.
 - Próximo: ratificar/rever SEC-R1C-01..04, política de GitHub/provider/criteria por cliente, perfis de SERVICE/consent/retention antes de API operacional. CHECKED_PASS do run não constitui revisão ou DONE.
 
+## SI-RD-03A A0 v0.6 — Kaggle PostgreSQL-WASM (INVESTIGAÇÃO, NÃO SELECÇÃO DE MOTOR)
+
+- **Checkpoint SI-MH-0046:** [Relatório Kaggle v0.6](research/SI_RD_03A_A0_V06_KAGGLE_DIAGNOSTIC_2026-11-13.md) e [scorecard auditado](research/fixtures/SI_RD_03A_A0_V06_AUDITED_SCORECARD.json). ZIP sintético recebido, CRC/hash verificados, 144 registos e 8 métricas recontadas; PGlite 0.5.8/PostgreSQL 18.3 reportado pelo ambiente Kaggle, não reexecutado localmente.
+- Strict AND: **0/15** hit@1 e hit@2. OR **pós-hoc**: simple **7/15** hit@1 / **13/15** hit@2; portuguese **9/15** hit@1 / **13/15** hit@2. 3 consultas de abstention fora do denominador. MEM-04 pode recuperar claim não verificada antes do registo PostgreSQL.
+- **Bloqueio metodológico:** SQL filtra por `q.base_case_id` conhecido do oráculo, restringindo a 1–3 docs/caso: Top 2 13/15 **NÃO é benchmark comparável**. Próximo trabalho independente: remover oracle leak, pré-registar protocolo, ampliar distractores e executar fornecedores reais em ambiente isolado. PostgreSQL Server/Mem0/Hindsight NOT_RUN; nenhuma decisão de seleccionar motor.
+
 ## Next exact work
 **Próximo gate: ratificar SEC-R1C-01..04 e políticas de provider/identity/consent/criteria para R2 operacional, após R2 R1B laboratório 131/131 PASS; só posteriormente considerar API REST evidence:verify e um reviewer independente; nunca auto-DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 

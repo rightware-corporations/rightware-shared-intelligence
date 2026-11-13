@@ -777,6 +777,22 @@
 
 **Next:** submeter contrato G01 para aprovação explícita antes de qualquer migração ou policy-admin API.
 
+---
+
+## SI-MH-0046 — SI-RD-03A Kaggle v0.6 FTS pós-hoc auditado (INVESTIGAÇÃO, NÃO DECISÃO)
+
+**Data:** 2026-11-13 Africa/Maputo. **Base:** `develop@4e6715be0ff811fe6daae6024855a4826d0b36b1`, [CI 43479566985](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43479566985) `completed/success`. **Âmbito:** documentação de pesquisa e handoffs; nenhum código/runtime.
+
+**Evidência recebida:** ZIP sintético Kaggle SHA-256 `ac24694e9a0baa36d88646c741f203e1d890e7ed321c6105bc9bebef2566e1b9`, 6 entradas íntegros, JSON 144 linhas/dados com hash `d974631c755d54b31c3ef7e8dedb3f90abbca5a55965d7ae9f91b330389e0ea6`, fixture hash `c5d3c01e3b3d6dd422a6dc7a09eed84dcf09cfeed7fd5893d2c59e292a202ac4`. Recalculo independente de numeradores. O ZIP não foi enviado ao repo público, apenas os resultados sanitizados: [relatório](research/SI_RD_03A_A0_V06_KAGGLE_DIAGNOSTIC_2026-11-13.md) e [scorecard](research/fixtures/SI_RD_03A_A0_V06_AUDITED_SCORECARD.json).
+
+**Medições:** PostgreSQL 18.3/PGlite 0.5.8 **reportado pelo run Kaggle**; 11 docs, 18 queries, 144 chamadas. Strict AND: 0/15 hit@1/hit@2 (simple e portuguese). OR exploratório **POST-HOC**: simple 7/15 hit@1 e 13/15 hit@2; portuguese 9/15 hit@1 e 13/15 hit@2. Três perguntas de desconhecido excluídas das métricas; Mem0/Hindsight/PostgreSQL Server NÃO executados; nenhuma aprovação de fornecedor.
+
+**Risco metodológico P0:** `WHERE case_id=q.base_case_id` revela ao motor, via fixture, o caso do ground truth e restringe a pesquisa a 1–3 documentos. 13/15 top2 NÃO mede retrieval real cross-case. Outros limites: claims de agente em MEM-04 precedem PostgreSQL, datas não resolvidas semanticamente, duas queries inglesas sem candidatos, OR criado depois de ver baseline. No novo protocolo remover filtro de caso derivado de oráculo e congelar métricas antes da execução.
+
+**Sem alterações:** main, JARVIS/PULSE, código R1/R2, migrations, dependências, workflows, decisões SEC/G01. O presente commit actualiza **apenas** dossier, scorecard e ambos handoffs. Seu CI fica **PENDENTE** até verificação separada. **Próximo gate A0-G01..G05:** teste global não-leaky e depois PostgreSQL Server/Mem0/Hindsight reais, nunca auto-DONE.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
