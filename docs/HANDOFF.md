@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0044 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0045 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -287,3 +287,10 @@
 - Found 7 PostgreSQL unittest modules using stale URI-only `_SAFE` checks before `TRUNCATE`, including the R1B fixture reused in R1C REST tests. Replaced all with `lab_boundary.is_disposable_postgres` and use-time `require_disposable_postgres` before any DB connection. Four pure tests added to guard behavior and fixture source completeness.
 - [Implementation audit](work03b/R2_R1D_LAB_TEST_FIXTURES_SI_MH_0044.md). **194 tests expected, CI pending**; no G01 ratification, G04/G05 approval, new SQL migrations or production route, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0 changes.
 - NEXT: inspect SI-MH-0044 Actions and append exact evidence in SI-MH-0045. G01 requires approval of tenant authority/quorum/expiry/retention first.
+
+## SI-MH-0045 — CI PostgreSQL test fixtures 194/194 VERIFIED
+
+- `develop@bc50bf4652301ad0770c5463c3efcdc629cae433`: [Actions 43478925313](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43478925313) **SUCCESS**, `Ran 194 tests / OK`, seven migrations, R1A/R1B/G03 GitHub LIVE REST, R1C independent agents and MCP/REST/PostgreSQL/Mem0/Ollama E2Es all PASS.
+- Seven destructive test fixtures now share `lab_boundary` guards at unittest collection and each `setUp`. Four new tests pass. [Verified report](work03b/R2_R1D_SI_MH_0045_VERIFIED.md).
+- Only documentation and both handoffs changed in this checkpoint, its own CI **PENDING**. G01 not ratified, 14 lifecycle tests NOT_EXECUTED; no G04/G05 release/OIDC/privacy or DONE/review, main/JARVIS/PULSE/vendor Mem0 preserved.
+- NEXT: explicit G01 operator decisions (authority/quorum/expiry/scope/legacy source consent/retention), then design approved SQL and integration tests.

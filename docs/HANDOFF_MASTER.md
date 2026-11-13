@@ -762,6 +762,21 @@
 
 **Next:** inspect GitHub Actions, record success/failure with real logs in SI-MH-0045. G01 policy authority, expiry, tenant and consent still require operator decision.
 
+
+---
+
+## SI-MH-0045 — Confirmado 194/194 CI depois do reforço das fixtures PostgreSQL
+
+**2026-11-13 Africa/Maputo. BASE:** `develop@bc50bf4652301ad0770c5463c3efcdc629cae433`. **CLASSIFICAÇÃO:** VERIFIED CI EVIDENCE; DOCUMENTATION ONLY.
+
+**Prova de GitHub Actions:** [43478925313](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43478925313) job 132070019680 completed **SUCCESS**; `HANDOFF_POLICY_PASS audited_commits=1 both_files_updated=true`; migrações 0001–0007 PASS; **`Ran 194 tests in 28.840s`, `OK`**. Marcadores R1A/R1B/G03 GitHub LIVE REST, R1C agents A/B e WORK02D MCP/REST/PostgreSQL/Mem0/Ollama todos PASS.
+
+**Âmbito:** 7 módulos `tests/test_*.py` que executam `TRUNCATE` agora invocam guarda URI PostgreSQL central antes de qualquer conexão em `setUp`; quatro testes de segurança adicionais PASS. Relatório [R2_R1D_SI_MH_0045_VERIFIED.md](work03b/R2_R1D_SI_MH_0045_VERIFIED.md). Isto não certifica isolamento de rede ou produção.
+
+**Neste checkpoint:** documentação e ambos handoffs, nenhum backend/migration/CI workflow alterado. Próprio CI deste commit documental PENDENTE, distinto do comprovado 194/194 do SI-MH-0044. **G01 permanece NÃO RATIFICADO** com 14 oráculos NOT_EXECUTED; política de tenant, aprovadores, prazos, consent/retention e G04/G05 bloqueados. Não mudar `main`, JARVIS/PULSE ou vendor Mem0, não promover reviewer/DONE.
+
+**Next:** submeter contrato G01 para aprovação explícita antes de qualquer migração ou policy-admin API.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
