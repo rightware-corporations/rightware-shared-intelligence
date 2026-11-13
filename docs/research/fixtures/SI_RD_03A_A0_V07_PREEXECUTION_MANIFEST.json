@@ -1,0 +1,34 @@
+{
+  "schema": "RIGHTWARE_SI_RD_03A_A0_V07_PREEXECUTION_MANIFEST",
+  "date": "2026-11-13",
+  "checkpoint": "SI-MH-0047",
+  "status": "PREPARED_NOT_RUN_ON_PGLITE_V07",
+  "benchmark_kind": "synthetic_global_corpus_scope_controlled",
+  "documents": 49,
+  "authorized_documents": 29,
+  "out_of_scope_documents": 20,
+  "queries": 40,
+  "queries_with_expected_source": 31,
+  "ranked_fts_queries_planned": 320,
+  "candidate_count_queries_planned": 160,
+  "local_protocol_tests": {
+    "passed": 15,
+    "total": 15,
+    "real_engine": false
+  },
+  "files_sha256": {
+    "notebook": "034a13379a6153284d33fd9c3f8cab50846e3bb46708630b11cb50fd992af6ca",
+    "full_package": "dbabdecc94ae6f25c2af3d5d110be7d63de6f3b56058c9327b914baa4cafbb1b",
+    "embedded_portable": "170d44e36e513239d68e6fc8e2959b9eeddd18d61bd21fa685775f0117599dab",
+    "public": "a72420867367a25e36c26c7fca29abdbfb4fe80008877f61c4e85444d53c68d8",
+    "oracle": "2c03b8500beef185f6780a98eb7c7356b816e72ff0613c89467c7994688d024e",
+    "original_v05": "c5d3c01e3b3d6dd422a6dc7a09eed84dcf09cfeed7fd5893d2c59e292a202ac4"
+  },
+  "notes": [
+    "Notebook contains full portable lab as verified embedded ZIP; Kaggle internet needed for npm package",
+    "OR method post-hoc from v0.6",
+    "Original historical MEM-02/MEM-03 ambiguous",
+    "Mem0/Hindsight/PostgreSQL Server NOT_RUN",
+    "PGlite v0.7 NOT_RUN until Kaggle ZIP returned"
+  ]
+}

@@ -171,6 +171,13 @@
 - Strict AND: **0/15** hit@1 e hit@2. OR **pós-hoc**: simple **7/15** hit@1 / **13/15** hit@2; portuguese **9/15** hit@1 / **13/15** hit@2. 3 consultas de abstention fora do denominador. MEM-04 pode recuperar claim não verificada antes do registo PostgreSQL.
 - **Bloqueio metodológico:** SQL filtra por `q.base_case_id` conhecido do oráculo, restringindo a 1–3 docs/caso: Top 2 13/15 **NÃO é benchmark comparável**. Próximo trabalho independente: remover oracle leak, pré-registar protocolo, ampliar distractores e executar fornecedores reais em ambiente isolado. PostgreSQL Server/Mem0/Hindsight NOT_RUN; nenhuma decisão de seleccionar motor.
 
+## SI-RD-03A A0 v0.7 — global-corpus experiment ready (NOT_RUN ON PGLITE)
+
+- **Checkpoint SI-MH-0047:** [Frozen global-corpus protocol](research/SI_RD_03A_A0_V07_PROTOCOL_2026-11-13.md), [self-contained Kaggle notebook](research/notebooks/RIGHTWARE_A0_GLOBAL_KAGGLE_V07.ipynb) e [hashes/manifesto](research/fixtures/SI_RD_03A_A0_V07_PREEXECUTION_MANIFEST.json).
+- **Local protocol validation:** 15/15 testes PASS; Node JS syntax PASS; notebook bootstrap verified. 49 docs (29 autorizados/20 fora de escopo), 40 perguntas, 320 pesquisas PGlite + 160 candidate counts **A EXECUTAR**. O runner NÃO usa oracle `case_id`/gold; score separado depois das consultas.
+- **Não executado ainda:** PGlite real nesta versão; PostgreSQL Server, Mem0 e Hindsight. Nenhuma comparação de fornecedores, aprovação de produto ou evidência de temporalidade/autoridade. A0 v0.6 OR 13/15 era **post-hoc e case-filtered**, não comparável com este corpus global.
+- **Próxima acção SI-RD-03A:** importar o notebook directamente no Kaggle (não requer dataset), executar Run All, devolver ZIP `RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip`, recalcular métricas antes de qualquer conclusão.
+
 ## Next exact work
 **Próximo gate: ratificar SEC-R1C-01..04 e políticas de provider/identity/consent/criteria para R2 operacional, após R2 R1B laboratório 131/131 PASS; só posteriormente considerar API REST evidence:verify e um reviewer independente; nunca auto-DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 

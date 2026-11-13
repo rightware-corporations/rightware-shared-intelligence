@@ -793,6 +793,22 @@
 
 ---
 
+---
+
+## SI-MH-0047 — SI-RD-03A A0 v0.7 — global-corpus, oráculos isolados e Kaggle self-contained (EXPERIMENTO)
+
+**Data:** 2026-11-13 Africa/Maputo; **base:** `develop@3906bf49f1d67acdacaf55d14af28b660f614ba1` com CI anterior [43482600418](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43482600418) `success`. **Classificação:** PREPARADO, TESTES LOCAIS DE CONTRATO VALIDOS; **PGLITE V07 NÃO EXECUTADO**.
+
+**Motivo:** corrigir oracle leakage da v0.6: `WHERE case_id=q.base_case_id` definia previamente a família correcta de fontes. [Protocolo](research/SI_RD_03A_A0_V07_PROTOCOL_2026-11-13.md), [notebook autónomo completo](research/notebooks/RIGHTWARE_A0_GLOBAL_KAGGLE_V07.ipynb), [manifesto de integridade](research/fixtures/SI_RD_03A_A0_V07_PREEXECUTION_MANIFEST.json) versionados. Notebook SHA256 `034a13379a6153284d33fd9c3f8cab50846e3bb46708630b11cb50fd992af6ca`; portable ZIP embutido SHA256 `170d44e36e513239d68e6fc8e2959b9eeddd18d61bd21fa685775f0117599dab`.
+
+**Fixture:** 49 fontes (29 autorizadas/20 de outro projecto ou organização), 40 queries, 31 com source-oracle, 9 sem. 8 combinações FTS: simple/portuguese, AND/OR de continuidade pós-hoc, top1/top2; 320 SELECT ranking + 160 contagens planeados. Executor tem `scope_id` constante derivado de identidade de laboratório, não da query e nunca acesso ao ficheiro de oráculos. Controlo de ACL durante scoring recusa fonte alheia.
+
+**Evidência REAL desta preparação:** 15/15 testes unitários locais PASS (incluindo fake scoring como teste de contrato, não benchmark), validação JS syntax e bootstrap do notebook, hashes confirmados. **NÃO há resultados PGlite v0.7, PostgreSQL Server, Mem0, Hindsight, abstenção, autoridade, temporalidade nem nova decisão de fornecedor.** CI do presente commit pendente. Limites: sample pequeno, 6 queries históricas ambíguas, novo corpus sintético não cego, OR aprendido com v0.6.
+
+**Isolamento:** nenhum backend, migration, workflows, production deploy, `main`, JARVIS/PULSE nem dependência nova do produto. A engenharia R2 continua independente. **Próximo:** Kaggle Run All + ZIP de evidências v0.7 → auditoria independente/novo checkpoint, nunca auto-DONE.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
