@@ -7,7 +7,6 @@ request resolves its actor from a high-entropy bearer token, not JSON.
 from __future__ import annotations
 
 import os
-from urllib.parse import urlsplit
 from typing import Annotated
 
 import psycopg
@@ -24,6 +23,7 @@ from rightware_si.context_service import ScopedContextReader, SemanticUnavailabl
 from rightware_si.continuity import ContinuityCore
 from rightware_si.memory import Mem0HTTPClient, SharedMemory
 from rightware_si.verification_ledger import EvidenceLedger
+from rightware_si.lab_boundary import require_disposable_postgres
 
 
 class StrictModel(BaseModel):
@@ -121,12 +121,9 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     # disposable loopback PostgreSQL synthetic lab. No production endpoint.
     r2_lab_enabled = os.environ.get("RW_SI_ENABLE_R2_R1C_LAB_API") == "1"
     if r2_lab_enabled:
-        parsed_dsn = urlsplit(dsn)
-        if (os.environ.get("RW_SI_ENVIRONMENT") != "lab" or
-                parsed_dsn.scheme not in ("postgresql", "postgres") or
-                parsed_dsn.hostname not in ("127.0.0.1", "localhost") or
-                parsed_dsn.port != 5432 or parsed_dsn.path != "/rw_test"):
-            raise RuntimeError("R2 R1C lab API requires disposable local /rw_test and lab environment")
+        if os.environ.get("RW_SI_ENVIRONMENT") != "lab":
+            raise RuntimeError("R2 R1C lab API requires lab environment")
+        require_disposable_postgres(dsn)
     core = WorkCore(dsn)
     continuity = ContinuityCore(dsn)
     principal_dep = make_principal_dependency(dsn)

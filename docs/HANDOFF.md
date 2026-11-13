@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-12 (Africa/Maputo); checkpoint SI-MH-0040 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0041 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -259,3 +259,10 @@
 - Pending explicit choices: activation authority/quorum, first internal tenant, expiry, disable/revocation, named legacy lab exceptions, source ACL/consent/retention; G04/G05 production still blocked.
 - Docs+two handoffs only in SI-MH-0040, own CI pending; no code/new privileges/main/JARVIS/PULSE/vendor Mem0 changes. R2 R1C lab flag remains OFF by default.
 - NEXT: ratify G01 then implement lifecycle transactionally with tests; do not advance production/DONE.
+
+## SI-MH-0041 — Safety of disposable synthetic PostgreSQL DB (CI PENDING)
+
+- Prior `develop@099b5e9d405bb16660a2b565bf221db33e689638` [Actions 43259970366](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43259970366) PASS 174/174 + R2 R1D G03 LIVE + Mem0/Ollama.
+- `urlsplit` hostname-only check missed libpq `hostaddr` URI/env redirection; dangerous in synthetic scripts calling TRUNCATE. New `lab_boundary.py` validates query/env/host resolution, explicit user and /rw_test port 5432. R2 experimental API + four destructive CI scripts now call it.
+- New `test_lab_db_boundary.py` 16 pure tests; 190 expected, **CI PENDING**. [Report](work03b/R2_R1D_LAB_DB_BOUNDARY_SI_MH_0041.md).
+- G01 approval/expiry/tenant/consent NOT RATIFIED, G04/G05 blocked. No migrations/new production endpoints, main/JARVIS/PULSE/vendor Mem0 unchanged. Next observe run SI-MH-0041 and append actual results SI-MH-0042.

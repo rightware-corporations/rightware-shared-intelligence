@@ -11,7 +11,6 @@ import os
 import subprocess
 import sys
 import time
-from urllib.parse import urlsplit
 from uuid import uuid4
 
 import httpx
@@ -19,6 +18,7 @@ import psycopg
 
 from rightware_si.core import WorkCore
 from rightware_si.token_admin import issue_api_token
+from rightware_si.lab_boundary import require_disposable_postgres
 
 URL = "http://127.0.0.1:8892"
 CLAIM = "Agent A recorded a synthetic receipt; not independently verified"
@@ -226,10 +226,7 @@ def run_child(role, task, token, lease=None, handoff=None):
 
 def main():
     dsn=os.environ.get("RW_TEST_DATABASE_URL","")
-    u=urlsplit(dsn)
-    require(bool(dsn) and u.path=="/rw_test"
-            and u.hostname in ("127.0.0.1","localhost") and u.port==5432,
-            "refusing non-disposable Postgres")
+    require_disposable_postgres(dsn, expected_user="rw")
     require(os.environ.get("RW_SI_DATABASE_URL")==dsn,
             "API and disposable test databases must match")
     require(os.environ.get("RW_R1B_URL",URL)==URL,

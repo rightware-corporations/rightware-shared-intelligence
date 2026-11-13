@@ -10,7 +10,6 @@ import os
 import subprocess
 import sys
 import time
-from urllib.parse import urlsplit
 from uuid import uuid4
 
 import httpx
@@ -18,17 +17,14 @@ import psycopg
 from mcp import Client, StdioServerParameters
 
 from rightware_si.core import WorkCore
+from rightware_si.lab_boundary import require_disposable_postgres
 from rightware_si.memory import Mem0HTTPClient, MemoryScope, SharedMemory
 from rightware_si.token_admin import issue_api_token, revoke_api_token
 
 
 def check_db() -> str:
     dsn = os.environ["RW_TEST_DATABASE_URL"]
-    parsed = urlsplit(dsn)
-    if (parsed.path != "/rw_test"
-        or parsed.hostname not in ("127.0.0.1", "localhost")
-        or parsed.port != 5432):
-        raise RuntimeError("Refusing non-local or non-ephemeral database")
+    require_disposable_postgres(dsn, expected_user="rw")
     if os.environ.get("RW_SI_DATABASE_URL") != dsn:
         raise RuntimeError("API database and test database must match")
     if os.environ.get("RW_SI_MEM0_URL") != "http://127.0.0.1:8891":

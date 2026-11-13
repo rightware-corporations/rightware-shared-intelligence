@@ -8,7 +8,6 @@ is placed in a JSON request, URL, persisted record, or output.
 from __future__ import annotations
 
 import os
-from urllib.parse import urlsplit
 from uuid import uuid4
 
 import psycopg
@@ -17,6 +16,7 @@ from fastapi.testclient import TestClient
 from rightware_si.core import WorkCore
 from rightware_si.http_api import create_app
 from rightware_si.token_admin import issue_api_token
+from rightware_si.lab_boundary import require_disposable_postgres
 
 LIVE_SHA = "0c63b2f2d3d4cf00926752ab2c58d42ccbd64901"
 LIVE_URL = ("https://github.com/rightware-corporations/"
@@ -30,12 +30,8 @@ def require(ok: bool) -> None:
 
 def main() -> None:
     dsn = os.environ.get("RW_TEST_DATABASE_URL", "")
-    d = urlsplit(dsn)
     # No network, database, or destructive action occurs before the guard.
-    require(d.scheme in ("postgresql", "postgres"))
-    require(d.hostname in ("localhost", "127.0.0.1"))
-    require(d.port == 5432 and d.path == "/rw_test")
-    require(d.username == "rw")
+    require_disposable_postgres(dsn, expected_user="rw")
     require(dsn == os.environ.get("RW_SI_DATABASE_URL"))
     require(os.environ.get("RW_SI_ENVIRONMENT") == "lab")
     require(os.environ.get("RW_SI_ENABLE_R2_R1C_LAB_API") == "1")

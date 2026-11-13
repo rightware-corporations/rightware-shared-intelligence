@@ -7,7 +7,6 @@ TRUNCATES the synthetic test DB; never deploy to a non-lab environment.
 from __future__ import annotations
 
 import os
-from urllib.parse import urlsplit
 from uuid import uuid4
 
 import psycopg
@@ -17,6 +16,7 @@ from rightware_si.api_auth import resolve_principal
 from rightware_si.core import AccessDenied, WorkCore
 from rightware_si.token_admin import issue_api_token
 from rightware_si.verification_ledger import EvidenceLedger
+from rightware_si.lab_boundary import require_disposable_postgres
 
 
 SHA="0c63b2f2d3d4cf00926752ab2c58d42ccbd64901"
@@ -31,10 +31,8 @@ def require(condition: bool):
 
 def main() -> None:
     dsn=os.environ.get("RW_TEST_DATABASE_URL","")
-    uri=urlsplit(dsn)
-    require(bool(dsn) and uri.hostname in ("localhost","127.0.0.1")
-            and uri.port==5432 and uri.path=="/rw_test"
-            and os.environ.get("RW_SI_DATABASE_URL")==dsn)
+    require_disposable_postgres(dsn, expected_user="rw")
+    require(os.environ.get("RW_SI_DATABASE_URL")==dsn)
     require(bool(os.environ.get("GITHUB_TOKEN")))
 
     with psycopg.connect(dsn,autocommit=True) as conn:

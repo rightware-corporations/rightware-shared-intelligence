@@ -708,6 +708,19 @@
 
 **Próxima ação:** ratificar ou rever o modelo G01 antes de implementação. G02 174 testes e G03 live REST validados apenas em laboratório; G04 identity/privacy e G05 release continuam bloqueados.
 
+
+---
+
+## SI-MH-0041 — Guards for PostgreSQL lab connection overrides (CI PENDING)
+
+**2026-11-13 Africa/Maputo. BASE `develop@099b5e9d405bb16660a2b565bf221db33e689638`. STATE:** LAB SECURITY FIX, NOT G01 APPROVAL.
+
+**CI previous verified:** [43259970366](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43259970366) SUCCESS 174/174, seven migrations and GitHub LIVE R2 R1D REST plus Mem0/Ollama regressions PASS.
+
+**Issue:** URI hostname/port/path preflight could be bypassed by libpq `?hostaddr=`, `PGHOSTADDR` or `PGSERVICE` connection override. Synthetic CI scripts run `TRUNCATE`, so avoid remote DB connections even when URI looks like localhost. Added `lab_boundary.py` fail-closed shared guard on API experimental flag and four destructive CI scripts, 16 pure unit tests for URI/env hostile cases. [Detailed review](work03b/R2_R1D_LAB_DB_BOUNDARY_SI_MH_0041.md).
+
+**CI of this commit PENDING:** 190 expected distinct tests (174+16); seven migrations, R1A/R1B/G03 GitHub LIVE, R1C A/B and Mem0/Ollama remain mandatory. G01 policy management still not ratified; zero changes to DB migrations, DONE/reviewer, main/JARVIS/PULSE/vendor Mem0 or production. Next: observe CI and append SI-MH-0042 with actual evidence.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
