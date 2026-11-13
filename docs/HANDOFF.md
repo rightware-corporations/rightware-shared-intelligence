@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0041 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0042 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -266,3 +266,11 @@
 - `urlsplit` hostname-only check missed libpq `hostaddr` URI/env redirection; dangerous in synthetic scripts calling TRUNCATE. New `lab_boundary.py` validates query/env/host resolution, explicit user and /rw_test port 5432. R2 experimental API + four destructive CI scripts now call it.
 - New `test_lab_db_boundary.py` 16 pure tests; 190 expected, **CI PENDING**. [Report](work03b/R2_R1D_LAB_DB_BOUNDARY_SI_MH_0041.md).
 - G01 approval/expiry/tenant/consent NOT RATIFIED, G04/G05 blocked. No migrations/new production endpoints, main/JARVIS/PULSE/vendor Mem0 unchanged. Next observe run SI-MH-0041 and append actual results SI-MH-0042.
+
+## SI-MH-0042 — Lab DB connection boundary VERIFIED 190/190
+
+- Code baseline `d2c06290ec5593324b8c1b84ad96ef3bd335a05e`: [GitHub Actions 43401900930](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43401900930) SUCCESS, `Ran 190 tests / OK`, migrations 0001..0007, GitHub R1A/R1B/G03 LIVE, R1C independent agents and MCP/REST/PostgreSQL/Mem0/Ollama regressions PASS.
+- New 16 `lab_boundary` tests validated rejection of DSN query hostaddr, env PGHOSTADDR/PGSERVICE/PGSERVICEFILE, unsafe hosts/database/port and injected redirects before database connection. Lab safety only, not production isolation guarantee.
+- [Verified evidence report](work03b/R2_R1D_SI_MH_0042_CI_EVIDENCE.md). This checkpoint is docs-only, **new CI PENDING**, preserve previous proof run.
+- G01 lifecycle/tenant authority expiry/disable/retention NOT RATIFIED; no policy schema changes, review/DONE or production route, main/JARVIS/PULSE/vendor Mem0 untouched.
+- NEXT: obtain explicit G01 authority/quorum/expiry/tenant/consent decisions; then implement lifecycle with migrations and 14 tests and full regressions.

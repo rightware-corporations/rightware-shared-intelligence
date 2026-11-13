@@ -721,6 +721,19 @@
 
 **CI of this commit PENDING:** 190 expected distinct tests (174+16); seven migrations, R1A/R1B/G03 GitHub LIVE, R1C A/B and Mem0/Ollama remain mandatory. G01 policy management still not ratified; zero changes to DB migrations, DONE/reviewer, main/JARVIS/PULSE/vendor Mem0 or production. Next: observe CI and append SI-MH-0042 with actual evidence.
 
+
+---
+
+## SI-MH-0042 — CI do hardening DB SI-MH-0041 confirmado: 190/190 PASS
+
+**2026-11-13 Africa/Maputo. HEAD de origem:** `develop@d2c06290ec5593324b8c1b84ad96ef3bd335a05e`. **Classificação:** VERIFIED LAB CI EVIDENCE, DOCUMENTATION ONLY.
+
+**Fonte GitHub Actions:** [run 43401900930](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43401900930), job 131806539362 completed SUCCESS. Logs `HANDOFF_POLICY_PASS audited_commits=1 both_files_updated=true`, migrations 0001–0007 PASS, **`Ran 190 tests in 24.218s / OK`**, GitHub R1A/R1B/G03 LIVE markers, R1C bound lease recovery, e WORK02D MCP/REST/PostgreSQL/Mem0/Ollama E2E PASS.
+
+**Evidência detalhada:** [R2_R1D_SI_MH_0042_CI_EVIDENCE.md](work03b/R2_R1D_SI_MH_0042_CI_EVIDENCE.md). A correção de `lab_boundary.py` está VALIDADA dentro dos testes de laboratório; nunca é garantia de isolamento contra administradores maliciosos ou rede comprometida, e não ratifica expiração/consent/tenant policy. O R2 REST continua desativado por default, sem DONE/review.
+
+**Neste checkpoint:** somente documentos/evidência + ambos handoffs. CI deste próprio commit **PENDENTE**, distinto do code SHA validado. Não alterar `main`, JARVIS, PULSE, pinned Mem0. **Próximo:** revisão/ratificação do contrato G01 sobre autoridade, prazos, revogação, tenant e retenção; somente após aprovação migration e 14 testes G01, G04/G05 continuam pendentes.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
