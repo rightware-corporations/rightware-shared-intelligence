@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 import os
 from pathlib import Path
 import unittest
-from urllib.parse import urlsplit
+from rightware_si.lab_boundary import require_disposable_postgres, is_disposable_postgres
 
 try:
     import psycopg
@@ -19,13 +19,15 @@ except ImportError:
 
 
 _DSN = os.environ.get("RW_TEST_DATABASE_URL", "")
-_SAFE = bool(_DSN and urlsplit(_DSN).path == "/rw_test")
+_SAFE = is_disposable_postgres(_DSN, expected_user="rw")
 
 
 @unittest.skipUnless(psycopg is not None and _SAFE,
                      "real Postgres tests require RW_TEST_DATABASE_URL ending /rw_test")
 class PostgresCoreTests(unittest.TestCase):
     def setUp(self):
+        # Check again at use-time: PGHOSTADDR may change after module import.
+        require_disposable_postgres(_DSN, expected_user="rw")
         self.dsn = _DSN
         self.core = WorkCore(self.dsn)
         # THIS IS A DISPOSABLE INTEGRATION TEST DATABASE ONLY.

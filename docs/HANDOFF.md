@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0043 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0044 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -280,3 +280,10 @@
 - `develop@bea6dd3ed4cc27ed841e3fc3d3c8fd6a469c5d27`: [Actions 43402401931](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402401931) SUCCESS; 190 tests OK, migrations 0001..0007 PASS, GitHub LIVE R1B/G03 and R1C two-agent/MCP/Mem0/Ollama E2Es PASS. Implementation SI-MH-0041 also SUCCESS [43401900930](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43401900930).
 - [Verified CI report](work03b/R2_R1D_SI_MH_0043_CI_EVIDENCE.md) appended; SI-MH-0043 itself docs-only; its CI separate.
 - G01 activation/expiry/disable/supersession, actor authority, tenant consent and retention still DRAFT NOT RATIFIED; no code/migrations for G01, no reviewer/DONE or production access. Continue only after explicit operator decision.
+
+## SI-MH-0044 — Seven destructive PostgreSQL test fixtures secured (CI pending)
+
+- Last HEAD `develop@bbd731d6e30640df5f35da95bf9db979456287db`, [Actions 43402943623](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402943623) SUCCESS by GitHub metadata; last exact test log 190 PASS [43402401931](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402401931).
+- Found 7 PostgreSQL unittest modules using stale URI-only `_SAFE` checks before `TRUNCATE`, including the R1B fixture reused in R1C REST tests. Replaced all with `lab_boundary.is_disposable_postgres` and use-time `require_disposable_postgres` before any DB connection. Four pure tests added to guard behavior and fixture source completeness.
+- [Implementation audit](work03b/R2_R1D_LAB_TEST_FIXTURES_SI_MH_0044.md). **194 tests expected, CI pending**; no G01 ratification, G04/G05 approval, new SQL migrations or production route, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0 changes.
+- NEXT: inspect SI-MH-0044 Actions and append exact evidence in SI-MH-0045. G01 requires approval of tenant authority/quorum/expiry/retention first.

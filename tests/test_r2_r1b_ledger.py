@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 from uuid import uuid4
 import os
 import unittest
-from urllib.parse import urlsplit
+from rightware_si.lab_boundary import require_disposable_postgres, is_disposable_postgres
 
 import httpx
 import psycopg
@@ -17,9 +17,7 @@ from rightware_si.token_admin import issue_api_token
 from rightware_si.verification_ledger import EvidenceLedger
 
 _DSN=os.environ.get("RW_TEST_DATABASE_URL","")
-_U=urlsplit(_DSN)
-_SAFE=bool(_DSN and _U.hostname in ("127.0.0.1","localhost")
-           and _U.port==5432 and _U.path=="/rw_test")
+_SAFE = is_disposable_postgres(_DSN, expected_user="rw")
 _SHA="0c63b2f2d3d4cf00926752ab2c58d42ccbd64901"
 _URL="https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43202560651"
 
@@ -43,6 +41,8 @@ def provider_record(**changes):
 @unittest.skipUnless(_SAFE,"requires disposable local PostgreSQL /rw_test")
 class VerificationLedgerLabTests(unittest.TestCase):
     def setUp(self):
+        # Check again at use-time: PGHOSTADDR may change after module import.
+        require_disposable_postgres(_DSN, expected_user="rw")
         with psycopg.connect(_DSN,autocommit=True) as conn:
             conn.execute("TRUNCATE si_organizations,si_principals RESTART IDENTITY CASCADE")
             conn.execute("INSERT INTO si_organizations(id) VALUES('r2lab'),('otherorg')")

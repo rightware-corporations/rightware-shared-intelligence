@@ -747,6 +747,21 @@
 
 **Próxima decisão:** ratificar G01 com papéis, âmbito, expiração e consentimento para habilitar migration + testes. Até lá, não criar schema/rotas de administração de policy nem promover a produção.
 
+
+---
+
+## SI-MH-0044 — 7 PostgreSQL test modules now fail closed before TRUNCATE (CI PENDING)
+
+**2026-11-13 Africa/Maputo. BASE:** `develop@bbd731d6e30640df5f35da95bf9db979456287db`. **STATE:** LAB TEST HARNESS SECURITY FIX, NOT PRODUCTION.
+
+**Baseline:** GitHub run [43402943623](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402943623) SUCCESS by Actions metadata, preceding 190-test log [43402401931](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402401931) SUCCESS.
+
+**Finding:** `_SAFE` based on `urlsplit` path/host alone left seven test modules with destructive `TRUNCATE` vulnerable to libpq `hostaddr` URI/environment redirection, even though prior SI-MH-0041 protected CI scripts. **Fix:** shared fail-closed `is_disposable_postgres` for unittest collection + `require_disposable_postgres` at start of `setUp` before any DB connect for all seven modules, including R1B fixture inherited by R1C HTTP. Added four pure unit/static guard tests. [Detailed findings](work03b/R2_R1D_LAB_TEST_FIXTURES_SI_MH_0044.md).
+
+**CI new SHA PENDING:** 190+4=194 tests expected, all migrations & LIVE GitHub G03 / R1C A/B / Mem0 E2E mandatory. No G01 lifecycle implementation/ratification, no G04/G05 or review/DONE, no production/main/JARVIS/PULSE/vendor Mem0 changes.
+
+**Next:** inspect GitHub Actions, record success/failure with real logs in SI-MH-0045. G01 policy authority, expiry, tenant and consent still require operator decision.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

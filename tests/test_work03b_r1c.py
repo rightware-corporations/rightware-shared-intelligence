@@ -8,7 +8,7 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor
 import os
 import unittest
-from urllib.parse import urlsplit
+from rightware_si.lab_boundary import require_disposable_postgres, is_disposable_postgres
 from uuid import uuid4
 
 import psycopg
@@ -18,14 +18,14 @@ from rightware_si.http_api import create_app
 from rightware_si.token_admin import issue_api_token
 
 _DSN=os.getenv("RW_TEST_DATABASE_URL","")
-_U=urlsplit(_DSN)
-_SAFE=bool(_DSN and _U.path=="/rw_test"
-           and _U.hostname in ("localhost","127.0.0.1") and _U.port==5432)
+_SAFE = is_disposable_postgres(_DSN, expected_user="rw")
 
 
 @unittest.skipUnless(_SAFE, "requires disposable local PostgreSQL /rw_test")
 class HandoffFencingTests(unittest.TestCase):
     def setUp(self):
+        # Check again at use-time: PGHOSTADDR may change after module import.
+        require_disposable_postgres(_DSN, expected_user="rw")
         with psycopg.connect(_DSN,autocommit=True) as conn:
             conn.execute("TRUNCATE si_organizations,si_principals RESTART IDENTITY CASCADE")
             conn.execute("INSERT INTO si_organizations(id) VALUES('r1c-a'),('r1c-b')")

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import os
 import unittest
-from urllib.parse import urlsplit
+from rightware_si.lab_boundary import require_disposable_postgres, is_disposable_postgres
 
 import psycopg
 from fastapi.testclient import TestClient
@@ -16,14 +16,14 @@ from rightware_si.http_api import create_app
 from rightware_si.token_admin import issue_api_token, revoke_api_token
 
 _DSN = os.environ.get("RW_TEST_DATABASE_URL", "")
-_U = urlsplit(_DSN)
-_SAFE = bool(_DSN and _U.path == "/rw_test"
-             and _U.hostname in ("127.0.0.1", "localhost") and _U.port == 5432)
+_SAFE = is_disposable_postgres(_DSN, expected_user="rw")
 
 
 @unittest.skipUnless(_SAFE, "isolated local PostgreSQL rw_test required")
 class CheckpointResumeTests(unittest.TestCase):
     def setUp(self):
+        # Check again at use-time: PGHOSTADDR may change after module import.
+        require_disposable_postgres(_DSN, expected_user="rw")
         with psycopg.connect(_DSN, autocommit=True) as conn:
             conn.execute("TRUNCATE si_organizations,si_principals RESTART IDENTITY CASCADE")
             conn.execute("INSERT INTO si_organizations(id) VALUES('a-org'),('b-org')")

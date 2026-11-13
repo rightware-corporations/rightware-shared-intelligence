@@ -40,3 +40,17 @@ def require_disposable_postgres(
                 raise RuntimeError(msg)
     except (ValueError, TypeError, OSError, IndexError, AttributeError):
         raise RuntimeError(msg) from None
+
+
+def is_disposable_postgres(
+    dsn: str, *, expected_user: str | None = None,
+    environ: Mapping[str, str] | None = None,
+) -> bool:
+    """Safe pre-collection predicate; fixture setUp must revalidate at use."""
+    try:
+        require_disposable_postgres(
+            dsn, expected_user=expected_user, environ=environ,
+        )
+    except RuntimeError:
+        return False
+    return True

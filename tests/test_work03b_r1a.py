@@ -6,7 +6,7 @@ assertions only; checkpoint/resume, verifier and DONE remain out of scope.
 from __future__ import annotations
 
 import os
-from urllib.parse import urlsplit
+from rightware_si.lab_boundary import require_disposable_postgres, is_disposable_postgres
 from uuid import uuid4
 import unittest
 
@@ -17,17 +17,14 @@ from rightware_si.http_api import create_app
 from rightware_si.token_admin import issue_api_token, revoke_api_token
 
 _DSN = os.environ.get("RW_TEST_DATABASE_URL", "")
-_URL = urlsplit(_DSN)
-_SAFE = bool(
-    _DSN and _URL.path == "/rw_test"
-    and _URL.hostname in ("localhost", "127.0.0.1")
-    and _URL.port == 5432
-)
+_SAFE = is_disposable_postgres(_DSN, expected_user="rw")
 
 
 @unittest.skipUnless(_SAFE, "requires disposable local PostgreSQL /rw_test")
 class Work03BR1ATests(unittest.TestCase):
     def setUp(self):
+        # Check again at use-time: PGHOSTADDR may change after module import.
+        require_disposable_postgres(_DSN, expected_user="rw")
         with psycopg.connect(_DSN, autocommit=True) as conn:
             conn.execute("TRUNCATE si_organizations,si_principals RESTART IDENTITY CASCADE")
             conn.execute("INSERT INTO si_organizations(id) VALUES('rw-synthetic'),('separate')")
