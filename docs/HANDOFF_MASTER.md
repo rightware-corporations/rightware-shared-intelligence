@@ -734,6 +734,19 @@
 
 **Neste checkpoint:** somente documentos/evidência + ambos handoffs. CI deste próprio commit **PENDENTE**, distinto do code SHA validado. Não alterar `main`, JARVIS, PULSE, pinned Mem0. **Próximo:** revisão/ratificação do contrato G01 sobre autoridade, prazos, revogação, tenant e retenção; somente após aprovação migration e 14 testes G01, G04/G05 continuam pendentes.
 
+
+---
+
+## SI-MH-0043 — CI do checkpoint SI-MH-0042: 190/190 PASS confirmados
+
+**2026-11-13 Africa/Maputo. HEAD base:** `develop@bea6dd3ed4cc27ed841e3fc3d3c8fd6a469c5d27`. **Classificação:** CI VERIFIED LAB / DOCUMENTATION.
+
+[Actions 43402401931](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402401931) terminou **SUCCESS** no job 131808231744: `HANDOFF_POLICY_PASS`, migrações 0001–0007, `Ran 190 tests in 22.980s / OK`; marcadores LIVE GitHub REST G03 e ledger R1B, R1C A/B e WORK02D MCP/REST/PostgreSQL/Mem0/Ollama todos PASS. A implementação SI-MH-0041 já tinha passado em [43401900930](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43401900930), 190/190.
+
+**Documento:** [R2_R1D_SI_MH_0043_CI_EVIDENCE.md](work03b/R2_R1D_SI_MH_0043_CI_EVIDENCE.md). **Nenhum código nem schema neste commit**, só log comprovado + CURRENT/MASTER; próprio CI do commit documental é separadamente pendente. `lab_boundary` protege laboratório contra opções libpq hostaddr e ambiente, não é firewall nem aprova produção. G01 policy lifecycle, autoridade de tenant, validade, revogação e retenção **NÃO RATIFICADOS**; 14 testes G01 NOT_EXECUTED. G04/G05 e reviewer/DONE bloqueados, main/JARVIS/PULSE/vendor Mem0 preservados.
+
+**Próxima decisão:** ratificar G01 com papéis, âmbito, expiração e consentimento para habilitar migration + testes. Até lá, não criar schema/rotas de administração de policy nem promover a produção.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

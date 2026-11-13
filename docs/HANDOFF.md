@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0042 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0043 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -274,3 +274,9 @@
 - [Verified evidence report](work03b/R2_R1D_SI_MH_0042_CI_EVIDENCE.md). This checkpoint is docs-only, **new CI PENDING**, preserve previous proof run.
 - G01 lifecycle/tenant authority expiry/disable/retention NOT RATIFIED; no policy schema changes, review/DONE or production route, main/JARVIS/PULSE/vendor Mem0 untouched.
 - NEXT: obtain explicit G01 authority/quorum/expiry/tenant/consent decisions; then implement lifecycle with migrations and 14 tests and full regressions.
+
+## SI-MH-0043 — CI SI-MH-0042 verified, 190/190
+
+- `develop@bea6dd3ed4cc27ed841e3fc3d3c8fd6a469c5d27`: [Actions 43402401931](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43402401931) SUCCESS; 190 tests OK, migrations 0001..0007 PASS, GitHub LIVE R1B/G03 and R1C two-agent/MCP/Mem0/Ollama E2Es PASS. Implementation SI-MH-0041 also SUCCESS [43401900930](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43401900930).
+- [Verified CI report](work03b/R2_R1D_SI_MH_0043_CI_EVIDENCE.md) appended; SI-MH-0043 itself docs-only; its CI separate.
+- G01 activation/expiry/disable/supersession, actor authority, tenant consent and retention still DRAFT NOT RATIFIED; no code/migrations for G01, no reviewer/DONE or production access. Continue only after explicit operator decision.
