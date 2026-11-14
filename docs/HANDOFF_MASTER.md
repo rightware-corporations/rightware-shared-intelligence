@@ -847,6 +847,17 @@
 
 **Next CI expected:** 202 tests + 8 migrations + existing R1A/R1B/G03 GitHub LIVE and Mem0/Ollama. **PENDING**. No changes runtime G01, no production/main/JARVIS/PULSE/vendor Mem0; G01 enforcement in verifier and missing midflight/replay gates still open.
 
+
+---
+
+## SI-MH-0051 — G01 enforcement integrated into R2 verifier and real GitHub REST lab smoke (CI PENDING)
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@ac0512a731207b9d2b521b33e0041108f45c1127`. Prior [Actions 43602557496](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43602557496) SUCCESS, 202/202 tests and 8 SQL migrations, G03 LIVE + Mem0/Ollama. Earlier [43602331541](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43602331541) FAILED with two test setup issues then corrected.
+
+**New G01 LAB code:** opt-in policy state enforced before real provider GET and rechecked under task lock after GET in `verification_ledger.py`, including old idempotency replay; disables/expiry/supersede deny 409 and cannot write a new attempt after revoke. `http_api` rejects G01 flag without R2 lab route. Six new PG negative/positive tests, now 208 expected. CI dedicated G03 step enables G01 and uses HUMAN author + independent HUMAN approver bearers, then SERVICE real GitHub HTTPS REST verification; disable → replay 409, grant revocation → 403, unique `WORK03B_R2_R1D_G01_LAB_POLICY_LIVE_PASS` expected. [Detailed work](work03b/R2_R1D_G01_SI_MH_0051_ENFORCEMENT.md).
+
+**CI NEW SHA PENDING**. Never label these HTTP MockTransport tests LIVE, and never infer DONE/review, backup/restore G01-12, source ACL/consent, tenant/OIDC or G04/G05 production. No migrations or vendor/main/JARVIS/PULSE modifications this commit. Next observe real CI and repair if needed.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

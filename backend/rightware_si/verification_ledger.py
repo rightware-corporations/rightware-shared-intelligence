@@ -20,6 +20,7 @@ from rightware_si.core.postgres import (
     WorkCore, AccessDenied, Conflict, InvalidTransition, Missing, _key, _valid_id,
 )
 from rightware_si.evidence_github import GithubRunPolicy, verify_github_run
+from rightware_si.policy_lifecycle import PolicyLifecycle, pilot_enabled
 
 
 def _uuid(value: str) -> str:
@@ -61,7 +62,8 @@ class EvidenceLedger:
     @classmethod
     def _load(cls, conn: psycopg.Connection, project: str, actor: str,
               policy_id: str, expected_version: int, lock: bool,
-              expected_evidence_id: str | None = None) -> tuple[dict, dict, dict]:
+              expected_evidence_id: str | None = None,
+              enforce_lifecycle: bool = False) -> tuple[dict, dict, dict]:
         cls._authorize_service(conn, project, actor)
         task_query = (
             "SELECT id,project_id,status,version,acceptance_criteria,created_by "
@@ -106,6 +108,10 @@ class EvidenceLedger:
         if not isinstance(criteria, list) or policy["criteria_index"] >= len(criteria):
             raise Conflict("policy criterion not bound to task acceptance criteria")
         cls._policy_from_row(policy)
+        if enforce_lifecycle:
+            # The caller holds the task row lock during the commit phase.
+            # Historical idempotent replays must also pass this check.
+            PolicyLifecycle.require_active(conn, project, policy_id)
         # The submitted URI is a pointer, NEVER an HTTP request target. It
         # must match operator-pinned policy exactly; no redirects/query/fragment.
         u = urlsplit(evidence["uri"])
@@ -171,12 +177,17 @@ class EvidenceLedger:
         _key(idem)
         _positive_version(expected_task_version)
 
+        enforce_g01 = pilot_enabled(self.dsn)
         with psycopg.connect(self.dsn, row_factory=dict_row, connect_timeout=10) as conn:
             with conn.transaction():
-                conn.execute("SET TRANSACTION READ ONLY")
+                if not enforce_g01:
+                    conn.execute("SET TRANSACTION READ ONLY")
+                # In G01 mode, lock even on an idempotent replay. An emergency
+                # disable cannot linearize between validation and the response.
                 _, policy, _ = self._load(
-                    conn, project, actor, policy_id, expected_task_version, False,
+                    conn, project, actor, policy_id, expected_task_version, enforce_g01,
                     expected_evidence_id=expected_evidence_id,
+                    enforce_lifecycle=enforce_g01,
                 )
                 # Safe repeat is allowed, but the exact policy and version
                 # must match. Permission is checked even on this fast path.
@@ -203,6 +214,7 @@ class EvidenceLedger:
                 task, policy, _ = self._load(
                     conn, project, actor, policy_id, expected_task_version, True,
                     expected_evidence_id=expected_evidence_id,
+                    enforce_lifecycle=enforce_g01,
                 )
                 # Pinned policy fields are append-only and checked again.
                 if self._policy_from_row(policy) != pinned:

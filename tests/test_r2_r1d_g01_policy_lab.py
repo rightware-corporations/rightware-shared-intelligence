@@ -124,5 +124,87 @@ class G01LifecycleLabTests(unittest.TestCase):
                              "event_type='DISABLED' WHERE policy_id=%s::uuid",
                              (self.old.policy_id,))
 
+
+    def test_09_verifier_rejects_unapproved_before_github(self):
+        import httpx
+        seen=[]
+        def handle(request):
+            seen.append(1)
+            return httpx.Response(200)
+        with self.old.mock(handler=handle) as client:
+            with self.assertRaises(Conflict):
+                self.old.check(client)
+        self.assertEqual(seen,[])
+        self.assertEqual(self.old.rows(),[])
+
+    def test_10_active_policy_verifies_and_idempotent_replay(self):
+        self.active()
+        with self.old.mock() as client:
+            first=self.old.check(client,key="g01-replay-verify-001")
+            second=self.old.check(client,key="g01-replay-verify-001")
+        self.assertEqual(first["attempt_id"],second["attempt_id"])
+        self.assertEqual(first["result"],"CHECKED_PASS")
+        self.assertEqual(len(self.old.rows()),1)
+
+    def test_11_disable_blocks_replay_after_prior_success(self):
+        _,a=self.active()
+        with self.old.mock() as client:
+            first=self.old.check(client,key="g01-revoke-check-001")
+            self.life.disable("alpha",self.dis,self.old.policy_id,
+                "g01-revoke-after-success-001",a["sequence"],"PILOT_REVOKE")
+            with self.assertRaises(Conflict):
+                self.old.check(client,key="g01-revoke-check-001")
+        self.assertEqual(first["result"],"CHECKED_PASS")
+        self.assertEqual(len(self.old.rows()),1)
+
+    def test_12_disable_during_provider_call_blocks_commit(self):
+        import httpx
+        from test_r2_r1b_ledger import provider_record
+        _,a=self.active()
+        def handle(request):
+            self.life.disable("alpha",self.dis,self.old.policy_id,
+                "g01-midflight-revoke-001",a["sequence"],"PILOT_REVOKE")
+            return httpx.Response(200,json=provider_record())
+        with self.old.mock(handler=handle) as client:
+            with self.assertRaises(Conflict):
+                self.old.check(client,key="g01-midflight-check-001")
+        self.assertEqual(self.old.rows(),[])
+
+    def test_13_expired_db_clock_denies_before_network(self):
+        import httpx
+        self.proposed()
+        # A test-only historical fixture; callers cannot inject timestamps
+        # through the authenticated policy lifecycle administration service.
+        with psycopg.connect(_DSN) as conn:
+            conn.execute("INSERT INTO si_policy_lifecycle_events "
+                "(id,project_id,task_id,evidence_id,policy_id,event_type,"
+                "actor_id,idempotency_key,valid_until) VALUES("
+                "%s::uuid,'alpha',%s::uuid,%s::uuid,%s::uuid,"
+                "'ACTIVATED','approver','g01-test-expired-seed-001',"
+                "clock_timestamp()-interval '1 second')",
+                (str(uuid4()),self.old.task_id,self.old.evidence_id,
+                 self.old.policy_id))
+        hits=[]
+        def handle(req):
+            hits.append(1)
+            return httpx.Response(200)
+        with self.old.mock(handler=handle) as client:
+            with self.assertRaises(Conflict):
+                self.old.check(client)
+        self.assertEqual(hits,[])
+        self.assertEqual(self.old.rows(),[])
+
+    def test_14_legacy_compatibility_is_flagged_and_not_implicit(self):
+        with self.assertRaises(Conflict):
+            with self.old.mock() as client:
+                self.old.check(client,key="g01-rejected-legacy-001")
+        with patch.dict(os.environ,{"RW_SI_ENABLE_R2_G01_LAB_POLICY":"0"}):
+            with self.old.mock() as client:
+                success=self.old.check(client,key="g01-legacy-only-001")
+        self.assertEqual(success["result"],"CHECKED_PASS")
+        with self.old.mock() as client:
+            with self.assertRaises(Conflict):
+                self.old.check(client,key="g01-legacy-only-001")
+
 if __name__=="__main__":
     unittest.main()

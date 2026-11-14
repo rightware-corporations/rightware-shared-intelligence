@@ -23,6 +23,7 @@ from rightware_si.context_service import ScopedContextReader, SemanticUnavailabl
 from rightware_si.continuity import ContinuityCore
 from rightware_si.memory import Mem0HTTPClient, SharedMemory
 from rightware_si.verification_ledger import EvidenceLedger
+from rightware_si.policy_lifecycle import pilot_enabled
 from rightware_si.lab_boundary import require_disposable_postgres
 
 
@@ -120,10 +121,13 @@ def create_app(dsn: str | None = None, memory_provider=None) -> FastAPI:
     # R2 R1C is deliberately disabled by default and only registered for the
     # disposable loopback PostgreSQL synthetic lab. No production endpoint.
     r2_lab_enabled = os.environ.get("RW_SI_ENABLE_R2_R1C_LAB_API") == "1"
+    if os.environ.get("RW_SI_ENABLE_R2_G01_LAB_POLICY") == "1" and not r2_lab_enabled:
+        raise RuntimeError("G01 requires the R2 lab-only verification route")
     if r2_lab_enabled:
         if os.environ.get("RW_SI_ENVIRONMENT") != "lab":
             raise RuntimeError("R2 R1C lab API requires lab environment")
         require_disposable_postgres(dsn)
+        pilot_enabled(dsn)
     core = WorkCore(dsn)
     continuity = ContinuityCore(dsn)
     principal_dep = make_principal_dependency(dsn)

@@ -17,6 +17,7 @@ from rightware_si.core import WorkCore
 from rightware_si.http_api import create_app
 from rightware_si.token_admin import issue_api_token
 from rightware_si.lab_boundary import require_disposable_postgres
+from rightware_si.policy_lifecycle import PolicyLifecycle
 
 LIVE_SHA = "0c63b2f2d3d4cf00926752ab2c58d42ccbd64901"
 LIVE_URL = ("https://github.com/rightware-corporations/"
@@ -45,7 +46,7 @@ def main() -> None:
                      "VALUES('alpha','r1d-http-live-lab')")
         conn.execute("INSERT INTO si_principals(id,principal_kind) VALUES"
                      "('lab-agent','AGENT'),('lab-verifier','SERVICE'),"
-                     "('operator','HUMAN')")
+                     "('operator','HUMAN'),('approver','HUMAN')")
         for perm in ("task:create", "task:manage", "task:execute", "task:read"):
             conn.execute("INSERT INTO si_project_grants "
                          "(project_id,principal_id,permission) "
@@ -55,6 +56,15 @@ def main() -> None:
                          "(project_id,principal_id,permission) "
                          "VALUES('alpha','lab-verifier',%s)", (perm,))
 
+        if os.environ.get("RW_SI_ENABLE_R2_G01_LAB_POLICY") == "1":
+            for principal, permission in (
+                ("operator", "policy:propose"),
+                ("approver", "policy:approve"),
+                ("approver", "policy:disable")
+            ):
+                conn.execute("INSERT INTO si_project_grants "
+                             "(project_id,principal_id,permission) "
+                             "VALUES('alpha',%s,%s)", (principal,permission))
     core = WorkCore(dsn)
     task = core.create_task(
         "alpha", "lab-agent", "R1D lab live GitHub-through-REST (synthetic)",
@@ -79,6 +89,15 @@ def main() -> None:
             "1452533938,415280241,43202560651,1,%s,'push','operator')",
             (policy_id, task_id, evidence["evidence_id"], LIVE_SHA))
 
+    lifecycle = None
+    if os.environ.get("RW_SI_ENABLE_R2_G01_LAB_POLICY") == "1":
+        lifecycle = PolicyLifecycle(dsn)
+        proposer_token = issue_api_token(dsn, "operator", 1)[1]
+        approver_token = issue_api_token(dsn, "approver", 1)[1]
+        proposal = lifecycle.propose("alpha", proposer_token, policy_id,
+                                     "g01-live-propose-001")
+        activation = lifecycle.approve("alpha", approver_token, policy_id,
+                                      "g01-live-approve-001", proposal["sequence"])
     service_token = issue_api_token(dsn, "lab-verifier", 1)[1]
     app = create_app(dsn)
     route = (f"/v1/projects/alpha/evidence/"
@@ -103,6 +122,14 @@ def main() -> None:
         duplicate = http.post(route, json=body, headers=headers)
         require(duplicate.status_code == 200)
         require(duplicate.json()["attempt_id"] == outcome["attempt_id"])
+        if lifecycle is not None:
+            disabled = lifecycle.disable(
+                "alpha", approver_token, policy_id,
+                "g01-live-disable-001", activation["sequence"],
+                "PILOT_SECURITY_REVOKE")
+            require(disabled["event_type"] == "DISABLED")
+            replay_after_revoke = http.post(route, json=body, headers=headers)
+            require(replay_after_revoke.status_code == 409)
 
         with psycopg.connect(dsn) as conn:
             a = conn.execute("SELECT result,observation_channel FROM "
@@ -124,6 +151,11 @@ def main() -> None:
 
     require(core.get_task("alpha", "lab-agent", task_id)["status"] == "IN_REVIEW")
     # Never print provider token, bearer credential, DSN, or raw provider JSON.
+    if lifecycle is not None:
+        print("WORK03B_R2_R1D_G01_LAB_POLICY_LIVE_PASS "
+              "provider_live=true two_human_bearers=true "
+              "validity_days=7 append_only_revoke=true "
+              "old_idempotent_replay_denied=true no_review=true no_done=true")
     print("WORK03B_R2_R1D_LAB_HTTP_GITHUB_LIVE_PASS "
           "transport=GitHub_API_HTTPS provider_live=true "
           "bearer_service=true pinned_policy=true postgres_append_only=true "

@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0050 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0051 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -325,3 +325,10 @@
 - SI-MH-0049 [CI 43602331541](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43602331541) FAILED: migration 0008 PASS but 202 tests had one dict_row KeyError after disabled-event count and one static migration allowlist mismatch. No provider LIVE regression reached in failed run.
 - Fixed `fetchone()["n"]` on named count column and added legitimate migration 0008 to static layout test. [Failure report](work03b/R2_R1D_G01_SI_MH_0050_FAILURE_FIX.md). Two handoffs updated.
 - New CI PENDING; still no G01 enforce-before/after-GitHub code or approval/DONE, no G04/G05 production. Research commits SI-MH-0046/47/48 preserved.
+
+## SI-MH-0051 — G01 policy enforcement before and after provider; CI PENDING
+
+- G01 event schema+two HUMAN tokens [Actions 43602557496](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43602557496) SUCCESS, 202/202 and 8 migrations. New G01 checks in verifier G01 mode lock task during preflight and idempotent replay; revalidate active/DB expiry after GitHub under lock. HTTP opt-in gated.
+- Six new PG tests (208 expected), dedicated CI G03 GitHub HTTPS real via REST with two HUMAN approval, SERVICE check, policy disable and old key replay HTTP409, then grant revoke HTTP403. New marker `WORK03B_R2_R1D_G01_LAB_POLICY_LIVE_PASS`. [Implementation details](work03b/R2_R1D_G01_SI_MH_0051_ENFORCEMENT.md).
+- New CI PENDING. G01-12 restore and full independent G01 tenant consent/retention/OIDC authority remain OPEN, G04/G05 production blocked; no reviewer/DONE.
+- SI-RD research and pinned vendor/main/JARVIS/PULSE unchanged; next check CI and fix using new handoff checkpoint.
