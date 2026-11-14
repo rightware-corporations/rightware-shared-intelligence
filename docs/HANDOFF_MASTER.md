@@ -898,6 +898,19 @@
 
 **Next:** confirm new CI outcome and report under SI-MH-0055; do not claim PASS from expected count.
 
+
+---
+
+## SI-MH-0055 — G01-HARDEN CI 216/216 confirmed; native PostgreSQL logical restore gate added (CI PENDING)
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@fc768ac8f99d4f4fc3a572c7eac26ae3c7e7493e`. **Class:** VERIFIED LAB G01 SECURITY + NEW LAB RECOVERY ENGINEERING, NOT PRODUCTION.
+
+**CI previous code:** [Actions 43606091450](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43606091450) **SUCCESS** `Ran 216 tests in 32.455s / OK`, migrations 0001..0008, R1A/R1B/G03 LIVE HTTPS, `WORK03B_R2_R1D_G01_LAB_POLICY_LIVE_PASS`, R1C bound agents and WORK02D MCP/Mem0/Ollama end-to-end PASS. Eight G01 adversarial tests including two separate spawned processes and during-fetch expiry passed on synthetic lab.
+
+**New G01-12:** `scripts/work03b_r2_r1d_g01_restore_lab.py` + CI step use actual PostgreSQL 16 native custom-format `pg_dump` and `pg_restore` between **separate ephemeral synthetic databases**, compare immutable lifecycle events/attempts/policy/task/evidence and prove terminal DISABLED still denies ACTIVE, restored trigger still immutable; clear archive and random DB. `WORK03B_R2_R1D_G01_NATIVE_RESTORE_PASS` is **EXPECTED ONLY, NOT VERIFIED** until new Actions run. [Detailed evidence and limits](work03b/R2_R1D_G01_SI_MH_0055_LOGICAL_RESTORE.md).
+
+**Scope limitations:** not physical PITR/DR SLA, production identity/consent/retention/OIDC, private source data or G04/G05 readiness; no task review/DONE, main/JARVIS/PULSE/vendor Mem0 change. New CI PENDING; if failed, preserve and repair in following checkpoint.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

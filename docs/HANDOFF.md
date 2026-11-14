@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0054 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0055 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -351,3 +351,10 @@
 - `policy_lifecycle.py` replay payload now checks reason, successor, original predecessor generation and terminal state. Eight synthetic tests add two separately spawned processes for revoke-vs-verify, DB-clock expiry during mock provider response, cross-org admin scope, stale payload/generation and exact disable replay. **216 tests expected; new CI PENDING.** [Detailed notes](work03b/R2_R1D_G01_SI_MH_0054_HARDEN.md).
 - G01 remains internal opt-in lab only. Real backup/restore (G01-12) and production tenant consent/OIDC/source ACL/retention, review/DONE, G04/G05 still OPEN/BLOCKED. No SQL/HTTP/CI workflow/main/JARVIS/PULSE/vendor Mem0 changes. Independent SI-RD research from SI-MH-0053 preserved.
 - NEXT: inspect CI job/log evidence and append result under SI-MH-0055.
+
+## SI-MH-0055 — G01-HARDEN 216/216 VERIFIED; logical DB restoration check introduced
+
+- Source `develop@fc768ac8f99d4f4fc3a572c7eac26ae3c7e7493e` [Actions 43606091450](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43606091450) **SUCCESS**, `216 tests / OK`, 8 migrations, LIVE G01 GitHub REST, two spawned-process race + during-fetch expiry, MCP/Mem0/Ollama E2E PASS.
+- New synthetic lab-only G01-12 native PostgreSQL custom-format dump/restore script and CI step: separate ephemeral DB, source vs restored lifecycle/attempt/task/evidence equality, revoked policy stays terminal, SQL append-only immutable, cleanup. [Engineering notes](work03b/R2_R1D_G01_SI_MH_0055_LOGICAL_RESTORE.md).
+- **NEW CI PENDING**; expected marker `WORK03B_R2_R1D_G01_NATIVE_RESTORE_PASS` not yet confirmed. No new SQL migration, production/PITR, private data, tenant consent/retention/OIDC, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0 changes.
+- NEXT: check CI restore marker and 216 suite/G03/Mem0 regressions; repair if necessary, append evidence in SI-MH-0056.
