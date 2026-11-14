@@ -178,6 +178,11 @@
 - **Não executado ainda:** PGlite real nesta versão; PostgreSQL Server, Mem0 e Hindsight. Nenhuma comparação de fornecedores, aprovação de produto ou evidência de temporalidade/autoridade. A0 v0.6 OR 13/15 era **post-hoc e case-filtered**, não comparável com este corpus global.
 - **Próxima acção SI-RD-03A:** importar o notebook directamente no Kaggle (não requer dataset), executar Run All, devolver ZIP `RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip`, recalcular métricas antes de qualquer conclusão.
 
+## SI-MH-0048 — CI A0 v0.7 CONFIRMADO (não benchmark executado)
+- `develop@f4841283bdee4ec849fc8bc1f9ccc1cf67254a52` [GitHub Actions 43486158396](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43486158396) **SUCCESS**: política de handoff, migrações e testes da engenharia, GitHub live verification, R1C agent resume, MCP/REST/PostgreSQL/Mem0/Ollama regressões; prova de regressão do repo e validação documental, **NÃO** execução do PGlite global 0.7.
+- [Notebook Kaggle A0 v0.7](research/notebooks/RIGHTWARE_A0_GLOBAL_KAGGLE_V07.ipynb) está pronto: 49 documentos, 40 queries, 320 ranking SELECT + 160 candidate counts esperados, oracle separado. **PGlite v0.7 ainda não executado**; aguardam-se as evidências `RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip` e auditoria independente.
+- Nenhuma selecção Mem0/Hindsight/PostgreSQL Server. Nenhuma alteração a código WorkCore, R2, `main`, JARVIS/PULSE. SI-RD-03A independente da ratificação G01 do R2.
+
 ## Next exact work
 **Próximo gate: ratificar SEC-R1C-01..04 e políticas de provider/identity/consent/criteria para R2 operacional, após R2 R1B laboratório 131/131 PASS; só posteriormente considerar API REST evidence:verify e um reviewer independente; nunca auto-DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 

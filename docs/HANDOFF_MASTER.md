@@ -809,6 +809,22 @@
 
 ---
 
+---
+
+## SI-MH-0048 — CI do protocolo A0 v0.7 validado; PGlite ainda não executado
+
+**Data:** 2026-11-14 Africa/Maputo. **Classificação:** CI VALIDADO (contratos/regressões), **NÃO EXECUÇÃO DO BENCHMARK A0 v0.7**.  
+**Commit verificado:** `develop@f4841283bdee4ec849fc8bc1f9ccc1cf67254a52`.  
+**Evidência:** [GitHub Actions 43486158396](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43486158396) `completed/success`, exact SHA igual ao commit. Job `real-mcp-mem0` concluiu SUCCESS; passos de política dos handoffs, migrações, testes deterministic/PostgreSQL e regressões MCP/REST/Mem0/Ollama aparecem SUCCESS. **O workflow não executa as 320 queries do Kaggle A0 v0.7**; não confundir suite de engenharia com benchmark exploratório.
+
+**Artefactos v0.7 verificados:** notebook autónomo `docs/research/notebooks/RIGHTWARE_A0_GLOBAL_KAGGLE_V07.ipynb`, protocolo pré-execução, manifesto e ambos handoffs existentes. Estado continua `PREPARED_PGLITE_V07_NOT_RUN`. No ensaio anterior v0.6, 13/15 OR Top2 era pós-hoc e filtrado pelo `case_id` de verdade; o v0.7 remove esse leakage.
+
+**Este checkpoint:** altera **somente** `docs/HANDOFF.md` e acrescenta esta adenda a `docs/HANDOFF_MASTER.md`; nenhum código, schema, API, CI, fixture, JARVIS/PULSE ou `main` alterado. CI do novo commit documental será observado separadamente e não significa que um ensaio A0 foi executado.
+
+**Próximo passo:** importar e executar o notebook v0.7 no Kaggle com CPU/Internet, exportar `RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip`; verificar 49 docs, 40 queries, 320 SELECTs e 160 candidate counts sem oracle leakage. Depois rever as métricas e só então decidir os próximos casos PostgreSQL Server/Mem0/Hindsight.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
