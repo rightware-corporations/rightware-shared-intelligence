@@ -885,6 +885,19 @@
 
 ---
 
+
+---
+
+## SI-MH-0054 — G01-HARDEN: independent-process revoke, provider expiry, admin idempotency payload (CI PENDING)
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@690100e46d10a4b9c6d80b609c4cbac860dba795`, prior [CI 43605297383](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43605297383) SUCCESS 208/208 + G01 LIVE and Mem0/Ollama. **Classification:** INTERNAL LAB SECURITY IMPLEMENTATION; NOT PRODUCT / PRODUCTION AUTHORIZATION.
+
+`policy_lifecycle.py` administration idempotency now checks reason_code, successor policy ID, and expected predecessor generation; old PROPOSED/ACTIVATED retries after a terminal event fail closed, exact terminal retries remain safe. Added eight synthetic PostgreSQL regression tests: reason/successor/generation replay mismatches; terminal proposal replay; cross-org HUMAN denial; expiry during slow provider fetch; **two spawned separate verifier/disabler processes**, with disable committing while verifier is paused outside the DB transaction and post-provider commit rejecting; exact disable replay. No migration/API/CI workflow change.
+
+[Implementation and limits](work03b/R2_R1D_G01_SI_MH_0054_HARDEN.md). **216 tests expected, new CI PENDING.** Tests with MockTransport are SIMULATED_TRANSPORT; actual LIVE GitHub marker must remain from separate smoke. G01-12 real backup/restore and other production/tenant/OIDC/consent/retention gates OPEN. No review/DONE, no main/JARVIS/PULSE/vendor Mem0 edits. Preserve research SI-MH-0053.
+
+**Next:** confirm new CI outcome and report under SI-MH-0055; do not claim PASS from expected count.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

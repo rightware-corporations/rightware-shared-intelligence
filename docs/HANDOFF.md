@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0052 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0054 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -344,3 +344,10 @@
 - `develop@ff39c4f5e8b964b01bbe410b2004bd95c38027ea` [Actions 43603129072](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43603129072) SUCCESS: 208 tests OK, 8 migrations, R2 G01 distinct HUMAN approvals + actual GitHub REST LIVE marker, old idempotency replay denied after DISABLED, R1A/R1B/R1C/Mem0/Ollama all PASS. [Detailed evidence and gate matrix](work03b/R2_R1D_G01_SI_MH_0052_VERIFIED.md).
 - G01 pilot is LAB-only and OFF by default; no public policy admin API, review/DONE, private data, customer tenant/OIDC/consent/retention, G04/G05 release. Remaining real independent two-process race, expiry during GET, cross-tenant admin and actual backup/restore tests OPEN. SI-MH-0049 first FAIL retained and repaired SI-MH-0050.
 - SI-MH-0052 docs + both handoffs only, its own CI PENDING. No changes main/JARVIS/PULSE/vendor Mem0, preserve SI-RD research. NEXT: G01 hardening and recovery acceptance before any product deployment.
+
+## SI-MH-0054 — G01-HARDEN: process race / expiry / exact admin idempotency (CI PENDING)
+
+- Baseline `develop@690100e46d10a4b9c6d80b609c4cbac860dba795`, [Actions 43605297383](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43605297383) SUCCESS, 208/208 + 8 migrations + G01 LIVE GitHub and Mem0/Ollama regression.
+- `policy_lifecycle.py` replay payload now checks reason, successor, original predecessor generation and terminal state. Eight synthetic tests add two separately spawned processes for revoke-vs-verify, DB-clock expiry during mock provider response, cross-org admin scope, stale payload/generation and exact disable replay. **216 tests expected; new CI PENDING.** [Detailed notes](work03b/R2_R1D_G01_SI_MH_0054_HARDEN.md).
+- G01 remains internal opt-in lab only. Real backup/restore (G01-12) and production tenant consent/OIDC/source ACL/retention, review/DONE, G04/G05 still OPEN/BLOCKED. No SQL/HTTP/CI workflow/main/JARVIS/PULSE/vendor Mem0 changes. Independent SI-RD research from SI-MH-0053 preserved.
+- NEXT: inspect CI job/log evidence and append result under SI-MH-0055.

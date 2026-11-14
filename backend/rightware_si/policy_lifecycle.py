@@ -110,12 +110,36 @@ class PolicyLifecycle:
                     "WHERE project_id=%s AND actor_id=%s AND idempotency_key=%s",
                     (project,actor,idem)).fetchone()
                 if previous:
-                    if str(previous["policy_id"])!=policy_id or previous["event_type"]!=event:
-                        raise Conflict("policy idempotency key conflict")
-                    if event=="ACTIVATED":
-                        self.require_active(conn,project,policy_id)
-                    return {"event_id":str(previous["id"]),"sequence":previous["sequence"],
-                            "event_type":event,"replayed":True}
+                    old_successor = (
+                        str(previous["successor_policy_id"])
+                        if previous["successor_policy_id"] is not None else None
+                    )
+                    if (str(previous["policy_id"]) != policy_id
+                            or previous["event_type"] != event
+                            or previous["reason_code"] != reason
+                            or old_successor != successor):
+                        raise Conflict("policy idempotency key reused with different payload")
+                    # The global sequence is monotone across policies. For a
+                    # replay, its expected generation is the previous event
+                    # for THIS policy, not sequence-1.
+                    position = next(
+                        i for i, item in enumerate(ev)
+                        if item["id"] == previous["id"]
+                    )
+                    previous_generation = (
+                        ev[position - 1]["sequence"] if position else 0
+                    )
+                    if expected_sequence != previous_generation:
+                        raise Conflict("policy idempotency generation mismatch")
+                    if (any(item["event_type"] in ("DISABLED", "SUPERSEDED")
+                            for item in ev)
+                            and event not in ("DISABLED", "SUPERSEDED")):
+                        raise Conflict("terminal policy cannot replay earlier approval")
+                    if event == "ACTIVATED":
+                        self.require_active(conn, project, policy_id)
+                    return {"event_id": str(previous["id"]),
+                            "sequence": previous["sequence"],
+                            "event_type": event, "replayed": True}
                 latest=ev[-1]["sequence"] if ev else 0
                 if expected_sequence!=latest:
                     raise Conflict("stale policy generation")
