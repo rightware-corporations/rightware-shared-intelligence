@@ -940,6 +940,18 @@
 **Not performed:** no migrations, API/token/ACL changes, RLS, private connector, outbound private fetch, Mem0 authority, deletion, release, G04 test execution or tenant provisioning. No main/JARVIS/PULSE/vendor Mem0 changes; production/customer access G04/G05 still BLOCKED. This commit updates both HANDOFF files and proposes design artifacts only. Its own CI is PENDING and must be observed separately.
 
 **Next:** explicitly resolve D01–D05/D12 for internal synthetic pilot and approve separate narrow G04 implementation, then G04 negative-first tests before implementation gates; review legal basis/privacy residency/retention under D09–D10 independently.
+
+---
+
+## SI-MH-0058 — G04-00 design checkpoint CI SUCCESS 216/216; operator decisions remain OPEN
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@aaee51f592d0746b5c25fde122909d1f4175f41c`. **CLASS:** VERIFIED DOCUMENTATION G04 DRAFT, NO PRODUCTION/STAGING CODE.
+
+**CI evidence:** [Actions 43608329040](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43608329040), job 132487669927, completed **SUCCESS**; `Ran 216 tests in 29.006s / OK`, migrations 0001..0008 PASS; G01 true GitHub REST LIVE and native PostgreSQL logical restore, R1C lease recovery and MCP/Mem0/Ollama E2E PASS; both handoffs updated in code CI.
+
+**Scope:** SI-MH-0057 delivered G04 identity/tenancy/privacy architecture R0, threat register T01–T18, decision packet D01–D12, 28 negative future oracles. **None of the G04 oracles was executed** or counts toward 216. [Evidence detail](work03b/G04_SI_MH_0058_DESIGN_CI_VERIFIED.md). No implementation, migrations, API exposure, OIDC, private connector, RLS, data deletion or customer onboarding, and no main/JARVIS/PULSE/vendor Mem0 change. The current commit itself is only documentation+handoff and its CI is pending.
+
+**Decision gate:** D01–D05/D12 require explicit scope/architecture approval before synthetic G04 engineering; D06–D11 and legal/privacy classification unresolved. G04/G05 production release BLOCKED.
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0057 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0058 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -372,3 +372,10 @@
 - Existing code has hashed opaque API tokens and project permissions; no enterprise OIDC, workload identity, tenant membership+resource ACL+RLS, private source consent, independent Mem0 authorization or approved retention/deletion. Public client/onboarding & production remain BLOCKED.
 - Authored [G04 architecture](work03b/G04_00_IDENTITY_TENANCY_PRIVACY_ARCHITECTURE_R0.md), [18 threats](work03b/G04_01_THREAT_MODEL_AND_TRUST_BOUNDARIES_R0.md), [12 operator decisions](work03b/G04_02_DECISION_AND_ACCEPTANCE_MATRIX_R0.md), [28 proposed acceptance oracles](work03b/fixtures/G04_ACCEPTANCE_ORACLES_R0.jsonl), all NOT RATIFIED/NOT IMPLEMENTED. No runtime/schema/CI edits, no private data, no review/DONE, no main/JARVIS/PULSE/vendor Mem0 changes.
 - CI for this docs-only SI-MH-0057 PENDING. NEXT: operator decision D01–D05 and D12 first, then separately approved synthetic G04 implementation and security tests; D09/D10 require jurisdiction-specific legal/privacy validation.
+
+## SI-MH-0058 — G04 design CI VERIFIED, no security code authorized
+
+- G04 R0 design base `aaee51f592d0746b5c25fde122909d1f4175f41c` [Actions 43608329040](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43608329040) SUCCESS: 216/216 existing lab tests, migrations 0001..0008, G01 GitHub REAL/REST and native restore, R1C and Mem0/Ollama PASS. [Verified report](work03b/G04_SI_MH_0058_DESIGN_CI_VERIFIED.md).
+- G04 18 threat entries, D01–D12 OPEN decision matrix, 28 NOT_IMPLEMENTED future oracles; **zero G04 runtime tests implemented/executed**, no OIDC, RLS, customer data, private source consent, retention/deletion or G05 release.
+- This SI-MH-0058 only appends evidence and updates both handoffs, own CI PENDING. main/JARVIS/PULSE/vendor Mem0 unchanged.
+- NEXT: D01–D05 & D12 explicit operator ratification for synthetic internal prototype; legal/privacy D09–D10 separate; no customer staging/production before G04/G05 gates.
