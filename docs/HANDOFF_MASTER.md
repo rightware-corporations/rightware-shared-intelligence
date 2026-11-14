@@ -926,6 +926,20 @@
 
 **Next:** G04 identity/privacy threat model and explicit operator approval before tenant/product staging.
 
+
+---
+
+## SI-MH-0057 — G04-00 identity/tenancy/privacy audit and threat model R0 (DESIGN DRAFT; NO CODE)
+
+**2026-11-14 Africa/Maputo. Baseline:** `develop@072f7f4a5922eab105dc2d063a376c9a8a7c974c`. [CI 43607079915](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43607079915) **SUCCESS 216/216**, 8 migrations, G01 GitHub LIVE, G01 native PostgreSQL logical restore, Mem0/Ollama integration. `develop` `protected=false` confirmed. **Classification:** RESEARCH/ARCHITECTURAL PROPOSAL, NOT OPERATOR-RATIFIED G04 IMPLEMENTATION.
+
+**Audit facts:** current `api_auth.py` hashed opaque bearer with expiry/revoke, no OIDC issuer; project permissions via `si_project_grants`, no complete tenant memberships/resource ACL/RLS; `MemoryScope` Mem0 user_id is project namespace, not independent tenant auth; local Mem0 service has trusted shared key and caller `user_id`; private sources, consent, deletion/retention, workload identity and staging need separate approval. Existing G01 is LAB-only and OFF by default.
+
+**Artifacts:** [G04 architecture](work03b/G04_00_IDENTITY_TENANCY_PRIVACY_ARCHITECTURE_R0.md), [G04 threats/T01–T18](work03b/G04_01_THREAT_MODEL_AND_TRUST_BOUNDARIES_R0.md), [D01–D12 decisions & role/action matrix](work03b/G04_02_DECISION_AND_ACCEPTANCE_MATRIX_R0.md), [28 machine-readable NOT_IMPLEMENTED test oracles](work03b/fixtures/G04_ACCEPTANCE_ORACLES_R0.jsonl). Technical recommendations cite OWASP API Security 2023, IETF RFC9700 2025 and NIST 800-63-4 2025.
+
+**Not performed:** no migrations, API/token/ACL changes, RLS, private connector, outbound private fetch, Mem0 authority, deletion, release, G04 test execution or tenant provisioning. No main/JARVIS/PULSE/vendor Mem0 changes; production/customer access G04/G05 still BLOCKED. This commit updates both HANDOFF files and proposes design artifacts only. Its own CI is PENDING and must be observed separately.
+
+**Next:** explicitly resolve D01–D05/D12 for internal synthetic pilot and approve separate narrow G04 implementation, then G04 negative-first tests before implementation gates; review legal basis/privacy residency/retention under D09–D10 independently.
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
