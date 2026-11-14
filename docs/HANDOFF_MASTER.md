@@ -961,6 +961,22 @@
 
 **Scope:** documentation + CURRENT/MASTER only. Own CI pending. D01–D05 and D12 require explicit approval for synthetic internal G04 proof; privacy/jurisdiction D09–D10 separate. No main/JARVIS/PULSE/vendor Mem0, production/tenants/private source/DONE modifications. G04/G05 release blocked.
 
+---
+
+## SI-MH-0060 — SI-RD-03A A0-GLOBAL-02 v0.8 sealed challenge pré-registado (CONTRATO; SEM VENDOR RUN)
+
+**2026-11-14 Africa/Maputo. Classe:** EXPERIMENT / BENCHMARK CONTRACT, **NOT PRODUCT DECISION**. Baseline remoto `develop@60f8e51a0df4d5be0b25246eb30f7d741207711a`; CI anterior [run 43609135330](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43609135330) status `completed/success`.
+
+**Novo:** [protocolo congelado](research/SI_RD_03A_A0_GLOBAL_02_PREREG_2026-11-14.md), [pacote binário público v0.8](research/bundles/RIGHTWARE_SI_RD03A_A0_GLOBAL02_PUBLIC_v08.zip), [registo JSON](research/fixtures/SI_RD_03A_A0_G02_PUBLIC_REGISTER.json). ZIP SHA256 `c946ef45f97d932796e6ddc80c453da797f2523b0c06b19ae7dfecb38dcc1707`, Git blob SHA `16ece24ee29d4c336a28f742f0139bb0cfc451eb`; corpus SHA256 `79d864eec2fd046f3102ca29dd94f61758f9d6d7db04048fd62b36579997d3e0`, questions SHA256 `d6b6cd11c091968ecf35ce34ec0d5eb7bc152d1d9b3f880d13f9f9f8983e4402`, compromisso oracle SHA256 `585494484292f8c92eea9961174f63fae9cb8295beacaadc48842d8a4e772694`. Chave de avaliação **fora do GitHub**, pacote privado SHA256 `f3903e8892e17d5a2f0d806b7e8db6a4c0e9c728d000b2c1d2241d6211f5270c`.
+
+**Escopo:** 82 docs sintéticos (70 elegíveis, 12 fora de escopo), 56 perguntas (12 exact-ID, 18 multilingual, 8 authority conflict, 6 temporal, 6 unknown, 6 foreign), **44** fontes gold e **12** negativas. Comparação R (retrieval nativo) / G (gateway comum) / E (resposta humana futura) sem `case_id` de oráculo. Gate de disclosure = zero. PostgreSQL Server, Mem0 e Hindsight NÃO EXECUTADOS. Testes locais **10 públicos + 18 privados PASS**, test mocks **NÃO** são resultados de fornecedor.
+
+**Limites:** desafio selado mas criado pelos próprios investigadores, não duplo-cego independente; scope fixo sintético não autenticação de produção; v0.7 best PGlite 19/31 pós-hoc apenas baseline histórica, não comparável directamente. No source-of-truth/lease/approval/reviewer/DONE, runtime, migração, API, CI logic, `main`, JARVIS/PULSE ou decisão G04/G01 alterados; R2 paralelo preservado. O próprio CI deste commit fica PENDING até auditoria.
+
+**Próximo passo:** verificar CI/documentos no HEAD; construir adaptadores isolados e observáveis de PostgreSQL Server, Mem0 OSS (infer=false) e Hindsight chunks com pins revalidados; recolher raw imutável 56 queries; score só offline com chave retida pelo operador. Escolha de fornecedor **NÃO AUTORIZADA**.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

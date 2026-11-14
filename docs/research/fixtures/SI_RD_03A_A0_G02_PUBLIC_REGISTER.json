@@ -1,0 +1,49 @@
+{
+  "schema": "RW_SI_RD03A_A0_G02_GITHUB_REGISTRATION",
+  "date": "2026-11-14",
+  "status": "EXPERIMENT_CONTRACT_PRE_REGISTERED_NO_VENDOR_RUN",
+  "public_bundle": "docs/research/bundles/RIGHTWARE_SI_RD03A_A0_GLOBAL02_PUBLIC_v08.zip",
+  "public_bundle_git_blob": "16ece24ee29d4c336a28f742f0139bb0cfc451eb",
+  "public_bundle_sha256": "c946ef45f97d932796e6ddc80c453da797f2523b0c06b19ae7dfecb38dcc1707",
+  "private_key_zip_sha256_only": "f3903e8892e17d5a2f0d806b7e8db6a4c0e9c728d000b2c1d2241d6211f5270c",
+  "private_key_in_repo": false,
+  "public_fixture_shas": {
+    "corpus": "79d864eec2fd046f3102ca29dd94f61758f9d6d7db04048fd62b36579997d3e0",
+    "queries": "d6b6cd11c091968ecf35ce34ec0d5eb7bc152d1d9b3f880d13f9f9f8983e4402",
+    "encrypted_oracle": "b82610b1a0197d03baa27829431a0c765bb4a87037d15e9e3bee36b3ae120ff2",
+    "oracle_plaintext_commitment": "585494484292f8c92eea9961174f63fae9cb8295beacaadc48842d8a4e772694"
+  },
+  "case_counts": {
+    "documents": 82,
+    "authorized": 70,
+    "foreign": 12,
+    "queries": 56,
+    "source_answerable": 44,
+    "no_source": 12,
+    "cohorts": {
+      "EXACT_ID": 12,
+      "MULTILINGUAL": 18,
+      "AUTHORITY": 8,
+      "TEMPORAL": 6,
+      "UNANSWERABLE": 6,
+      "FORBIDDEN_SCOPE": 6
+    }
+  },
+  "tests": {
+    "public": 10,
+    "private": 18,
+    "all_pass": true,
+    "runtime_engine_run": false
+  },
+  "providers": {
+    "postgresql_server": "NOT_RUN",
+    "mem0": "NOT_RUN",
+    "hindsight": "NOT_RUN"
+  },
+  "caveats": [
+    "Evaluator sealed but not independently authored blind",
+    "Fixed lab scope is not production authorization",
+    "V07 is not directly comparable to new challenge",
+    "The private oracle key must not be uploaded to provider runner"
+  ]
+}
