@@ -871,6 +871,20 @@
 
 **Next:** G01 hardening/security negative tests and recovery proof; never mark DONE or production from this pilot.
 
+---
+
+## SI-MH-0053 — SI-RD-03A A0 v0.7: auditoria independente de resultados Kaggle (EXPERIMENTO)
+
+**Data:** 2026-11-14 Africa/Maputo. **Classificação:** EVIDÊNCIA EXPERIMENTAL VALIDADA EM ARTEFACTO, **NÃO DECISÃO DE FORNECEDOR/PRODUÇÃO**. Base de leitura `develop@9ce3286a121ff6b0c9287dd39d314570278d064c`, run anterior [43603562803](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43603562803) `success`.
+
+**Artefacto recebido:** `RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip`, SHA256 `064c4ce8ec24c257ee9b34adb973fa832df725fcaffd5a8bb095b870c0eab4f9`, ZIP CRC PASS, **14 hashes e tamanhos do manifesto conferidos**. Recontagem independente em Python das 320 linhas de retrieval e os 8 scores, com 160 candidate counts reportados; campos `source_ids`, `top_k`, `candidate_count` e separação dos âmbitos validados. **Não reexecutado PGlite localmente**; versão Kaggle reportada 0.5.8 / PostgreSQL 18.3 WASM.
+
+**Resultados em 31 perguntas com fonte:** simple AND 0/31 top1/top2; portuguese AND 4/31 top1 e 5/31 top2; simple OR pós-hoc 11/31 top1 e 14/31 top2; portuguese OR pós-hoc **14/31 top1 e 19/31 top2**. PT 14/18 vs EN 5/13 na melhor configuração; histórico 9/15 e desafio 10/16. 49 documentos (29 autorizados/20 não autorizados) e 40 perguntas. **Nenhuma fonte fora de scope foi devolvida** neste laboratório, mas o filtro usa scope fixo e não constitui autenticação de produção. Todas as 4 sondagens ACL e 5 perguntas desconhecidas tiveram candidatos internos sob OR, sem validação de abstention; MEM-04 agiu com claim não verificada primeiro no Top 1. Seis perguntas históricas têm ambiguidade real. **Nenhum verificador, revisão ou DONE inferido.**
+
+**Documentos:** [auditoria completa](research/SI_RD_03A_A0_V07_KAGGLE_EVIDENCE_AUDIT_2026-11-14.md), [scorecard de auditoria](research/fixtures/SI_RD_03A_A0_V07_INDEPENDENT_AUDIT.json); ZIP bruto permanece fora do repo. Limites: corpus pequeno, não-ciego, OR pós-hoc; Mem0/Hindsight/PostgreSQL Server NOT_RUN. **Próximo:** fixar benchmark global cego e comparar exact-ID, FTS PT/EN e motores reais. Não alterar `main`, JARVIS/PULSE, migrações, API/WorkCore/R2, políticas G01 e nenhum runtime. Commit é apenas documental; observar o seu CI próprio.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

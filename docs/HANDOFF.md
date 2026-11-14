@@ -183,6 +183,12 @@
 - [Notebook Kaggle A0 v0.7](research/notebooks/RIGHTWARE_A0_GLOBAL_KAGGLE_V07.ipynb) está pronto: 49 documentos, 40 queries, 320 ranking SELECT + 160 candidate counts esperados, oracle separado. **PGlite v0.7 ainda não executado**; aguardam-se as evidências `RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip` e auditoria independente.
 - Nenhuma selecção Mem0/Hindsight/PostgreSQL Server. Nenhuma alteração a código WorkCore, R2, `main`, JARVIS/PULSE. SI-RD-03A independente da ratificação G01 do R2.
 
+## SI-MH-0053 — Kaggle A0 v0.7: resultados independentes verificados (apenas research)
+- **Evidência:** [auditoria detalhada](research/SI_RD_03A_A0_V07_KAGGLE_EVIDENCE_AUDIT_2026-11-14.md) e [JSON scorecard](research/fixtures/SI_RD_03A_A0_V07_INDEPENDENT_AUDIT.json), ZIP original SHA256 `064c4ce8ec24c257ee9b34adb973fa832df725fcaffd5a8bb095b870c0eab4f9` mantido fora do repo. 14 hashes OK e 8 scores recontados de 320 outputs PGlite; não reexecutado em local.
+- **Melhor resultado experimental:** `portuguese + OR` **14/31 hit@1, 19/31 hit@2**, PT 14/18 vs EN 5/13 hit@2. `simple + OR` 14/31 hit@2; `portuguese + AND` 5/31 hit@2; `simple + AND` 0/31. OR derivado do diagnóstico pós-hoc v0.6; 6 históricos ambíguos.
+- **Limitações decisivas:** 0 respostas cross-scope no laboratório com `scope_id` fixo, mas 4/4 ACL probes e 5/5 unknown queries retornam candidatos irrelevantes sob OR. `MEM-04` pode ranquear afirmação não verificada acima do PostgreSQL autoritativo. Não avaliar accuracy, abstention, temporalidade, segurança de produção ou DONE. PostgreSQL Server/Mem0/Hindsight NOT_RUN.
+- **Próximo trabalho independente:** congelar A0 v0.7 como baseline; criar corpus cego, recuperação exact-ID/FTS e gates PT/EN, depois executar motores reais e manter separação entre memória/retrieval e autoridade/approval. Nenhuma alteração de código/runtime do Core, Jarvis/PULSE ou main. CI do presente commit precisa validação separada.
+
 ## Next exact work
 **Próximo gate: ratificar SEC-R1C-01..04 e políticas de provider/identity/consent/criteria para R2 operacional, após R2 R1B laboratório 131/131 PASS; só posteriormente considerar API REST evidence:verify e um reviewer independente; nunca auto-DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
 

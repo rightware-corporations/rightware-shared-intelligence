@@ -1,0 +1,126 @@
+{
+  "schema": "RIGHTWARE_SI_RD_03A_A0_V07_INDEPENDENT_EVIDENCE_AUDIT",
+  "checkpoint": "SI-MH-0053",
+  "classification": "EXPERIMENTAL_MEASUREMENT_NO_PROVIDER_SELECTION",
+  "date": "2026-11-14",
+  "evidence_zip_sha256": "064c4ce8ec24c257ee9b34adb973fa832df725fcaffd5a8bb095b870c0eab4f9",
+  "evidence_files_hash_checked": 14,
+  "raw_sha256": "0ad278bbf50fbc928114d3ec020cb50bc2929d3e9f4094d4e73ee92b8537c98a",
+  "original_scorecard_sha256": "dc82b7154301e179005d03bd42d7cb03ecffe9148547411891d39995b83aba71",
+  "public_corpus_sha256": "a72420867367a25e36c26c7fca29abdbfb4fe80008877f61c4e85444d53c68d8",
+  "oracle_sha256": "2c03b8500beef185f6780a98eb7c7356b816e72ff0613c89467c7994688d024e",
+  "source_environment": "Kaggle-reported PGlite 0.5.8 / PostgreSQL 18.3 wasm32 (not locally re-executed)",
+  "corpus": {
+    "documents": 49,
+    "authorized_documents": 29,
+    "out_of_scope_documents": 20,
+    "queries": 40,
+    "scored_queries": 31,
+    "unknown_unscored": 5,
+    "acl_probes_unscored": 4
+  },
+  "observed_ranked_queries": 320,
+  "observed_candidate_count_queries": 160,
+  "observed_scope_violations": 0,
+  "scores": [
+    {
+      "dictionary": "simple",
+      "method": "AND",
+      "k": 1,
+      "hits": 0,
+      "n": 31,
+      "pct": 0
+    },
+    {
+      "dictionary": "simple",
+      "method": "AND",
+      "k": 2,
+      "hits": 0,
+      "n": 31,
+      "pct": 0
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "AND",
+      "k": 1,
+      "hits": 4,
+      "n": 31,
+      "pct": 12.9
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "AND",
+      "k": 2,
+      "hits": 5,
+      "n": 31,
+      "pct": 16.13
+    },
+    {
+      "dictionary": "simple",
+      "method": "OR_posthoc",
+      "k": 1,
+      "hits": 11,
+      "n": 31,
+      "pct": 35.48
+    },
+    {
+      "dictionary": "simple",
+      "method": "OR_posthoc",
+      "k": 2,
+      "hits": 14,
+      "n": 31,
+      "pct": 45.16
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "OR_posthoc",
+      "k": 1,
+      "hits": 14,
+      "n": 31,
+      "pct": 45.16
+    },
+    {
+      "dictionary": "portuguese",
+      "method": "OR_posthoc",
+      "k": 2,
+      "hits": 19,
+      "n": 31,
+      "pct": 61.29
+    }
+  ],
+  "best": {
+    "dictionary": "portuguese",
+    "method": "OR_posthoc",
+    "k": 2,
+    "hits": 19,
+    "n": 31,
+    "pt_hits": 14,
+    "pt_n": 18,
+    "en_hits": 5,
+    "en_n": 13,
+    "historical_hits": 9,
+    "historical_n": 15,
+    "new_hits": 10,
+    "new_n": 16,
+    "nonempty_scored_candidates": 29
+  },
+  "warnings": [
+    "OR strategy arose post-hoc in v0.6",
+    "historical dataset has 6 globally ambiguous queries",
+    "ACL probes return irrelevant authorized candidates, no cross-scope IDs",
+    "unknown queries return candidates: no abstention engine",
+    "agent unverified claim precedes authoritative source in MEM-04 canonical top1",
+    "tiny correlated synthetic corpus; no blind holdout"
+  ],
+  "not_measured": [
+    "PostgreSQL Server",
+    "Mem0",
+    "Hindsight",
+    "answer correctness",
+    "abstention correctness",
+    "authorization of real principals",
+    "temporal correctness",
+    "reviewer decision"
+  ],
+  "decision": "RESEARCH_BASELINE_ONLY"
+}
