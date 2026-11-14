@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0055 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0056 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -358,3 +358,10 @@
 - New synthetic lab-only G01-12 native PostgreSQL custom-format dump/restore script and CI step: separate ephemeral DB, source vs restored lifecycle/attempt/task/evidence equality, revoked policy stays terminal, SQL append-only immutable, cleanup. [Engineering notes](work03b/R2_R1D_G01_SI_MH_0055_LOGICAL_RESTORE.md).
 - **NEW CI PENDING**; expected marker `WORK03B_R2_R1D_G01_NATIVE_RESTORE_PASS` not yet confirmed. No new SQL migration, production/PITR, private data, tenant consent/retention/OIDC, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0 changes.
 - NEXT: check CI restore marker and 216 suite/G03/Mem0 regressions; repair if necessary, append evidence in SI-MH-0056.
+
+## SI-MH-0056 — G01-HARDEN + native logical restore CI VERIFIED
+
+- Code baseline `ecb3a45e4a0be6b55eba561a3519c19fd76ebfa2` [Actions 43606718445](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43606718445) **SUCCESS 216/216**, all eight migrations, R2 G01 policy LIVE GitHub REST, native `pg_dump` / `pg_restore` into separate random ephemeral DB, exact policy/events/attempts/tasks/evidence snapshot comparison, terminal disable still enforced, append-only trigger preserved, temporary DB/archive cleaned, R1C and MCP/Mem0/Ollama PASS. [Full matrix/report](work03b/R2_R1D_G01_SI_MH_0056_VERIFIED.md).
+- G01-12 **LAB LOGICAL RESTORE PASS** but physical PITR/DR/RPO/RTO/OIDC/tenant consent/retention, private source ACL and production G04/G05 **OPEN**; no reviewer/DONE, no customer onboarding.
+- This SI-MH-0056 is docs-only + both handoffs; its own CI PENDING. `develop` unprotected per GitHub metadata, no branch settings altered; main/JARVIS/PULSE/vendor Mem0 preserved.
+- NEXT: G04 scoped identity/privacy threat model and approval gates; no production work until operator authorization.

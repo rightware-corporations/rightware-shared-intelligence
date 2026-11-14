@@ -911,6 +911,21 @@
 
 **Scope limitations:** not physical PITR/DR SLA, production identity/consent/retention/OIDC, private source data or G04/G05 readiness; no task review/DONE, main/JARVIS/PULSE/vendor Mem0 change. New CI PENDING; if failed, preserve and repair in following checkpoint.
 
+
+---
+
+## SI-MH-0056 — G01-HARDEN + native PostgreSQL logical backup/restore CI verified 216/216
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@ecb3a45e4a0be6b55eba561a3519c19fd76ebfa2`. **STATE:** VERIFIED INTERNAL LAB / DOCUMENTATION ONLY; NO PRODUCTION AUTHORIZATION.
+
+**Actual evidence:** [Actions 43606718445](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43606718445), job 132482831414, **SUCCESS**. `Ran 216 tests in 36.279s / OK`; migrations 0001..0008 PASS; `HANDOFF_POLICY_PASS`; real GitHub G03 G01 ACTIVE→CHECKED_PASS→DISABLED and replay 409 PASS; `WORK03B_R2_R1D_G01_NATIVE_RESTORE_PASS` proves native pg_dump -Fc + pg_restore to a fresh ephemeral PostgreSQL database with exact policy/lifecycle/attempt/task/evidence match, revocation still terminal, immutable event trigger enforced, archive+target cleanup. R1C agent recovery, real MCP/REST/PostgreSQL/Mem0/Ollama also PASS. Prior [SI-MH-0054 CI 43606091450](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43606091450) 216/216 PASS separately.
+
+**Gate status:** G01-12 LAB LOGICAL RESTORE **VERIFIED**, but physical PITR, offsite retention, RPO/RTO and production disaster recovery are OPEN. Independent-process race and during-provider expiration proven under deterministic synthetic testing; not general safety under arbitrary traffic. [Complete evidence and 14-gate matrix](work03b/R2_R1D_G01_SI_MH_0056_VERIFIED.md).
+
+**Not authorized:** tenant/client/private source access, production G04/G05 identity/OIDC/consent/retention/deletion, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0. `develop` branch protection remains absent (observed GitHub metadata protected=false). SI-MH-0056 changes documents+both handoffs only, its own CI PENDING.
+
+**Next:** G04 identity/privacy threat model and explicit operator approval before tenant/product staging.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
