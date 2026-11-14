@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0051 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0052 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -332,3 +332,9 @@
 - Six new PG tests (208 expected), dedicated CI G03 GitHub HTTPS real via REST with two HUMAN approval, SERVICE check, policy disable and old key replay HTTP409, then grant revoke HTTP403. New marker `WORK03B_R2_R1D_G01_LAB_POLICY_LIVE_PASS`. [Implementation details](work03b/R2_R1D_G01_SI_MH_0051_ENFORCEMENT.md).
 - New CI PENDING. G01-12 restore and full independent G01 tenant consent/retention/OIDC authority remain OPEN, G04/G05 production blocked; no reviewer/DONE.
 - SI-RD research and pinned vendor/main/JARVIS/PULSE unchanged; next check CI and fix using new handoff checkpoint.
+
+## SI-MH-0052 — G01 internal policy lifecycle LIVE verified, 208/208
+
+- `develop@ff39c4f5e8b964b01bbe410b2004bd95c38027ea` [Actions 43603129072](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43603129072) SUCCESS: 208 tests OK, 8 migrations, R2 G01 distinct HUMAN approvals + actual GitHub REST LIVE marker, old idempotency replay denied after DISABLED, R1A/R1B/R1C/Mem0/Ollama all PASS. [Detailed evidence and gate matrix](work03b/R2_R1D_G01_SI_MH_0052_VERIFIED.md).
+- G01 pilot is LAB-only and OFF by default; no public policy admin API, review/DONE, private data, customer tenant/OIDC/consent/retention, G04/G05 release. Remaining real independent two-process race, expiry during GET, cross-tenant admin and actual backup/restore tests OPEN. SI-MH-0049 first FAIL retained and repaired SI-MH-0050.
+- SI-MH-0052 docs + both handoffs only, its own CI PENDING. No changes main/JARVIS/PULSE/vendor Mem0, preserve SI-RD research. NEXT: G01 hardening and recovery acceptance before any product deployment.

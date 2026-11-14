@@ -858,6 +858,19 @@
 
 **CI NEW SHA PENDING**. Never label these HTTP MockTransport tests LIVE, and never infer DONE/review, backup/restore G01-12, source ACL/consent, tenant/OIDC or G04/G05 production. No migrations or vendor/main/JARVIS/PULSE modifications this commit. Next observe real CI and repair if needed.
 
+
+---
+
+## SI-MH-0052 — R2 R1D G01 LIVE via REST + 208/208 testes CI confirmados
+
+**2026-11-14 Africa/Maputo. HEAD baseline:** `develop@ff39c4f5e8b964b01bbe410b2004bd95c38027ea`. **CLASSIFICATION: LAB VALIDATED, DOCUMENTATION ONLY.** [GitHub Actions 43603129072](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43603129072) SUCCESS: `Ran 208 tests in 30.451s / OK`, migrations 0001..0008 PASS, handoff policy PASS; markers `WORK03B_R2_R1D_G01_LAB_POLICY_LIVE_PASS`, `WORK03B_R2_R1D_LAB_HTTP_GITHUB_LIVE_PASS`, R1A/R1B LIVE, R1C bound agents and real MCP/REST/PostgreSQL/Mem0/Ollama E2Es all PASS.
+
+**Evidence report:** [R2_R1D_G01_SI_MH_0052_VERIFIED.md](work03b/R2_R1D_G01_SI_MH_0052_VERIFIED.md). Distinct HUMAN bearer proposer/approver, 7-day DB-clock policy, SERVICE verification, append-only DISABLED and prior-key replay HTTP409 confirmed with actual provider HTTPS. No review/DONE; MockTransport negative tests remain SIMULATED. Original FAIL run 43602331541 retained, fixed in 43602557496.
+
+**Residual G01:** independent multi-process race load, expiry mid-GET, cross-tenant admin, policy-idempotency payload conflict, actual PostgreSQL backup/restore and tenant consent/access/retention remain OPEN; G04/G05, workload identity, branch protection and product release not implemented. No main/JARVIS/PULSE/vendor Mem0 changes; R2 G01 requires explicit LAB opt-in flags. CI of this documentary SI-MH-0052 separately pending.
+
+**Next:** G01 hardening/security negative tests and recovery proof; never mark DONE or production from this pilot.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
