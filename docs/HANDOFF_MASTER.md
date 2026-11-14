@@ -825,6 +825,19 @@
 
 ---
 
+
+---
+
+## SI-MH-0049 — G01 LAB foundation: immutable event journal + two-human policy approval (CI PENDING)
+
+**2026-11-14 Africa/Maputo. Base:** `develop@dc2daaff69df6357454473d2e7fc7ecdce9903e7`, [Actions 43601430844](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43601430844) SUCCESS. **Class:** INTERNAL TECHNICAL PILOT ONLY, NOT PRODUCTION RATIFICATION.
+
+**Code:** migration 0008 append-only `si_policy_lifecycle_events`; internal `policy_lifecycle.py` with bearer-authenticated HUMAN proposer/independent HUMAN approver and 7-day DB-clock expiry, disable/supersede terminal, project grants + shared task row lock, opt-in LAB only. Eight new real PostgreSQL tests, 202 expected total; workflow includes migration 0008. **CI NOT YET CHECKED**. [Implementation scope](work03b/R2_R1D_G01_SI_MH_0049_FOUNDATION.md).
+
+**Remaining:** connect policy event validity to EvidenceLedger before GitHub + locked post-GitHub commit and old idempotent replays; test G03 LIVE REST and midflight; real backup/restore, production tenant/OIDC/privacy/consent, reviewer/DONE still OPEN. No code to authorize policy lifecycle via HTTP/MCP and no implicit customer approval. Parallel SI-RD research untouched.
+
+**Next:** CI validation and second G01 checkpoint for verification enforcement.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

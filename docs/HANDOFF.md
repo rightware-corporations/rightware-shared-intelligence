@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0045 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0049 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -312,3 +312,10 @@
 - Seven destructive test fixtures now share `lab_boundary` guards at unittest collection and each `setUp`. Four new tests pass. [Verified report](work03b/R2_R1D_SI_MH_0045_VERIFIED.md).
 - Only documentation and both handoffs changed in this checkpoint, its own CI **PENDING**. G01 not ratified, 14 lifecycle tests NOT_EXECUTED; no G04/G05 release/OIDC/privacy or DONE/review, main/JARVIS/PULSE/vendor Mem0 preserved.
 - NEXT: explicit G01 operator decisions (authority/quorum/expiry/scope/legacy source consent/retention), then design approved SQL and integration tests.
+
+## SI-MH-0049 — G01 INTERNAL LAB policy lifecycle foundation (CI pending)
+
+- Parent `dc2daaff69df6357454473d2e7fc7ecdce9903e7` [Actions 43601430844](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43601430844) SUCCESS. SI-MH-0046/47/48 research and CI retained.
+- Opt-in LAB-only G01 event journal migration 0008, internal token-authenticated HUMAN proposal and independent HUMAN activation for 7 days, append-only DISABLED/SUPERSEDED, per-project grants, task lock and idempotency/generation. **Not a public admin API or release**.
+- Eight PostgreSQL synthetic tests added; 202 expected count; CI PENDING. [Implementation notes](work03b/R2_R1D_G01_SI_MH_0049_FOUNDATION.md).
+- G01 not yet enforced in EvidenceLedger pre/post-GitHub; no claim of G01 verified chain yet. Next link verifier and test revocation/replay/midflight LIVE under new pilot flag. Customer tenant/consent/retention/OIDC and G04/G05 remain blocked. No main/JARVIS/PULSE/vendor Mem0 changes.
