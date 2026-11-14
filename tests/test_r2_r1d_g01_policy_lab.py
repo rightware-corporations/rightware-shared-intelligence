@@ -90,7 +90,7 @@ class G01LifecycleLabTests(unittest.TestCase):
         with psycopg.connect(_DSN,row_factory=dict_row) as conn:
             with self.assertRaises(Conflict):
                 self.life.require_active(conn,"alpha",self.old.policy_id)
-            count=conn.execute("SELECT count(*) FROM si_policy_lifecycle_events").fetchone()[0]
+            count=conn.execute("SELECT count(*) AS n FROM si_policy_lifecycle_events").fetchone()["n"]
         self.assertEqual(count,3)
 
     def test_06_superseded_policy_cannot_activate_successor_automatically(self):

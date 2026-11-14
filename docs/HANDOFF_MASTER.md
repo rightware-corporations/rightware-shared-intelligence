@@ -838,6 +838,15 @@
 
 **Next:** CI validation and second G01 checkpoint for verification enforcement.
 
+
+---
+
+## SI-MH-0050 — Targeted fix after SI-MH-0049 CI FAIL (NEW CI PENDING)
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@4b1d9eff569b0d108dd8e1c6fd3a7589619f1b20`. [CI failure 43602331541](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43602331541): migrations 0001..0008 PASS, 202 tests executed, **1 FAIL + 1 ERROR**. The ledger code and real GitHub smoke were not reached after test failure. Error: `dict_row` `fetchone()[0]` KeyError in G01 event count after disable, not a lifecycle DB failure. Failure: migration layout static allowlist listed 0001..0007 but new 0008 is legitimate. Fixed both narrowly in `tests/test_r2_r1d_g01_policy_lab.py` and `tests/test_repository_layout.py`. [Report](work03b/R2_R1D_G01_SI_MH_0050_FAILURE_FIX.md).
+
+**Next CI expected:** 202 tests + 8 migrations + existing R1A/R1B/G03 GitHub LIVE and Mem0/Ollama. **PENDING**. No changes runtime G01, no production/main/JARVIS/PULSE/vendor Mem0; G01 enforcement in verifier and missing midflight/replay gates still open.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0049 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-13 (Africa/Maputo); checkpoint SI-MH-0050 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -319,3 +319,9 @@
 - Opt-in LAB-only G01 event journal migration 0008, internal token-authenticated HUMAN proposal and independent HUMAN activation for 7 days, append-only DISABLED/SUPERSEDED, per-project grants, task lock and idempotency/generation. **Not a public admin API or release**.
 - Eight PostgreSQL synthetic tests added; 202 expected count; CI PENDING. [Implementation notes](work03b/R2_R1D_G01_SI_MH_0049_FOUNDATION.md).
 - G01 not yet enforced in EvidenceLedger pre/post-GitHub; no claim of G01 verified chain yet. Next link verifier and test revocation/replay/midflight LIVE under new pilot flag. Customer tenant/consent/retention/OIDC and G04/G05 remain blocked. No main/JARVIS/PULSE/vendor Mem0 changes.
+
+## SI-MH-0050 — Corrected G01 first CI failures; rerun pending
+
+- SI-MH-0049 [CI 43602331541](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43602331541) FAILED: migration 0008 PASS but 202 tests had one dict_row KeyError after disabled-event count and one static migration allowlist mismatch. No provider LIVE regression reached in failed run.
+- Fixed `fetchone()["n"]` on named count column and added legitimate migration 0008 to static layout test. [Failure report](work03b/R2_R1D_G01_SI_MH_0050_FAILURE_FIX.md). Two handoffs updated.
+- New CI PENDING; still no G01 enforce-before/after-GitHub code or approval/DONE, no G04/G05 production. Research commits SI-MH-0046/47/48 preserved.
