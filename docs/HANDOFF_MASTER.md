@@ -952,6 +952,15 @@
 **Scope:** SI-MH-0057 delivered G04 identity/tenancy/privacy architecture R0, threat register T01–T18, decision packet D01–D12, 28 negative future oracles. **None of the G04 oracles was executed** or counts toward 216. [Evidence detail](work03b/G04_SI_MH_0058_DESIGN_CI_VERIFIED.md). No implementation, migrations, API exposure, OIDC, private connector, RLS, data deletion or customer onboarding, and no main/JARVIS/PULSE/vendor Mem0 change. The current commit itself is only documentation+handoff and its CI is pending.
 
 **Decision gate:** D01–D05/D12 require explicit scope/architecture approval before synthetic G04 engineering; D06–D11 and legal/privacy classification unresolved. G04/G05 production release BLOCKED.
+
+---
+
+## SI-MH-0059 — G04 design documentation CI confirmed 216/216, G04 code STILL NOT IMPLEMENTED
+
+**2026-11-14 Africa/Maputo. BASE:** `develop@8df0d374dd7fcb83b2109ac7380c138935a02b23`. [Actions 43608719030](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43608719030) **SUCCESS**: `Ran 216 tests in 32.437s / OK`, eight migrations, G01 real GitHub LIVE + native PG restore, R1C, Mem0/Ollama E2Es PASS; handoff gate PASS. **G04: 18 DRAFT threats, 12 OPEN operator decisions, 28 NOT_IMPLEMENTED oracles, zero new runtime code or test execution.** [Evidence report](work03b/G04_SI_MH_0059_CI_VERIFIED.md).
+
+**Scope:** documentation + CURRENT/MASTER only. Own CI pending. D01–D05 and D12 require explicit approval for synthetic internal G04 proof; privacy/jurisdiction D09–D10 separate. No main/JARVIS/PULSE/vendor Mem0, production/tenants/private source/DONE modifications. G04/G05 release blocked.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

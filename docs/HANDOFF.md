@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0058 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0059 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -379,3 +379,9 @@
 - G04 18 threat entries, D01–D12 OPEN decision matrix, 28 NOT_IMPLEMENTED future oracles; **zero G04 runtime tests implemented/executed**, no OIDC, RLS, customer data, private source consent, retention/deletion or G05 release.
 - This SI-MH-0058 only appends evidence and updates both handoffs, own CI PENDING. main/JARVIS/PULSE/vendor Mem0 unchanged.
 - NEXT: D01–D05 & D12 explicit operator ratification for synthetic internal prototype; legal/privacy D09–D10 separate; no customer staging/production before G04/G05 gates.
+
+## SI-MH-0059 — G04 design docs CI verified, approvals remain open
+
+- `develop@8df0d374dd7fcb83b2109ac7380c138935a02b23` [Actions 43608719030](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43608719030) SUCCESS 216/216 existing tests + eight migrations + G01 real LIVE provider/REST and native PG restore + Mem0/Ollama. [Verified source](work03b/G04_SI_MH_0059_CI_VERIFIED.md).
+- G04 four design assets unchanged: 18 threats (not pen test findings), D01–D12 OPEN, 28 NOT_IMPLEMENTED future tests; zero G04 code/tests executed. No customer access, OIDC, RLS, private source consent, data deletion, production G04/G05 or review/DONE.
+- SI-MH-0059 only docs and both handoffs, own CI PENDING. NEXT ratify D01–D05/D12 for scoped synthetic work; D09/D10 require legal/privacy decision. main/JARVIS/PULSE/vendor Mem0 untouched.
