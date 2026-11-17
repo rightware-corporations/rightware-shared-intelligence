@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-14 (Africa/Maputo); checkpoint SI-MH-0059 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-17 (Africa/Maputo); checkpoint SI-MH-0061 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -390,3 +390,10 @@
 - `develop@8df0d374dd7fcb83b2109ac7380c138935a02b23` [Actions 43608719030](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43608719030) SUCCESS 216/216 existing tests + eight migrations + G01 real LIVE provider/REST and native PG restore + Mem0/Ollama. [Verified source](work03b/G04_SI_MH_0059_CI_VERIFIED.md).
 - G04 four design assets unchanged: 18 threats (not pen test findings), D01–D12 OPEN, 28 NOT_IMPLEMENTED future tests; zero G04 code/tests executed. No customer access, OIDC, RLS, private source consent, data deletion, production G04/G05 or review/DONE.
 - SI-MH-0059 only docs and both handoffs, own CI PENDING. NEXT ratify D01–D05/D12 for scoped synthetic work; D09/D10 require legal/privacy decision. main/JARVIS/PULSE/vendor Mem0 untouched.
+
+## SI-MH-0061 — D01–D05/D12 G04-A0 piloto sintético RATIFIED (CI PENDING)
+
+- HEAD parent develop@61a5d18a17c5fddb60373bf4e664cc89a1dc8ac4, [CI 43610801921](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43610801921) SUCCESS 216/216. Concurrent SI-MH-0060 research unchanged.
+- [Decision receipt](work03b/G04_A0_OPERATOR_DECISION_R1.md): internal RIGHTWARE + 2 fake orgs, OIDC/PKCE/MFA and short asymmetric workload ID as design principles (provider NOT CHOSEN), explicit membership, resource grants+RLS goal, required branch protection/CI/review (NOT CONFIGURED). D06–D11 OPEN.
+- [Implementation](work03b/G04_A0_SI_MH_0061_IMPLEMENTATION.md): pure g04_a0_synthetic_policy.py, lab guard, 21 negative tests; 237 expected total, CI PENDING. Synthetic claims are forgeable, no real auth; no HTTP/MCP/Mem0 wiring. 28 G04 R0 oracles still NOT_IMPLEMENTED.
+- No DB migration, clients/private data, production/staging, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0 changes. NEXT validate CI; later choose IdP and approve distinct G04-A1/A2 implementation.

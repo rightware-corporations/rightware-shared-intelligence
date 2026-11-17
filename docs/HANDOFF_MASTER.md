@@ -977,6 +977,17 @@
 
 ---
 
+
+---
+
+## SI-MH-0061 — RATIFIED scoped G04-A0 synthetic lab (21 pure negative tests, NEW CI PENDING)
+
+**2026-11-17 Africa/Maputo. BASE:** develop@61a5d18a17c5fddb60373bf4e664cc89a1dc8ac4, SI-MH-0060 [Actions 43610801921](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/43610801921) SUCCESS 216 tests, 8 migrations, G01 LIVE/restore + Mem0/Ollama. **OFFICIAL DECISION LIMITED TO SYNTHETIC LAB**: D01 internal RIGHTWARE+2 fake tenants, D02 OIDC+PKCE/MFA design only with provider OPEN, D03 short-lived asymmetric workload identity design only with provider OPEN, D04 explicit subject/tenant membership, D05 deny-by-default resource authorization and future RLS, D12 independent review+branch protection as release gate NOT CONFIGURED. D06–D11 OPEN. [Decision R1](work03b/G04_A0_OPERATOR_DECISION_R1.md).
+
+**IMPLEMENTATION:** standalone synthetic-only policy evaluator backend/rightware_si/g04_a0_synthetic_policy.py, no cryptographic authentication or runtime integration; 21 unit tests, 237 total EXPECTED, CI PENDING. [Evidence and limitations](work03b/G04_A0_SI_MH_0061_IMPLEMENTATION.md). 28 real G04 R0 oracles remain NOT_IMPLEMENTED. No new migrations/HTTP, private source, staging or production, review/DONE, main/JARVIS/PULSE/vendor Mem0 changes. SI-RD-0060 research preserved.
+
+**NEXT:** run CI and record result; G04-A1 real IdP and A2 ACL/RLS require further technical decisions.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
