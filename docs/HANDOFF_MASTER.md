@@ -988,6 +988,17 @@
 
 **NEXT:** run CI and record result; G04-A1 real IdP and A2 ACL/RLS require further technical decisions.
 
+
+---
+
+## SI-MH-0062 — G04-A0 237/237 synthetic-lab CI verified; real G04 acceptance remains OPEN
+
+**2026-11-17 Africa/Maputo. BASE:** develop@c387217e75bb6fab836e62a4306f648debd9e213, [Actions 44113475872](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44113475872), job 134145055234 **SUCCESS**. Ran **237 tests in 35.672s / OK**, migrations 0001–0008 PASS, G01 real GitHub LIVE, native pg_dump/pg_restore, R1C and MCP/REST/PostgreSQL/Mem0/Ollama E2Es PASS; HANDOFF_POLICY_PASS. [Evidence](work03b/G04_A0_SI_MH_0062_VERIFIED.md).
+
+**Actual G04 progress:** limited operator ratification D01–D05/D12 *for synthetic internal design only*, 21 pure negative tests of a standalone in-memory policy evaluator PASS. **No real OIDC cryptography, active DB tenant memberships, per-resource DB ACL, RLS, source consent or product enforcement**. All 28 original G04 DB/E2E acceptance oracles remain NOT_IMPLEMENTED. D02 IDP vendor, D03 workload implementation, D12 branch protection config and D06–D11 open. No production, review/DONE, main, JARVIS/PULSE/vendor Mem0 changes.
+
+**This commit:** docs-only report + both handoffs, own CI PENDING. Next choose G04-A1 identity implementation and G04-A2 DB/RLS designs under separate approval; maintain independent SI-RD work.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

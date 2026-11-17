@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-17 (Africa/Maputo); checkpoint SI-MH-0061 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-17 (Africa/Maputo); checkpoint SI-MH-0062 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -397,3 +397,10 @@
 - [Decision receipt](work03b/G04_A0_OPERATOR_DECISION_R1.md): internal RIGHTWARE + 2 fake orgs, OIDC/PKCE/MFA and short asymmetric workload ID as design principles (provider NOT CHOSEN), explicit membership, resource grants+RLS goal, required branch protection/CI/review (NOT CONFIGURED). D06–D11 OPEN.
 - [Implementation](work03b/G04_A0_SI_MH_0061_IMPLEMENTATION.md): pure g04_a0_synthetic_policy.py, lab guard, 21 negative tests; 237 expected total, CI PENDING. Synthetic claims are forgeable, no real auth; no HTTP/MCP/Mem0 wiring. 28 G04 R0 oracles still NOT_IMPLEMENTED.
 - No DB migration, clients/private data, production/staging, reviewer/DONE, main/JARVIS/PULSE/vendor Mem0 changes. NEXT validate CI; later choose IdP and approve distinct G04-A1/A2 implementation.
+
+## SI-MH-0062 — G04-A0 synthetic authorization CI VERIFIED (237 tests)
+
+- Code HEAD develop@c387217e75bb6fab836e62a4306f648debd9e213, [Actions 44113475872](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44113475872) SUCCESS 237/237 (216+21), eight migrations, real GitHub/G01 native restore/R1C/Mem0-Ollama E2Es PASS. [Verified evidence](work03b/G04_A0_SI_MH_0062_VERIFIED.md).
+- D01–D05/D12 RATIFIED principles restricted to internal synthetic pilot only; provider OIDC/workload vendor and branch ruleset implementation remain pending. 28 original G04 real DB/E2E oracles still NOT_IMPLEMENTED, not part of 237.
+- No client identity, production tenant ACL/RLS, private-source access, data retention, reviewer/DONE, public deployment or main/JARVIS/PULSE/vendor Mem0 changes. SI-MH-0062 docs-only own CI PENDING.
+- NEXT: G04-A1 identify real IDP/workload strategy; G04-A2 obtain DB resource ACL/RLS approval; D12 actual branch protection coordination.
