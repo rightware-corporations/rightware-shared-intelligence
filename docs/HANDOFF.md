@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0063 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0064 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -411,3 +411,9 @@
 - Operator explicit strategic mandate to create own RIGHTWARE intelligence/data science engine, not only reverse engineering or vendor wrappers. [Strategy R0](research/RIGHTWARE_INTELLIGENCE_ENGINE_STRATEGY_R0.md), [scientific protocol](research/RIGHTWARE_INTELLIGENCE_ENGINE_RESEARCH_PROTOCOL_R0.md). Trainable ranker/calibration and validated proprietary models are FUTURE HYPOTHESES; own LLM foundation training NOT APPROVED.
 - New `experimental_engine_e0.py`: independent offline research BM25 baseline (public algorithm) + synthetic authority/scope/time/abstention, not production auth/fact verifier; 22 pure new tests, 259 expected CI PENDING. [Report](research/SI_MH_0063_RIGHTWARE_ENGINE_E0.md).
 - Existing sealed SI-RD A0-GLOBAL-02 v0.8 corpus/key **not used for training/tuning**. 28 G04 oracles still NOT_IMPLEMENTED. No production/client/data, DB migrations, REST/MCP, Mem0, JARVIS/PULSE/main/vendor, reviewer/DONE changes. NEXT verify exact CI on new SHA; plan E1 data science independently of G04 IAM choice.
+
+## SI-MH-0064 — RIGHTWARE Engine E0 independently verified in CI (259 tests)
+
+- `develop@7aa7ae0749d6f0606eba65fa2d3dc0249a53ff87` [Actions 44313829879](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44313829879) **SUCCESS** 259/259 (237 prior + 22 pure synthetic research E0), all 8 migrations, G01 LIVE/provider and native restore, R1C and real MCP/Mem0/Ollama PASS. [Evidence report](research/SI_MH_0064_RIGHTWARE_ENGINE_E0_VERIFIED.md).
+- Official strategic direction: RIGHTWARE to develop proprietary intelligence/data science engine; E0 is research-only lexical BM25/authority/time/abstention reference, NOT proprietary trained ML/LLM or production identity/answer validator. Blind SI-RD A0-GLOBAL-02 v0.8 sealed evaluator untouched.
+- New SI-MH-0064 only evidence docs + both handoffs; own CI PENDING. No new DB/API, client/private data, main/JARVIS/PULSE/vendor edits. G04-A1/A2 and 28 G04 real acceptance oracles still NOT IMPLEMENTED. NEXT E1 independently labelled training sets/model selection without test leakage and parallel G04 IAM.

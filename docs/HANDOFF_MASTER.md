@@ -1012,6 +1012,17 @@
 
 **NEXT:** verify CI and retain as new checkpoint; perform dataset/label design on independent public training data, evaluate models blinded with metrics and strict source isolation; proceed G04 IAM independently.
 
+
+---
+
+## SI-MH-0064 — RIGHTWARE proprietary engine E0 synthetic baseline 259/259 CI VERIFIED
+
+**2026-11-18 Africa/Maputo. BASE:** `develop@7aa7ae0749d6f0606eba65fa2d3dc0249a53ff87`. [Actions 44313829879](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44313829879), job 134834575340 **SUCCESS**: `Ran 259 tests in 32.131s / OK` (237 previous + 22 engine E0), migrations 0001–0008 PASS, HANDOFF policy PASS, G01 GitHub LIVE and native PostgreSQL logical restore, agent bound recovery and actual MCP/Mem0/Ollama E2Es PASS. [Verified evidence](research/SI_MH_0064_RIGHTWARE_ENGINE_E0_VERIFIED.md).
+
+**Scope:** research-only own E0 evidence candidate/temporal/authority/conflict model with public BM25 baseline, synthetic trusted scope and fake facts. No learned RIGHTWARE ML model, no empirical superiority or vendor comparison, no real auth, private source, customer data, production, reviewer/DONE. SI-RD-03A sealed 82-source/56-query benchmark and private oracle key not touched. G04-A1/OIDC and G04-A2/RLS still unimplemented; 28 G04 acceptance oracles NOT_IMPLEMENTED. Main/JARVIS/PULSE/vendor Mem0 unchanged.
+
+**SI-MH-0064:** docs plus two handoffs only, its CI PENDING. NEXT create independent licensed E1 dataset/splits and trainable ranker, validate scientifically without sealed-benchmark leakage; continue G04 identity/tenant security separately.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
