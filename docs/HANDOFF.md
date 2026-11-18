@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0064 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0065 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -417,3 +417,10 @@
 - `develop@7aa7ae0749d6f0606eba65fa2d3dc0249a53ff87` [Actions 44313829879](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44313829879) **SUCCESS** 259/259 (237 prior + 22 pure synthetic research E0), all 8 migrations, G01 LIVE/provider and native restore, R1C and real MCP/Mem0/Ollama PASS. [Evidence report](research/SI_MH_0064_RIGHTWARE_ENGINE_E0_VERIFIED.md).
 - Official strategic direction: RIGHTWARE to develop proprietary intelligence/data science engine; E0 is research-only lexical BM25/authority/time/abstention reference, NOT proprietary trained ML/LLM or production identity/answer validator. Blind SI-RD A0-GLOBAL-02 v0.8 sealed evaluator untouched.
 - New SI-MH-0064 only evidence docs + both handoffs; own CI PENDING. No new DB/API, client/private data, main/JARVIS/PULSE/vendor edits. G04-A1/A2 and 28 G04 real acceptance oracles still NOT IMPLEMENTED. NEXT E1 independently labelled training sets/model selection without test leakage and parallel G04 IAM.
+
+## SI-MH-0065 — FOCUS: E1 FULL Learning & Evaluation, G04 independent security
+
+- Source `develop@9461e8c8cc4ab506ad9441ea2910c058cd1b26b7`, [CI 44314535706](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44314535706) SUCCESS 259/259; existing E0 scientific synthetic tests ≠ trainable E1 engine or benchmark superiority.
+- User reaffirmed **E1 includes entire arc**: independently licensed/synthetic data + leak-free splits (E1.1/ENG-E1-01); BM25/dense/hybrid fair baselines (E1.2); **RW-R1 trainable** (E1.3); calibration/abstention (E1.4); held-out blinded scientific comparison PT/EN, temporal/authority, confidence intervals/cost (E1.5). Each gate NOT_IMPLEMENTED. [Frozen order](research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md), [decision receipt](research/SI_MH_0065_E1_FOCUS_AND_SEQUENCE.md).
+- G04 parallel but separate: OIDC/workload/DB-RLS/consent still NOT IMPLEMENTED; do not expose E1 to private/customer data until authorization. A0 sealed challenge remains untouched; BEIR/LongMemEval/RAGAS methodology only. No new code/API/DB, no main/JARVIS/PULSE/vendor Mem0 changes. Own docs CI PENDING.
+- NEXT **only principal task** E1.1/ENG-E1-01; no trained ranker/prod claims before actual model and independent evaluation.

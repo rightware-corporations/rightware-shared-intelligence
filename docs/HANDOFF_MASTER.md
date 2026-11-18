@@ -1023,6 +1023,19 @@
 
 **SI-MH-0064:** docs plus two handoffs only, its CI PENDING. NEXT create independent licensed E1 dataset/splits and trainable ranker, validate scientifically without sealed-benchmark leakage; continue G04 identity/tenant security separately.
 
+
+---
+
+## SI-MH-0065 — E1 is full Learning & Evaluation, G04 parallel identity/security (PRIORITY REAFFIRMED)
+
+**2026-11-18 Africa/Maputo. BASE:** `develop@9461e8c8cc4ab506ad9441ea2910c058cd1b26b7`, [Actions 44314535706](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44314535706) SUCCESS 259/259 + eight migrations, R2 G01 LIVE/native restore and Mem0/Ollama. **Official intent:** do not forget the E1 step; it includes independent training data, a **trainable RIGHTWARE ranker**, BM25 and external-vendor benchmarking, and calibrated answering/abstaining; BEIR/LongMemEval/RAGAS are methodological references, not own models.
+
+**Execution correction:** `ENG-E1-01` is the **E1.1 dataset foundation**, not the entire E1. [Frozen ordered E1 plan](research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md): E1.1 data/labels/splits and reproducible runner → E1.2 controlled BM25/dense/hybrid baselines → E1.3 trained RW-R1 weights → E1.4 calibration and risk-coverage/abstention → E1.5 blind held-out comparative science review. Each milestone NOT_IMPLEMENTED; E0's 259-test CI **does not satisfy** E1 gates. No vendor accuracy claimed. Sealed A0-GLOBAL-02 oracle and key not used for tuning.
+
+**G04 parallel:** HUMAN/OIDC, SERVICE identity, DB resource ACL/RLS and privacy gates proceed independently; never replace or block offline synthetic E1 work, but block client/private deployment until actually implemented. D12 branch protection still unconfigured. **This checkpoint is docs-only** ([detailed receipt](research/SI_MH_0065_E1_FOCUS_AND_SEQUENCE.md)) plus both handoffs; own CI PENDING. No new code/migration/main/JARVIS/PULSE/vendor Mem0, source credentials or reviewer/DONE.
+
+**NEXT one main engineering deliverable:** E1.1/ENG-E1-01 independent corpus, leak-free splits and evaluation runner; then E1.2, never skip learning/evaluation.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
