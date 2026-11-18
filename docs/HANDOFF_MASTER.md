@@ -999,6 +999,19 @@
 
 **This commit:** docs-only report + both handoffs, own CI PENDING. Next choose G04-A1 identity implementation and G04-A2 DB/RLS designs under separate approval; maintain independent SI-RD work.
 
+
+---
+
+## SI-MH-0063 — RIGHTWARE proprietary Intelligence Engine strategic mandate, scientific E0 reference (CI PENDING)
+
+**2026-11-18 Africa/Maputo. BASE** develop@25ed1695b5daafc14c182aad288304398fda81e5, [CI 44114227352](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44114227352) SUCCESS 237/237, G01 LIVE/native PG restore, Mem0/Ollama. **Official direction:** build RIGHTWARE-owned intelligence/data-science engine rather than only reverse-engineer or wrap Mem0/Hindsight/Ollama/Qwen. **Not official:** foundation LLM training, vendor choice, E0 algorithm as product, any accuracy superiority, production integration.
+
+[Strategic IP/architecture R0](research/RIGHTWARE_INTELLIGENCE_ENGINE_STRATEGY_R0.md) and [experiment protocol R0](research/RIGHTWARE_INTELLIGENCE_ENGINE_RESEARCH_PROTOCOL_R0.md) distinguish governed scope/authority/temporal evidence, learned ranking, calibrated abstention, provenance, memory continuity, LLM adapters; plan E1/E2 held-out train/dev/test & ablations independent of SI-RD-03A A0-GLOBAL-02 sealed evaluator. Novel trainable ranker **NOT IMPLEMENTED**.
+
+**Research-only implementation:** `backend/rightware_si/experimental_engine_e0.py` independent of network/DB/vendor, baseline BM25 (non-proprietary) with synthetic time/scope, authority conflict and abstention; 22 pure tests. **259 EXPECTED** suite, new CI PENDING. Evidence [SI-MH-0063 report](research/SI_MH_0063_RIGHTWARE_ENGINE_E0.md). No HTTP/MCP/Mem0 gateway wiring, migrations, client data, G04-A1 OIDC/G04-A2 RLS, review/DONE, main/JARVIS/PULSE/vendor Mem0 changes.
+
+**NEXT:** verify CI and retain as new checkpoint; perform dataset/label design on independent public training data, evaluate models blinded with metrics and strict source isolation; proceed G04 IAM independently.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

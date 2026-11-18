@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-17 (Africa/Maputo); checkpoint SI-MH-0062 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0063 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -404,3 +404,10 @@
 - D01–D05/D12 RATIFIED principles restricted to internal synthetic pilot only; provider OIDC/workload vendor and branch ruleset implementation remain pending. 28 original G04 real DB/E2E oracles still NOT_IMPLEMENTED, not part of 237.
 - No client identity, production tenant ACL/RLS, private-source access, data retention, reviewer/DONE, public deployment or main/JARVIS/PULSE/vendor Mem0 changes. SI-MH-0062 docs-only own CI PENDING.
 - NEXT: G04-A1 identify real IDP/workload strategy; G04-A2 obtain DB resource ACL/RLS approval; D12 actual branch protection coordination.
+
+## SI-MH-0063 — RIGHTWARE proprietary Intelligence Engine STRATEGY + experimental E0 (CI PENDING)
+
+- Baseline develop@25ed1695b5daafc14c182aad288304398fda81e5, [Actions 44114227352](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44114227352) SUCCESS 237 tests, 8 migrations, GitHub G01 LIVE/native restore and Mem0/Ollama. G04-A0 limited synthetic tests remain, G04-A1 real identity and A2 RLS not yet implemented.
+- Operator explicit strategic mandate to create own RIGHTWARE intelligence/data science engine, not only reverse engineering or vendor wrappers. [Strategy R0](research/RIGHTWARE_INTELLIGENCE_ENGINE_STRATEGY_R0.md), [scientific protocol](research/RIGHTWARE_INTELLIGENCE_ENGINE_RESEARCH_PROTOCOL_R0.md). Trainable ranker/calibration and validated proprietary models are FUTURE HYPOTHESES; own LLM foundation training NOT APPROVED.
+- New `experimental_engine_e0.py`: independent offline research BM25 baseline (public algorithm) + synthetic authority/scope/time/abstention, not production auth/fact verifier; 22 pure new tests, 259 expected CI PENDING. [Report](research/SI_MH_0063_RIGHTWARE_ENGINE_E0.md).
+- Existing sealed SI-RD A0-GLOBAL-02 v0.8 corpus/key **not used for training/tuning**. 28 G04 oracles still NOT_IMPLEMENTED. No production/client/data, DB migrations, REST/MCP, Mem0, JARVIS/PULSE/main/vendor, reviewer/DONE changes. NEXT verify exact CI on new SHA; plan E1 data science independently of G04 IAM choice.
