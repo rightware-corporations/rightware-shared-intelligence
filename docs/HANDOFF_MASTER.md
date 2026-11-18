@@ -1047,6 +1047,19 @@
 
 **Scope:** documentation-only report + both handoffs, own CI PENDING. No code/migration/client sources/prod/main/JARVIS/PULSE/vendor Mem0 modifications. Next **ENG-E1-01 / E1.1** dataset, leakage-safe splits and evaluation runner.
 
+
+---
+
+## SI-MH-0067 — ENG-E1-01 E1.1 independent synthetic dataset and offline evaluation runner (CI PENDING)
+
+**2026-11-18 Africa/Maputo. BASE** `develop@134739d4ae7a89ce01931a365d9ae045e21c49f6`, [CI 44320181640](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44320181640) SUCCESS 259/259 + 8 migrations, G01 LIVE/restoration and Mem0/Ollama; SI-MH-0066 own run 44320844769 observed SUCCESS. **Classification:** E1.1 ENGINEERING IMPLEMENTATION, SCIENTIFIC DATA ACCEPTANCE NOT YET MET.
+
+**Files:** 84 original synthetic documents + 60 PT/EN graded questions, 12 project-group families split 6 train/3 dev/3 test (42/21/21 docs, 30/15/15 queries) including 36 positives/24 negatives and foreign/cross-project sources; [manifest SHA256](research/e1_01/manifest.json). Rule-authored labels, no independently human-adjudicated gold, shared templates across splits, public held-out labels — **REVIEW_REQUIRED**, not a science benchmark. `e1_01_data_eval.py` validates hashes/scope/splits/gold/temporal integrity, computes deterministic E0 BM25 diagnostic hit@k/MRR/nDCG and negative emissions, hard-denies out-of-scope IDs; `scripts/e1_01_evaluate.py` exposes CLI; 24 new unit tests and new CI integrity step. **283 tests expected (259+24), CI PENDING**. [Scope/limits](research/ENG_E1_01_DATA_FOUNDATION.md).
+
+**Does NOT implement:** E1.2 dense/hybrid baselines, E1.3 trained RW-R1, E1.4 calibration, E1.5 blind comparisons or E1_DATA_READY sign-off. Sealed A0-GLOBAL-02 oracle untouched, no vendor results. G04 OIDC/ACL/RLS and 28 G04 real tests OPEN. No private data, production, main/JARVIS/PULSE/vendor Mem0/reviewer/DONE.
+
+**Next:** observe actual CI; do not confuse synthetic engineering fixture correctness with independent expert labels. Prioritize human-review/diverse E1.1 dataset before E1.2.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

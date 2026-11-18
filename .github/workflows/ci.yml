@@ -105,6 +105,8 @@ jobs:
           PY
       - name: Full deterministic/real PostgreSQL test suite
         run: python -m unittest discover -s tests -v
+      - name: E1.1 synthetic research dataset audit and offline E0 diagnostic
+        run: python scripts/e1_01_evaluate.py --dataset docs/research/e1_01 --output /tmp/e1_01_metrics.json
       - name: R2-R1A real GitHub workflow-run evidence smoke (read-only)
         env:
           GITHUB_TOKEN: ${{ github.token }}

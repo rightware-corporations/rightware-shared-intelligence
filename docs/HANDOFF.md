@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0066 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0067 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -430,3 +430,10 @@
 - Parent `develop@5c618eb4080ed86500157d7a4275a5df54d07f7e`, [CI 44320181640](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44320181640) SUCCESS 259/259 + migrations 0001–0008, G01 LIVE/native restore and MCP/Mem0/Ollama PASS. [Evidence](research/SI_MH_0066_E1_ORDER_CI_VERIFIED.md).
 - [E1 full execution sequence](research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md): E1.1 licensed/synthetic data and splits → E1.2 fair baselines → E1.3 learned RW-R1 → E1.4 calibration → E1.5 held-out scientific comparison. All E1 gates remain NOT_IMPLEMENTED; prior 259 tests are existing E0/G01/G04-A0, not E1 training.
 - G04 identity/tenant/security separate parallel track, real OIDC and RLS NOT IMPLEMENTED; no private/client data, new code, main/JARVIS/PULSE/vendor edits. This docs-only SI-MH-0066 own CI PENDING. NEXT exclusive active mission ENG-E1-01/E1.1.
+
+## SI-MH-0067 — E1.1 ENG-E1-01 implemented as a controlled synthetic data pipeline (CI PENDING)
+
+- Source develop@134739d4ae7a89ce01931a365d9ae045e21c49f6 SI-MH-0066, [CI 44320181640](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44320181640) SUCCESS 259/259; SI-MH-0066 own run 44320844769 observed SUCCESS before changes.
+- New [data foundation](research/ENG_E1_01_DATA_FOUNDATION.md): 84 original synthetic documents, 60 PT/EN queries, family-disjoint train/dev/test, graded source mappings and negatives, [SHA256 manifest](research/e1_01/manifest.json); independent from sealed SI-RD-03A benchmark. New offline SHA/scope/temporal leakage audit + E0 BM25 hit@k/MRR/nDCG/negative diagnostic, 24 unit tests and CI pipeline step; 283 suite tests expected, CI PENDING.
+- IMPORTANT rule-authored gold, public test labels and shared template structure mean E1_DATA_READY remains REVIEW_REQUIRED, not scientific gate PASS. E1.2 baseline comparison, E1.3 trained own ranker, E1.4 calibration and E1.5 blinded science NOT STARTED. G04 real OIDC/RLS and 28 actual oracles still OPEN.
+- No prod/client/private sources, new SQL/API, main/JARVIS/PULSE/vendor Mem0 modifications. NEXT check CI, then improve independent human labels/semantic split audit before E1.2.
