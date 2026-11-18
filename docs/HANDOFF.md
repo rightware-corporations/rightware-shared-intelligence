@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0067 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0068 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -437,3 +437,9 @@
 - New [data foundation](research/ENG_E1_01_DATA_FOUNDATION.md): 84 original synthetic documents, 60 PT/EN queries, family-disjoint train/dev/test, graded source mappings and negatives, [SHA256 manifest](research/e1_01/manifest.json); independent from sealed SI-RD-03A benchmark. New offline SHA/scope/temporal leakage audit + E0 BM25 hit@k/MRR/nDCG/negative diagnostic, 24 unit tests and CI pipeline step; 283 suite tests expected, CI PENDING.
 - IMPORTANT rule-authored gold, public test labels and shared template structure mean E1_DATA_READY remains REVIEW_REQUIRED, not scientific gate PASS. E1.2 baseline comparison, E1.3 trained own ranker, E1.4 calibration and E1.5 blinded science NOT STARTED. G04 real OIDC/RLS and 28 actual oracles still OPEN.
 - No prod/client/private sources, new SQL/API, main/JARVIS/PULSE/vendor Mem0 modifications. NEXT check CI, then improve independent human labels/semantic split audit before E1.2.
+
+## SI-MH-0068 — ENG-E1-01 initial CI failure preserved, synthetic project guard repaired
+
+- `develop@f027a1fdde4d6cda7cb4a8fc186d6d7b96931531` [Actions 44322381727](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44322381727) **FAILED**: `E101DatasetTests.setUpClass` raised `DataIntegrityError: non-synthetic document identifier` before 24 new tests executed; initial CI did NOT prove 283 PASS. [Exact diagnosis](research/SI_MH_0068_E1_01_CI_REPAIR.md).
+- Cause: legitimate `other-project` decoy `syn-other-project-*` denied by overly strict generic ID prefix. Repair validates synthetic `syn-` globally and maintains exact role-aware foreign/project isolation later. JSONL/hashes/labels unchanged. 283 expected CI PENDING.
+- E1.1 review REQUIRED; no E1_DATA_READY/human gold/real model, no G04 private auth/tenant, no E1.2+ or main/JARVIS/PULSE/vendor/production changes. NEXT: inspect new CI.

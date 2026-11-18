@@ -96,7 +96,7 @@ def audit_records(documents: list[dict], queries: list[dict], manifest: dict) ->
         _required(split in SPLITS, "invalid document split")
         _required(d.get("group_id", "").startswith("syn-e1-family-")
                   and d.get("source_id", "").startswith("syn-e1-")
-                  and d.get("project", "").startswith("syn-e1-project-")
+                  and d.get("project", "").startswith("syn-")
                   and d.get("organization", "").startswith("syn-"),
                   "non-synthetic document identifier")
         _required(d.get("role") in ROLES and d.get("authority") in AUTHORITIES,

@@ -1060,6 +1060,17 @@
 
 **Next:** observe actual CI; do not confuse synthetic engineering fixture correctness with independent expert labels. Prioritize human-review/diverse E1.1 dataset before E1.2.
 
+
+---
+
+## SI-MH-0068 — E1.1 CI FAILED: synthetic cross-project decoy rejected, narrow guard repair (CI PENDING)
+
+**2026-11-18 Africa/Maputo. BASE:** `develop@f027a1fdde4d6cda7cb4a8fc186d6d7b96931531`. [CI 44322381727](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44322381727) **FAILED**: `test_e1_01_data_eval.E101DatasetTests.setUpClass` raised `DataIntegrityError: non-synthetic document identifier`. `Ran 259 tests / FAILED(errors=1)`, because E1.1 tests never ran. Prior CI baseline 259/259 remains historic, not current. [Diagnosis](research/SI_MH_0068_E1_01_CI_REPAIR.md).
+
+Root cause: valid synthetic `other-project` decoy uses `syn-other-project-*`, but global schema guard required `syn-e1-project-*`. **Fix** generic `syn-` namespace and preserve stricter role-aware project/organization check. Dataset files, SHA256 manifest, 60 gold questions, other Core code and 24 tests unchanged. **283 expected, CI PENDING**. E1.1 remains synthetic fixture/REVIEW_REQUIRED (not `E1_DATA_READY`); E1.2–E1.5 NOT STARTED, G04 and sealed SI-RD unchanged, no production/customer data.
+
+NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/Mem0 regression.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
