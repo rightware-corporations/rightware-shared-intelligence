@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0068 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0069 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -443,3 +443,10 @@
 - `develop@f027a1fdde4d6cda7cb4a8fc186d6d7b96931531` [Actions 44322381727](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44322381727) **FAILED**: `E101DatasetTests.setUpClass` raised `DataIntegrityError: non-synthetic document identifier` before 24 new tests executed; initial CI did NOT prove 283 PASS. [Exact diagnosis](research/SI_MH_0068_E1_01_CI_REPAIR.md).
 - Cause: legitimate `other-project` decoy `syn-other-project-*` denied by overly strict generic ID prefix. Repair validates synthetic `syn-` globally and maintains exact role-aware foreign/project isolation later. JSONL/hashes/labels unchanged. 283 expected CI PENDING.
 - E1.1 review REQUIRED; no E1_DATA_READY/human gold/real model, no G04 private auth/tenant, no E1.2+ or main/JARVIS/PULSE/vendor/production changes. NEXT: inspect new CI.
+
+## SI-MH-0069 — E1.1 software pass 283/283, negative-control E0 warning
+
+- HEAD parent `develop@c1ea2f947033cc7f05cbf207df7ef7203d64c6c3`, [Actions 44323032454](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44323032454) **SUCCESS 283/283** (259 + 24 E1.1), all eight migrations, E1_01_DATA_INTEGRITY_PASS, G01 real GitHub/native restore and MCP/Mem0/Ollama PASS. Previous E1.1 CI 44322381727 failure (synthetic decoy ID guard) preserved. [Evidence & limitations](research/SI_MH_0069_E1_01_CI_VERIFIED.md).
+- On simple rule-authored synthetic fixture: 36 positive queries E0 lexical hit@1 and nDCG@5 = 1.0, **NOT MODEL SCIENCE**; **24/24 negative cases still yielded EVIDENCE_CANDIDATE**, no forbidden source ID. Distinguish candidate output from actual generated hallucinations; no output text/answer model.
+- Engineering dataset/versioned hashes/splits/runner pass, but `E1_DATA_READY` scientific **REVIEW_REQUIRED**, due template similarity, simplistic per-family project isolation, open synthetic rule labels and no independent annotation/true hidden holdout. E1.2/E1.3/E1.4/E1.5 NOT_STARTED, G04 real IAM/RLS unresolved. No prod/client data or vendor modifications.
+- SI-MH-0069 doc-only + both handoffs, own CI PENDING. NEXT **ENG-E1-02 / E1.1B** harder independent corpus, human rubric and blind held-out tests; do not tune sealed SI-RD oracle.

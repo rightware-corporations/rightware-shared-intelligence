@@ -1071,6 +1071,17 @@ Root cause: valid synthetic `other-project` decoy uses `syn-other-project-*`, bu
 
 NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/Mem0 regression.
 
+
+---
+
+## SI-MH-0069 — ENG-E1-01 data/runner CI 283/283 PASS; E1.1 scientific gate REVIEW_REQUIRED
+
+**2026-11-18 Africa/Maputo. BASE** `develop@c1ea2f947033cc7f05cbf207df7ef7203d64c6c3`. [Actions 44323032454](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44323032454) job 134866806363 **SUCCESS**: `Ran 283 tests in 26.377s / OK` (259 prior + 24 E1.1), 8 migrations PASS, HANDOFF_PASS, E1_01_DATA_INTEGRITY_PASS, G01 LIVE and native PostgreSQL restore, Mem0/Ollama E2E PASS. Previous SI-MH-0067 run [44322381727](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44322381727) **FAILED**, repaired in SI-MH-0068; preserve failure in history.
+
+**E0 offline diagnostic:** 36/36 answerable queries had Hit@1/2/5, MRR@5 and nDCG@5 = 1.0 across train/dev/test on **easy shared synthetic templates** — **NOT** scientific performance/generalization. **24/24 negative queries still emitted `EVIDENCE_CANDIDATE`** (important limitation); 0 out-of-scope IDs returned. This is not final-answer hallucination measurement. Rule-derived labels not independently reviewed, publicly visible test gold, template leakage and easy per-family project isolation: **scientific `E1_DATA_READY` remains REVIEW_REQUIRED**, even though dataset integrity and runner pass. [Report](research/SI_MH_0069_E1_01_CI_VERIFIED.md).
+
+**Next task:** ENG-E1-02/E1.1B improve data difficulty, independent annotation and blind held-out scientific splits before claiming data readiness; E1.2 baseline comparison, E1.3 trained RW-R1, E1.4 calibrated abstention and E1.5 blind comparison remain NOT_STARTED. G04 IAM/RLS and 28 E2E oracles OPEN; sealed SI-RD 03A challenge untouched. This docs-only checkpoint updates both handoffs; own CI PENDING. No main/JARVIS/PULSE/vendor Mem0/production changes.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
