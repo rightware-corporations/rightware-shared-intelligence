@@ -1082,6 +1082,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **Next task:** ENG-E1-02/E1.1B improve data difficulty, independent annotation and blind held-out scientific splits before claiming data readiness; E1.2 baseline comparison, E1.3 trained RW-R1, E1.4 calibrated abstention and E1.5 blind comparison remain NOT_STARTED. G04 IAM/RLS and 28 E2E oracles OPEN; sealed SI-RD 03A challenge untouched. This docs-only checkpoint updates both handoffs; own CI PENDING. No main/JARVIS/PULSE/vendor Mem0/production changes.
 
+
+---
+
+## SI-MH-0070 — ENG-E1-02 E1.1B harder synthetic multi-domain corpus, leakage and review gates (CI PENDING)
+
+**2026-11-18 Africa/Maputo. BASE:** `develop@0ccfa21b8650a95d9cff0ac6cdd918556f5542cb`, [CI 44323888002](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44323888002) **SUCCESS** 283/283, 8 migrations, E1_01 data and R2/G01 real GitHub/restored PostgreSQL, MCP/Mem0/Ollama. **Implementation:** new `docs/research/e1_02` original synthetic **56 docs / 32 PT/EN queries** over 8 diverse topics, per split **shared authorized projects** to force cross-topic ranking; 24 **RULE_PROVISIONAL_NOT_HUMAN** train/dev labels; 8 evaluation questions deliberately **UNLABELED**, no gold or eval scoring. SHA256 manifest, normalized 4-token cross-split near-duplicate audit, strict expiry/org/project/role/gold boundary, negative-first 20 tests and CI runner. **303 tests EXPECTED; NEW CI PENDING**. [Engineering report](research/SI_MH_0070_E1_02_QUALITY.md) / [independent review protocol](research/e1_02/ANNOTATION_RUBRIC_R0.md).
+
+**Scientific state:** `E1_DATA_READY` **REVIEW_REQUIRED**; no independent annotators, inter-rater agreement, adjudicated gold or secret evaluator gold. Public unlabeled eval queries are NOT a blind scientific benchmark. Shared synthetic topic text/partial semantic leakage cannot be ruled out by Jaccard alone. No claim of trained RW-R1 or E1.2/E1.4/E1.5 completion. E1.1 v1 unchanged; sealed SI-RD A0-GLOBAL-02 untouched; G04 OIDC/RLS and privacy still OPEN. No SQL/API/production/private data or main/JARVIS/PULSE/vendor Mem0 edits.
+
+**NEXT:** confirm 303 tests + E1_02 marker; if fail preserve/log and fix, else obtain independent human annotation and true evaluator-held-out gold.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

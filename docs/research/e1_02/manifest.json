@@ -1,0 +1,48 @@
+{
+  "schema_version": "rightware-e1b-quality-v1",
+  "dataset_id": "rightware-e1b-synthetic-multidomain-research-v1",
+  "created_at": "2026-11-18",
+  "author": "RIGHTWARE-generated original synthetic text for lab research",
+  "classification": "SYNTHETIC_ENGINEERING_NOT_INDEPENDENT_HUMAN_GOLD",
+  "review_status": "INDEPENDENT_REVIEW_REQUIRED",
+  "license": "Original RIGHTWARE-authored synthetic text; no source rights from third parties",
+  "provisional_label_state": "RULE_PROVISIONAL_NOT_HUMAN",
+  "holdout_state": "EVAL_QUERIES_UNLABELED_NO_GOLD_COLLECTED; NOT A TRUE BLIND REVIEWED BENCHMARK",
+  "split_policy": "group-isolated; shared authorized project within split; 4-token cross-split near duplicate scan",
+  "counts": {
+    "documents": 56,
+    "queries": 32,
+    "labels_provisional": 24,
+    "families": 8,
+    "splits": {
+      "train": {
+        "families": 4,
+        "documents": 28,
+        "queries": 16,
+        "labels_provisional": 16
+      },
+      "dev": {
+        "families": 2,
+        "documents": 14,
+        "queries": 8,
+        "labels_provisional": 8
+      },
+      "eval": {
+        "families": 2,
+        "documents": 14,
+        "queries": 8,
+        "labels_provisional": 0
+      }
+    }
+  },
+  "shingle_threshold": 0.65,
+  "sha256": {
+    "documents": "1db545a02797eb9f6bfc7f2ff649b2152aaca395f7a455da4b4f5d132e7c4d96",
+    "queries": "6651dffa743c44a975c5494dbc0f33a5a8c32909775d16af42c7a11e868908bb",
+    "labels_provisional": "bf5f7780afb2c31c97234541c29b21e9ed294f11957b452ed287230d6500735f"
+  },
+  "sealed_benchmark": "SI-RD-03A A0-GLOBAL-02 ORACLE NOT CONSULTED",
+  "real_data": false,
+  "trained_ranker": false,
+  "independent_human_annotators": 0
+}

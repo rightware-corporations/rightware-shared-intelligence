@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0069 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0070 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -450,3 +450,10 @@
 - On simple rule-authored synthetic fixture: 36 positive queries E0 lexical hit@1 and nDCG@5 = 1.0, **NOT MODEL SCIENCE**; **24/24 negative cases still yielded EVIDENCE_CANDIDATE**, no forbidden source ID. Distinguish candidate output from actual generated hallucinations; no output text/answer model.
 - Engineering dataset/versioned hashes/splits/runner pass, but `E1_DATA_READY` scientific **REVIEW_REQUIRED**, due template similarity, simplistic per-family project isolation, open synthetic rule labels and no independent annotation/true hidden holdout. E1.2/E1.3/E1.4/E1.5 NOT_STARTED, G04 real IAM/RLS unresolved. No prod/client data or vendor modifications.
 - SI-MH-0069 doc-only + both handoffs, own CI PENDING. NEXT **ENG-E1-02 / E1.1B** harder independent corpus, human rubric and blind held-out tests; do not tune sealed SI-RD oracle.
+
+## SI-MH-0070 — ENG-E1-02 dataset quality hardening in progress (CI PENDING)
+
+- Base `develop@0ccfa21b8650a95d9cff0ac6cdd918556f5542cb` [Actions 44323888002](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44323888002) SUCCESS 283/283, eight migrations, E1_01 integrity + G01 GitHub/native restore and Mem0/Ollama.
+- [E1.1B new independent engineering fixture](research/SI_MH_0070_E1_02_QUALITY.md) 56 multi-domain original synthetic source records, 32 PT/EN queries; authorized projects shared across groups within split to avoid trivial per-family selection, cross-tenant and cross-project controls. 24 provisional rule labels on train/dev, 8 evaluation queries **NO GOLD**; [SHA256 manifest](research/e1_02/manifest.json), code near-duplicate and integrity audit, 20 new tests. 303 expected CI PENDING.
+- [Human annotation protocol](research/e1_02/ANNOTATION_RUBRIC_R0.md) drafted, NO annotators or adjudication yet. E1_DATA_READY remains REVIEW_REQUIRED; public unlabelled eval questions ≠ true blinded independent held-out benchmark. E1.1 original corpus/hashes and sealed SI-RD A0 GLOBAL 02 evaluator unchanged. E1.2/3/4/5 and real G04 IAM/RLS not implemented; no private/customer/production/new SQL/API/main/JARVIS/PULSE/vendor Mem0 changes.
+- NEXT: inspect CI, record findings accurately, then independent human review and real evaluator holdout; no trained RW-R1 or scientific superiority claim.
