@@ -5,6 +5,7 @@ Independent RIGHTWARE infrastructure for authorized AI agents and applications t
 **Status:** experimental Python backend validated in synthetic lab. R1A adds source-linked, unverified observations; R1B checkpoint/resume read-only and R1C checkpoint-bound handoff/fenced holder-only rekey in synthetic lab; full verification remains unimplemented. **Not a production service.** Jarvis and PULSE unchanged; no frontend UI.
 
 ## Start here
+- [SIC — Shared Intelligence Core (dossier permanente)](docs/SIC_SHARED_INTELLIGENCE_CORE/README.md) — recuperação, cronologia, evidências, ficheiros, E1/G04 e custódia.
 - [Current HANDOFF](docs/HANDOFF.md) — last state, evidence, blockers and next action.
 - [MASTER HANDOFF](docs/HANDOFF_MASTER.md) — cumulative append-only engineering history.
 - [Handoff policy](docs/HANDOFF_POLICY.md) — update BOTH in every technical commit.

@@ -1,0 +1,236 @@
+{
+  "schema": "RIGHTWARE_SIC_ARTIFACT_REGISTRY_V1",
+  "date": "2026-11-18",
+  "checkpoint": "SI-MH-0072",
+  "classification": "REGISTRY_NOT_BACKUP",
+  "repo": "rightware-corporations/rightware-shared-intelligence",
+  "branch": "develop",
+  "observed_head": "9ce74749bbb62d8ed17e915e94bbf9d303446005",
+  "observed_ci": {
+    "id": 44328297491,
+    "sha": "9ce74749bbb62d8ed17e915e94bbf9d303446005",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "versioned": [
+    {
+      "path": "docs/HANDOFF.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/HANDOFF_MASTER.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/HANDOFF_POLICY.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/UPSTREAM_PROVENANCE.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/work03a/RESTRUCTURE_MANIFEST.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/work03b/G04_A0_OPERATOR_DECISION_R1.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/work03b/G04_00_IDENTITY_TENANCY_PRIVACY_ARCHITECTURE_R0.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/work03b/G04_02_DECISION_AND_ACCEPTANCE_MATRIX_R0.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_01_TECH_LANDSCAPE_2026-11-12.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_02_BENCHMARK_CONTRACT.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_02_SOURCE_CODE_MATRIX_2026-11-12.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_02_EXTERNAL_PERPLEXITY_TRIAGE_2026-11-12.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_03C_EVIDENCE_RESEARCH_2026-11-12.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/fixtures/SI_RD_03C_EVIDENCE_CASES_v1.jsonl",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_03A_A0_V06_KAGGLE_DIAGNOSTIC_2026-11-13.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/fixtures/SI_RD_03A_A0_V06_AUDITED_SCORECARD.json",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_03A_A0_V07_PROTOCOL_2026-11-13.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/notebooks/RIGHTWARE_A0_GLOBAL_KAGGLE_V07.ipynb",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_03A_A0_V07_KAGGLE_EVIDENCE_AUDIT_2026-11-14.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/fixtures/SI_RD_03A_A0_V07_INDEPENDENT_AUDIT.json",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_RD_03A_A0_GLOBAL_02_PREREG_2026-11-14.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/bundles/RIGHTWARE_SI_RD03A_A0_GLOBAL02_PUBLIC_v08.zip",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/fixtures/SI_RD_03A_A0_G02_PUBLIC_REGISTER.json",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/RIGHTWARE_INTELLIGENCE_ENGINE_STRATEGY_R0.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/RIGHTWARE_INTELLIGENCE_ENGINE_RESEARCH_PROTOCOL_R0.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_MH_0063_RIGHTWARE_ENGINE_E0.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_MH_0064_RIGHTWARE_ENGINE_E0_VERIFIED.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/ENG_E1_01_DATA_FOUNDATION.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_01/documents.jsonl",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_01/queries.jsonl",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_01/manifest.json",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_MH_0070_E1_02_QUALITY.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_02/documents.jsonl",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_02/queries.jsonl",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_02/labels_provisional.jsonl",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_02/manifest.json",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/e1_02/ANNOTATION_RUBRIC_R0.md",
+      "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "docs/research/SI_MH_0071_E1_02_CI_VERIFIED.md",
+      "status": "VERIFIED_GIT_TREE"
+    }
+  ],
+  "external": [
+    {
+      "name": "RIGHTWARE_SI_RD_03A_LAB_v01.zip",
+      "sha256": "c805fb834b0c24697d97e626bb0db81ac7e5e03b541a8ce91d4df6697cae9199",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD_03A_LAB_v02.zip",
+      "sha256": "42de7b97dc4c968fcee1fba1b02068752c805e4e9ea799a0e30275e27f6ec3",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD_03A_LAB_v03.zip",
+      "sha256": "02879627664a7880014b9fb36a9985180943bcd458dc8c6565522540f56e0fc9",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD_03A_A0_v04.zip",
+      "sha256": "580fc17da1045feab1d2f366f803658c9c4a4c2023c3c290418812ad2dc20520",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD_03A_A0_v05.zip",
+      "sha256": "d406028285a3b92cdcb48d33cdefab2f5ea6681353d5c4b6a759f4badb990c90",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD03A_A0_DIAGNOSTIC_V06_EVIDENCE.zip",
+      "sha256": "ac24694e9a0baa36d88646c741f203e1d890e7ed321c6105bc9bebef2566e1b9",
+      "status": "EXTERNAL_KAGGLE_EVIDENCE"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD_03A_A0_V07_EVIDENCE.zip",
+      "sha256": "064c4ce8ec24c257ee9b34adb973fa832df725fcaffd5a8bb095b870c0eab4f9",
+      "status": "EXTERNAL_KAGGLE_EVIDENCE"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD_03A_A0_v07_FULL.zip",
+      "sha256": "dbabdecc94ae6f25c2af3d5d110be7d63de6f3b56058c9327b914baa4cafbb1b",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "SI-RD-02-RESEARCH-REPORT.pdf",
+      "sha256": "36a5e2d181b29942d1a1d90f03b70fe7f93adfbf0b7dc870feec48ca35675a1b",
+      "status": "EXTERNAL_ONLY"
+    },
+    {
+      "name": "RIGHTWARE_SI_RD03A_A0_GLOBAL02_EVALUATOR_KEY_PRIVATE_v08.zip",
+      "sha256": "f3903e8892e17d5a2f0d806b7e8db6a4c0e9c728d000b2c1d2241d6211f5270c",
+      "status": "PRIVATE_OFF_REPO_HASH_ONLY"
+    }
+  ],
+  "public_v08_sha256": "c946ef45f97d932796e6ddc80c453da797f2523b0c06b19ae7dfecb38dcc1707",
+  "rules": [
+    "EXTERNAL_ONLY != durable custody",
+    "Private evaluator key must not be published",
+    "E1 human reviewers = 0; E1_DATA_READY = REVIEW_REQUIRED",
+    "PostgreSQL Server/Mem0/Hindsight v0.8 = NOT_RUN"
+  ]
+}

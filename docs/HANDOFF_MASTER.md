@@ -1104,6 +1104,20 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **This checkpoint:** docs-only report + two handoffs, own CI PENDING. NEXT **ENG-E1-03 / E1.1C** independent human annotation and secure evaluator holdout, not fictitious reviews or a trained RW-R1 claim.
 
+---
+
+## SI-MH-0072 — SIC central knowledge and custody dossier (DOCUMENTAL)
+
+**2026-11-18 Africa/Maputo. Base:** `develop@9ce74749bbb62d8ed17e915e94bbf9d303446005`; GitHub Actions [44328297491](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44328297491) `completed/success`. **Origem:** pedido explícito do operador para registar o que foi feito, ficheiros e correspondência com os handoffs, para não depender do chat.
+
+**Criado:** `docs/SIC_SHARED_INTELLIGENCE_CORE/` (README, 00 recovery, 01 chronology, 02 files/evidence, 03 strategy/gates, 04 metrics, 05 custody, ARTIFACT_REGISTRY.json). Confirmados 40 caminhos preexistentes na tree do develop; registados 10 artefactos ZIP/PDF/chave em formato nome+SHA, **sem** publicar os bytes externos, oráculo plaintext ou chave privada. O ZIP público A0-GLOBAL-02 v0.8 permanece no seu path original com SHA256 `c946ef45f97d932796e6ddc80c453da797f2523b0c06b19ae7dfecb38dcc1707`. Hashes externos NÃO significam backup durável.
+
+**Reconciliado:** após SI-MH-0071, CI **303/303 testes de engenharia**; E1.1B `E1_DATA_READY=REVIEW_REQUIRED`, 0 anotadores humanos, 8 eval sem gold; E1.2–E1.5 e RW-R1 trained NÃO implementados. Próximo gate principal **ENG-E1-03/E1.1C** revisão humana independente + custódia. G04 só D01–D05/D12 sintéticos ratificados; OIDC/ACL/RLS de produção não implementados. Benchmark PostgreSQL Server/Mem0/Hindsight v0.8 NOT_RUN. O `Next exact work` antigo de CURRENT foi actualizado; histórico MASTER permanece inalterado.
+
+**Commit:** adiciona 8 ficheiros SIC, actualiza o README raiz e ambos handoffs. **Sem** implementação, schema, CI workflow, main, modelos, R2, JARVIS/PULSE, deployment, decisão de fornecedor ou divulgação de segredos. CI próprio **PENDING** até verificação em adenda futura.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

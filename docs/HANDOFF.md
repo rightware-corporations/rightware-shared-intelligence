@@ -1,6 +1,9 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0071 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0072 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+
+## SIC document registry (SI-MH-0072)
+- [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -195,7 +198,7 @@
 - **NEXT SI-RD-03A:** verificar CI do presente commit, construir adaptadores isolados com pins e env attestation; recolher outputs imutáveis 56 queries antes de abrir a chave e pontuar. Não modificar WorkCore R2, G01/G04, main, JARVIS/PULSE.
 
 ## Next exact work
-**Próximo gate: ratificar SEC-R1C-01..04 e políticas de provider/identity/consent/criteria para R2 operacional, após R2 R1B laboratório 131/131 PASS; só posteriormente considerar API REST evidence:verify e um reviewer independente; nunca auto-DONE** com checkpoints imutáveis, ContextSnapshot e resume controlado, teste em dois processos sem o chat original. Ratificações de privacy/recovery e separação de revisão continuam abertas. Não implementar Jarvis em produção. SI-RD-03 benchmark isolado em paralelo; reconciliar antigos PRs e proteger main/develop sem reescrever histórico.
+**PRIORIDADE E1.1C / ENG-E1-03:** revisão humana independente (dois revisores), evidence spans, acordo e adjudicação; preparar custódia de verdadeiro holdout e manter `E1_DATA_READY=REVIEW_REQUIRED` até provas. E1.2 baselines → E1.3 RW-R1 treinado → E1.4 calibração → E1.5 held-out independente. **G04 identidade/tenant/privacy em paralelo** sob aprovação distinta; sem dados de clientes, OIDC/RLS real ainda não implementado. SI-RD-03A A0 v0.8 PostgreSQL Server/Mem0/Hindsight comparáveis NOT_RUN; chave privada fora do Git e runners. Nunca auto-DONE, nem deploy/release `main`. Ver [SIC dossier](SIC_SHARED_INTELLIGENCE_CORE/README.md) e MASTER para continuidade.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
@@ -464,3 +467,6 @@
 - On **rule-authored synthetic** E1.1B: E0 train 7/8 hit@1 and 8/8 negative candidate emissions, dev 3/4 hit@1 and 3/4 negative candidate emissions; 0 out-of-scope source IDs. **No eval scores (8 query labels absent)**. No real independent review or trained ranker, so NOT science superiority.
 - E1_DATA_READY scientific remains REVIEW_REQUIRED: 2 independent human annotation rounds, evidence spans/adjudication/agreement, genuine evaluator-held-out gold and human semantic leakage review absent. E1.2 baselines, E1.3 trained RW-R1, E1.4 calibration, E1.5 blind comparison not started; G04 OIDC/RLS still open.
 - SI-MH-0071 docs-only + both handoffs, own CI PENDING; main/JARVIS/PULSE/vendor Mem0 unchanged. NEXT ENG-E1-03/E1.1C independent human review and secure gold custody without fabricated reviewers.
+
+## SI-MH-0072 — SIC folder, artifact register and current recovery map (docs only)
+- Baseline `develop@9ce74749bbb62d8ed17e915e94bbf9d303446005` CI [44328297491](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44328297491) `completed/success`. Criada a pasta [SIC_SHARED_INTELLIGENCE_CORE](SIC_SHARED_INTELLIGENCE_CORE/README.md) com 7 documentos e 1 JSON; README raiz actualizado. 40 caminhos existentes confirmados; 10 nomes/hashes externos registados, sem importar segredos. Reconciliado próximo gate E1.1C. CI deste commit PENDING; sem alterações de Core/SQL/runtime/main/JARVIS/PULSE.
