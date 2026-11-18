@@ -1093,6 +1093,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **NEXT:** confirm 303 tests + E1_02 marker; if fail preserve/log and fix, else obtain independent human annotation and true evaluator-held-out gold.
 
+
+---
+
+## SI-MH-0071 — ENG-E1-02 E1.1B CI 303/303 PASS; E0 candidate/negative weaknesses proven in synthetic diagnostics
+
+**2026-11-18 Africa/Maputo. BASE:** `develop@6260fc220b7112382de80608cc1593c756b6af52`. [Actions 44327416091](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44327416091), job 134882338189, **SUCCESS**: `Ran 303 tests in 33.807s / OK`, migrations 0001–0008 PASS; E1_01 DATA PASS, new E1_02_QUALITY_AUDIT_PASS, G01 real GitHub LIVE, native PostgreSQL restore, R1C recovery and full Mem0/Ollama E2E PASS. [Verified report](research/SI_MH_0071_E1_02_CI_VERIFIED.md).
+
+**Actual synthetic E0 diagnostic** on **provisional labels, NOT peer-reviewed model science**: train hit@1 **7/8** positive, negative candidate emission **8/8**; dev hit@1 **3/4**, negative candidate emission **3/4**; foreign ID leaks **0**. Eval 8 questions NOT SCORED (no gold). Old 84/60 synthetic E1.1 fixture retained; new E1.1B 56 documents/32 queries/24 rule labels creates cross-topic competition within one authorized project. Human reviewers **0**, adjudicated labels absent, truly blind evaluator gold absent. `E1_DATA_READY` **REVIEW_REQUIRED**, E1.2–E1.5 NOT IMPLEMENTED. Sealed SI-RD 03A oracle untouched; G04 identity/RLS open. No source credentials, client data, production, main/JARVIS/PULSE/vendor Mem0 edits.
+
+**This checkpoint:** docs-only report + two handoffs, own CI PENDING. NEXT **ENG-E1-03 / E1.1C** independent human annotation and secure evaluator holdout, not fictitious reviews or a trained RW-R1 claim.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

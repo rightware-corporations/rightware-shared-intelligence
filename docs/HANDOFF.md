@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0070 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0071 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -457,3 +457,10 @@
 - [E1.1B new independent engineering fixture](research/SI_MH_0070_E1_02_QUALITY.md) 56 multi-domain original synthetic source records, 32 PT/EN queries; authorized projects shared across groups within split to avoid trivial per-family selection, cross-tenant and cross-project controls. 24 provisional rule labels on train/dev, 8 evaluation queries **NO GOLD**; [SHA256 manifest](research/e1_02/manifest.json), code near-duplicate and integrity audit, 20 new tests. 303 expected CI PENDING.
 - [Human annotation protocol](research/e1_02/ANNOTATION_RUBRIC_R0.md) drafted, NO annotators or adjudication yet. E1_DATA_READY remains REVIEW_REQUIRED; public unlabelled eval questions ≠ true blinded independent held-out benchmark. E1.1 original corpus/hashes and sealed SI-RD A0 GLOBAL 02 evaluator unchanged. E1.2/3/4/5 and real G04 IAM/RLS not implemented; no private/customer/production/new SQL/API/main/JARVIS/PULSE/vendor Mem0 changes.
 - NEXT: inspect CI, record findings accurately, then independent human review and real evaluator holdout; no trained RW-R1 or scientific superiority claim.
+
+## SI-MH-0071 — E1.1B quality audit CI PASS 303/303, scientific review STILL REQUIRED
+
+- Source `develop@6260fc220b7112382de80608cc1593c756b6af52`, [GitHub Actions 44327416091](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44327416091) **SUCCESS 303/303** (283+20), eight migrations, E1_01 and E1_02 audit PASS, R2 G01 GitHub LIVE/native PostgreSQL restore and real MCP/Mem0/Ollama PASS. [Exact evidence](research/SI_MH_0071_E1_02_CI_VERIFIED.md).
+- On **rule-authored synthetic** E1.1B: E0 train 7/8 hit@1 and 8/8 negative candidate emissions, dev 3/4 hit@1 and 3/4 negative candidate emissions; 0 out-of-scope source IDs. **No eval scores (8 query labels absent)**. No real independent review or trained ranker, so NOT science superiority.
+- E1_DATA_READY scientific remains REVIEW_REQUIRED: 2 independent human annotation rounds, evidence spans/adjudication/agreement, genuine evaluator-held-out gold and human semantic leakage review absent. E1.2 baselines, E1.3 trained RW-R1, E1.4 calibration, E1.5 blind comparison not started; G04 OIDC/RLS still open.
+- SI-MH-0071 docs-only + both handoffs, own CI PENDING; main/JARVIS/PULSE/vendor Mem0 unchanged. NEXT ENG-E1-03/E1.1C independent human review and secure gold custody without fabricated reviewers.
