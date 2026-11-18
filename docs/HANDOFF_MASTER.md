@@ -1036,6 +1036,17 @@
 
 **NEXT one main engineering deliverable:** E1.1/ENG-E1-01 independent corpus, leak-free splits and evaluation runner; then E1.2, never skip learning/evaluation.
 
+
+---
+
+## SI-MH-0066 — E1 full Learning & Evaluation priority sequence CI VERIFIED 259/259
+
+**2026-11-18 Africa/Maputo. BASE:** `develop@5c618eb4080ed86500157d7a4275a5df54d07f7e`. [Actions 44320181640](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44320181640), job 134856732253, **SUCCESS**, `Ran 259 tests in 37.933s / OK`, all 8 migrations, HANDOFF gate, G01 LIVE and native PostgreSQL logical restore, real MCP/Mem0/Ollama E2E PASS.
+
+**Verified artifact:** [E1 execution order R1](research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md) defines complete E1.1 data/runner → E1.2 BM25/dense/hybrid → E1.3 learned RW-R1 → E1.4 calibrated abstention → E1.5 held-out blind science review. **These E1 gates are NOT IMPLEMENTED**, 259 tests do NOT prove a trained model or comparison. BEIR/LongMemEval/RAGAS methodological references only; sealed SI-RD challenge untouched. G04 IAM/tenant security separate parallel gate, with real OIDC/RLS still OPEN. [Exact CI evidence](research/SI_MH_0066_E1_ORDER_CI_VERIFIED.md).
+
+**Scope:** documentation-only report + both handoffs, own CI PENDING. No code/migration/client sources/prod/main/JARVIS/PULSE/vendor Mem0 modifications. Next **ENG-E1-01 / E1.1** dataset, leakage-safe splits and evaluation runner.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

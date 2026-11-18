@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0065 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-18 (Africa/Maputo); checkpoint SI-MH-0066 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## Immediate recovery
 - Repository: https://github.com/rightware-corporations/rightware-shared-intelligence
@@ -424,3 +424,9 @@
 - User reaffirmed **E1 includes entire arc**: independently licensed/synthetic data + leak-free splits (E1.1/ENG-E1-01); BM25/dense/hybrid fair baselines (E1.2); **RW-R1 trainable** (E1.3); calibration/abstention (E1.4); held-out blinded scientific comparison PT/EN, temporal/authority, confidence intervals/cost (E1.5). Each gate NOT_IMPLEMENTED. [Frozen order](research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md), [decision receipt](research/SI_MH_0065_E1_FOCUS_AND_SEQUENCE.md).
 - G04 parallel but separate: OIDC/workload/DB-RLS/consent still NOT IMPLEMENTED; do not expose E1 to private/customer data until authorization. A0 sealed challenge remains untouched; BEIR/LongMemEval/RAGAS methodology only. No new code/API/DB, no main/JARVIS/PULSE/vendor Mem0 changes. Own docs CI PENDING.
 - NEXT **only principal task** E1.1/ENG-E1-01; no trained ranker/prod claims before actual model and independent evaluation.
+
+## SI-MH-0066 — E1 plan CI VERIFIED, full E1 learning/evaluation remains NEXT
+
+- Parent `develop@5c618eb4080ed86500157d7a4275a5df54d07f7e`, [CI 44320181640](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44320181640) SUCCESS 259/259 + migrations 0001–0008, G01 LIVE/native restore and MCP/Mem0/Ollama PASS. [Evidence](research/SI_MH_0066_E1_ORDER_CI_VERIFIED.md).
+- [E1 full execution sequence](research/RIGHTWARE_ENGINE_E1_EXECUTION_ORDER_R1.md): E1.1 licensed/synthetic data and splits → E1.2 fair baselines → E1.3 learned RW-R1 → E1.4 calibration → E1.5 held-out scientific comparison. All E1 gates remain NOT_IMPLEMENTED; prior 259 tests are existing E0/G01/G04-A0, not E1 training.
+- G04 identity/tenant/security separate parallel track, real OIDC and RLS NOT IMPLEMENTED; no private/client data, new code, main/JARVIS/PULSE/vendor edits. This docs-only SI-MH-0066 own CI PENDING. NEXT exclusive active mission ENG-E1-01/E1.1.
