@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0083 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0084 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -198,7 +198,7 @@
 - **NEXT SI-RD-03A:** verificar CI do presente commit, construir adaptadores isolados com pins e env attestation; recolher outputs imutáveis 56 queries antes de abrir a chave e pontuar. Não modificar WorkCore R2, G01/G04, main, JARVIS/PULSE.
 
 ## Next exact work
-**ENG-E1-04 / E1.1C — HUMAN INPUT REQUIRED:** confirm CI, then run `python scripts/e1_04_prepare_review.py` on clean local develop with private custody; browser smoke before dispatch. [Packaging checkpoint](research/SI_MH_0082_E1_04_PACKAGING_GATE.md). Operator arranges two independent real reviewers + adjudicator/curator, distributes only individual ZIPs and collects private submissions. No reviewer/gold/adjudication yet; E1_DATA_READY=REVIEW_REQUIRED. If unavailable BLOCKED_HUMAN_REVIEW; avoid more infrastructure churn without concrete blocker. E1.2 baselines → E1.3 RW-R1 → E1.4 calibration → E1.5 held-out after gate. G04 parallel; A0 comparison NOT_RUN; never auto-DONE or release main.
+**Parallel provisional E1-X01:** execute [notebook](research/notebooks/RIGHTWARE_SIC_E1_X01_KAGGLE.ipynb) on Kaggle CPU, Internet Off; audit returned evidence ZIP. Local prototype underperforms fixed baseline; no promotion. [Report](research/SI_MH_0084_E1_X01_EXPERIMENT.md). **Formal ENG-E1-04:** still requires human reviewers/adjudication and reserved curator holdout; E1_DATA_READY=REVIEW_REQUIRED. Official E1.2–E1.5 not closed/advanced; browser smoke SI-MH-0083 failure to resolve separately. G04 separate; A0 comparison NOT_RUN; never auto-DONE or release main.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
@@ -535,3 +535,7 @@
 - [Report](research/SI_MH_0083_E1_04_BROWSER_SMOKE.md). Added real Chromium smoke script and isolated test-only job to existing CI; actual exporter and SI-MH-0082 archive reused; A/B ZIPs, 24 questions/560 ratings each, mismatched pair and incomplete submission rejection, draft roundtrip, offline context. No completed submissions or human attestations; no uploaded artifacts. Local exact checkout DNS blocked, browser NOT_RUN; own CI PENDING.
 - E1_DATA_READY REVIEW_REQUIRED; actual operator export/dispatch NOT_RUN, humans/submissions/adjudication=0, independent holdout absent. No model/Core/SQL/G04/main/JARVIS/PULSE/vendor changes. NEXT verify both CI jobs; local packaging and real human gate, not more infrastructure without concrete issue.
 
+
+## SI-MH-0084 — E1-X01 provisional ranking notebook (LOCAL EXECUTED; KAGGLE NOT_RUN)
+
+**2026-11-24 Africa/Maputo. Base:** develop@91da42178ceabe9ea73e464d7c71792b2bd71b6e, CI 45354460769 completed/failure. Operator authorized remote experimental notebook without local clone. [Protocol/results](research/SI_MH_0084_E1_X01_EXPERIMENT.md), [notebook](research/notebooks/RIGHTWARE_SIC_E1_X01_KAGGLE.ipynb). Exact notebook blob bd8475a477d38b12256917da8c1518cdaa44f91c, SHA256 069cf9e71fb66c51be6e781bc29f3a7356ec81e6e6c56406c21b217e34af678b. 288 synthetic documents,192 queries, 48 disjoint groups 28/10/10, 15,680 training pairs (56 positives), 7 methods incl 2 real fitted logistic models, 1,344 rankings. Local execution complete, 10 manifest entries verified. Diagnostic 20 answerable queries BM25 nDCG@5 .496, hard authority hybrid .758, learned text .222, learned meta .385; prototypes underperform. Dev threshold 1.01 yields zero acceptance in both dev and diagnostic; risk undefined. No provider decision, no science gate advancement. SI-MH-0083 browser dependency setup failure remains separate; real Core CI job success. Kaggle execution NOT_RUN; actual human reviewers=0. Official E1_DATA_READY REVIEW_REQUIRED and E1.2–E1.5 pending; no A0 sealed data, API/SQL/runtime/G04/main or product changes. Next operator Kaggle Run All and evidence ZIP audit. Both handoffs and registry updated; own CI PENDING.

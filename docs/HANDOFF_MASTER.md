@@ -1236,6 +1236,14 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+---
+
+## SI-MH-0084 — E1-X01 provisional ranking notebook (LOCAL EXECUTED; KAGGLE NOT_RUN)
+
+**2026-11-24 Africa/Maputo. Base:** develop@91da42178ceabe9ea73e464d7c71792b2bd71b6e, CI 45354460769 completed/failure. Operator authorized remote experimental notebook without local clone. [Protocol/results](research/SI_MH_0084_E1_X01_EXPERIMENT.md), [notebook](research/notebooks/RIGHTWARE_SIC_E1_X01_KAGGLE.ipynb). Exact notebook blob bd8475a477d38b12256917da8c1518cdaa44f91c, SHA256 069cf9e71fb66c51be6e781bc29f3a7356ec81e6e6c56406c21b217e34af678b. 288 synthetic documents,192 queries, 48 disjoint groups 28/10/10, 15,680 training pairs (56 positives), 7 methods incl 2 real fitted logistic models, 1,344 rankings. Local execution complete, 10 manifest entries verified. Diagnostic 20 answerable queries BM25 nDCG@5 .496, hard authority hybrid .758, learned text .222, learned meta .385; prototypes underperform. Dev threshold 1.01 yields zero acceptance in both dev and diagnostic; risk undefined. No provider decision, no science gate advancement. SI-MH-0083 browser dependency setup failure remains separate; real Core CI job success. Kaggle execution NOT_RUN; actual human reviewers=0. Official E1_DATA_READY REVIEW_REQUIRED and E1.2–E1.5 pending; no A0 sealed data, API/SQL/runtime/G04/main or product changes. Next operator Kaggle Run All and evidence ZIP audit. Both handoffs and registry updated; own CI PENDING.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

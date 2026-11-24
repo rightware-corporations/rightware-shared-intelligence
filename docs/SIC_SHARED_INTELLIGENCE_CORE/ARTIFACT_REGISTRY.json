@@ -256,6 +256,14 @@
     {
       "path": "docs/research/SI_MH_0082_E1_04_PACKAGING_GATE.md",
       "status": "REGISTERED_SI_MH_0082"
+    },
+    {
+      "path": "docs/research/notebooks/RIGHTWARE_SIC_E1_X01_KAGGLE.ipynb",
+      "status": "REGISTERED_SI-MH-0084"
+    },
+    {
+      "path": "docs/research/SI_MH_0084_E1_X01_EXPERIMENT.md",
+      "status": "REGISTERED_SI-MH-0084"
     }
   ],
   "external": [
@@ -319,9 +327,10 @@
   ],
   "last_update": {
     "date": "2026-11-24",
-    "checkpoint": "SI-MH-0082",
+    "checkpoint": "SI-MH-0084",
     "science_gate": "REVIEW_REQUIRED",
     "ci": "PENDING",
-    "human_reviews": 0
+    "human_reviews": 0,
+    "experimental": "E1-X01_LOCAL_EXECUTED_KAGGLE_NOT_RUN"
   }
 }

@@ -27,3 +27,7 @@ O pacote v2 distingue suporte autoritativo de evidência contraditória não ver
 
 ## SI-MH-0082 — Human execution helper
 [Local packaging](../research/SI_MH_0082_E1_04_PACKAGING_GATE.md); five mock checks passed; actual human reviews absent, browser smoke not run. No scientific pass.
+
+
+## SI-MH-0084 — E1-X01 provisional experiment
+[Report](../research/SI_MH_0084_E1_X01_EXPERIMENT.md). Local actual training, no gate promotion; Kaggle run pending. Human gate preserved.
