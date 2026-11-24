@@ -1163,6 +1163,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+
+---
+
+## SI-MH-0077 — ENG-E1-03B mitigação P0 de IDs preditivos nos packets (CI PENDING)
+
+**2026-11-24 Africa/Maputo. BASE:** develop@e06c1e6e497ad716e604a6e7a5bd7322fab22704, SI-MH-0076 metodológico [CI 45345658739](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45345658739) SUCCESS. Ordinais originais q1/d1 e q2/d2 permitiam inferir 24/24 rótulos provisórios, portanto pacotes anteriores BLOQUEADOS PARA REVISÃO. Nova geração A/B com aliases criptográficos DOC-/QUE-, ordem aleatória, crosswalk fora do Git em CUSTODY_ONLY, comparação offline. [Report](research/SI_MH_0077_E1_03B_OPAQUE.md), [custódia](research/E1_03B_OPAQUE_REVIEWER_CUSTODY.md).
+
+**13 novos testes (total 341 esperado), CI PENDING**. Não confundir alias opaco com benchmark verdadeiramente blindado: corpus/gold públicos e rótulos por regra ainda permitem procura textual; 0 humanos, 0 adjudicação, 0 evaluator gold, E1_DATA_READY REVIEW_REQUIRED. P1 AUTHORITY_CONFLICT ainda OPEN, G04 IAM/RLS, E1.2–E1.5 sem execução. Sem SQL/API/produção, main, JARVIS/PULSE/vendor Mem0 changes.
+
+**NEXT:** verificar CI e depois planejar rótulos humanos + conjunto independente reservado; sem distribuir pacotes antigos.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

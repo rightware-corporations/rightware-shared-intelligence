@@ -1,67 +1,67 @@
-"""E1.1C offline synthetic-only review packet and agreement CLI.
-
-No reviewer submissions exist in CI. Nothing here adjudicates gold.
-"""
+"""RIGHTWARE E1.1C/03B: opaque reviewer packets, private local crosswalk."""
 from __future__ import annotations
-
 import argparse
-import json
 from pathlib import Path
-
 from rightware_si.e1_03_review_protocol import (
-    assert_private_path, blank_submission, compare_submissions,
-    make_packet, private_load_json, private_write_json,
+    assert_private_path, blank_submission, make_packet,
+    private_load_json, private_write_json,
+)
+from rightware_si.e1_03_blind_alias import (
+    issue_packets, audit_packets, compare_aliased,
 )
 
-ROOT = Path(__file__).resolve().parents[1]
-DATASET = ROOT / "docs" / "research" / "e1_02"
+ROOT=Path(__file__).resolve().parents[1]
+DATA=ROOT/"docs"/"research"/"e1_02"
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("self-check", "export", "compare"),
-                        default="self-check")
-    parser.add_argument("--output-dir", default=".runtime/e1_03")
-    parser.add_argument("--a", default="")
-    parser.add_argument("--b", default="")
-    args = parser.parse_args()
-    packet = make_packet(DATASET)
-    template = blank_submission(packet)
+def main():
+    p=argparse.ArgumentParser()
+    p.add_argument("--mode",choices=("self-check","export","compare"),
+                   default="self-check")
+    p.add_argument("--output-dir",default=".runtime/e1_03")
+    p.add_argument("--a",default="")
+    p.add_argument("--b",default="")
+    args=p.parse_args()
+    raw=make_packet(DATA)
 
-    if args.mode == "self-check":
-        assert not any(q["split"] == "eval" for q in packet["queries"])
-        assert not any(k in str(packet) for k in (
-            "RULE_PROVISIONAL_NOT_HUMAN", "source_relevance",
-            "expected_mode", "labels_provisional"
-        ))
-        print("E1_03_REVIEW_CONTRACT_PASS source_docs=42 questions=24 "
-              "provisional_gold_exported=false eval_exported=false "
-              "real_reviewers=0 adjudicated_gold=false")
-        print("E1_03_SCIENCE_GATE REVIEW_REQUIRED independent_human_reviews=0 "
-              "evaluator_gold=uncollected no_model_trained=true")
+    if args.mode=="self-check":
+        packets,private=issue_packets(raw)
+        audit_packets(raw,packets,private)
+        print("E1_03B_OPAQUE_IDS_PASS reviewer_A_B_independent=true "
+              "original_ids_exposed=false crosswalk_private=true "
+              "eval_gold_exported=false actual_reviewers=0")
+        print("E1_03_SCIENCE_GATE REVIEW_REQUIRED "
+              "public_corpus_is_not_blind=true human_reviews=0")
         return
 
-    out = assert_private_path(ROOT / args.output_dir, ROOT)
-    if args.mode == "export":
-        private_write_json(out / "review_packet.json", packet, ROOT)
-        for slot in ("A", "B"):
-            private_write_json(out / ("review_" + slot + "_BLANK.json"),
-                               template, ROOT)
-        print("E1_03_REVIEW_PACKETS_EXPORTED train_dev_only=true "
-              "slots=A,B no_human_review_implied=true "
-              "directory=.runtime/e1_03")
+    out=assert_private_path(ROOT/args.output_dir,ROOT)
+    if args.mode=="export":
+        packets,private=issue_packets(raw)
+        for slot in ("A","B"):
+            private_write_json(out/("reviewer_"+slot)/"packet.json",
+                               packets[slot],ROOT)
+            private_write_json(out/("reviewer_"+slot)/"BLANK.json",
+                               blank_submission(packets[slot]),ROOT)
+        private_write_json(out/"CUSTODY_ONLY"/"PRIVATE_ALIAS_MAP.json",
+                           private,ROOT)
+        print("E1_03B_EXPORT_READY share_reviewer_folders_separately=true "
+              "NEVER_share_CUSTODY_ONLY=true science_gate=REVIEW_REQUIRED")
         return
 
     if not args.a or not args.b:
-        parser.error("--mode compare requires --a and --b inside .runtime/")
-    a = private_load_json(ROOT / args.a, ROOT)
-    b = private_load_json(ROOT / args.b, ROOT)
-    report = compare_submissions(a, b, packet)
-    private_write_json(out / "agreement_PRIVATE.json", report, ROOT)
-    print("E1_03_SUBMISSION_SCHEMA_CHECK_PASS "
-          "identity_independence_not_cryptographically_proven=true "
-          "adjudicated_gold=false science_gate=REVIEW_REQUIRED")
+        p.error("--mode compare requires --a and --b under ignored .runtime/")
+    packets={slot:private_load_json(
+        out/("reviewer_"+slot)/"packet.json",ROOT)
+        for slot in ("A","B")}
+    private=private_load_json(
+        out/"CUSTODY_ONLY"/"PRIVATE_ALIAS_MAP.json",ROOT)
+    a=private_load_json(ROOT/args.a,ROOT)
+    b=private_load_json(ROOT/args.b,ROOT)
+    summary=compare_aliased(a,b,packets,private,raw)
+    private_write_json(out/"CUSTODY_ONLY"/"agreement_PRIVATE.json",summary,ROOT)
+    print("E1_03B_SCHEMA_COMPARISON_PASS human_independence_unverified=true "
+          "adjudicated_gold=false")
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()

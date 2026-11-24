@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0076 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0077 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -493,3 +493,9 @@
 ## SI-MH-0076 — P0 reviewer packet ordinal ID leakage; patch gate before human review
 - [Detailed read-only audit](research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md): CI 45344939725 SUCCESS 328/328 remains engineering-VALID. Reviu 24 provisional E1.1B labels: **24/24 dedutíveis pelos IDs q1/d1, q2/d2, q3/q4**, ainda exportados pelo `make_packet`; dois formulários idênticos A/B sem gold ficheiro não equivale a blind review. NUNCA marcar E1_DATA_READY como PASS por estes pacotes.
 - Próximo ENG-E1-03B: IDs aliases opacos independentes por revisor, mapa privado e embaralhamento, testes de leakage e revisão do AUTHORITY_CONFLICT; só depois convidar dois revisores humanos e adjudicar. 0 reviewers, 0 gold cego; E1.2–E1.5 pendentes. Sem código alterado; CI deste commit PENDING.
+
+## SI-MH-0077 — Reviewer IDs opacos A/B; pacotes antigos proibidos (CI PENDING)
+
+- Base develop@e06c1e6e497ad716e604a6e7a5bd7322fab22704, SI-MH-0076 P0 de IDs q1/d1 que permitem deduzir 24/24 gold provisório. [Fix documentado](research/SI_MH_0077_E1_03B_OPAQUE.md): aliases DOC/QUE aleatórios e separados por revisor; pastas A/B e CUSTODY_ONLY/.runtime; mapping protegido fora do Git, comparação segura com reconciliação.
+- 13 testes novos; suite 341 esperada, CI PENDING. Dados originais, hashes, 8 eval unlabeled e SI-RD sealed benchmark intactos. **NÃO É verdadeira avaliação cega** por corpus/rótulos públicos; 0 humanos, 0 adjudicação/gold, E1_DATA_READY REVIEW_REQUIRED. P1 AUTHORITY_CONFLICT permanece aberto.
+- G04 OIDC/RLS, E1.2–E1.5 não realizados. Sem dados privados, public API, SQL, main/JARVIS/PULSE/vendor Mem0. Próximo: CI, revisão humana genuína com corpus independente e custódia.
