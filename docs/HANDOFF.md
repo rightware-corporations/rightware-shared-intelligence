@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0075 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0076 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -198,7 +198,7 @@
 - **NEXT SI-RD-03A:** verificar CI do presente commit, construir adaptadores isolados com pins e env attestation; recolher outputs imutáveis 56 queries antes de abrir a chave e pontuar. Não modificar WorkCore R2, G01/G04, main, JARVIS/PULSE.
 
 ## Next exact work
-**PRIORIDADE E1.1C / ENG-E1-03:** revisão humana independente (dois revisores), evidence spans, acordo e adjudicação; preparar custódia de verdadeiro holdout e manter `E1_DATA_READY=REVIEW_REQUIRED` até provas. E1.2 baselines → E1.3 RW-R1 treinado → E1.4 calibração → E1.5 held-out independente. **G04 identidade/tenant/privacy em paralelo** sob aprovação distinta; sem dados de clientes, OIDC/RLS real ainda não implementado. SI-RD-03A A0 v0.8 PostgreSQL Server/Mem0/Hindsight comparáveis NOT_RUN; chave privada fora do Git e runners. Nunca auto-DONE, nem deploy/release `main`. Ver [SIC dossier](SIC_SHARED_INTELLIGENCE_CORE/README.md) e MASTER para continuidade.
+**PRIORIDADE ENG-E1-03B / E1.1C:** corrigir leakage de IDs do pacote **antes** de enviar formulários a revisores: `q1→d1`, `q2→d2`, `q3/q4` negativos permitem inferir 24/24 labels provisórios. Implementar aliases opacos A/B independentes + mapa privado + shuffle e testes adversariais, mantendo dataset e eval inalterados. Depois organizar dois revisores humanos independentes e terceiro adjudicador com gold evaluator-only realmente oculto. `E1_DATA_READY=REVIEW_REQUIRED` até aceite. E1.2 baselines → E1.3 RW-R1 treinável → E1.4 calibração → E1.5 ciência held-out. G04 IAM/tenancy/privacy é paralelo; v0.8 PostgreSQL Server/Mem0/Hindsight NOT_RUN. Nunca auto-DONE nem release `main`. [P0 audit](research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md).
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
@@ -489,3 +489,7 @@
 - Prior 45344586199 FAILED one test from missing ignored `.runtime/`; SI-MH-0074 fixes validated in new run. `E1_REVIEW_INFRA_READY` as **engineering gate only**; 2 blank independent reviewer templates, pseudo-ID/quote/scope schema, kappa computation and private local storage implemented. **NO actual human reviews, no third adjudicator, no evaluator gold**. No trained RW-R1, E1_DATA_READY SCIENTIFIC REVIEW_REQUIRED.
 - E1.2–E1.5 and real G04 identity/tenant RLS still not implemented. SI-RD sealed test and all E1.1B data hashes unchanged; no private/customer/production/SQL/API/main/JARVIS/PULSE/vendor Mem0 changes.
 - SI-MH-0075 documents+both handoffs only, own CI PENDING. NEXT **ENG-E1-04** actual independent human review and adjudication, evaluator-only blinded holdout; operator must arrange reviewers without fake test submissions.
+
+## SI-MH-0076 — P0 reviewer packet ordinal ID leakage; patch gate before human review
+- [Detailed read-only audit](research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md): CI 45344939725 SUCCESS 328/328 remains engineering-VALID. Reviu 24 provisional E1.1B labels: **24/24 dedutíveis pelos IDs q1/d1, q2/d2, q3/q4**, ainda exportados pelo `make_packet`; dois formulários idênticos A/B sem gold ficheiro não equivale a blind review. NUNCA marcar E1_DATA_READY como PASS por estes pacotes.
+- Próximo ENG-E1-03B: IDs aliases opacos independentes por revisor, mapa privado e embaralhamento, testes de leakage e revisão do AUTHORITY_CONFLICT; só depois convidar dois revisores humanos e adjudicar. 0 reviewers, 0 gold cego; E1.2–E1.5 pendentes. Sem código alterado; CI deste commit PENDING.

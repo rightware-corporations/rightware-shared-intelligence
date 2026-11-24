@@ -1151,6 +1151,18 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **This checkpoint:** only CI report + both handoffs; own docs-only CI PENDING. **NEXT:** coordinate two real independent human annotators and third adjudicator plus offline evaluator-controlled genuinely blind gold. Do not mark DONE or E1_DATA_READY without evidence.
 
+---
+
+## SI-MH-0076 — E1.1C P0 metodológico: IDs dos packets revelam 24/24 labels provisórios (AUDITORIA)
+
+**2026-11-24 Africa/Maputo. Base:** `develop@ae7d2f58b062c1814b7b78e024dc08d1ea8b1b61`. [CI E1.1C 45344939725](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344939725) **SUCCESS 328/328** e E1_03_REVIEW_CONTRACT_PASS, conforme SI-MH-0075. Auditoria adicional da fixture E1.1B e `make_packet` descobriu que os IDs originais `q1→d1`, `q2→d2` e `q3/q4→negativo` codificam **12/12 positivos e 12/12 negativos**; `source_id` e `query_id` originais são incluídos nos pacotes mesmo sem a coluna gold. **Leitura dos labels não é necessária para inferir 24/24 labels provisórios**: ocultação de `labels_provisional` não significa blind review. Os formulários A/B são idênticos. [Auditoria e correcção proposta](research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md).
+
+**Efeito:** E1_REVIEW_INFRA_READY continua válido como engenharia, mas NÃO distribuir o pacote actual como avaliação cientificamente cega. `E1_DATA_READY=REVIEW_REQUIRED`, 0 revisores humanos, 0 adjudicação, 8 eval públicos sem gold. Recomendação **ENG-E1-03B**: aliases opacos independentes A/B, mapping privado, shuffle, novos testes adversariais; separar relevância de fonte da elegibilidade na classe AUTHORITY_CONFLICT (risco P1). Mesmo essa correcção não cria um held-out independente: requer curador externo e gold privado.
+
+**Âmbito:** docs-only auditoria, SIC index e ambos handoffs; sem alteração a código/CI, data, G04, R2, backend runtime, main, JARVIS/PULSE, vendor/production. CI próprio deste commit PENDING. Próximo: patch ENG-E1-03B antes de submissões humanas; não avançar E1.2–E1.5 por contagem de testes de software.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

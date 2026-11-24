@@ -15,3 +15,6 @@
 - **SI-RD-03A A0 v0.8:** 82 docs/56 perguntas com oracle cifrado e separado; benchmark PostgreSQL Server/Mem0/Hindsight igualitário ainda NOT_RUN. Preparar adaptadores só em infraestrutura isolada e não misturar com dataset de treino E1.
 
 **Não prioridade:** UI, novos conectores por curiosidade, releases de JARVIS/PULSE, production deploy, alterações `main`, novos ramos. Próximo trabalho: E1.1C com custódia e revisão humana reais, sem fabricar scores nem assinaturas.
+
+## SI-MH-0076 — Reviewer ID blinding gap (auditoria, não implementação)
+- [Relatório completo](../research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md): apesar do CI E1.1C **328/328 PASS**, o pacote revela IDs que permitem reconstruir **24/24** labels provisórios, embora os valores gold não sejam exportados. Não distribuir como blind review sem aliases e custódia. Próximo patch **ENG-E1-03B**; E1_DATA_READY segue REVIEW_REQUIRED e reviewers reais=0.
