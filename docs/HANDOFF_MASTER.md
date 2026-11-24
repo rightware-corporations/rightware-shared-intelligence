@@ -1317,6 +1317,13 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0093 — TRUST: preserve single-workflow CI invariant (CI PENDING)
+- Base `develop@8fc5b199d7727bb53a1a91b156d144bcad059ab4`. SI-MH-0091 core/browser [CI 45368151387](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45368151387) FAILED: browser job 138355169941 SUCCESS (E1_04_BROWSER_SMOKE_PASS); core job 138355170314 ran 356 tests, 1 failure in test_repository_layout.test_single_current_workflow_and_pinned_vendor: expected only ci.yml, got ci.yml plus g04-a1-lab.yml. 355 other tests passed; downstream core steps not reached. This is a real repository-layout regression, not a cryptographic defect.
+- CI 45368411599 observed completed/success. Job 138356043979 success: [36;1mpython -c "import jwt, cryptography; print('G04_A1_VERSIONS', jwt.__version__, cryptography.__version__)"[0m; G04_A1_VERSIONS 2.15.1 50.0.2; Ran 29 tests in 0.384s; OK. SI-MH-0092 cryptographic changes preserved unchanged.
+- Repair: move identical isolated synthetic-signed-credentials job into existing ci.yml, explicit read-only permission; remove standalone YAML, retain existing Core/browser jobs verbatim and existing layout test unchanged. No dependency change for other jobs, no production runtime changes. New combined CI pending; 356 core + 29 isolated tests expected, browser separate. Both handoffs and coordination updated, no LEARN/model/API/SQL/G04-A0/main changes. Next verify all three jobs, record evidence. Original 28 G04 acceptance oracles remain NOT_IMPLEMENTED; E1_DATA_READY REVIEW_REQUIRED.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

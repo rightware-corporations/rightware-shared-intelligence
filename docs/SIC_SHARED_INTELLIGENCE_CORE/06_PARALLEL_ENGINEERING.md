@@ -33,3 +33,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0092 — TRUST lab CI repair
 - Initial lab 25/26 passed, one fixture construction error; fixed and hardened retired key continuity, 29 expected, CI pending. LEARN remains separate; human and formal G04 gates unchanged.
+
+## SI-MH-0093 — TRUST CI layout reconciliation
+- G04-A1 lab remains isolated by job and dependency installation, now in the single existing ci.yml to satisfy the established repository layout. Previous core failure preserved; no test weakening or changes to LEARN or other jobs. New combined CI pending.

@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0092 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0093 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -588,4 +588,9 @@
 ## SI-MH-0092 — TRUST G04-A1 fixture error and retired-key continuity repair (CI PENDING)
 - Base `develop@b0cba7b78f362932373342ad6f0ada0b615f6133`. Dedicated [CI 45368151669](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45368151669) FAILED 25/26 passed, 1 fixture ERROR: pinned PyJWT 2.15.1 rejects non-string iss during encode. cryptography 50.0.2 installed successfully. [Repair report](work03b/G04_A1_LAB_01_SI_MH_0092_CI_REPAIR.md).
 - Fix synthetic malformed-issuer fixture using library-backed RSA signing; audit gap in prior snapshot history repaired with bounded retired-key/fingerprint continuity and 3 new negative tests (29 expected). New CI pending, no PASS claimed. No runtime, API/SQL, provider, LEARN, main or model changes; 28 original G04 oracles unchanged. Next verify actual lab/core/browser jobs.
+
+## SI-MH-0093 — TRUST: preserve single-workflow CI invariant (CI PENDING)
+- Base `develop@8fc5b199d7727bb53a1a91b156d144bcad059ab4`. SI-MH-0091 core/browser [CI 45368151387](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45368151387) FAILED: browser job 138355169941 SUCCESS (E1_04_BROWSER_SMOKE_PASS); core job 138355170314 ran 356 tests, 1 failure in test_repository_layout.test_single_current_workflow_and_pinned_vendor: expected only ci.yml, got ci.yml plus g04-a1-lab.yml. 355 other tests passed; downstream core steps not reached. This is a real repository-layout regression, not a cryptographic defect.
+- CI 45368411599 observed completed/success. Job 138356043979 success: [36;1mpython -c "import jwt, cryptography; print('G04_A1_VERSIONS', jwt.__version__, cryptography.__version__)"[0m; G04_A1_VERSIONS 2.15.1 50.0.2; Ran 29 tests in 0.384s; OK. SI-MH-0092 cryptographic changes preserved unchanged.
+- Repair: move identical isolated synthetic-signed-credentials job into existing ci.yml, explicit read-only permission; remove standalone YAML, retain existing Core/browser jobs verbatim and existing layout test unchanged. No dependency change for other jobs, no production runtime changes. New combined CI pending; 356 core + 29 isolated tests expected, browser separate. Both handoffs and coordination updated, no LEARN/model/API/SQL/G04-A0/main changes. Next verify all three jobs, record evidence. Original 28 G04 acceptance oracles remain NOT_IMPLEMENTED; E1_DATA_READY REVIEW_REQUIRED.
 

@@ -183,3 +183,26 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Chromium offline reviewer smoke with ephemeral synthetic ZIPs
         run: python scripts/e1_04_browser_smoke.py
+
+  synthetic-signed-credentials:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    env:
+      RW_SI_ENVIRONMENT: lab
+      RW_SI_ENABLE_G04_A1_LAB: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install lab-only dependencies
+        run: |
+          python -m pip install -e . -r backend/requirements/g04_a1_lab.txt
+          python -m pip check
+          python -c "import jwt, cryptography; print('G04_A1_VERSIONS', jwt.__version__, cryptography.__version__)"
+      - name: Execute isolated signed synthetic credential tests
+        run: python -m unittest discover -s tests/g04_a1_lab -p 'test_*.py' -v
