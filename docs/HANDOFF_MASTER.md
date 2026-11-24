@@ -1413,6 +1413,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0108 — TRUST SEC-R2-X02 authorized initial candidate comparison (CI PENDING)
+- Base `develop@de755f631dcdb0943befa26386d57a4b892faaf0`, operator approved SI-MH-0107. [Implementation and limits](research/SI_MH_0108_SEC_R2_X02_CANDIDATE_IMPLEMENTATION.md). Separate disposable C1/C2 schemas and restricted roles, persistent lifecycle/generation/NOLOGIN/session containment; C2 persistent release permits and controlled local byte sink. C0 preserved, two added test methods, 34 A2 expected. No operational changes.
+- Partial X02 coverage: positive, revocation, selective scope, old MVCC session observation, replay/regrant, uncertain-delivery simulation, integrity. Actual process death/outage, exhaustive barriers, mutation and performance benchmark NOT_RUN. Trusted bootstrap only; no production broker or full gate claim. CI PENDING; inspect exact results. LEARN, main, MCP, runtime/migrations/workflow and original G04/E1 gates unchanged. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

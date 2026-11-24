@@ -462,6 +462,14 @@ class DatabaseIsolation(unittest.TestCase):
         from sec_r2_x01 import revocation_race
         revocation_race(self,2)
 
+    def test_33_sec_r2_x02_c1_candidate(self):
+        from sec_r2_x02 import exercise
+        exercise(self,"c1")
+
+    def test_34_sec_r2_x02_c1_c2_candidate(self):
+        from sec_r2_x02 import exercise
+        exercise(self,"c2")
+
 
 if __name__=="__main__":
     unittest.main(verbosity=2)

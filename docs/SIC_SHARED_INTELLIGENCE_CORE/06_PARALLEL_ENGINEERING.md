@@ -72,3 +72,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0107 — TRUST revocation research
 - X01 repeated, full CI verified twice. Proposed R0/R1 and C1/C1+C2 disposable candidate comparison in SEC-R2-X02; no implementation approval inferred, MCP paused, LEARN independent. [Decision packet](../research/SI_MH_0107_SEC_R_REVOCATION_CONSISTENCY_DECISION_PACKET.md).
+
+## SI-MH-0108 — TRUST X02 initial candidate comparison
+- Approved isolated C1/C2 lab variants and test-only methods; C0 unchanged. CI pending; full X02 gate not achieved. No MCP/LEARN/runtime/deployment edits. [Implementation](../research/SI_MH_0108_SEC_R2_X02_CANDIDATE_IMPLEMENTATION.md).
