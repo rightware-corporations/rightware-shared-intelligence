@@ -109,6 +109,8 @@ jobs:
         run: python scripts/e1_01_evaluate.py --dataset docs/research/e1_01 --output /tmp/e1_01_metrics.json
       - name: E1.1B synthetic shared-project quality and no-eval-gold audit
         run: python scripts/e1_02_audit.py --dataset docs/research/e1_02 --output /tmp/e1_02_quality.json
+      - name: E1.1C independent reviewer packet contract and no-gold gate
+        run: python scripts/e1_03_review.py --mode self-check
       - name: R2-R1A real GitHub workflow-run evidence smoke (read-only)
         env:
           GITHUB_TOKEN: ${{ github.token }}

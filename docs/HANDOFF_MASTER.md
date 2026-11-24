@@ -1118,6 +1118,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+
+---
+
+## SI-MH-0073 — ENG-E1-03 E1.1C offline independent review tooling, no actual reviewers (CI PENDING)
+
+**2026-11-24 Africa/Maputo. BASE:** `develop@8417dd163e0e55f3de0a80d6847f912449bfada2`, SI-MH-0072 SIC documentary registry, [Actions 44335025606](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44335025606) **SUCCESS** (existing 303-test E1.1B). New `e1_03_review_protocol.py`, `scripts/e1_03_review.py`, **25 negative-first tests**, CI self-check step and [review custody protocol](research/e1_03/REVIEW_CUSTODY_AND_GATE_R0.md). [Exact engineering report](research/SI_MH_0073_E1_03_REVIEW_WORKFLOW.md).
+
+**Actual functionality:** deterministic label-free review packet 42 train/dev synthetic sources and 24 queries, NO eval sources/questions or provisional grades; 2 **BLANK** local reviewer templates; field/coverage/scope/expiry/authority/quote and packet hash checks; pseudonymous independent attestation flags; comparative Cohen kappa and weighted kappa. Review outputs restricted to ignored local `.runtime/`. **328 tests EXPECTED, CI PENDING**. Source/split/hashes unchanged. Test-only `RV-MOCK-` submissions are NOT human reviews. **No human submissions, authenticated reviewers, adjudication or held-out evaluator gold**; `E1_DATA_READY=REVIEW_REQUIRED`. Real G04 OIDC/RLS and privacy decisions remain OPEN, E1.2–E1.5 not started; SI-RD sealed benchmark untouched. No SQL/public API/prod/private client/main/JARVIS/PULSE/vendor Mem0/approval DONE edits.
+
+**NEXT:** inspect actual CI; if green checkpoint evidence only, then obtain actual independent human reviews, verify identity out-of-band and adjudicate, independent evaluator custodian to hold blind gold.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
