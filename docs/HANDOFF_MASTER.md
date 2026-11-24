@@ -1370,6 +1370,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0101 — TRUST G04-A2-LAB-01 verified real PostgreSQL evidence
+- Base `develop@958c486d59a9524250eade6856a6840bcd22d840`. [Evidence](work03b/G04_A2_LAB_01_VERIFIED_EVIDENCE.md): CI 45377653608, A2 job 138388097032 SUCCESS, PostgreSQL 16.16, guard PASS, 16/16 real DB test families (0.707s); A1 98/98 and browser PASS. Core job 138388097049: in_progress/PENDING at evidence publication; deterministic/real PostgreSQL suite step success.
+- Verified prior jobs preserved, no existing migration/runtime changes. A2 lab DB proof only; original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. No real identity integration/deployment/LEARN changes. Next verify any pending Core result and delimit signed-identity-to-DB integration separately. Both handoffs updated; documentation-only commit CI pending.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

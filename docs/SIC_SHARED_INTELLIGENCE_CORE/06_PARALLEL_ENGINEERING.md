@@ -51,3 +51,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0100 — TRUST A2 lab active
 - Explicit operator approval for disposable DB lab. TRUST owns database/labs/g04_a2/, tests/g04_a2_lab/, G04_A2 lab documentation, isolated appended CI job and shared publication files only. 16 DB_REAL_LAB test families implemented, CI pending. No existing migrations or runtime/LEARN changes.
+
+## SI-MH-0101 — TRUST A2 DB proof verified
+- G04-A2-LAB-01 16/16 DB_REAL_LAB PASS on PostgreSQL 16.16, A1 98/98 and browser PASS. Core job 138388097049: in_progress/PENDING at evidence publication; deterministic/real PostgreSQL suite step success. No runtime integration, original oracle promotion or LEARN edits. [Evidence](../work03b/G04_A2_LAB_01_VERIFIED_EVIDENCE.md).
