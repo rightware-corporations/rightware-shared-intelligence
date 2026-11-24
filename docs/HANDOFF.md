@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0106 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0107 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -648,4 +648,8 @@
 ## SI-MH-0106 — TRUST SEC-R2-X01 observed evidence; stop for operator analysis
 - Executed base `develop@054869d0fe134a6f25cdd45d97b9f60c612c8a9b`, CI 45439599363, A2 job 138606696905 SUCCESS, PostgreSQL 16.16, 32/32 in 5.789s; nine trials. [Evidence](research/SI_MH_0106_SEC_R2_X01_OBSERVED_EVIDENCE.md). SR-F01 REPRODUCED 3/3 signed DENY but existing/fresh restricted DB ALLOW after external identity deletion. SR-F02 early recheck DENY 3/3; late in-flight delivery ALLOW 3/3; all six new post-revocation reads DENY. Stronger delivery cutoff not adopted; mutation race NOT_RUN. No production exploit, credential theft or cross-tenant breach claimed.
 - synthetic-signed-credentials (138606696798): completed/success; g04-a2-real-postgres-isolation (138606696905): completed/success; real-mcp-mem0 (138606697064): in_progress/PENDING; e1-04-offline-browser-smoke (138606697235): completed/success. Diagnostic CI PASS is not security PASS. Baseline enforcement/workflow verified unchanged, fixture restored, no corrective code, MCP, operational migrations, runtime, LEARN or main changes. Original 28 G04 oracles unchanged; E1_DATA_READY REVIEW_REQUIRED. NEXT operator evaluates F01 revocation and F02 in-flight semantics before remediation. Both handoffs updated; own docs-only CI pending.
+
+## SI-MH-0107 — TRUST SEC-R1 revocation consistency decision packet
+- Base `develop@306b03097c3934c9a1a02b5756c65b45fc851ffd`. CI 45439599363 and 45439918495 all four jobs SUCCESS; 356 Core + 98 A1 + 32 A2 each, integration/browser PASS. 18 diagnostic trials across two runs reproduce F01 and late F02, no new post-revoke reads allowed. No independent reviewer or SLA claim.
+- [Research and proposed X02 contract](research/SI_MH_0107_SEC_R_REVOCATION_CONSISTENCY_DECISION_PACKET.md): RFC 7009/7662, PG16 RLS/isolation/locking/role management, Zanzibar/SpiceDB/OpenFGA primary sources; C0–C4 qualitative candidates. Proposed persistent principal lifecycle + version/fencing, R0 durable admission block and R1 verified containment completion; explicitly distinguish in-flight release, external receipt and future mutation commit. X02 candidate lab comparisons and eight test families NOT_RUN; explicit approval requested. No correction, runtime/DB/workflow/MCP/deployment/main/LEARN change. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Own CI pending. Both handoffs updated.
 

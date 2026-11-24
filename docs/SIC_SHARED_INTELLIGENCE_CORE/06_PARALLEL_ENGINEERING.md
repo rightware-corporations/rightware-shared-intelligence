@@ -69,3 +69,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0106 — TRUST X01 evidence recorded
 - Nine actual DB trials, F01 boundary divergence and F02 late delivery window reproduced. No corrections or MCP; stop for operator analysis. LEARN independent. [Evidence](../research/SI_MH_0106_SEC_R2_X01_OBSERVED_EVIDENCE.md).
+
+## SI-MH-0107 — TRUST revocation research
+- X01 repeated, full CI verified twice. Proposed R0/R1 and C1/C1+C2 disposable candidate comparison in SEC-R2-X02; no implementation approval inferred, MCP paused, LEARN independent. [Decision packet](../research/SI_MH_0107_SEC_R_REVOCATION_CONSISTENCY_DECISION_PACKET.md).

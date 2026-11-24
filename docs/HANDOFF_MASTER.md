@@ -1407,6 +1407,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0107 — TRUST SEC-R1 revocation consistency decision packet
+- Base `develop@306b03097c3934c9a1a02b5756c65b45fc851ffd`. CI 45439599363 and 45439918495 all four jobs SUCCESS; 356 Core + 98 A1 + 32 A2 each, integration/browser PASS. 18 diagnostic trials across two runs reproduce F01 and late F02, no new post-revoke reads allowed. No independent reviewer or SLA claim.
+- [Research and proposed X02 contract](research/SI_MH_0107_SEC_R_REVOCATION_CONSISTENCY_DECISION_PACKET.md): RFC 7009/7662, PG16 RLS/isolation/locking/role management, Zanzibar/SpiceDB/OpenFGA primary sources; C0–C4 qualitative candidates. Proposed persistent principal lifecycle + version/fencing, R0 durable admission block and R1 verified containment completion; explicitly distinguish in-flight release, external receipt and future mutation commit. X02 candidate lab comparisons and eight test families NOT_RUN; explicit approval requested. No correction, runtime/DB/workflow/MCP/deployment/main/LEARN change. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Own CI pending. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
