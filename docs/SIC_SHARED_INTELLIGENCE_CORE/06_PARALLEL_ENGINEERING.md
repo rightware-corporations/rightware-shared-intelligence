@@ -30,3 +30,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0091 — TRUST mission active
 - Operator approved G04-A1-LAB-01 exactly as SI-MH-0089. TRUST owns new g04_a1_lab module, dedicated tests, lab requirements, standalone path-scoped CI and G04_A1 documentation; no shared runtime or broad CI edits. Implementation published, execution pending. LEARN owns X03; no overlap. ENG-E1-04B remains verified; human review awaiting real input.
+
+## SI-MH-0092 — TRUST lab CI repair
+- Initial lab 25/26 passed, one fixture construction error; fixed and hardened retired key continuity, 29 expected, CI pending. LEARN remains separate; human and formal G04 gates unchanged.

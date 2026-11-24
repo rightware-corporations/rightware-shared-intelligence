@@ -1311,6 +1311,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0092 — TRUST G04-A1 fixture error and retired-key continuity repair (CI PENDING)
+- Base `develop@b0cba7b78f362932373342ad6f0ada0b615f6133`. Dedicated [CI 45368151669](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45368151669) FAILED 25/26 passed, 1 fixture ERROR: pinned PyJWT 2.15.1 rejects non-string iss during encode. cryptography 50.0.2 installed successfully. [Repair report](work03b/G04_A1_LAB_01_SI_MH_0092_CI_REPAIR.md).
+- Fix synthetic malformed-issuer fixture using library-backed RSA signing; audit gap in prior snapshot history repaired with bounded retired-key/fingerprint continuity and 3 new negative tests (29 expected). New CI pending, no PASS claimed. No runtime, API/SQL, provider, LEARN, main or model changes; 28 original G04 oracles unchanged. Next verify actual lab/core/browser jobs.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

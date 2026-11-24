@@ -28,6 +28,7 @@ MAX_TOKEN = 8192
 MAX_TTL = 300
 MAX_SNAPSHOT_AGE = 60
 MAX_REPLAY = 4096
+MAX_KEY_HISTORY = 256
 IDENTIFIER = re.compile(r"syn-[A-Za-z0-9_-]{1,64}\Z", re.ASCII)
 SEGMENT = re.compile(r"[A-Za-z0-9_-]+\Z", re.ASCII)
 FIELDS = {"iss", "sub", "aud", "iat", "nbf", "exp", "jti", "gen"}
@@ -130,6 +131,8 @@ class SyntheticVerifier:
         self._consumed = {}
         self._last_now = None
         self._last_snapshot = None
+        self._key_history = {}
+        self._fingerprint_history = {}
 
     def verify(self, token: str, expected_kind: str) -> IdentityCandidate:
         if expected_kind not in KINDS:
@@ -217,12 +220,30 @@ class SyntheticVerifier:
                 reject()
             if not previous[3].issubset(snap.revoked):
                 reject()
-            old_keys = {k: (g, n) for k, g, n in previous[2]}
-            for k, v in index.items():
-                if k in old_keys:
-                    g, n = old_keys[k]
-                    if v.generation < g or (v.generation == g and v.public_key.public_numbers() != n):
-                        reject()
+        # Remember retired keys across intermediate snapshots. A removed
+        # issuer/kid/profile is never reintroduced in this verifier instance;
+        # rotation after removal must use a fresh kid and fresh public key.
+        active_before = ({k for k, _, _ in self._last_snapshot[2]}
+                         if self._last_snapshot is not None else set())
+        history = dict(self._key_history)
+        used = dict(self._fingerprint_history)
+        for lookup, key in index.items():
+            fingerprint = key.public_key.public_numbers()
+            prior = history.get(lookup)
+            if prior is not None:
+                generation, previous_key = prior
+                if (lookup not in active_before or key.generation < generation
+                        or (key.generation == generation and fingerprint != previous_key)):
+                    reject()
+            if fingerprint in used and (used[fingerprint] != lookup
+                                        or (prior is not None and fingerprint != prior[1])):
+                reject()
+            history[lookup] = (key.generation, fingerprint)
+            used[fingerprint] = lookup
+        if len(history) > MAX_KEY_HISTORY or len(used) > MAX_KEY_HISTORY:
+            reject()
+        self._key_history = history
+        self._fingerprint_history = used
         self._last_snapshot = stamp
 
         key = index.get((claims["iss"], header["kid"], profile))

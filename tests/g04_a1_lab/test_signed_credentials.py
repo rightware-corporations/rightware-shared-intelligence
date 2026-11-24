@@ -127,8 +127,16 @@ class G04A1Tests(unittest.TestCase):
 
     def test_11_invalid_identifiers_and_generation(self):
         for kwargs in (dict(sub="real-user"), dict(sub="syn-"), dict(jti=""),
-                       dict(gen=True), dict(gen=0), dict(gen=2), dict(iss=["syn-issuer"])):
+                       dict(gen=True), dict(gen=0), dict(gen=2)):
             self.denied(self.token(**kwargs))
+        # The pinned encoder rejects non-string iss itself. Sign malformed
+        # synthetic JSON using the same library-backed RSA primitive so the
+        # verifier, not the fixture encoder, is the actual test target.
+        header = self.token().split(".")[0]
+        payload = b64(json.dumps(self.claims(iss=["syn-issuer"])).encode())
+        data = (header+"."+payload).encode("ascii")
+        signature = self.private["HUMAN"].sign(data, padding.PKCS1v15(), hashes.SHA256())
+        self.denied(header+"."+payload+"."+b64(signature))
 
     def test_12_extra_privileged_claims(self):
         for kwargs in (dict(role="HUMAN"), dict(tenant="syn-tenant"), dict(scope="policy:approve"),
@@ -255,6 +263,37 @@ class G04A1Tests(unittest.TestCase):
                 if isinstance(node, ast.ImportFrom):
                     self.assertNotIn("g04_a1_lab", node.module or "")
                     self.assertFalse(any("g04_a1_lab" in alias.name for alias in node.names))
+
+
+    def test_27_removed_key_cannot_return(self):
+        self.verifier.verify(self.token(), "HUMAN")
+        self.now += 1
+        self.snapshot = Snapshot(self.now, self.now+59, self.keys[1:])
+        self.verifier.verify(self.token("AGENT"), "AGENT")
+        self.now += 1
+        self.snapshot = Snapshot(self.now, self.now+59, self.keys)
+        self.denied(self.token())
+
+    def test_28_retired_fingerprint_cannot_be_reassigned(self):
+        self.verifier.verify(self.token(), "HUMAN")
+        self.now += 1
+        fresh = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        self.snapshot = Snapshot(self.now, self.now+59,
+                                 (replace(self.keys[0], public_key=fresh.public_key(),
+                                          generation=2),)+self.keys[1:])
+        self.verifier.verify(self.token(key=fresh, gen=2), "HUMAN")
+        self.now += 1
+        self.snapshot = replace(self.snapshot, observed_at=self.now,
+                                keys=self.snapshot.keys+(TrustKey(
+                                    "syn-retired", "syn-alt", "HUMAN",
+                                    self.keys[0].public_key),))
+        self.denied(self.token(key=self.private["HUMAN"], iss="syn-retired",
+                               header={"kid": "syn-alt"}))
+
+    def test_29_same_snapshot_version_cannot_change(self):
+        self.verifier.verify(self.token(), "HUMAN")
+        self.snapshot = replace(self.snapshot, valid_until=NOW+58)
+        self.denied(self.token())
 
 
 if __name__ == "__main__":

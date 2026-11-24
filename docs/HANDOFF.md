@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0091 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0092 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -584,4 +584,8 @@
 - Base `develop@17dbc2523b09cec494c7a72d96e5eebed34ba9b1`; operator explicitly approved SI-MH-0089 synthetic-only scope. SI-MH-0090 CI 45367338050 and SI-MH-0089 CI 45367296242 SUCCESS. LEARN retains X03; no algorithm changes.
 - [Implementation/decision report](work03b/G04_A1_LAB_01_IMPLEMENTATION.md): isolated RS256 verifier with strict profiles/schema, synthetic clock, snapshot freshness, revocation/generation, fail-closed handling and atomic single-instance one-time exchange receipt. PyJWT 2.15.1 / cryptography 50.0.2 lab-only pinned; 26 real RSA unit tests authored; new isolated workflow, existing CI unchanged. Local exact pinned execution NOT_RUN (checkout DNS unavailable); new CI pending, no PASS claimed.
 - No real IdP, real authentication/authorization, provider, DB/ACL/RLS, runtime, API, customer data, main/JARVIS/PULSE/vendor, sealed A0 or LEARN changes. 28 G04 oracles remain NOT_IMPLEMENTED, E1_DATA_READY REVIEW_REQUIRED. NEXT inspect actual CI and record evidence/repairs; human gate remains separate.
+
+## SI-MH-0092 — TRUST G04-A1 fixture error and retired-key continuity repair (CI PENDING)
+- Base `develop@b0cba7b78f362932373342ad6f0ada0b615f6133`. Dedicated [CI 45368151669](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45368151669) FAILED 25/26 passed, 1 fixture ERROR: pinned PyJWT 2.15.1 rejects non-string iss during encode. cryptography 50.0.2 installed successfully. [Repair report](work03b/G04_A1_LAB_01_SI_MH_0092_CI_REPAIR.md).
+- Fix synthetic malformed-issuer fixture using library-backed RSA signing; audit gap in prior snapshot history repaired with bounded retired-key/fingerprint continuity and 3 new negative tests (29 expected). New CI pending, no PASS claimed. No runtime, API/SQL, provider, LEARN, main or model changes; 28 original G04 oracles unchanged. Next verify actual lab/core/browser jobs.
 
