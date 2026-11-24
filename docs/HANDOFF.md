@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0082 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0083 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -529,3 +529,9 @@
 
 ## SI-MH-0082 — Local packaging helper; human input required (CI PENDING)
 - SI-MH-0081 policy retained. [Report](research/SI_MH_0082_E1_04_PACKAGING_GATE.md). Five mock packaging checks PASS; browser E2E NOT_RUN, real operator export and dispatch NOT_RUN. Human submissions 0; E1_DATA_READY REVIEW_REQUIRED. No Core/SQL/API/G04/main changes.
+
+## SI-MH-0083 — ENG-E1-04A actual ZIP browser smoke prepared; CI PENDING
+- Base `develop@afadeb936772a90c94f7ce7b357712d9a059463c`; concurrent advance reconciled without overwrite. SI-MH-0081 [CI 45353879662](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45353879662) SUCCESS 356/356 (34.495s) with handoff, review contract and real MCP/Mem0/Ollama E2E. SI-MH-0082 CI 45354167631 observed in_progress/PENDING.
+- [Report](research/SI_MH_0083_E1_04_BROWSER_SMOKE.md). Added real Chromium smoke script and isolated test-only job to existing CI; actual exporter and SI-MH-0082 archive reused; A/B ZIPs, 24 questions/560 ratings each, mismatched pair and incomplete submission rejection, draft roundtrip, offline context. No completed submissions or human attestations; no uploaded artifacts. Local exact checkout DNS blocked, browser NOT_RUN; own CI PENDING.
+- E1_DATA_READY REVIEW_REQUIRED; actual operator export/dispatch NOT_RUN, humans/submissions/adjudication=0, independent holdout absent. No model/Core/SQL/G04/main/JARVIS/PULSE/vendor changes. NEXT verify both CI jobs; local packaging and real human gate, not more infrastructure without concrete issue.
+

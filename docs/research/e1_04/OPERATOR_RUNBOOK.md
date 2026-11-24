@@ -24,6 +24,16 @@ Get-FileHash (Join-Path $root "REVIEWER_A.zip"),(Join-Path $root "REVIEWER_B.zip
 ```
 Never share the root directory or CUSTODY_ONLY. Use two separate approved private channels; archive hashes locally. Retain the exact original packet and mapping; do not regenerate after distribution. The HTML is a convenience form, not the authoritative Python validator. Browser smoke must be performed locally before sending (open each package, select matching files, check 24 questions, save a draft and reload it; blank must not export as completed). Verify no external network access; if form fails, use the original blank JSON with a local editor and the same rubric. Do not use a public form service.
  
+## Reproducible browser engineering smoke
+The isolated CI browser job uses the actual V2 exporter and SI-MH-0082 ZIP helper, tests the extracted HTML for both slots in Chromium, rejects mismatched A/B and blank/partial completion, and saves/reloads one explicitly marked test draft. Offline context, blocked HTTP(S) page requests, no uploaded artifacts; temporary packets, mapping, ZIPs and drafts are removed. No human submissions or attestations. This is not operator dispatch or proof of scientific independence.
+On the operator machine, optionally reproduce on a controlled disk:
+```powershell
+python -m pip install -e . playwright==1.57.0
+python -m playwright install chromium
+python scripts/e1_04_browser_smoke.py
+```
+After CI and the local smoke are green, use `python scripts/e1_04_prepare_review.py` on clean develop to generate the actual batch. Verify final packages locally before distribution. Never distribute smoke drafts, CUSTODY_ONLY or the full batch.
+
 ## People
 - Reviewer A: independent PT/EN competent person, preferably domain/operations.
 - Reviewer B: independent PT/EN competent person, preferably retrieval/data evaluation. No shared review sessions, author involvement, prior gold access or AI-generated annotations.
