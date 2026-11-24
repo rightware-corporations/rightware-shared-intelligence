@@ -1,0 +1,121 @@
+{
+  "schema": "RIGHTWARE_E1_X02_LOCAL_SCORECARD_V1",
+  "checkpoint": "SI-MH-0088",
+  "classification": "PROVISIONAL_SYNTHETIC_NOT_INDEPENDENT",
+  "notebook_sha256": "1aea1cf2007450ffc4353e7263a1d62bc0e344b5777a2de68b9935d3c0dbaf53",
+  "git_blob": "c83149c3eb5b29677912c284e3c401efd290494d",
+  "local_zip_sha256": "d402655c1c50d15622dd449eb779bb96630a8b0bedc32a7d4e1ac667e3a432e7",
+  "manifest_entries": 14,
+  "rankings": 4320,
+  "recalculated_metric_rows": 90,
+  "documents": 576,
+  "queries": 432,
+  "train_pairs_pointwise": 14112,
+  "positive_rows": 84,
+  "pairwise_comparisons": 1344,
+  "pairwise_directions": 2688,
+  "diagnostic_positive": 30,
+  "diagnostic_negative": 60,
+  "diagnostic": [
+    {
+      "method": "BM25-Scope",
+      "hit1": 0,
+      "hit2": 0,
+      "hit5": 0.733333,
+      "mrr5": 0.1927778,
+      "ndcg5": 0.3232402
+    },
+    {
+      "method": "BM25",
+      "hit1": 0,
+      "hit2": 0.3666667,
+      "hit5": 1,
+      "mrr5": 0.3666667,
+      "ndcg5": 0.5248998
+    },
+    {
+      "method": "CharTFIDF",
+      "hit1": 0.3333333,
+      "hit2": 0.6,
+      "hit5": 1,
+      "mrr5": 0.5805556,
+      "ndcg5": 0.6854058
+    },
+    {
+      "method": "LSA32",
+      "hit1": 0.0333333,
+      "hit2": 0.0666667,
+      "hit5": 0.1333333,
+      "mrr5": 0.0694444,
+      "ndcg5": 0.0853869
+    },
+    {
+      "method": "Hybrid",
+      "hit1": 0.2333333,
+      "hit2": 0.5666667,
+      "hit5": 1,
+      "mrr5": 0.5333333,
+      "ndcg5": 0.6510668
+    },
+    {
+      "method": "Hybrid-ID-Property",
+      "hit1": 0.8333333,
+      "hit2": 0.9666667,
+      "hit5": 1,
+      "mrr5": 0.9111111,
+      "ndcg5": 0.934124
+    },
+    {
+      "method": "Pointwise",
+      "hit1": 0.8333333,
+      "hit2": 1,
+      "hit5": 1,
+      "mrr5": 0.9166667,
+      "ndcg5": 0.9384883
+    },
+    {
+      "method": "PairwiseText",
+      "hit1": 0,
+      "hit2": 0.5,
+      "hit5": 1,
+      "mrr5": 0.3944444,
+      "ndcg5": 0.5469786
+    },
+    {
+      "method": "PairwiseNoID",
+      "hit1": 0,
+      "hit2": 0.6333333,
+      "hit5": 1,
+      "mrr5": 0.425,
+      "ndcg5": 0.5713683
+    },
+    {
+      "method": "RW-R1-X02",
+      "hit1": 0.7666667,
+      "hit2": 0.9333333,
+      "hit5": 1,
+      "mrr5": 0.8722222,
+      "ndcg5": 0.905155
+    }
+  ],
+  "paired_effect": {
+    "mean": -0.02896900821428475,
+    "percentiles": [
+      -0.08254269952380566,
+      0.02024035797618758
+    ],
+    "groups": 15
+  },
+  "abstention": {
+    "threshold": 1.01,
+    "dev_accepted": 0,
+    "diagnostic_accepted": 0,
+    "n_each": 90,
+    "risk": null
+  },
+  "scope_violations": 0,
+  "human_reviews": 0,
+  "science_gate": "REVIEW_REQUIRED",
+  "kaggle": "NOT_RUN",
+  "provider_comparison": "NOT_RUN"
+}

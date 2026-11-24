@@ -1278,6 +1278,14 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+---
+
+## SI-MH-0088 — LEARN E1-X02 pairwise experiment (LOCAL EXECUTED; KAGGLE NOT_RUN)
+
+**2026-11-24 Africa/Maputo. Base:** develop@965cff0861cda46d282bd22703822ba40db1d741; CI 45364884789 completed/success. [Notebook](research/notebooks/RIGHTWARE_SIC_E1_X02_KAGGLE.ipynb), [report](research/SI_MH_0088_E1_X02_EXPERIMENT.md), [scorecard](research/fixtures/E1_X02_LOCAL_VERIFIED_SCORECARD.json). Exact notebook SHA256 1aea1cf2007450ffc4353e7263a1d62bc0e344b5777a2de68b9935d3c0dbaf53, blob c83149c3eb5b29677912c284e3c401efd290494d. New 576 docs/432 queries/72 groups, 4 fitted logistic models, 14112 pointwise rows/84 positives, 1344 pairwise comparisons (2688 directions), 4320 rankings. Full local run passed, 14 manifest files and independent recalculation of 90 metrics validated. Diagnostic 30 positives: pointwise .9385, explicit hybrid .9341, full pairwise .9052, no-ID .5714 nDCG@5. Pairwise minus explicit -0.0290, descriptive bootstrap interval [-.0825,.0202]; no superiority. Threshold 1.01 again accepts zero (0/90 dev and diagnostic), risk undefined. X01 historical comparator only; different corpus. No provider runs or real authorization evidence. No promotion. Kaggle NOT_RUN. E1_DATA_READY REVIEW_REQUIRED; 0 humans, formal gates unchanged. TRUST scope preserved, no Core/API/SQL/G04/main/product/CI workflow or sealed A0 changes. Next operator Kaggle Run All and return ZIP; audit before next experiment. Both handoffs and registry updated; own CI PENDING.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

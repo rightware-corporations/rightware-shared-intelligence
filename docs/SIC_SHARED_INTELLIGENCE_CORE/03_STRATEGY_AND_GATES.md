@@ -37,3 +37,6 @@ O pacote v2 distingue suporte autoritativo de evidência contraditória não ver
 
 ## SI-MH-0086 — LEARN X01 Kaggle audited
 [Audit](../research/SI_MH_0086_E1_X01_KAGGLE_AUDIT.md). Reproduced metrics; learned prototypes underperform, threshold abstains all. Proposed X02 experimental; formal E1 gate remains open, TRUST independent.
+
+## SI-MH-0088 — LEARN E1-X02
+[Report](../research/SI_MH_0088_E1_X02_EXPERIMENT.md). Pairwise trained on new synthetic groups, no superiority vs matched explicit or pointwise comparator. Zero acceptance remains blocker. Kaggle pending; formal scientific gate unchanged.

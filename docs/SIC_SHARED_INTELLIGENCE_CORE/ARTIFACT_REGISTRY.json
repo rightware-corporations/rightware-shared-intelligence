@@ -272,6 +272,18 @@
     {
       "path": "docs/research/fixtures/E1_X01_KAGGLE_AUDITED_SCORECARD.json",
       "status": "REGISTERED_SI-MH-0086"
+    },
+    {
+      "path": "docs/research/notebooks/RIGHTWARE_SIC_E1_X02_KAGGLE.ipynb",
+      "status": "REGISTERED_SI-MH-0088"
+    },
+    {
+      "path": "docs/research/SI_MH_0088_E1_X02_EXPERIMENT.md",
+      "status": "REGISTERED_SI-MH-0088"
+    },
+    {
+      "path": "docs/research/fixtures/E1_X02_LOCAL_VERIFIED_SCORECARD.json",
+      "status": "REGISTERED_SI-MH-0088"
     }
   ],
   "external": [
@@ -329,6 +341,11 @@
       "name": "RIGHTWARE_SIC_E1_X01_EVIDENCE.zip",
       "sha256": "ec3cc94effbcec167cbf4b3593b403c8def3888b5ceac92f8d11dac446168882",
       "status": "EXTERNAL_KAGGLE_EVIDENCE_AUDITED"
+    },
+    {
+      "name": "RIGHTWARE_SIC_E1_X02_EVIDENCE.zip (local preflight)",
+      "sha256": "d402655c1c50d15622dd449eb779bb96630a8b0bedc32a7d4e1ac667e3a432e7",
+      "status": "LOCAL_EXPERIMENT_EVIDENCE_NOT_KAGGLE"
     }
   ],
   "public_v08_sha256": "c946ef45f97d932796e6ddc80c453da797f2523b0c06b19ae7dfecb38dcc1707",
@@ -340,7 +357,7 @@
   ],
   "last_update": {
     "date": "2026-11-24",
-    "checkpoint": "SI-MH-0086",
+    "checkpoint": "SI-MH-0088",
     "science_gate": "REVIEW_REQUIRED",
     "ci": "PENDING",
     "human_reviews": 0

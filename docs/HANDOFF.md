@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0087 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0088 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -564,3 +564,6 @@
 
 **Next TRUST:** verify browser A/B PASS and core CI, then stop browser infrastructure work absent concrete defects. Real operator export/dispatch, two independent human reviews, adjudication and reserved holdout remain pending. If people not available record BLOCKED_HUMAN_REVIEW; propose separately scoped G04 work within existing approvals instead of blocking all engineering. E1_DATA_READY REVIEW_REQUIRED; formal E1.2–E1.5 unchanged. No G04 implementation, model, corpus, sealed A0, runtime/API/SQL, main/JARVIS/PULSE/vendor changes.
 
+
+## SI-MH-0088 — LEARN E1-X02 local executed, Kaggle pending
+- [Report](research/SI_MH_0088_E1_X02_EXPERIMENT.md), [notebook](research/notebooks/RIGHTWARE_SIC_E1_X02_KAGGLE.ipynb). 4320 rankings; 90 metric rows independently verified. Full pairwise .9052 nDCG vs explicit .9341 and pointwise .9385, no-ID .5714. Dev threshold abstains all, no science gate change. Next LEARN Kaggle reproduction evidence. TRUST independently continues its assigned scope. Own CI PENDING.
