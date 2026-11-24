@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0094 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0095 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -597,3 +597,9 @@
 
 ## SI-MH-0094 — LEARN X03 local executed; Kaggle pending
 - [Notebook](research/notebooks/RIGHTWARE_SIC_E1_X03_KAGGLE.ipynb), [report](research/SI_MH_0094_E1_X03_EXPERIMENT.md). 4536 rankings, 204 metric rows and 306 dev threshold rows independently reconciled. SupportVerifier synthetic diagnostic nDCG 1.0, but final learned/rule policies both 24 correct / 11 wrong accepts, 7 exact conflicts, 102 abstentions; risk 31.43%. No promotion. Next LEARN Kaggle reproduction; TRUST independent, formal E1_DATA_READY REVIEW_REQUIRED. Own CI PENDING.
+
+## SI-MH-0095 — TRUST: SIC vision and actual-client interoperability review
+- Base `develop@e737f8d1687b0268365bc7fadbfe6f12426c51bd`. [Review and proposed pilot](research/SI_MH_0095_SIC_VISION_CLIENT_INTEROPERABILITY_REVIEW.md). Verified SI-MH-0093 CI 45368557908 all three jobs SUCCESS: 356 core + 29 isolated RSA tests, browser smoke, real synthetic MCP/REST/Mem0 and independent-agent bound handoff/fence recovery PASS. No product or science approval.
+- Actual MCP stdio tool surface has 4 read-only tools; REST experimental task/checkpoint/handoff writes exist. No verified ChatGPT/Claude live client connection, remote MCP service or automatic cross-account execution. Interactive connectors require user initiation unless supported trigger exists; autonomous dispatch requires supported runtime/API adapters and an orchestrator. Separate account auth, scopes and billing. No native account/memory merging.
+- Proposed SIC-PILOT-01 synthetic real-client vertical slice (read-only first, separately approved narrow writes and remote authorization); human review, G04 and formal E1 gates preserved. No deployment or implementation in this review. TRUST principal binding remains candidate; LEARN X03 independent. Both handoffs updated; own CI PENDING. Next operator chooses pilot prioritization and authorized scope.
+

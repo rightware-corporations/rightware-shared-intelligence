@@ -1332,6 +1332,13 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0095 — TRUST: SIC vision and actual-client interoperability review
+- Base `develop@e737f8d1687b0268365bc7fadbfe6f12426c51bd`. [Review and proposed pilot](research/SI_MH_0095_SIC_VISION_CLIENT_INTEROPERABILITY_REVIEW.md). Verified SI-MH-0093 CI 45368557908 all three jobs SUCCESS: 356 core + 29 isolated RSA tests, browser smoke, real synthetic MCP/REST/Mem0 and independent-agent bound handoff/fence recovery PASS. No product or science approval.
+- Actual MCP stdio tool surface has 4 read-only tools; REST experimental task/checkpoint/handoff writes exist. No verified ChatGPT/Claude live client connection, remote MCP service or automatic cross-account execution. Interactive connectors require user initiation unless supported trigger exists; autonomous dispatch requires supported runtime/API adapters and an orchestrator. Separate account auth, scopes and billing. No native account/memory merging.
+- Proposed SIC-PILOT-01 synthetic real-client vertical slice (read-only first, separately approved narrow writes and remote authorization); human review, G04 and formal E1 gates preserved. No deployment or implementation in this review. TRUST principal binding remains candidate; LEARN X03 independent. Both handoffs updated; own CI PENDING. Next operator chooses pilot prioritization and authorized scope.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
