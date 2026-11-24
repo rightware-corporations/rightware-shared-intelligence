@@ -21,3 +21,6 @@
 
 ## Adenda SI-MH-0078 — E1.1C
 O pacote v2 distingue suporte autoritativo de evidência contraditória não verificada. [Contrato](../research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md). CI pendente; não distribuir v1. E1_DATA_READY REVIEW_REQUIRED, 0 revisores humanos documentados. Depois de CI aprovado, executar revisão humana e curadoria reservada, não saltar para treino.
+
+## SI-MH-0080 — Human execution gate
+[ENG-E1-04 runbook](../research/e1_04/OPERATOR_RUNBOOK.md) and [report](../research/SI_MH_0080_E1_04_REVIEW_OPERATIONS.md). v2 356/356 CI verified; actual distribution and browser smoke pending; no human results. E1.1C is waiting for real reviewers and reserved curator, not more model code.

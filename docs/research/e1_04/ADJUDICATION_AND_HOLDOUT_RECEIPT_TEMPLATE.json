@@ -1,0 +1,36 @@
+{
+  "schema": "rightware-sic-e1-04-private-receipt-template-v1",
+  "status": "BLANK_NOT_SUBMITTED_NOT_EVIDENCE",
+  "reviewer_A": {
+    "pseudonym": null,
+    "identity_independence_verified": null,
+    "packet_sha256": null,
+    "submission_sha256": null,
+    "received_at": null
+  },
+  "reviewer_B": {
+    "pseudonym": null,
+    "identity_independence_verified": null,
+    "packet_sha256": null,
+    "submission_sha256": null,
+    "received_at": null
+  },
+  "adjudication": {
+    "adjudicator_verified": null,
+    "agreement_file_sha256": null,
+    "disagreements_resolved": null,
+    "unresolved_count": null,
+    "decision_records": []
+  },
+  "holdout": {
+    "independent_curator_verified": null,
+    "corpus_commitment_sha256": null,
+    "questions_commitment_sha256": null,
+    "gold_commitment_sha256": null,
+    "semantic_leakage_audit": null,
+    "provenance_review": null,
+    "custody_verified": null
+  },
+  "gate": "REVIEW_REQUIRED",
+  "notice": "Template only. Fill and store privately; never commit completed receipt or use null values as proof."
+}

@@ -224,6 +224,30 @@
     {
       "path": "tests/test_e1_03_conflict_contract.py",
       "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/e1_04/REVIEWER_OFFLINE.html",
+      "status": "REGISTERED_SI_MH_0080"
+    },
+    {
+      "path": "docs/research/e1_04/REVIEWER_GUIDE_PT_EN.md",
+      "status": "REGISTERED_SI_MH_0080"
+    },
+    {
+      "path": "docs/research/e1_04/OPERATOR_RUNBOOK.md",
+      "status": "REGISTERED_SI_MH_0080"
+    },
+    {
+      "path": "docs/research/e1_04/ADJUDICATION_AND_HOLDOUT_RECEIPT_TEMPLATE.json",
+      "status": "REGISTERED_SI_MH_0080"
+    },
+    {
+      "path": "docs/research/e1_04/INDEPENDENT_HOLDOUT_PROTOCOL.md",
+      "status": "REGISTERED_SI_MH_0080"
+    },
+    {
+      "path": "docs/research/SI_MH_0080_E1_04_REVIEW_OPERATIONS.md",
+      "status": "REGISTERED_SI_MH_0080"
     }
   ],
   "external": [
@@ -287,8 +311,9 @@
   ],
   "last_update": {
     "date": "2026-11-24",
-    "checkpoint": "SI-MH-0078",
+    "checkpoint": "SI-MH-0080",
     "science_gate": "REVIEW_REQUIRED",
-    "ci": "PENDING"
+    "ci": "PENDING",
+    "human_reviews": 0
   }
 }

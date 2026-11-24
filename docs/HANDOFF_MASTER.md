@@ -1195,6 +1195,16 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **This checkpoint** updates only report and BOTH handoffs; own CI PENDING. **NEXT:** ENG-E1-04 genuine human expert review and independent hidden evaluator custody with real adjudication; do NOT distribute old v1 packets.
 
+---
+
+## SI-MH-0080 — ENG-E1-04 reviewer execution package; HUMAN INPUT REQUIRED (PREPARED)
+
+**2026-11-24 Africa/Maputo. Base:** `develop@d8ab95aa86ae72a5b277f7d6bffd8906185cbb17`; CI [45347242669](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45347242669) completed/success, verified 356-test engineering v2 run 45346784374. **Actual:** [operational report](research/SI_MH_0080_E1_04_REVIEW_OPERATIONS.md), PT/EN guide, local-only HTML blank/draft editor, export/dispatch/compare runbook, blank private adjudication receipt and independent curator requirements. Existing v2 Python protocol unchanged. Browser form uses no external resources; 8 isolated mock JS helper checks PASS; browser E2E and actual packet export NOT_RUN; CI own commit PENDING.
+
+**Hard boundary:** no real reviewers recruited, no submissions, no adjudication, no independent held-out gold. Each reviewer needs 24 questions/560 judgments. Operator must verify real independence and provide private custody; never distribute root or mapping, never treat test mocks as human. No new runtime/backend/API/SQL/G04/main/JARVIS/PULSE/vendor changes, no training or provider results, sealed SI-RD untouched. E1_DATA_READY REVIEW_REQUIRED. Next: actual human execution; if unavailable mark BLOCKED_HUMAN_REVIEW. Both handoffs and SIC registry updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

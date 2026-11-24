@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>RIGHTWARE SIC — Independent review v2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f7f9;color:#172331;font:16px/1.5 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px}h1,h2,h3{line-height:1.2}h1{font-size:26px}h2{font-size:20px}header{border-bottom:2px solid #172331;padding-bottom:12px}section,article{background:white;border:1px solid #cbd2d9;border-radius:8px;padding:16px;margin:14px 0}label{display:block;margin:8px 0}input,select,textarea,button{font:inherit}input[type=text],select,textarea{width:100%;padding:8px;border:1px solid #9aa4ae;border-radius:4px}textarea{min-height:60px;resize:vertical}button{padding:9px 15px;background:#173f5e;color:#fff;border:0;border-radius:5px;cursor:pointer;margin:4px 5px 4px 0}button:disabled{opacity:.45}small,.meta{color:#536171;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere}.source{background:#f8fafb;padding:12px;border-left:3px solid #758599;white-space:pre-wrap;overflow-wrap:anywhere}.nav{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.nav select{width:auto;max-width:100%}.error{color:#8b2929}#review[hidden]{display:none}#messages{white-space:pre-wrap;overflow-wrap:anywhere}strong{overflow-wrap:anywhere}
+</style></head><body><main><header><h1>RIGHTWARE · SIC</h1><div>ENG-E1-04 | Independent human annotation · offline v2</div></header>
+<section><h2>1. Abrir pacote / Load packet</h2><p>Use apenas a sua pasta de revisor. Não consulte o GitHub, rótulos provisórios, respostas de terceiros ou modelos de IA. Este formulário não gera respostas nem envia dados pela Internet. Guarde rascunhos regularmente.</p>
+<label>packet.json <input id="packet" type="file" accept=".json,application/json"></label><label>BLANK.json ou rascunho / draft <input id="blank" type="file" accept=".json,application/json"></label><button id="load">Abrir / Load</button><p id="loadstatus" role="status"></p></section>
+<div id="review" hidden><section><h2>2. Identificação e declaração / Attestation</h2><label>Pseudónimo atribuído / assigned pseudonym<input id="pseudo" type="text" placeholder="RV-..." autocomplete="off"></label><label><input id="independent" type="checkbox"> Confirmo que avaliei independentemente / I reviewed independently.</label><label><input id="nogold" type="checkbox"> Não consultei os rótulos provisórios / I did not consult provisional gold.</label><p><small>Declarações pessoais; não constituem prova de identidade ou aprovação científica.</small></p></section>
+<section><div class="nav"><button id="prev">Anterior</button><select id="question"></select><button id="next">Seguinte</button><span id="progress" role="status"></span></div><div id="questionbody"></div></section>
+<section><h2>3. Guardar / Save</h2><button id="draft">Guardar rascunho JSON</button><button id="finish">Descarregar submissão JSON</button><p>Entregue SUBMITTED.json apenas ao operador por canal privado aprovado. A validação Python oficial ocorre depois; este formulário apenas verifica preenchimento básico e algumas regras.</p><div id="messages" role="alert"></div></section></div>
+<script>
+"use strict";
+function validateDraft(p,r){
+  const errors=[];
+  const cls=["ANSWERABLE","UNANSWERABLE","FORBIDDEN_SCOPE","TEMPORAL_INVALID","AUTHORITY_CONFLICT"];
+  const validPseudo=typeof r.reviewer_pseudonym==="string" && /^RV-[A-Za-z0-9_-]{3,32}$/.test(r.reviewer_pseudonym) && !/^RV-MOCK-/i.test(r.reviewer_pseudonym);
+  if(!validPseudo)errors.push("Enter your assigned RV- pseudonym (not a MOCK identity).");
+  if(r.independence_attested!==true||r.provisional_gold_not_consulted!==true)errors.push("Both independence attestations are required.");
+  const ds=new Map(p.documents.map(d=>[d.source_id,d]));
+  function current(q,d){
+    const t=Date.parse(q.as_of);
+    return d.split===q.split&&d.organization===q.organization&&d.project===q.project&&Date.parse(d.valid_from)<=t&&Date.parse(d.observed_at)<=t&&(d.valid_until===null||t<Date.parse(d.valid_until));
+  }
+  for(const q of p.queries){
+    const j=r.judgments.find(j=>j.query_id===q.query_id);
+    const title=q.query_id;
+    if(!j||!cls.includes(j.query_class)){errors.push(title+": classify question.");continue;}
+    const gradeMap=new Map();
+    const eligible=d=>current(q,d)&&d.authority==="OFFICIAL_SOURCE";
+    for(const x of j.ratings){
+      const d=ds.get(x.source_id);
+      if(!d||!Number.isInteger(x.grade)||x.grade<0||x.grade>3||typeof x.justification!=="string"||x.justification.trim().length<10||typeof x.evidence_quote!=="string"){
+        errors.push(title+" / "+x.source_id+": incomplete rating.");continue;
+      }
+      gradeMap.set(x.source_id,x.grade);
+      if(x.grade>0&&(!eligible(d)||x.evidence_quote.trim().length<6||!d.text.includes(x.evidence_quote)))errors.push(title+" / "+x.source_id+": positive grade needs an eligible official source and literal quote.");
+      if(x.grade===0&&x.evidence_quote!=="")errors.push(title+" / "+x.source_id+": grade 0 must have empty support quote.");
+    }
+    const high=[...gradeMap.values()].filter(n=>n>=2).length;
+    if(j.query_class==="ANSWERABLE"&&!high)errors.push(title+": answerable requires supporting grade 2–3.");
+    if(["UNANSWERABLE","FORBIDDEN_SCOPE","TEMPORAL_INVALID"].includes(j.query_class)&&high)errors.push(title+": negative class cannot have grade 2–3.");
+    const pairs=j.conflict_claims;
+    if(!Array.isArray(pairs)){errors.push(title+": missing v2 conflict list.");continue;}
+    if(j.query_class!=="AUTHORITY_CONFLICT"&&pairs.length)errors.push(title+": conflict pairs only on AUTHORITY_CONFLICT.");
+    if(j.query_class==="AUTHORITY_CONFLICT"&&!pairs.length)errors.push(title+": add explicit conflict pair.");
+    const seen=new Set();
+    for(const x of pairs){
+      const a=ds.get(x.official_source_id),b=ds.get(x.opposing_source_id);
+      const pair=[x.official_source_id,x.opposing_source_id].sort().join("|");
+      if(!a||!b||a===b||!eligible(a)||(gradeMap.get(a.source_id)||0)<2||!current(q,b)||!["OFFICIAL_SOURCE","UNVERIFIED_CLAIM"].includes(b.authority)|| (b.authority==="OFFICIAL_SOURCE"?(gradeMap.get(b.source_id)||0)<2:gradeMap.get(b.source_id)!==0)||typeof x.opposing_quote!=="string"||x.opposing_quote.trim().length<6||!b.text.includes(x.opposing_quote)||typeof x.rationale!=="string"||x.rationale.trim().length<10||seen.has(pair))errors.push(title+": invalid conflict pair or quote.");
+      seen.add(pair);
+    }
+  }
+  return errors;
+}
+function matchFiles(p,r){
+  if(!p||!r||p.schema_version!=="rightware-e1c-independent-review-v2"||r.schema_version!==p.schema_version||p.status!=="REVIEWER_OPAQUE_TRAIN_DEV_NO_GOLD"||!["A","B"].includes(p.review_slot)||r.dataset_id!==p.dataset_id||!r.data_sha256||!p.data_sha256||Object.keys(p.data_sha256).some(k=>p.data_sha256[k]!==r.data_sha256[k])||!Array.isArray(p.documents)||!Array.isArray(p.queries)||!Array.isArray(r.judgments)||p.documents.length!==42||p.queries.length!==24||r.judgments.length!==24||!(/^[a-f0-9]{64}$/).test(r.packet_sha256||""))return false;
+  const ids=new Set(p.queries.map(q=>q.query_id));
+  const docIds=new Set(p.documents.map(d=>d.source_id));
+  if(ids.size!==24||docIds.size!==42||!p.queries.every(q=>q.query_id.startsWith("QUE-")&&["train","dev"].includes(q.split))||!p.documents.every(d=>d.source_id.startsWith("DOC-")&&["train","dev"].includes(d.split)))return false;
+  if(new Set(r.judgments.map(j=>j.query_id)).size!==24||!r.judgments.every(j=>ids.has(j.query_id)&&Array.isArray(j.ratings)&&Array.isArray(j.conflict_claims)))return false;
+  return p.queries.every(q=>{
+    const j=r.judgments.find(j=>j.query_id===q.query_id);
+    const want=new Set(p.documents.filter(d=>d.split===q.split).map(d=>d.source_id));
+    return j.ratings.length===want.size&&new Set(j.ratings.map(x=>x.source_id)).size===want.size&&j.ratings.every(x=>want.has(x.source_id));
+  });
+}
+const $=id=>document.getElementById(id);
+let packet=null,record=null,index=0;
+const classes=["ANSWERABLE","UNANSWERABLE","FORBIDDEN_SCOPE","TEMPORAL_INVALID","AUTHORITY_CONFLICT"];
+const classNames=["Resposta sustentada / Answerable","Sem resposta sustentada / Unanswerable","Fora de âmbito / Forbidden scope","Temporalmente inválida / Temporal invalid","Conflito de autoridade / Authority conflict"];
+const gradeNames=["0 — Não sustenta resposta / No support","1 — Contextual","2 — Suporte parcial / Partial","3 — Suporte directo / Direct"];
+const el=(tag,t)=>{const x=document.createElement(tag);if(t!==undefined)x.textContent=t;return x};
+function select(values,names,val,fn){const s=el("select");values.forEach((v,i)=>{const o=el("option",names[i]);o.value=v;s.append(o)});s.value=val;s.addEventListener("change",()=>fn(s.value));return s}
+function field(parent,title,control){const l=el("label",title);l.append(control);parent.append(l)}
+function area(value,fn){const t=el("textarea");t.value=value||"";t.addEventListener("input",()=>fn(t.value));return t}
+function meta(d){return "Scope: "+d.organization+" / "+d.project+" | "+d.authority+" | Observed: "+d.observed_at+" | Valid: "+d.valid_from+" — "+(d.valid_until||"open")}
+function count(){let n=0,total=0;for(const j of record.judgments){for(const r of j.ratings){total++;if(Number.isInteger(r.grade)&&r.justification.trim().length>=10&&(r.grade===0?r.evidence_quote==="":r.evidence_quote.trim().length>=6))n++}}$("progress").textContent=n+"/"+total+" ratings filled (not final validation)"}
+function download(name,final){const copy=JSON.parse(JSON.stringify(record));copy.review_status=final?"SUBMITTED_INDEPENDENT":"NOT_SUBMITTED";copy.submitted_at=final?new Date().toISOString():"";const url=URL.createObjectURL(new Blob([JSON.stringify(copy,null,2)+"\n"],{type:"application/json"}));const a=el("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500)}
+function render(){
+ const q=packet.queries[index],j=record.judgments.find(x=>x.query_id===q.query_id),body=$("questionbody");body.replaceChildren();
+ $("question").value=String(index);$("prev").disabled=index===0;$("next").disabled=index===packet.queries.length-1;
+ body.append(el("h2",String(index+1)+"/"+packet.queries.length+" — "+q.language),el("p",q.text),el("small","Query: "+q.query_id+" | "+q.organization+" / "+q.project+" | as of "+q.as_of));
+ field(body,"Classificação / Query class",select(["UNSET",...classes],["Choose / Seleccionar",...classNames],j.query_class,v=>{j.query_class=v;render()}));
+ const docById=new Map(packet.documents.map(d=>[d.source_id,d]));
+ for(const r of j.ratings){
+  const d=docById.get(r.source_id),card=el("article");card.append(el("strong",d.source_id),el("p",meta(d)));
+  const text=el("div",d.text);text.className="source";card.append(text);
+  field(card,"Grau de suporte autoritativo / Support grade",select(["", "0","1","2","3"],["Choose / Seleccionar",...gradeNames],r.grade===null?"":String(r.grade),v=>{r.grade=v===""?null:Number(v);count()}));
+  field(card,"Justificação (>=10 caracteres) / Rationale",area(r.justification,v=>{r.justification=v;count()}));
+  field(card,"Excerto literal para grau positivo (vazio se 0) / Literal support quote",area(r.evidence_quote,v=>{r.evidence_quote=v;count()}));body.append(card);
+ }
+ const conflict=el("article");conflict.append(el("h3","Contradições / Conflict pairs"),el("p","A alegação não verificada pode ser citada aqui, mas o seu grau de suporte oficial deve permanecer 0. Use apenas se a classe for AUTHORITY_CONFLICT. Explique a contradição."));
+ const available=j.ratings.map(r=>r.source_id), names=available.map(id=>id+" — "+docById.get(id).authority);
+ for(const [i,c] of j.conflict_claims.entries()){const part=el("section");
+  field(part,"Fonte oficial / Official anchor",select(["",...available],["Choose",...names],c.official_source_id,v=>c.official_source_id=v));
+  field(part,"Fonte oposta / Opposing source",select(["",...available],["Choose",...names],c.opposing_source_id,v=>c.opposing_source_id=v));
+  field(part,"Excerto literal da fonte oposta / Opposing quote",area(c.opposing_quote,v=>c.opposing_quote=v));
+  field(part,"Razão da contradição / Conflict rationale",area(c.rationale,v=>c.rationale=v));
+  const remove=el("button","Remover par / Remove pair");remove.onclick=()=>{j.conflict_claims.splice(i,1);render()};part.append(remove);conflict.append(part);}
+ const add=el("button","Adicionar par / Add pair");add.disabled=j.query_class!=="AUTHORITY_CONFLICT";add.onclick=()=>{j.conflict_claims.push({official_source_id:"",opposing_source_id:"",opposing_quote:"",rationale:""});render()};conflict.append(add);body.append(conflict);count();
+}
+$("load").onclick=async()=>{try{
+ const a=$("packet").files[0],b=$("blank").files[0];if(!a||!b)throw Error("Select both files.");if(a.size>5000000||b.size>5000000)throw Error("Files too large.");
+ const p=JSON.parse(await a.text()),r=JSON.parse(await b.text());if(!matchFiles(p,r))throw Error("Wrong packet/schema/coverage. Use the matching v2 files for your reviewer.");
+ if(record&&!confirm("Replace current in-memory review? Save a draft first."))return;
+ packet=p;record=r;index=0;record.review_status="NOT_SUBMITTED";record.submitted_at="";
+ $("pseudo").value=r.reviewer_pseudonym||"";$("independent").checked=r.independence_attested===true;$("nogold").checked=r.provisional_gold_not_consulted===true;
+ $("question").replaceChildren(...p.queries.map((q,i)=>{const o=el("option",(i+1)+". "+q.language+" — "+q.text.slice(0,65));o.value=String(i);return o}));
+ $("review").hidden=false;$("messages").textContent="";$("loadstatus").textContent="Loaded reviewer "+p.review_slot+"; no network transfer.";render();
+ }catch(e){$("loadstatus").textContent="Error: "+e.message}};
+$("pseudo").oninput=()=>record.reviewer_pseudonym=$("pseudo").value;
+$("independent").onchange=()=>record.independence_attested=$("independent").checked;
+$("nogold").onchange=()=>record.provisional_gold_not_consulted=$("nogold").checked;
+$("prev").onclick=()=>{if(index>0){index--;render()}};
+$("next").onclick=()=>{if(index<packet.queries.length-1){index++;render()}};
+$("question").onchange=()=>{index=Number($("question").value);render()};
+$("draft").onclick=()=>download("DRAFT.json",false);
+$("finish").onclick=()=>{const errors=validateDraft(packet,record);$("messages").className=errors.length?"error":"";$("messages").textContent=errors.length?errors.length+" issue(s):\n"+errors.slice(0,30).join("\n"):"File ready for private operator validation; no transmission.";if(!errors.length)download("SUBMITTED.json",true)};
+</script></main></body></html>

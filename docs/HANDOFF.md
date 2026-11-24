@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0079 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0080 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -198,7 +198,7 @@
 - **NEXT SI-RD-03A:** verificar CI do presente commit, construir adaptadores isolados com pins e env attestation; recolher outputs imutáveis 56 queries antes de abrir a chave e pontuar. Não modificar WorkCore R2, G01/G04, main, JARVIS/PULSE.
 
 ## Next exact work
-**PRIORIDADE E1.1C / ENG-E1-03C:** verificar CI de schema v2 conflito/autoridade e IDs opacos. Após CI verde, exportar novos pacotes locais v2 (não reutilizar v1); obter dois revisores humanos independentes e terceiro adjudicador, curador externo e holdout reservado. E1_DATA_READY=REVIEW_REQUIRED. E1.2 baselines → E1.3 RW-R1 treinável → E1.4 calibração → E1.5 ciência held-out. G04 IAM/tenancy/privacy paralelo; A0 v0.8 comparação NOT_RUN. Nunca auto-DONE nem release main. [Contrato v2](research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md).
+**PRIORIDADE ENG-E1-04 / E1.1C:** executar [runbook operacional](research/e1_04/OPERATOR_RUNBOOK.md). CI v2 356/356 confirmado; toolkit local pronto, browser smoke e distribuição NOT_RUN. Operador deve seleccionar dois revisores humanos independentes, terceiro adjudicador e curador reservado; exportar A/B v2 localmente e receber 24 classes + 560 ratings por revisor. CUSTODY_ONLY e resultados privados. E1_DATA_READY=REVIEW_REQUIRED; E1.2 baselines → E1.3 RW-R1 treinável → E1.4 calibração → E1.5 held-out após gate. G04 paralelo, v0.8 comparação NOT_RUN; não auto-DONE nem release main.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
@@ -508,3 +508,6 @@
 - Parent `develop@65c2e8b0315af898e5b0771beed123001665775b`, [Actions 45346784374](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346784374) **SUCCESS 356/356**, 8 migrations, E1_03B alias/no-eval/no-gold marker, G01 GitHub LIVE/native PostgreSQL restore, full Mem0/Ollama E2E PASS. P0 patch [Actions 45346421772](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346421772) SUCCESS 341/341. [Detailed verifiable CI](research/SI_MH_0079_E1_03_REVIEW_CI_VERIFIED.md).
 - New v2 HUMAN REVIEW *protocol software* separates textual contradiction evidence (`conflict_claims`) from authority-grade relevance; opaque A/B alias maps stay in private `.runtime/CUSTODY_ONLY`. **0 human reviewers, 0 adjudication, 0 evaluator-only independent gold**, underlying public texts/labels searchable; E1_DATA_READY REVIEW_REQUIRED. No RW-R1 training, no E1.2–E1.5 implementation or real G04 IAM/RLS.
 - NEXT ENG-E1-04 actual independent human reviews, expert adjudication and private evaluator-controlled blind corpus; do not distribute old v1 packets. SI-MH-0079 docs-only own CI pending; main/JARVIS/PULSE/vendor Mem0 unchanged.
+
+## SI-MH-0080 — ENG-E1-04 ready for real human execution (AWAITING REVIEWERS)
+- SI-MH-0079 docs CI 45347242669 SUCCESS; engineering v2 356/356 verified at 45346784374. [Runbook](research/e1_04/OPERATOR_RUNBOOK.md), [guide](research/e1_04/REVIEWER_GUIDE_PT_EN.md), [offline reviewer form](research/e1_04/REVIEWER_OFFLINE.html), [receipt template](research/e1_04/ADJUDICATION_AND_HOLDOUT_RECEIPT_TEMPLATE.json), [curator protocol](research/e1_04/INDEPENDENT_HOLDOUT_PROTOCOL.md). 8 mock helper checks passed; browser smoke NOT_RUN; local export/dispatch NOT_RUN; new CI PENDING. 0 humans, 0 submissions, 0 adjudication, no reserved gold. E1_DATA_READY REVIEW_REQUIRED. NEXT select actual independent reviewers, perform local browser smoke + export, collect submissions. No model/production/G04/Core/API/SQL/main/JARVIS/PULSE/vendor edits.
