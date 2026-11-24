@@ -1346,6 +1346,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0097 — TRUST G04-A1-LAB-03 explicit synthetic scope binding (CI PENDING)
+- Base `develop@3414cb35e4039f13feda90830e6a816b226ce3ab`. CI 45371435583 observed completed/success; lab job 138366401968 success (50 tests in 0.897s), browser job 138366402674 success. Core job 138366402894 success: 2026-11-24T10:06:12.1054236Z HANDOFF_POLICY_PASS audited_commits=1 both_files_updated=true; 2026-11-24T10:06:58.0026916Z Ran 356 tests in 30.752s; 2026-11-24T10:07:05.1772835Z WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS bound_checkpoint=true independent_agents=true fencing_rekey=true secret_replay_denied=true memory_offline=true synthetic_only=true; 2026-11-24T10:08:03.4565873Z WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS mcp_stdio=true rest_auth=true postgres=true mem0_oss=true ollama_embed=true project_denied=true revocation=true intruder_denied=true synthetic_only=true. [Implementation report](work03b/G04_A1_LAB_03_SCOPE_BINDING.md).
+- Existing lab extended with fresh signed identity -> principal -> explicit active organization AND project memberships, topology checks, version/freshness/retired-row safeguards, no resource grants. Three fictitious organizations. LAB-02 key-snapshot lifetime and post-directory recheck reinforced. 23 new tests, 73 expected lab tests; new CI PENDING. No DB/runtime/API/MCP, real tenancy, deployment, LEARN, main or production changes. Original oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. NEXT verify all jobs and record result before further scope. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

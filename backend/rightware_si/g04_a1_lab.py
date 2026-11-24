@@ -274,7 +274,7 @@ class SyntheticVerifier:
             self._consumed[receipt] = claims["exp"]
 
         return IdentityCandidate(claims["iss"], claims["sub"], profile,
-                                 claims["jti"], claims["gen"], claims["exp"])
+                                 claims["jti"], claims["gen"], min(claims["exp"], snap.valid_until))
 
 
 # G04-A1-LAB-02: identity resolution only. This is an in-memory experiment,
@@ -401,14 +401,204 @@ class SyntheticPrincipalResolver:
         match = index.get((identity.issuer, identity.subject))
         if match is None or match.kind != identity.kind or not match.active:
             reject()
-        # A second clock check covers slow directory callbacks; it does not
-        # claim atomic cross-store revocation or distributed consistency.
+        # Recheck the credential after the directory callback, including
+        # revocation and key freshness. Still not an atomic cross-store read.
+        refreshed = self._verifier.verify(token, expected_kind)
+        if (refreshed.issuer, refreshed.subject, refreshed.kind, refreshed.credential_id,
+                refreshed.generation) != (identity.issuer, identity.subject, identity.kind,
+                                          identity.credential_id, identity.generation):
+            reject()
         end = self._clock()
         if (not number(end) or end < now or end >= snapshot.valid_until
-                or end >= match.expires_at or end >= identity.expires_at):
+                or end >= match.expires_at or end >= identity.expires_at
+                or end >= refreshed.expires_at):
             reject()
         self._last_now = end
         return ResolvedPrincipal(match.principal_id, identity.issuer,
                                  identity.subject, identity.kind,
                                  min(identity.expires_at, match.expires_at,
-                                     snapshot.valid_until))
+                                     refreshed.expires_at, snapshot.valid_until))
+
+
+# G04-A1-LAB-03 — explicitly scoped membership context, not a resource grant.
+MAX_SCOPE_ROWS = 256
+
+
+@dataclass(frozen=True)
+class Organization:
+    organization_id: str = field(repr=False)
+    active: bool
+
+
+@dataclass(frozen=True)
+class Project:
+    project_id: str = field(repr=False)
+    organization_id: str = field(repr=False)
+    active: bool
+
+
+@dataclass(frozen=True)
+class OrganizationMembership:
+    principal_id: str = field(repr=False)
+    organization_id: str = field(repr=False)
+    active: bool
+    expires_at: int
+
+
+@dataclass(frozen=True)
+class ProjectMembership:
+    principal_id: str = field(repr=False)
+    project_id: str = field(repr=False)
+    active: bool
+    expires_at: int
+
+
+@dataclass(frozen=True)
+class ScopeSnapshot:
+    observed_at: int
+    valid_until: int
+    organizations: tuple[Organization, ...] = field(repr=False)
+    projects: tuple[Project, ...] = field(repr=False)
+    organization_memberships: tuple[OrganizationMembership, ...] = field(repr=False)
+    project_memberships: tuple[ProjectMembership, ...] = field(repr=False)
+
+
+@dataclass(frozen=True)
+class ScopedPrincipal:
+    principal_id: str = field(repr=False)
+    organization_id: str = field(repr=False)
+    project_id: str = field(repr=False)
+    kind: str
+    expires_at: int
+    status: str = field(default="RESOLVED_SYNTHETIC_SCOPE_NO_RESOURCE_GRANT", init=False)
+
+
+class SyntheticScopeResolver:
+    """Fresh credential -> principal -> explicit organization AND project.
+
+    Trusted immutable fixture snapshots; not persistent or distributed IAM.
+    No authorization of any task, source, memory, write, approval or DONE.
+    """
+    def __init__(self, key_snapshot: Callable[[], Snapshot],
+                 directory_snapshot: Callable[[], DirectorySnapshot],
+                 scope_snapshot: Callable[[], ScopeSnapshot],
+                 clock: Callable[[], int]):
+        if not enabled() or not callable(scope_snapshot) or not callable(clock):
+            reject()
+        self._principal = SyntheticPrincipalResolver(key_snapshot, directory_snapshot, clock)
+        self._scope = scope_snapshot
+        self._clock = clock
+        self._lock = Lock()
+        self._last_now = None
+        self._last = None
+        self._history = {}
+
+    def resolve(self, token, expected_kind, organization_id, project_id):
+        try:
+            with self._lock:
+                return self._resolve(token, expected_kind, organization_id, project_id)
+        except Exception:
+            pass
+        raise CredentialRejected("synthetic credential rejected") from None
+
+    def _resolve(self, token, expected_kind, organization_id, project_id):
+        if not enabled() or not ident(organization_id) or not ident(project_id):
+            reject()
+        principal = self._principal.resolve(token, expected_kind)
+        now = self._clock()
+        if (not number(now) or now >= principal.expires_at
+                or (self._last_now is not None and now < self._last_now)):
+            reject()
+        self._last_now = now
+        snap = self._scope()
+        if (type(snap) is not ScopeSnapshot or not number(snap.observed_at)
+                or not number(snap.valid_until)
+                or not (snap.observed_at <= now < snap.valid_until
+                        <= snap.observed_at + MAX_SNAPSHOT_AGE)):
+            reject()
+        groups = (snap.organizations, snap.projects,
+                  snap.organization_memberships, snap.project_memberships)
+        if any(type(group) is not tuple for group in groups):
+            reject()
+        if sum(map(len, groups)) > MAX_SCOPE_ROWS:
+            reject()
+
+        orgs, projects, org_members, project_members = {}, {}, {}, {}
+        rows = {}
+        for row in snap.organizations:
+            if (type(row) is not Organization or not ident(row.organization_id)
+                    or type(row.active) is not bool or row.organization_id in orgs):
+                reject()
+            orgs[row.organization_id] = row
+            rows[("org", row.organization_id)] = row
+        for row in snap.projects:
+            if (type(row) is not Project or not ident(row.project_id)
+                    or not ident(row.organization_id) or row.organization_id not in orgs
+                    or type(row.active) is not bool or row.project_id in projects):
+                reject()
+            projects[row.project_id] = row
+            rows[("project", row.project_id)] = row
+        for row in snap.organization_memberships:
+            if (type(row) is not OrganizationMembership or not ident(row.principal_id)
+                    or not ident(row.organization_id) or row.organization_id not in orgs
+                    or type(row.active) is not bool or not number(row.expires_at)):
+                reject()
+            key = (row.principal_id, row.organization_id)
+            if key in org_members:
+                reject()
+            org_members[key] = row
+            rows[("org_member", *key)] = row
+        for row in snap.project_memberships:
+            if (type(row) is not ProjectMembership or not ident(row.principal_id)
+                    or not ident(row.project_id) or row.project_id not in projects
+                    or type(row.active) is not bool or not number(row.expires_at)):
+                reject()
+            project = projects[row.project_id]
+            if (row.principal_id, project.organization_id) not in org_members:
+                reject()
+            key = (row.principal_id, row.project_id)
+            if key in project_members:
+                reject()
+            project_members[key] = row
+            rows[("project_member", *key)] = row
+
+        stamp = (snap.observed_at, snap.valid_until, frozenset(rows.items()))
+        previous = self._last
+        if previous is not None:
+            if stamp[0] < previous[0] or (stamp[0] == previous[0] and stamp != previous):
+                reject()
+        previous_keys = {key for key, _ in previous[2]} if previous else set()
+        history = dict(self._history)
+        for key, row in rows.items():
+            prior = history.get(key)
+            if prior is not None:
+                if key not in previous_keys or (not prior.active and row.active):
+                    reject()
+                if type(row) is Project and row.organization_id != prior.organization_id:
+                    reject()
+            history[key] = row
+        if len(history) > MAX_SCOPE_ROWS:
+            reject()
+        self._history, self._last = history, stamp
+
+        org, project = orgs.get(organization_id), projects.get(project_id)
+        member = org_members.get((principal.principal_id, organization_id))
+        grant = project_members.get((principal.principal_id, project_id))
+        if (org is None or project is None or member is None or grant is None
+                or project.organization_id != organization_id
+                or not all(row.active for row in (org, project, member, grant))):
+            reject()
+        # Recheck credentials and principal after reading memberships. No
+        # atomic cross-store consistency claimed; snapshots are trusted fixtures.
+        refreshed = self._principal.resolve(token, expected_kind)
+        if (refreshed.principal_id, refreshed.kind, refreshed.issuer, refreshed.subject) != (
+                principal.principal_id, principal.kind, principal.issuer, principal.subject):
+            reject()
+        end = self._clock()
+        expiry = min(principal.expires_at, refreshed.expires_at, snap.valid_until,
+                     member.expires_at, grant.expires_at)
+        if not number(end) or end < now or end >= expiry:
+            reject()
+        self._last_now = end
+        return ScopedPrincipal(principal.principal_id, organization_id, project_id,
+                               principal.kind, expiry)

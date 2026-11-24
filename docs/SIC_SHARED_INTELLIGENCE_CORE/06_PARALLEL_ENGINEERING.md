@@ -39,3 +39,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0096 — TRUST LAB-02
 - G04-A1-LAB-01 verified (29 tests); G04-A1-LAB-02 active: synthetic principal binding in existing lab module and dedicated tests only. No real identity, runtime or DB scope. CI pending, LEARN X03 unchanged. SIC-PILOT-01 remains proposed; human review awaiting actual input.
+
+## SI-MH-0097 — TRUST LAB-03
+- LAB-02 dedicated 50 tests PASS; LAB-03 active, existing isolated module + tests and docs only, explicit synthetic memberships, no resource grant or real tenant. CI pending. LEARN independent. No cross-track integration or deployment.
