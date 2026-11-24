@@ -1244,6 +1244,16 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0085 — Parallel engineering allocation + ENG-E1-04B runner compatibility repair (CI PENDING)
+
+**2026-11-24 Africa/Maputo. Base:** develop@2b4159b08423ac3ae4f9a66520d1b74f8724035c. **DECISÃO OFICIAL DO OPERADOR:** ambos os agentes desenvolvem em paralelo em áreas distintas, sem duplicar missões. [Registo de coordenação e ownership](SIC_SHARED_INTELLIGENCE_CORE/06_PARALLEL_ENGINEERING.md) atribui TRUST/ENG-E1-04B à conversa de recuperação e LEARN/E1-X01 à conversa original; preserva dois ramos oficiais, publicação atómica com HEAD esperado, handoffs por output, gates e reconciliação sem overwrite. G04/Core future scope requires scoped mission and existing ratifications. No actual distributed lock implemented.
+
+**Evidência:** SI-MH-0084 [CI 45359421948](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45359421948) completed/failure: core job 138325363680 SUCCESS (logs 356 tests in 36.216s, HANDOFF_POLICY_PASS, real MCP/Mem0/Ollama E2E PASS); browser job 138325361282 FAILED at Playwright installation, exact error "Playwright does not support chromium on ubuntu26.04-x64", same cause as 45354460769. Browser test not reached. **Repair:** pin ONLY e1-04-offline-browser-smoke runner from ubuntu-latest to ubuntu-24.04; core job, pinned Playwright version, notebook and model code unchanged. New CI PENDING; no browser PASS claimed.
+
+**LEARN reconciliation:** E1-X01 reported local fit, 288 docs/192 queries/15680 training pairs, two prototypes underperform, threshold accepts zero, Kaggle NOT_RUN; [frozen report](research/SI_MH_0084_E1_X01_EXPERIMENT.md) unchanged. Operator to return Kaggle ZIP in other conversation. TRUST does not tune or alter X01. Real humans=0, adjudication/holdout absent, E1_DATA_READY REVIEW_REQUIRED. No formal E1.2–E1.5, runtime/SQL/API/G04/main/JARVIS/PULSE/vendor changes. NEXT TRUST verify browser CI, address concrete failure, then local packaging and human review; LEARN reproduce X01 and audit returned ZIP. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

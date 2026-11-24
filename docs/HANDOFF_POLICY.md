@@ -22,6 +22,9 @@ Dois documentos com funções diferentes:
 - O GitHub público não é arquivo de conversas privadas integrais, segredos, dados pessoais, anotações privadas, gold reservado ou material confidencial. Registar decisões e evidência técnica necessária em resumo sanitizado; usar referências ou compromissos públicos apenas quando não exponham informação protegida. Não publicar conteúdo de CUSTODY_ONLY ou .runtime.
 - Em cada recuperação, ler HANDOFF_POLICY, HANDOFF, última entrada MASTER, dossier SIC e verificar HEAD/CI reais. O histórico MASTER é append-only; não reescrever falhas nem decisões antigas. Preservar develop/main e a política de release existente.
 
+## Desenvolvimento paralelo por áreas (SI-MH-0085)
+**Decisão oficial:** ambos os agentes desenvolvem em paralelo em missões distintas. Consultar [registo de coordenação](SIC_SHARED_INTELLIGENCE_CORE/06_PARALLEL_ENGINEERING.md) antes de iniciar trabalho. TRUST e LEARN têm ownership de escopo; escrita partilhada dos handoffs exige publicação atómica e reconciliação do HEAD, com identificadores únicos e sem overwrite. Não é uma alteração da política develop/main nem uma garantia de locking distribuído. A regra de registo por output continua obrigatória para ambos.
+
 ## Fluxo de trabalho obrigatório para cada output técnico
 1. ANTES: consultar develop remoto, HANDOFF.md, última entrada HANDOFF_MASTER.md, PRs e CI reais; não assumir estado do chat.
 2. DECIDIR: registrar âmbito, hipótese, decisão aprovada ou recomendação; identificar o que NÃO será alterado.

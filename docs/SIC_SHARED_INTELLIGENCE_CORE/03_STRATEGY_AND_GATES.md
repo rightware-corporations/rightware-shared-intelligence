@@ -31,3 +31,6 @@ O pacote v2 distingue suporte autoritativo de evidência contraditória não ver
 
 ## SI-MH-0084 — E1-X01 provisional experiment
 [Report](../research/SI_MH_0084_E1_X01_EXPERIMENT.md). Local actual training, no gate promotion; Kaggle run pending. Human gate preserved.
+
+## SI-MH-0085 — Parallel engineering
+[Ownership registry](06_PARALLEL_ENGINEERING.md): TRUST (E1.1C/ENG-E1-04B) and LEARN (provisional E1-X01) independently implement in disjoint scopes. Formal E1 gates unchanged; only shared atomic publication serialized. Browser runner compatibility repair CI PENDING.
