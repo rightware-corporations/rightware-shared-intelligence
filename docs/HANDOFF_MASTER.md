@@ -1221,6 +1221,14 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+---
+
+## SI-MH-0082 — ENG-E1-04 local packaging helper; human-input gate (CI PENDING)
+
+**2026-11-24 Africa/Maputo. BASE:** develop@d0a13f571aa12595d954ef258914f11fbda7945b, SI-MH-0081 continuity policy, CI [45353879662](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45353879662) in_progress/null. Initial publish stopped by HEAD guard and reconciled. New `scripts/e1_04_prepare_review.py` wraps v2 exporter, exact per-reviewer allowlist ZIPs, blank/hash/CRC checks, no overwrite, local custody receipt. [Report](research/SI_MH_0082_E1_04_PACKAGING_GATE.md). Five actual mock Python smoke checks PASS; browser remote download failed DNS, E2E NOT_RUN. Real local operator export, dispatch, reviewers, adjudication and reserved gold absent. E1_DATA_READY REVIEW_REQUIRED; human-input blocker. New CI pending. No Core/API/SQL/G04/main/JARVIS/PULSE/vendor/production or sealed A0 changes. Both handoffs and SIC registry updated. NEXT operator local smoke/export and actual human recruitment; no repetitive infrastructure unless concrete issue.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

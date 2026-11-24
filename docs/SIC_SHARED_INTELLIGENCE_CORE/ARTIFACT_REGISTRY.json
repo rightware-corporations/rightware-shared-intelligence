@@ -248,6 +248,14 @@
     {
       "path": "docs/research/SI_MH_0080_E1_04_REVIEW_OPERATIONS.md",
       "status": "REGISTERED_SI_MH_0080"
+    },
+    {
+      "path": "scripts/e1_04_prepare_review.py",
+      "status": "REGISTERED_SI_MH_0082"
+    },
+    {
+      "path": "docs/research/SI_MH_0082_E1_04_PACKAGING_GATE.md",
+      "status": "REGISTERED_SI_MH_0082"
     }
   ],
   "external": [
@@ -311,7 +319,7 @@
   ],
   "last_update": {
     "date": "2026-11-24",
-    "checkpoint": "SI-MH-0080",
+    "checkpoint": "SI-MH-0082",
     "science_gate": "REVIEW_REQUIRED",
     "ci": "PENDING",
     "human_reviews": 0

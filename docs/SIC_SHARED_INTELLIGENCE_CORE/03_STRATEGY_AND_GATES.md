@@ -24,3 +24,6 @@ O pacote v2 distingue suporte autoritativo de evidência contraditória não ver
 
 ## SI-MH-0080 — Human execution gate
 [ENG-E1-04 runbook](../research/e1_04/OPERATOR_RUNBOOK.md) and [report](../research/SI_MH_0080_E1_04_REVIEW_OPERATIONS.md). v2 356/356 CI verified; actual distribution and browser smoke pending; no human results. E1.1C is waiting for real reviewers and reserved curator, not more model code.
+
+## SI-MH-0082 — Human execution helper
+[Local packaging](../research/SI_MH_0082_E1_04_PACKAGING_GATE.md); five mock checks passed; actual human reviews absent, browser smoke not run. No scientific pass.

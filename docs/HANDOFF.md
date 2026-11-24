@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0081 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0082 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -198,7 +198,7 @@
 - **NEXT SI-RD-03A:** verificar CI do presente commit, construir adaptadores isolados com pins e env attestation; recolher outputs imutáveis 56 queries antes de abrir a chave e pontuar. Não modificar WorkCore R2, G01/G04, main, JARVIS/PULSE.
 
 ## Next exact work
-**PRIORIDADE ENG-E1-04 / E1.1C:** executar [runbook operacional](research/e1_04/OPERATOR_RUNBOOK.md). CI v2 356/356 confirmado; toolkit local pronto, browser smoke e distribuição NOT_RUN. Operador deve seleccionar dois revisores humanos independentes, terceiro adjudicador e curador reservado; exportar A/B v2 localmente e receber 24 classes + 560 ratings por revisor. CUSTODY_ONLY e resultados privados. E1_DATA_READY=REVIEW_REQUIRED; E1.2 baselines → E1.3 RW-R1 treinável → E1.4 calibração → E1.5 held-out após gate. G04 paralelo, v0.8 comparação NOT_RUN; não auto-DONE nem release main.
+**ENG-E1-04 / E1.1C — HUMAN INPUT REQUIRED:** confirm CI, then run `python scripts/e1_04_prepare_review.py` on clean local develop with private custody; browser smoke before dispatch. [Packaging checkpoint](research/SI_MH_0082_E1_04_PACKAGING_GATE.md). Operator arranges two independent real reviewers + adjudicator/curator, distributes only individual ZIPs and collects private submissions. No reviewer/gold/adjudication yet; E1_DATA_READY=REVIEW_REQUIRED. If unavailable BLOCKED_HUMAN_REVIEW; avoid more infrastructure churn without concrete blocker. E1.2 baselines → E1.3 RW-R1 → E1.4 calibration → E1.5 held-out after gate. G04 parallel; A0 comparison NOT_RUN; never auto-DONE or release main.
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
@@ -526,3 +526,6 @@
 
 **Próximo passo:** verificar CI deste checkpoint; continuar ENG-E1-04 com browser smoke local, exportação V2, custódia e revisores humanos reais segundo [runbook](research/e1_04/OPERATOR_RUNBOOK.md). E1.2–E1.5 permanecem pendentes. Se não houver revisores, registar BLOCKED_HUMAN_REVIEW, não simular resultados.
 
+
+## SI-MH-0082 — Local packaging helper; human input required (CI PENDING)
+- SI-MH-0081 policy retained. [Report](research/SI_MH_0082_E1_04_PACKAGING_GATE.md). Five mock packaging checks PASS; browser E2E NOT_RUN, real operator export and dispatch NOT_RUN. Human submissions 0; E1_DATA_READY REVIEW_REQUIRED. No Core/SQL/API/G04/main changes.
