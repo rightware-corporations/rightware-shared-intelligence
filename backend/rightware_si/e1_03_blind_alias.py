@@ -11,10 +11,10 @@ import secrets
 import random
 from rightware_si.e1_01_data_eval import _required
 from rightware_si.e1_03_review_protocol import (
-    _digest, _cohen, _quadratic_weighted, validate_submission,
+    _digest, _cohen, _quadratic_weighted, validate_submission, SCHEMA_V2,
 )
 
-SCHEMA="rightware-e1-03b-opaque-map-v1"
+SCHEMA="rightware-e1-03b-opaque-map-v2"
 
 
 def issue_packets(original: dict) -> tuple[dict, dict]:
@@ -48,7 +48,7 @@ def issue_packets(original: dict) -> tuple[dict, dict]:
         rng.shuffle(documents)
         rng.shuffle(queries)
         packet={
-            "schema_version":original["schema_version"],
+            "schema_version":SCHEMA_V2,
             "dataset_id":original["dataset_id"],
             "data_sha256":deepcopy(original["data_sha256"]),
             "review_slot":slot,
@@ -79,7 +79,8 @@ def audit_packets(original:dict,packets:dict,custody:dict)->None:
         mapping=custody["slots"][slot]
         source_index={d["source_id"]:d for d in pack["documents"]}
         query_index={q["query_id"]:q for q in pack["queries"]}
-        _required(pack.get("review_slot")==slot
+        _required(pack.get("schema_version")==SCHEMA_V2
+                  and pack.get("review_slot")==slot
                   and pack.get("status")=="REVIEWER_OPAQUE_TRAIN_DEV_NO_GOLD"
                   and pack.get("data_sha256")==original["data_sha256"]
                   and mapping["packet_sha256"]==_digest(pack),
@@ -127,12 +128,15 @@ def compare_aliased(a:dict,b:dict,packets:dict,custody:dict,raw:dict)->dict:
         sm=custody["slots"][slot]["sources"]
         qm=custody["slots"][slot]["queries"]
         return {qm[alias]:{"class":record["class"],
-                 "grades":{sm[sid]:v for sid,v in record["grades"].items()}}
+                 "grades":{sm[sid]:v for sid,v in record["grades"].items()},
+                 "conflict_pairs": sorted(tuple(sorted(sm[sid] for sid in pair))
+                    for pair in record["conflict_pairs"])}
                 for alias,record in validation["judgments"].items()}
     x,y=canonical(va,"A"),canonical(vb,"B")
     _required(set(x)==set(y) and len(x)==24,"reviewed different question sets")
     classes_a,classes_b,grades_a,grades_b=[],[],[],[]
     disagreements=0
+    conflict_disagreements=0
     for qid in sorted(x):
         p,r=x[qid],y[qid]
         _required(set(p["grades"])==set(r["grades"]),
@@ -140,6 +144,7 @@ def compare_aliased(a:dict,b:dict,packets:dict,custody:dict,raw:dict)->dict:
         classes_a.append(p["class"])
         classes_b.append(r["class"])
         disagreements+=int(p!=r)
+        conflict_disagreements+=int(p["conflict_pairs"]!=r["conflict_pairs"])
         for sid in sorted(p["grades"]):
             grades_a.append(p["grades"][sid])
             grades_b.append(r["grades"][sid])
@@ -153,6 +158,7 @@ def compare_aliased(a:dict,b:dict,packets:dict,custody:dict,raw:dict)->dict:
         "rating_agreement":round(sum(a==b for a,b in zip(grades_a,grades_b))/560,6),
         "rating_weighted_kappa":_quadratic_weighted(grades_a,grades_b),
         "disagreement_count":disagreements,
+        "conflict_pair_disagreement_queries":conflict_disagreements,
         "independence_authenticated":False,"adjudicated_gold":False,
         "science_gate":"REVIEW_REQUIRED"
     }

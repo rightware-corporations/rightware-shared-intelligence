@@ -172,6 +172,58 @@
     {
       "path": "docs/research/SI_MH_0071_E1_02_CI_VERIFIED.md",
       "status": "VERIFIED_GIT_TREE"
+    },
+    {
+      "path": "backend/rightware_si/e1_03_review_protocol.py",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "backend/rightware_si/e1_03_blind_alias.py",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "scripts/e1_03_review.py",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "tests/test_e1_03_review_process.py",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "tests/test_e1_03_blind_alias.py",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/SI_MH_0073_E1_03_REVIEW_WORKFLOW.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/SI_MH_0074_E1_03_CI_REPAIR.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/SI_MH_0075_E1_03_CI_VERIFIED.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/SI_MH_0077_E1_03B_OPAQUE.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/E1_03B_OPAQUE_REVIEWER_CUSTODY.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "docs/research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md",
+      "status": "REGISTERED_SI_MH_0078"
+    },
+    {
+      "path": "tests/test_e1_03_conflict_contract.py",
+      "status": "REGISTERED_SI_MH_0078"
     }
   ],
   "external": [
@@ -232,5 +284,11 @@
     "Private evaluator key must not be published",
     "E1 human reviewers = 0; E1_DATA_READY = REVIEW_REQUIRED",
     "PostgreSQL Server/Mem0/Hindsight v0.8 = NOT_RUN"
-  ]
+  ],
+  "last_update": {
+    "date": "2026-11-24",
+    "checkpoint": "SI-MH-0078",
+    "science_gate": "REVIEW_REQUIRED",
+    "ci": "PENDING"
+  }
 }

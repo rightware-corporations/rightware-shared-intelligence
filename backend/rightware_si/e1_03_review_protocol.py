@@ -16,7 +16,9 @@ import re
 from rightware_si.e1_01_data_eval import DataIntegrityError, _required, _when
 from rightware_si.e1_02_quality import read_data, audit
 
-SCHEMA = "rightware-e1c-independent-review-v1"
+SCHEMA = "rightware-e1c-independent-review-v1"  # legacy audit/test only
+SCHEMA_V2 = "rightware-e1c-independent-review-v2"
+CONFLICT_FIELDS = {"official_source_id", "opposing_source_id", "opposing_quote", "rationale"}
 CLASSES = {
     "ANSWERABLE", "UNANSWERABLE", "FORBIDDEN_SCOPE",
     "TEMPORAL_INVALID", "AUTHORITY_CONFLICT",
@@ -76,7 +78,7 @@ def make_packet(dataset: Path) -> dict:
 def blank_submission(packet: dict) -> dict:
     documents = packet["documents"]
     return {
-        "schema_version": SCHEMA,
+        "schema_version": packet["schema_version"],
         "dataset_id": packet["dataset_id"],
         "data_sha256": packet["data_sha256"].copy(),
         "packet_sha256": _digest(packet),
@@ -89,6 +91,7 @@ def blank_submission(packet: dict) -> dict:
             {
                 "query_id": q["query_id"],
                 "query_class": "UNSET",
+                **({"conflict_claims": []} if packet["schema_version"] == SCHEMA_V2 else {}),
                 "ratings": [
                     {
                         "source_id": d["source_id"], "grade": None,
@@ -113,11 +116,61 @@ def _eligible(q: dict, d: dict) -> bool:
                  or when < _when(d["valid_until"])))
 
 
+def _current_scoped(q: dict, d: dict) -> bool:
+    """Eligibility to inspect a claim, not authority to answer."""
+    when = _when(q["as_of"])
+    return (q["organization"] == d["organization"]
+            and q["project"] == d["project"]
+            and _when(d["valid_from"]) <= when
+            and _when(d["observed_at"]) <= when
+            and (d["valid_until"] is None or when < _when(d["valid_until"])))
+
+
+def _conflict_pairs(j: dict, q: dict, docs: dict, grades: dict) -> list:
+    """Structural support for HUMAN-ASSERTED contradictions, never truth proof."""
+    claims = j["conflict_claims"]
+    _required(isinstance(claims, list), "conflict claims must be a list")
+    if j["query_class"] != "AUTHORITY_CONFLICT":
+        _required(not claims, "only AUTHORITY_CONFLICT may carry conflict pairs")
+        return []
+    _required(bool(claims), "authority conflict requires an explicit contradiction pair")
+    pairs = set()
+    for claim in claims:
+        _required(isinstance(claim, dict) and set(claim) == CONFLICT_FIELDS,
+                  "invalid conflict pair fields")
+        left, right = claim["official_source_id"], claim["opposing_source_id"]
+        _required(isinstance(left, str) and isinstance(right, str)
+                  and left != right and left in docs and right in docs,
+                  "unknown, identical or out-of-split conflict source")
+        official, opponent = docs[left], docs[right]
+        _required(_eligible(q, official) and grades[left] >= 2,
+                  "conflict anchor must be eligible official supporting evidence")
+        _required(_current_scoped(q, opponent)
+                  and opponent["authority"] in ("OFFICIAL_SOURCE", "UNVERIFIED_CLAIM"),
+                  "opposing claim must be in scope and current")
+        if opponent["authority"] == "OFFICIAL_SOURCE":
+            _required(grades[right] >= 2, "official opposing source needs supporting grade")
+        else:
+            _required(grades[right] == 0, "unverified claim cannot support an authoritative answer")
+        quote, rationale = claim["opposing_quote"], claim["rationale"]
+        _required(isinstance(quote, str) and len(quote.strip()) >= 6
+                  and quote in opponent["text"],
+                  "opposing quote must be a literal evidence span")
+        _required(isinstance(rationale, str) and len(rationale.strip()) >= 10,
+                  "human contradiction rationale required")
+        pair = tuple(sorted((left, right)))
+        _required(pair not in pairs, "duplicate conflict pair")
+        pairs.add(pair)
+    return sorted(pairs)
+
+
 def validate_submission(submission: dict, packet: dict) -> dict:
     _required(isinstance(submission, dict)
               and set(submission) == SUBMISSION_FIELDS,
               "submission schema/fields invalid")
-    _required(submission["schema_version"] == SCHEMA
+    version = packet.get("schema_version")
+    _required(version in (SCHEMA, SCHEMA_V2), "unsupported packet schema")
+    _required(submission["schema_version"] == version
               and submission["dataset_id"] == packet["dataset_id"]
               and submission["data_sha256"] == packet["data_sha256"]
               and submission["packet_sha256"] == _digest(packet),
@@ -144,7 +197,8 @@ def validate_submission(submission: dict, packet: dict) -> dict:
         for s in ("train", "dev")
     }
     for j in judgments:
-        _required(set(j) == JUDGMENT_FIELDS, "judgment fields invalid")
+        fields = JUDGMENT_FIELDS | ({"conflict_claims"} if version == SCHEMA_V2 else set())
+        _required(set(j) == fields, "judgment fields invalid")
         qid = j["query_id"]
         _required(isinstance(qid, str)
                   and qid in expected_q and qid not in by_q,
@@ -196,13 +250,16 @@ def validate_submission(submission: dict, packet: dict) -> dict:
         ):
             _required(high_grades == 0,
                       "negative class contradicts supported positive grade")
-        else:
+        elif version == SCHEMA:
             _required(high_grades >= 2,
-                      "authority conflict needs at least two candidate sources")
+                      "legacy authority conflict needs two eligible sources")
         by_q[qid] = {
             "class": j["query_class"],
             "grades": rated,
         }
+        if version == SCHEMA_V2:
+            by_q[qid]["conflict_pairs"] = _conflict_pairs(
+                j, q, docs_by_split[q["split"]], rated)
     _required(set(by_q) == set(expected_q), "query review coverage incomplete")
     return {"pseudonym": reviewer, "judgments": by_q,
             "query_count": len(by_q),
@@ -240,7 +297,7 @@ def compare_submissions(a: dict, b: dict, packet: dict) -> dict:
     disagreeing_queries = []
     for qid in ids:
         x, y = first["judgments"][qid], second["judgments"][qid]
-        if x["class"] != y["class"] or x["grades"] != y["grades"]:
+        if x != y:
             disagreeing_queries.append(qid)
         for sid in sorted(x["grades"]):
             ratings_a.append(x["grades"][sid])

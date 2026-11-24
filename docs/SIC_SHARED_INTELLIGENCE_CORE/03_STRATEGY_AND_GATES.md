@@ -18,3 +18,6 @@
 
 ## SI-MH-0076 — Reviewer ID blinding gap (auditoria, não implementação)
 - [Relatório completo](../research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md): apesar do CI E1.1C **328/328 PASS**, o pacote revela IDs que permitem reconstruir **24/24** labels provisórios, embora os valores gold não sejam exportados. Não distribuir como blind review sem aliases e custódia. Próximo patch **ENG-E1-03B**; E1_DATA_READY segue REVIEW_REQUIRED e reviewers reais=0.
+
+## Adenda SI-MH-0078 — E1.1C
+O pacote v2 distingue suporte autoritativo de evidência contraditória não verificada. [Contrato](../research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md). CI pendente; não distribuir v1. E1_DATA_READY REVIEW_REQUIRED, 0 revisores humanos documentados. Depois de CI aprovado, executar revisão humana e curadoria reservada, não saltar para treino.

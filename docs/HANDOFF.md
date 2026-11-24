@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0077 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0078 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -198,7 +198,7 @@
 - **NEXT SI-RD-03A:** verificar CI do presente commit, construir adaptadores isolados com pins e env attestation; recolher outputs imutáveis 56 queries antes de abrir a chave e pontuar. Não modificar WorkCore R2, G01/G04, main, JARVIS/PULSE.
 
 ## Next exact work
-**PRIORIDADE ENG-E1-03B / E1.1C:** corrigir leakage de IDs do pacote **antes** de enviar formulários a revisores: `q1→d1`, `q2→d2`, `q3/q4` negativos permitem inferir 24/24 labels provisórios. Implementar aliases opacos A/B independentes + mapa privado + shuffle e testes adversariais, mantendo dataset e eval inalterados. Depois organizar dois revisores humanos independentes e terceiro adjudicador com gold evaluator-only realmente oculto. `E1_DATA_READY=REVIEW_REQUIRED` até aceite. E1.2 baselines → E1.3 RW-R1 treinável → E1.4 calibração → E1.5 ciência held-out. G04 IAM/tenancy/privacy é paralelo; v0.8 PostgreSQL Server/Mem0/Hindsight NOT_RUN. Nunca auto-DONE nem release `main`. [P0 audit](research/SI_MH_0076_E1_03_BLIND_ID_AUDIT.md).
+**PRIORIDADE E1.1C / ENG-E1-03C:** verificar CI de schema v2 conflito/autoridade e IDs opacos. Após CI verde, exportar novos pacotes locais v2 (não reutilizar v1); obter dois revisores humanos independentes e terceiro adjudicador, curador externo e holdout reservado. E1_DATA_READY=REVIEW_REQUIRED. E1.2 baselines → E1.3 RW-R1 treinável → E1.4 calibração → E1.5 ciência held-out. G04 IAM/tenancy/privacy paralelo; A0 v0.8 comparação NOT_RUN. Nunca auto-DONE nem release main. [Contrato v2](research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md).
 
 ## Recovery protocol
 1. Read develop HEAD and docs/HANDOFF_MASTER.md last entry.
@@ -499,3 +499,6 @@
 - Base develop@e06c1e6e497ad716e604a6e7a5bd7322fab22704, SI-MH-0076 P0 de IDs q1/d1 que permitem deduzir 24/24 gold provisório. [Fix documentado](research/SI_MH_0077_E1_03B_OPAQUE.md): aliases DOC/QUE aleatórios e separados por revisor; pastas A/B e CUSTODY_ONLY/.runtime; mapping protegido fora do Git, comparação segura com reconciliação.
 - 13 testes novos; suite 341 esperada, CI PENDING. Dados originais, hashes, 8 eval unlabeled e SI-RD sealed benchmark intactos. **NÃO É verdadeira avaliação cega** por corpus/rótulos públicos; 0 humanos, 0 adjudicação/gold, E1_DATA_READY REVIEW_REQUIRED. P1 AUTHORITY_CONFLICT permanece aberto.
 - G04 OIDC/RLS, E1.2–E1.5 não realizados. Sem dados privados, public API, SQL, main/JARVIS/PULSE/vendor Mem0. Próximo: CI, revisão humana genuína com corpus independente e custódia.
+
+## SI-MH-0078 — ENG-E1-03C conflict annotation v2 (CI PENDING)
+- [Contract and implementation](research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md): separates authority support grade from explicitly cited contradiction; unverified claim stays grade 0. New opaque v2 packets/custody, private A/B pair reconciliation; +15 mock tests, 356 expected (341+15). Local execution NOT_RUN; new CI PENDING. Previous SI-MH-0077 CI at read completed/success. No actual humans/gold; E1_DATA_READY REVIEW_REQUIRED. No Core/API/SQL/production/main/JARVIS/PULSE/vendor change. NEXT check CI and recruit independent humans + external curator.

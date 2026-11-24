@@ -1174,6 +1174,16 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **NEXT:** verificar CI e depois planejar rótulos humanos + conjunto independente reservado; sem distribuir pacotes antigos.
 
+---
+
+## SI-MH-0078 — ENG-E1-03C versioned contradiction annotation (IMPLEMENTED; CI PENDING)
+
+**2026-11-24 Africa/Maputo. Base:** `develop@a09cd71413c559380de8cffd0f5b992a1cb62581`; SI-MH-0077 CI [45346421772](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346421772) completed/success. Fix P1 from SI-MH-0076: v2 opaque reviewer packet and map, explicit conflict pair with current eligible official anchor and scoped/current opposing source, literal quote and rationale. UNVERIFIED_CLAIM stays grade 0 for authoritative support, not ignored as contradictory evidence. Canonical pair comparison private; no automated truth validation. Legacy v1 kept for historical tests, not current distribution. [Contract](research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md).
+
+**Evidence:** +15 mock negative/positive contract tests, 356 total expected conditional on previous CI. No local execution (network unavailable), own CI PENDING. Corpus, labels, holdout and sealed A0-GLOBAL-02 unchanged; 0 human submissions, adjudication absent; E1_DATA_READY REVIEW_REQUIRED. E1.2–E1.5, G04 real IAM/RLS and production still open. No Core SQL/API, main/JARVIS/PULSE/vendor changes. Next verify CI, then arrange independent humans and reserved curator holdout. Both handoffs and SIC index updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
