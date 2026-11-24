@@ -1352,6 +1352,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0098 — TRUST G04-A1-LAB-04 synthetic resource authorization (CI PENDING)
+- Base `develop@daab717b743f347e8c51f168b6038bf20d80b2ea`. CI 45372048743 completed/success: core job 138368509061 356 tests in 21.771s, HANDOFF_POLICY_PASS, WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS, WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS; lab job 138368509482 73 tests in 0.767s; browser job 138368509478 E1_04_BROWSER_SMOKE_PASS. Prior publication transient updateRefs error recovered by verifying commit and retrying expected parent without force.
+- [Implementation and limits](work03b/G04_A1_LAB_04_RESOURCE_AUTHORIZATION.md). Existing lab extends verified credential -> principal -> org/project -> resource/action/purpose decision, exact allowlist, deny default, freshness, revoked grant and lineage checks, revalidation and non-capability result. 25 new tests, 98 expected lab; CI PENDING. No real execution, DB/runtime/API/MCP, provider, deployment, LEARN/main, approval or DONE changes. Original 28 oracles unchanged; E1_DATA_READY REVIEW_REQUIRED. Next verify CI and delimit vertical integration, no endless isolated lab extensions. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

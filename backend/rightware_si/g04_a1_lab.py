@@ -602,3 +602,181 @@ class SyntheticScopeResolver:
         self._last_now = end
         return ScopedPrincipal(principal.principal_id, organization_id, project_id,
                                principal.kind, expiry)
+
+
+# G04-A1-LAB-04 — deny-by-default decision over synthetic resource metadata.
+# No access to payloads, actual tasks, external tools, storage or live services.
+MAX_POLICY_ROWS = 256
+RESOURCE_ACTIONS = {
+    "TASK": frozenset(("task:read", "task:write")),
+    "MEMORY": frozenset(("memory:read",)),
+    "EVIDENCE": frozenset(("evidence:read",)),
+}
+LAB_PURPOSES = frozenset(("syn-purpose-work", "syn-purpose-audit"))
+
+
+@dataclass(frozen=True)
+class ResourceRecord:
+    resource_id: str = field(repr=False)
+    organization_id: str = field(repr=False)
+    project_id: str = field(repr=False)
+    kind: str
+    classification: str
+    active: bool
+
+
+@dataclass(frozen=True)
+class ResourceGrant:
+    principal_id: str = field(repr=False)
+    resource_id: str = field(repr=False)
+    action: str
+    purpose: str
+    active: bool
+    expires_at: int
+
+
+@dataclass(frozen=True)
+class ResourcePolicySnapshot:
+    observed_at: int
+    valid_until: int
+    resources: tuple[ResourceRecord, ...] = field(repr=False)
+    grants: tuple[ResourceGrant, ...] = field(repr=False)
+
+
+@dataclass(frozen=True)
+class ResourceDecision:
+    allowed: bool
+    status: str
+    # Diagnostic result only: not an authorization token or executable grant.
+    valid_until: int | None = None
+
+
+class SyntheticResourceAuthorizer:
+    """Evaluate exact resource, action and purpose after fresh scope resolution.
+
+    This is only an offline evaluator over trusted synthetic snapshots. Results
+    never confer authority to access real resources or perform mutations.
+    """
+    def __init__(self, key_snapshot: Callable[[], Snapshot],
+                 directory_snapshot: Callable[[], DirectorySnapshot],
+                 scope_snapshot: Callable[[], ScopeSnapshot],
+                 policy_snapshot: Callable[[], ResourcePolicySnapshot],
+                 clock: Callable[[], int]):
+        if not enabled() or not callable(policy_snapshot) or not callable(clock):
+            reject()
+        self._scoped = SyntheticScopeResolver(key_snapshot, directory_snapshot,
+                                              scope_snapshot, clock)
+        self._policy = policy_snapshot
+        self._clock = clock
+        self._lock = Lock()
+        self._last_now = None
+        self._last_policy = None
+        self._history = {}
+
+    def evaluate(self, token, expected_kind, organization_id, project_id,
+                 resource_id, action, purpose):
+        try:
+            with self._lock:
+                return self._evaluate(token, expected_kind, organization_id,
+                                      project_id, resource_id, action, purpose)
+        except Exception:
+            # Generic result avoids distinguishing nonexistent and denied IDs.
+            return ResourceDecision(False, "DENY_SYNTHETIC")
+
+    def _read_policy(self, now):
+        snap = self._policy()
+        if (type(snap) is not ResourcePolicySnapshot
+                or not number(snap.observed_at) or not number(snap.valid_until)
+                or not (snap.observed_at <= now < snap.valid_until
+                        <= snap.observed_at + MAX_SNAPSHOT_AGE)
+                or type(snap.resources) is not tuple or type(snap.grants) is not tuple
+                or len(snap.resources) + len(snap.grants) > MAX_POLICY_ROWS):
+            reject()
+        resources, grants, rows = {}, {}, {}
+        for row in snap.resources:
+            if (type(row) is not ResourceRecord
+                    or not all(ident(v) for v in
+                               (row.resource_id,row.organization_id,row.project_id))
+                    or type(row.kind) is not str or row.kind not in RESOURCE_ACTIONS
+                    or row.classification != "SYNTHETIC"
+                    or type(row.active) is not bool or row.resource_id in resources):
+                reject()
+            resources[row.resource_id] = row
+            rows[("resource",row.resource_id)] = row
+        for row in snap.grants:
+            if (type(row) is not ResourceGrant
+                    or not ident(row.principal_id) or not ident(row.resource_id)
+                    or row.resource_id not in resources
+                    or type(row.action) is not str
+                    or row.action not in RESOURCE_ACTIONS[resources[row.resource_id].kind]
+                    or type(row.purpose) is not str or row.purpose not in LAB_PURPOSES
+                    or type(row.active) is not bool or not number(row.expires_at)):
+                reject()
+            key = (row.principal_id,row.resource_id,row.action,row.purpose)
+            if key in grants:
+                reject()
+            grants[key] = row
+            rows[("grant",*key)] = row
+        stamp = (snap.observed_at,snap.valid_until,frozenset(rows.items()))
+        previous = self._last_policy
+        if previous is not None:
+            if stamp[0] < previous[0] or (stamp[0] == previous[0] and stamp != previous):
+                reject()
+        previous_keys = {key for key,_ in previous[2]} if previous else set()
+        history = dict(self._history)
+        for key,row in rows.items():
+            prior = history.get(key)
+            if prior is not None:
+                if key not in previous_keys or (not prior.active and row.active):
+                    reject()
+                if type(row) is ResourceRecord and (
+                        row.organization_id,row.project_id,row.kind,row.classification) != (
+                        prior.organization_id,prior.project_id,prior.kind,prior.classification):
+                    reject()
+            history[key] = row
+        if len(history) > MAX_POLICY_ROWS:
+            reject()
+        self._history,self._last_policy = history,stamp
+        return stamp,resources,grants
+
+    def _evaluate(self,token,expected_kind,organization_id,project_id,
+                  resource_id,action,purpose):
+        if (not enabled() or not ident(resource_id)
+                or type(action) is not str or type(purpose) is not str
+                or purpose not in LAB_PURPOSES):
+            reject()
+        # No approval, deletion, administration, external execution or source
+        # ingestion action exists in this lab allowlist.
+        if not any(action in actions for actions in RESOURCE_ACTIONS.values()):
+            reject()
+        scoped = self._scoped.resolve(token,expected_kind,organization_id,project_id)
+        now = self._clock()
+        if (not number(now) or now >= scoped.expires_at
+                or (self._last_now is not None and now < self._last_now)):
+            reject()
+        self._last_now = now
+        stamp,resources,grants = self._read_policy(now)
+        resource = resources.get(resource_id)
+        grant = grants.get((scoped.principal_id,resource_id,action,purpose))
+        if (resource is None or grant is None or not resource.active or not grant.active
+                or resource.organization_id != scoped.organization_id
+                or resource.project_id != scoped.project_id
+                or action not in RESOURCE_ACTIONS[resource.kind]
+                or now >= grant.expires_at):
+            reject()
+        # Recheck scope and then the policy after callbacks. A policy change
+        # during a decision causes denial, even if the new policy would allow.
+        refreshed = self._scoped.resolve(token,expected_kind,organization_id,project_id)
+        if (refreshed.principal_id,refreshed.kind,refreshed.organization_id,refreshed.project_id) != (
+                scoped.principal_id,scoped.kind,scoped.organization_id,scoped.project_id):
+            reject()
+        mid = self._clock()
+        if not number(mid) or mid < now:
+            reject()
+        second,_,_ = self._read_policy(mid)
+        end = self._clock()
+        expiry = min(scoped.expires_at,refreshed.expires_at,stamp[1],grant.expires_at)
+        if second != stamp or not number(end) or end < mid or end >= expiry:
+            reject()
+        self._last_now = end
+        return ResourceDecision(True,"ALLOW_SYNTHETIC_EVALUATION_ONLY",expiry)

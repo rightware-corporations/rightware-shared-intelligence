@@ -42,3 +42,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0097 — TRUST LAB-03
 - LAB-02 dedicated 50 tests PASS; LAB-03 active, existing isolated module + tests and docs only, explicit synthetic memberships, no resource grant or real tenant. CI pending. LEARN independent. No cross-track integration or deployment.
+
+## SI-MH-0098 — TRUST LAB-04
+- LAB-03 verified all jobs (73 lab,356 core,browser). LAB-04 active, synthetic resource policy only in existing lab, dedicated tests and docs; CI pending. No real client integration/production. LEARN remains independent; next bounded integration proposal after CI.
