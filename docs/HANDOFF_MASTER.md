@@ -1395,6 +1395,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0105 — TRUST SEC-R2-X01 authorized baseline diagnostics (CI PENDING)
+- Base `develop@0038c177f42b568d8b197dc2f33a25bb7155fc21`. Operator approved SI-MH-0104 SR-F01/F02 disposable laboratory only; no fixes or MCP. [Frozen protocol](research/SI_MH_0105_SEC_R2_X01_EXPERIMENT_PROTOCOL.md). SI-MH-0104 CI 45438968050 in_progress/PENDING; previous research CI success.
+- Three diagnostic test methods appended to existing 29-test A2 suite; test-only helper observes real DB reads, independent committed revocation and deterministic barriers. F01 3 trials, F02 3 each at two barriers. Positive/unrelated controls, restoration, no payload mutation. Original enforcement and workflow unchanged, 32 expected A2 tests. CI pending; no observations claimed. No production, runtime, migration, MCP, LEARN or original oracle changes. Next record actual results before any mitigation. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

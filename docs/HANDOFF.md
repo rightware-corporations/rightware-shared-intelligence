@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0104 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0105 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -640,4 +640,8 @@
 - Base `develop@6fdefe5dff3e825db7b518c920835ecaaeec53a4`; SI-MH-0103 CI 45412560422 completed SUCCESS. Operator uploaded ten-page PDF (SHA-256 5b7c73f3492b9bfc00eb9c17b6fac6c80d429689394fe43b82a2d92adab2250b). [Audit and experiment proposal](research/SI_MH_0104_SEC_R_INDEPENDENT_RESEARCH_A_AUDIT.md).
 - Reviewed all pages; selected primary sources verified, not all 45 refs or full methods. NIST 207A final replaces draft; RFC 9700 supplements older OAuth; PG16 docs pinned; distinguish Cedar/OpenFGA/SpiceDB consistency, AgentDojo, MPBench and MCP studies; ref 22 unavailable, ref 18 ACM denied but author abstract corroborated. No technology selection or independent pentest claim. No original PDF republished.
 - Propose SEC-R2-X01 negative-first SR-F01/F02 in existing disposable lab with pre-registered revocation semantics, independent session/barriers and baseline evidence; NOT_RUN, no code/CI/runtime/LEARN/main changes or deployment. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next bounded operator approval; both handoffs updated, own CI pending.
+
+## SI-MH-0105 — TRUST SEC-R2-X01 authorized baseline diagnostics (CI PENDING)
+- Base `develop@0038c177f42b568d8b197dc2f33a25bb7155fc21`. Operator approved SI-MH-0104 SR-F01/F02 disposable laboratory only; no fixes or MCP. [Frozen protocol](research/SI_MH_0105_SEC_R2_X01_EXPERIMENT_PROTOCOL.md). SI-MH-0104 CI 45438968050 in_progress/PENDING; previous research CI success.
+- Three diagnostic test methods appended to existing 29-test A2 suite; test-only helper observes real DB reads, independent committed revocation and deterministic barriers. F01 3 trials, F02 3 each at two barriers. Positive/unrelated controls, restoration, no payload mutation. Original enforcement and workflow unchanged, 32 expected A2 tests. CI pending; no observations claimed. No production, runtime, migration, MCP, LEARN or original oracle changes. Next record actual results before any mitigation. Both handoffs updated.
 

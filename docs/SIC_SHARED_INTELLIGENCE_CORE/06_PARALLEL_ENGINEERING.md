@@ -63,3 +63,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0104 — TRUST independent research A reviewed
 - Source audit and experiment contract proposed; SEC-R0/R1 partial, SR-F01/F02 NOT_RUN. No MCP expansion or runtime/LEARN changes. [Research audit](../research/SI_MH_0104_SEC_R_INDEPENDENT_RESEARCH_A_AUDIT.md). Await bounded synthetic test authorization.
+
+## SI-MH-0105 — TRUST SEC-R2-X01 active
+- Explicit operator approval for SR-F01/F02 only; test-only diagnostics on existing guarded disposable DB. Baseline unchanged, no fixes/MCP/LEARN. CI pending. [Protocol](../research/SI_MH_0105_SEC_R2_X01_EXPERIMENT_PROTOCOL.md).

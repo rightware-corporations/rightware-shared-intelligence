@@ -450,6 +450,18 @@ class DatabaseIsolation(unittest.TestCase):
         self.assertEqual(f.calls,["g04_alpha","g04_beta","g04_beta"])
         self.assertEqual(self.baseline(),before)
 
+    def test_30_sec_r2_x01_identity_revocation_diagnostic(self):
+        from sec_r2_x01 import identity_revocation
+        identity_revocation(self)
+
+    def test_31_sec_r2_x01_between_reads_diagnostic(self):
+        from sec_r2_x01 import revocation_race
+        revocation_race(self,1)
+
+    def test_32_sec_r2_x01_after_final_read_diagnostic(self):
+        from sec_r2_x01 import revocation_race
+        revocation_race(self,2)
+
 
 if __name__=="__main__":
     unittest.main(verbosity=2)
