@@ -46,3 +46,6 @@ ENG-E1-04B verified, human science gate remains REVIEW_REQUIRED. [G04-A1-LAB-01 
 
 ## SI-MH-0090 — LEARN X02 Kaggle reproduced
 [Audit](../research/SI_MH_0090_E1_X02_KAGGLE_AUDIT.md). Pairwise under explicit/pointwise; dev 9 wrong positive-confidence candidates, zero coverage remains. Next proposed X03 evidence assertion/support, no scientific gate advancement.
+
+## SI-MH-0091 — G04-A1-LAB-01
+Operator-approved isolated signed synthetic identity experiment implemented, test execution pending; not real OIDC, runtime, RLS or release. Formal G04 and E1 gates unchanged. See [report](../work03b/G04_A1_LAB_01_IMPLEMENTATION.md).

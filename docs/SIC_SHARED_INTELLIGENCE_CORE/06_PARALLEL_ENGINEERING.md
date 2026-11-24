@@ -27,3 +27,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 ## SI-MH-0089 — TRUST gate closed; proposed G04 mission
 - TRUST ENG-E1-04B verified in two green CI runs. Review tooling closed absent defects. Human execution awaiting independent reviewers and curator. Proposed G04-A1-LAB-01 awaits explicit scope approval; until then no G04 implementation. See [decision packet](../research/SI_MH_0089_TRUST_BROWSER_CLOSE_G04_A1_SCOPE.md).
 - LEARN remains owner of E1-X02 Kaggle reproduction and experimental algorithm work (SI-MH-0088). Shared publication protocol unchanged.
+
+## SI-MH-0091 — TRUST mission active
+- Operator approved G04-A1-LAB-01 exactly as SI-MH-0089. TRUST owns new g04_a1_lab module, dedicated tests, lab requirements, standalone path-scoped CI and G04_A1 documentation; no shared runtime or broad CI edits. Implementation published, execution pending. LEARN owns X03; no overlap. ENG-E1-04B remains verified; human review awaiting real input.

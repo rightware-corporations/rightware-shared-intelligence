@@ -1304,6 +1304,13 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0091 — TRUST G04-A1-LAB-01 approved and implemented (CI PENDING)
+- Base `develop@17dbc2523b09cec494c7a72d96e5eebed34ba9b1`; operator explicitly approved SI-MH-0089 synthetic-only scope. SI-MH-0090 CI 45367338050 and SI-MH-0089 CI 45367296242 SUCCESS. LEARN retains X03; no algorithm changes.
+- [Implementation/decision report](work03b/G04_A1_LAB_01_IMPLEMENTATION.md): isolated RS256 verifier with strict profiles/schema, synthetic clock, snapshot freshness, revocation/generation, fail-closed handling and atomic single-instance one-time exchange receipt. PyJWT 2.15.1 / cryptography 50.0.2 lab-only pinned; 26 real RSA unit tests authored; new isolated workflow, existing CI unchanged. Local exact pinned execution NOT_RUN (checkout DNS unavailable); new CI pending, no PASS claimed.
+- No real IdP, real authentication/authorization, provider, DB/ACL/RLS, runtime, API, customer data, main/JARVIS/PULSE/vendor, sealed A0 or LEARN changes. 28 G04 oracles remain NOT_IMPLEMENTED, E1_DATA_READY REVIEW_REQUIRED. NEXT inspect actual CI and record evidence/repairs; human gate remains separate.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
