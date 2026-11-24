@@ -43,3 +43,6 @@ O pacote v2 distingue suporte autoritativo de evidência contraditória não ver
 
 ## SI-MH-0089 — TRUST engineering gate closed
 ENG-E1-04B verified, human science gate remains REVIEW_REQUIRED. [G04-A1-LAB-01 decision packet](../research/SI_MH_0089_TRUST_BROWSER_CLOSE_G04_A1_SCOPE.md) proposed, not approved. A0 ratification remains binding; no real IAM/RLS or provider decision. LEARN X02 separately.
+
+## SI-MH-0090 — LEARN X02 Kaggle reproduced
+[Audit](../research/SI_MH_0090_E1_X02_KAGGLE_AUDIT.md). Pairwise under explicit/pointwise; dev 9 wrong positive-confidence candidates, zero coverage remains. Next proposed X03 evidence assertion/support, no scientific gate advancement.

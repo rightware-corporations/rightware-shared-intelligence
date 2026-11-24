@@ -1296,6 +1296,14 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+---
+
+## SI-MH-0090 — LEARN E1-X02 Kaggle reproduction audited; evidence support bottleneck (VERIFIED)
+
+**2026-11-24 Africa/Maputo. Base:** develop@71cc5a9140ea809cca20f96f41bd471f2e402277; CI 45367296242 in_progress/unknown. [Audit](research/SI_MH_0090_E1_X02_KAGGLE_AUDIT.md), [scorecard](research/fixtures/E1_X02_KAGGLE_AUDITED_SCORECARD.json). ZIP 719fa6fa93bfd934720c80b5d5fe1168574c15ca9b4c7d76adf333d7e23b7538; 14 manifest files, 4320 ranking records/candidate counts and source sequences, 90 metrics, 1344 training pair records, 432 decision arithmetic checks, 102 dev threshold outcomes and 15 group deltas verified. All source sequences match local, eight data/metric artifacts byte-identical; weights differ. Pairwise nDCG .9052, explicit .9341, pointwise .9385; no superiority. Dev 19 positive-confidence candidates, 9 wrong sources, zero negative queries positive confidence. Diagnostic 30 positive-confidence candidates, 7 wrong sources, zero negative queries positive confidence. Best nonempty dev empirical risk 25% (2/8); threshold 1.01 accepts zero in dev and diagnostic, risk undefined. Cross-mentions and ambiguous property phrases are concrete failure modes. No promotion, no new training or threshold change. Next proposed LEARN E1-X03: assertion/value/span evidence support and answerability separate from retrieval, stronger negatives and matched controls, dev-only selection. Human review still required; formal E1 gates unchanged. No Core/API/SQL/G04/main/TRUST/vendor/workflow/ sealed A0 changes. Raw ZIP external; report, scorecard, handoffs and registry updated. Own CI PENDING.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

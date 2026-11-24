@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0089 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0090 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -576,3 +576,6 @@
 
 **LEARN:** SI-MH-0088 X02 local experiment completed, Kaggle evidence pending as recorded, no model promotion. LEARN owns reproduction/audit. No notebook/model/corpus changes. Documentation-only checkpoint, both handoffs and coordination updated; own CI PENDING. No runtime, SQL/API, dependencies, G04, main, JARVIS/PULSE/vendor changes.
 
+
+## SI-MH-0090 — LEARN: X02 reproduction and evidence support gap
+- [Audit](research/SI_MH_0090_E1_X02_KAGGLE_AUDIT.md), [scorecard](research/fixtures/E1_X02_KAGGLE_AUDITED_SCORECARD.json). Kaggle reproduction verified: 4320 rankings, 90 metrics, 102 threshold outcomes; no learned superiority, zero coverage. Dev 9 wrong out of 19 positive-confidence candidates. Proposed X03 assertion-aware support/answerability separate from retrieval, no X03 executed. Formal E1_DATA_READY REVIEW_REQUIRED; TRUST independent. Own CI PENDING.
