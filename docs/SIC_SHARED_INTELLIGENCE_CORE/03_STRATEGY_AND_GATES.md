@@ -49,3 +49,6 @@ ENG-E1-04B verified, human science gate remains REVIEW_REQUIRED. [G04-A1-LAB-01 
 
 ## SI-MH-0091 — G04-A1-LAB-01
 Operator-approved isolated signed synthetic identity experiment implemented, test execution pending; not real OIDC, runtime, RLS or release. Formal G04 and E1 gates unchanged. See [report](../work03b/G04_A1_LAB_01_IMPLEMENTATION.md).
+
+## SI-MH-0094 — LEARN X03
+[Report](../research/SI_MH_0094_E1_X03_EXPERIMENT.md). Perfect synthetic retrieval but 11/35 wrong accepts; no learned decision improvement over rule. Kaggle pending; formal gates unchanged.

@@ -1324,6 +1324,14 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+---
+
+## SI-MH-0094 — LEARN E1-X03 evidence support and answerability (LOCAL EXECUTED; KAGGLE NOT_RUN)
+
+**2026-11-24 Africa/Maputo. Base:** develop@14d4327ad0bf887826f452cfcf89b81b22540e51; CI 45368557908 completed/success. [Notebook](research/notebooks/RIGHTWARE_SIC_E1_X03_KAGGLE.ipynb), [report](research/SI_MH_0094_E1_X03_EXPERIMENT.md), [scorecard](research/fixtures/E1_X03_LOCAL_VERIFIED_SCORECARD.json). Exact notebook SHA256 679fc4ad5e61d099f4f957d30e444ac189315221c853ad35ef16375567735c3c, blob 64e53b464a841ec11a458f6bc133156340b6455c. 792 docs/648 queries/72 disjoint groups, 3 fitted logistic models, 57600 training rows/160 positives, 1920 pair comparisons/3840 directions, 4536 rankings and 1944 decision inputs. All 17 cells executed; 20 manifest entries checked, separate audit 105 retrieval metrics/99 decision metrics/306 threshold outcomes and final actions verified. Diagnostic 48 support-bearing queries: learned verifier nDCG 1.000 vs explicit .83849, pointwise .78344, pairwise .76838; synthetic grammar caveat. **Decision still fails:** dev 32 correct accepts/0 wrong, diagnostic 35 accepts (24 correct,11 wrong), 31.43% selective risk, 7/16 correct conflict signals, 102 abstain. Five uncertainty and six incomplete conflict cases wrongly accepted. Rule and learned policy aggregate outcomes identical. Mention-only policy abstains all. No promotion, no production or independent science claim. Zero observed synthetic scope leakage, no real authorization proof. Kaggle NOT_RUN, E1_DATA_READY REVIEW_REQUIRED, formal gates unchanged. TRUST checkpoints preserved; no Core/API/SQL/G04/main/product/vendor/workflow or sealed A0 edits. Next operator Kaggle reproduction ZIP then audit before any X04. Both handoffs and registry updated, own CI PENDING.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

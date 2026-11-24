@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0093 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0094 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -594,3 +594,6 @@
 - CI 45368411599 observed completed/success. Job 138356043979 success: [36;1mpython -c "import jwt, cryptography; print('G04_A1_VERSIONS', jwt.__version__, cryptography.__version__)"[0m; G04_A1_VERSIONS 2.15.1 50.0.2; Ran 29 tests in 0.384s; OK. SI-MH-0092 cryptographic changes preserved unchanged.
 - Repair: move identical isolated synthetic-signed-credentials job into existing ci.yml, explicit read-only permission; remove standalone YAML, retain existing Core/browser jobs verbatim and existing layout test unchanged. No dependency change for other jobs, no production runtime changes. New combined CI pending; 356 core + 29 isolated tests expected, browser separate. Both handoffs and coordination updated, no LEARN/model/API/SQL/G04-A0/main changes. Next verify all three jobs, record evidence. Original 28 G04 acceptance oracles remain NOT_IMPLEMENTED; E1_DATA_READY REVIEW_REQUIRED.
 
+
+## SI-MH-0094 — LEARN X03 local executed; Kaggle pending
+- [Notebook](research/notebooks/RIGHTWARE_SIC_E1_X03_KAGGLE.ipynb), [report](research/SI_MH_0094_E1_X03_EXPERIMENT.md). 4536 rankings, 204 metric rows and 306 dev threshold rows independently reconciled. SupportVerifier synthetic diagnostic nDCG 1.0, but final learned/rule policies both 24 correct / 11 wrong accepts, 7 exact conflicts, 102 abstentions; risk 31.43%. No promotion. Next LEARN Kaggle reproduction; TRUST independent, formal E1_DATA_READY REVIEW_REQUIRED. Own CI PENDING.

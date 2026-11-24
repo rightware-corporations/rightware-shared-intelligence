@@ -1,0 +1,169 @@
+{
+  "schema": "RIGHTWARE_E1_X03_LOCAL_SCORECARD_V1",
+  "checkpoint": "SI-MH-0094",
+  "classification": "PROVISIONAL_SYNTHETIC_NOT_INDEPENDENT",
+  "notebook_sha256": "679fc4ad5e61d099f4f957d30e444ac189315221c853ad35ef16375567735c3c",
+  "notebook_blob": "64e53b464a841ec11a458f6bc133156340b6455c",
+  "local_zip_sha256": "e8b7b61b3fb052bd881eec0866292d12119406e596224d6183cadd5bf39c6163",
+  "counts": {
+    "documents": 792,
+    "queries": 648,
+    "groups": 72,
+    "training_rows": 57600,
+    "training_positive_rows": 160,
+    "pairwise_comparisons": 1920,
+    "pairwise_directions": 3840,
+    "rankings": 4536,
+    "decision_inputs": 1944,
+    "retrieval_metric_rows": 105,
+    "decision_metric_rows": 99,
+    "threshold_rows": 306,
+    "parser_probes": 6,
+    "manifest_entries": 20
+  },
+  "diagnostic_retrieval": [
+    {
+      "method": "BM25-Scope",
+      "n": 48,
+      "hit1": 0.22916666666666666,
+      "hit5": 0.375,
+      "mrr5": 0.28368055555555555,
+      "ndcg5": 0.27980576162652904
+    },
+    {
+      "method": "BM25",
+      "n": 48,
+      "hit1": 0.2708333333333333,
+      "hit5": 0.5208333333333334,
+      "mrr5": 0.33993055555555557,
+      "ndcg5": 0.34617251975073443
+    },
+    {
+      "method": "Hybrid",
+      "n": 48,
+      "hit1": 0.2708333333333333,
+      "hit5": 0.625,
+      "mrr5": 0.36180555555555555,
+      "ndcg5": 0.37802923857606413
+    },
+    {
+      "method": "Explicit",
+      "n": 48,
+      "hit1": 0.6041666666666666,
+      "hit5": 1,
+      "mrr5": 0.7881944444444443,
+      "ndcg5": 0.8384899391273221
+    },
+    {
+      "method": "Pointwise",
+      "n": 48,
+      "hit1": 0.4583333333333333,
+      "hit5": 1,
+      "mrr5": 0.704861111111111,
+      "ndcg5": 0.7834422862808855
+    },
+    {
+      "method": "Pairwise",
+      "n": 48,
+      "hit1": 0.5208333333333334,
+      "hit5": 1,
+      "mrr5": 0.7107638888888889,
+      "ndcg5": 0.7683846412791576
+    },
+    {
+      "method": "SupportVerifier",
+      "n": 48,
+      "hit1": 1,
+      "hit5": 1,
+      "mrr5": 1,
+      "ndcg5": 1
+    }
+  ],
+  "diagnostic_decision": [
+    {
+      "policy": "MentionTop1",
+      "threshold": 1.01,
+      "n": 144,
+      "accepted": 0,
+      "correct": 0,
+      "wrong": 0,
+      "conflict_exact": 0,
+      "conflict_wrong": 0,
+      "abstain": 144,
+      "risk": null
+    },
+    {
+      "policy": "AssertionRule",
+      "threshold": 1,
+      "n": 144,
+      "accepted": 35,
+      "correct": 24,
+      "wrong": 11,
+      "negative_false_accept": 11,
+      "conflict_exact": 7,
+      "conflict_wrong": 0,
+      "abstain": 102,
+      "coverage": 0.24305555555555555,
+      "risk": 0.3142857142857143
+    },
+    {
+      "policy": "LearnedVerifier",
+      "threshold": 0.99,
+      "n": 144,
+      "accepted": 35,
+      "correct": 24,
+      "wrong": 11,
+      "negative_false_accept": 11,
+      "conflict_exact": 7,
+      "conflict_wrong": 0,
+      "abstain": 102,
+      "coverage": 0.24305555555555555,
+      "risk": 0.3142857142857143
+    }
+  ],
+  "learned_dev": {
+    "n": 144,
+    "accepted": 32,
+    "correct": 32,
+    "wrong": 0,
+    "conflict_exact": 16,
+    "abstain": 96,
+    "risk": 0
+  },
+  "learned_diagnostic_classes": {
+    "answerable_id": {
+      "correct": 12,
+      "n": 16
+    },
+    "answerable_alias": {
+      "correct": 12,
+      "n": 16
+    },
+    "uncertain": {
+      "false_accept": 5,
+      "n": 16
+    },
+    "conflict": {
+      "false_accept_single": 6,
+      "correct_conflict": 7,
+      "abstain": 3,
+      "n": 16
+    },
+    "other_negative_classes": {
+      "false_accept": 0
+    }
+  },
+  "paired": {
+    "mean": 0.16151006087267808,
+    "percentiles": [
+      0.11008887546331975,
+      0.21828391262695498
+    ],
+    "groups": 16,
+    "descriptive_only": true
+  },
+  "scope_violations_observed": 0,
+  "science_gate": "REVIEW_REQUIRED",
+  "kaggle": "NOT_RUN",
+  "human_reviews": 0
+}
