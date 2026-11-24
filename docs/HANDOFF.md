@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0102 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0103 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -631,4 +631,8 @@
 ## SI-MH-0102 — TRUST G04-A2-LAB-02 signed identity-to-DB integration (CI PENDING)
 - Base `develop@ea242e2f73b508431e1f0a95b5ade5e9165a3481`. SI-MH-0100 CI 45377653608 SUCCESS all four jobs: 356 Core, 98 A1, 16 A2, browser and real synthetic integration PASS. [Integration contract](work03b/G04_A2_LAB_02_IDENTITY_DB_INTEGRATION.md).
 - Existing disposable A2 lab only: signed RSA -> A1 principal resolver -> trusted provisioned DB login -> exact persisted identity recheck in RLS query. Read-only fresh connection, uniform deny, reverify and re-read; 13 new tests, 29 expected A2, CI PENDING. Fourth job installs existing pinned A1 deps; prior jobs, migrations, backend runtime and LEARN unchanged. No real account linking, external service, provider, production, original G04 oracle or E1 gate promotion. Next verify exact CI. Both handoffs updated.
+
+## SI-MH-0103 — TRUST SEC-R security research and adversarial engineering proposal
+- Base `develop@a476db6cef4fe5314f4aaf437e98a0c549a6f47d`. CI 45378895388 all four jobs SUCCESS: Core 356 (21.139s), A1 98 (0.777s), A2 29 (2.992s PostgreSQL 16.16), browser plus integration markers PASS; 483 total named tests, no production or formal oracle promotion. develop API protected=false, rulesets not audited.
+- Operator requested deeper security research before further feature growth. [Research register and proposed gates](research/SI_MH_0103_TRUST_SECURITY_RESEARCH_ADVERSARIAL_PROGRAM.md): NIST, OWASP ASVS/Agentic, IETF OAuth, MCP, PostgreSQL, Zanzibar/Cedar/OpenFGA/SpiceDB/SPIFFE; eight preliminary risk hypotheses, especially direct DB login after external identity deletion and final-query revocation race; no exploit reproduced. Compare architectures using independent oracles, mutation/property/fuzz/race tests and AI-specific abuse tests. Recommend pausing MCP expansion for SEC-R0/R1 then isolated negative-first experiment; no real attacks, code, CI changes, deployment, production or LEARN edits. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Own CI pending. Both handoffs updated.
 

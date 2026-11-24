@@ -1382,6 +1382,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0103 — TRUST SEC-R security research and adversarial engineering proposal
+- Base `develop@a476db6cef4fe5314f4aaf437e98a0c549a6f47d`. CI 45378895388 all four jobs SUCCESS: Core 356 (21.139s), A1 98 (0.777s), A2 29 (2.992s PostgreSQL 16.16), browser plus integration markers PASS; 483 total named tests, no production or formal oracle promotion. develop API protected=false, rulesets not audited.
+- Operator requested deeper security research before further feature growth. [Research register and proposed gates](research/SI_MH_0103_TRUST_SECURITY_RESEARCH_ADVERSARIAL_PROGRAM.md): NIST, OWASP ASVS/Agentic, IETF OAuth, MCP, PostgreSQL, Zanzibar/Cedar/OpenFGA/SpiceDB/SPIFFE; eight preliminary risk hypotheses, especially direct DB login after external identity deletion and final-query revocation race; no exploit reproduced. Compare architectures using independent oracles, mutation/property/fuzz/race tests and AI-specific abuse tests. Recommend pausing MCP expansion for SEC-R0/R1 then isolated negative-first experiment; no real attacks, code, CI changes, deployment, production or LEARN edits. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Own CI pending. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

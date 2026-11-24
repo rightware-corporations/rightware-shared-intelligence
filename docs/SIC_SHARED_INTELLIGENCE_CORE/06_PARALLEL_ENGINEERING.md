@@ -57,3 +57,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0102 — TRUST A2 LAB-02 active
 - Prior full CI green. Signed synthetic identity to real RLS-protected payload read, existing A2 test directory/schema and isolated job only; 29 expected A2 tests. No runtime or LEARN changes; CI pending. No external MCP or production scope.
+
+## SI-MH-0103 — TRUST research checkpoint
+- LAB-02 verified all four jobs. Operator requested adversarial research; proposed SEC-R gate before further MCP implementation. Research/static hypotheses only; no runtime, CI, operational DB or LEARN edits. [Research register](../research/SI_MH_0103_TRUST_SECURITY_RESEARCH_ADVERSARIAL_PROGRAM.md). Await scope decision before expansion.
