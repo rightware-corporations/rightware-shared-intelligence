@@ -1388,6 +1388,13 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0104 — TRUST independent research A intake and source audit
+- Base `develop@6fdefe5dff3e825db7b518c920835ecaaeec53a4`; SI-MH-0103 CI 45412560422 completed SUCCESS. Operator uploaded ten-page PDF (SHA-256 5b7c73f3492b9bfc00eb9c17b6fac6c80d429689394fe43b82a2d92adab2250b). [Audit and experiment proposal](research/SI_MH_0104_SEC_R_INDEPENDENT_RESEARCH_A_AUDIT.md).
+- Reviewed all pages; selected primary sources verified, not all 45 refs or full methods. NIST 207A final replaces draft; RFC 9700 supplements older OAuth; PG16 docs pinned; distinguish Cedar/OpenFGA/SpiceDB consistency, AgentDojo, MPBench and MCP studies; ref 22 unavailable, ref 18 ACM denied but author abstract corroborated. No technology selection or independent pentest claim. No original PDF republished.
+- Propose SEC-R2-X01 negative-first SR-F01/F02 in existing disposable lab with pre-registered revocation semantics, independent session/barriers and baseline evidence; NOT_RUN, no code/CI/runtime/LEARN/main changes or deployment. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next bounded operator approval; both handoffs updated, own CI pending.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

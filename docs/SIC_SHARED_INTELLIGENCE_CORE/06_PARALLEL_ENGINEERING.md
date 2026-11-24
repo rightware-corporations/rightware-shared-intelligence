@@ -60,3 +60,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0103 — TRUST research checkpoint
 - LAB-02 verified all four jobs. Operator requested adversarial research; proposed SEC-R gate before further MCP implementation. Research/static hypotheses only; no runtime, CI, operational DB or LEARN edits. [Research register](../research/SI_MH_0103_TRUST_SECURITY_RESEARCH_ADVERSARIAL_PROGRAM.md). Await scope decision before expansion.
+
+## SI-MH-0104 — TRUST independent research A reviewed
+- Source audit and experiment contract proposed; SEC-R0/R1 partial, SR-F01/F02 NOT_RUN. No MCP expansion or runtime/LEARN changes. [Research audit](../research/SI_MH_0104_SEC_R_INDEPENDENT_RESEARCH_A_AUDIT.md). Await bounded synthetic test authorization.

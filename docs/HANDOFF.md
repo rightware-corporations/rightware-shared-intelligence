@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0103 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0104 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -635,4 +635,9 @@
 ## SI-MH-0103 — TRUST SEC-R security research and adversarial engineering proposal
 - Base `develop@a476db6cef4fe5314f4aaf437e98a0c549a6f47d`. CI 45378895388 all four jobs SUCCESS: Core 356 (21.139s), A1 98 (0.777s), A2 29 (2.992s PostgreSQL 16.16), browser plus integration markers PASS; 483 total named tests, no production or formal oracle promotion. develop API protected=false, rulesets not audited.
 - Operator requested deeper security research before further feature growth. [Research register and proposed gates](research/SI_MH_0103_TRUST_SECURITY_RESEARCH_ADVERSARIAL_PROGRAM.md): NIST, OWASP ASVS/Agentic, IETF OAuth, MCP, PostgreSQL, Zanzibar/Cedar/OpenFGA/SpiceDB/SPIFFE; eight preliminary risk hypotheses, especially direct DB login after external identity deletion and final-query revocation race; no exploit reproduced. Compare architectures using independent oracles, mutation/property/fuzz/race tests and AI-specific abuse tests. Recommend pausing MCP expansion for SEC-R0/R1 then isolated negative-first experiment; no real attacks, code, CI changes, deployment, production or LEARN edits. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Own CI pending. Both handoffs updated.
+
+## SI-MH-0104 — TRUST independent research A intake and source audit
+- Base `develop@6fdefe5dff3e825db7b518c920835ecaaeec53a4`; SI-MH-0103 CI 45412560422 completed SUCCESS. Operator uploaded ten-page PDF (SHA-256 5b7c73f3492b9bfc00eb9c17b6fac6c80d429689394fe43b82a2d92adab2250b). [Audit and experiment proposal](research/SI_MH_0104_SEC_R_INDEPENDENT_RESEARCH_A_AUDIT.md).
+- Reviewed all pages; selected primary sources verified, not all 45 refs or full methods. NIST 207A final replaces draft; RFC 9700 supplements older OAuth; PG16 docs pinned; distinguish Cedar/OpenFGA/SpiceDB consistency, AgentDojo, MPBench and MCP studies; ref 22 unavailable, ref 18 ACM denied but author abstract corroborated. No technology selection or independent pentest claim. No original PDF republished.
+- Propose SEC-R2-X01 negative-first SR-F01/F02 in existing disposable lab with pre-registered revocation semantics, independent session/barriers and baseline evidence; NOT_RUN, no code/CI/runtime/LEARN/main changes or deployment. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next bounded operator approval; both handoffs updated, own CI pending.
 
