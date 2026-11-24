@@ -1358,6 +1358,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0099 — TRUST G04-A1 verified closure; G04-A2-LAB-01 decision packet
+- Base `develop@fd7903da5af80fbefebbdcdd0592e2cadcd4540b`. CI 45374656422 SUCCESS all 3 jobs: 356 core (27.066s), 98 A1 (0.926s), browser, handoff and real synthetic MCP/REST/Mem0 and bound handoff recovery PASS. Close isolated A1 sequence; no G04 production or formal science promotion.
+- Static audit all eight SQL migrations and actual project/bearer authorization: no RLS/policies/role creation in migrations; existing project grants and composite task FKs preserved. [G04-A2-LAB-01 decision packet](work03b/G04_A2_LAB_01_DECISION_PACKET.md) freezes disposable PostgreSQL 16 separate database, restricted direct-login roles, explicit persisted membership/resource/purpose grants, FORCE RLS and 16 DB_REAL_LAB test families. Existing schema/migrations/CI unchanged. No SQL run, tables, provider, deployment, LEARN/model/main changes. Prior approvals exclude new DB tables; explicit bounded approval requested. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next after authorization implement and verify isolated DB proof. Both handoffs updated; own CI pending.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

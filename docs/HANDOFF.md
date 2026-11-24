@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0098 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0099 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -615,4 +615,8 @@
 ## SI-MH-0098 — TRUST G04-A1-LAB-04 synthetic resource authorization (CI PENDING)
 - Base `develop@daab717b743f347e8c51f168b6038bf20d80b2ea`. CI 45372048743 completed/success: core job 138368509061 356 tests in 21.771s, HANDOFF_POLICY_PASS, WORK03B_R1C_BOUND_LEASE_RECOVERY_E2E_PASS, WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS; lab job 138368509482 73 tests in 0.767s; browser job 138368509478 E1_04_BROWSER_SMOKE_PASS. Prior publication transient updateRefs error recovered by verifying commit and retrying expected parent without force.
 - [Implementation and limits](work03b/G04_A1_LAB_04_RESOURCE_AUTHORIZATION.md). Existing lab extends verified credential -> principal -> org/project -> resource/action/purpose decision, exact allowlist, deny default, freshness, revoked grant and lineage checks, revalidation and non-capability result. 25 new tests, 98 expected lab; CI PENDING. No real execution, DB/runtime/API/MCP, provider, deployment, LEARN/main, approval or DONE changes. Original 28 oracles unchanged; E1_DATA_READY REVIEW_REQUIRED. Next verify CI and delimit vertical integration, no endless isolated lab extensions. Both handoffs updated.
+
+## SI-MH-0099 — TRUST G04-A1 verified closure; G04-A2-LAB-01 decision packet
+- Base `develop@fd7903da5af80fbefebbdcdd0592e2cadcd4540b`. CI 45374656422 SUCCESS all 3 jobs: 356 core (27.066s), 98 A1 (0.926s), browser, handoff and real synthetic MCP/REST/Mem0 and bound handoff recovery PASS. Close isolated A1 sequence; no G04 production or formal science promotion.
+- Static audit all eight SQL migrations and actual project/bearer authorization: no RLS/policies/role creation in migrations; existing project grants and composite task FKs preserved. [G04-A2-LAB-01 decision packet](work03b/G04_A2_LAB_01_DECISION_PACKET.md) freezes disposable PostgreSQL 16 separate database, restricted direct-login roles, explicit persisted membership/resource/purpose grants, FORCE RLS and 16 DB_REAL_LAB test families. Existing schema/migrations/CI unchanged. No SQL run, tables, provider, deployment, LEARN/model/main changes. Prior approvals exclude new DB tables; explicit bounded approval requested. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next after authorization implement and verify isolated DB proof. Both handoffs updated; own CI pending.
 

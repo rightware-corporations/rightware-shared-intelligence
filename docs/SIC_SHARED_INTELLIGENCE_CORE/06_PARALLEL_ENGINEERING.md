@@ -45,3 +45,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0098 — TRUST LAB-04
 - LAB-03 verified all jobs (73 lab,356 core,browser). LAB-04 active, synthetic resource policy only in existing lab, dedicated tests and docs; CI pending. No real client integration/production. LEARN remains independent; next bounded integration proposal after CI.
+
+## SI-MH-0099 — TRUST A1 closed; A2 proposal
+- LAB-04 and full baseline verified; 98 isolated A1 + 356 core tests, browser PASS. G04-A2-LAB-01 awaits explicit bounded approval for new disposable DB tables/roles/job only. No operational migrations, real identity, deployment or LEARN edits. [Decision packet](../work03b/G04_A2_LAB_01_DECISION_PACKET.md).

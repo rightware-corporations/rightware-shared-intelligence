@@ -52,3 +52,6 @@ Operator-approved isolated signed synthetic identity experiment implemented, tes
 
 ## SI-MH-0094 — LEARN X03
 [Report](../research/SI_MH_0094_E1_X03_EXPERIMENT.md). Perfect synthetic retrieval but 11/35 wrong accepts; no learned decision improvement over rule. Kaggle pending; formal gates unchanged.
+
+## SI-MH-0099 — A1 synthetic closure / A2 proposal
+98 signed-credential-to-resource lab tests and 356 Core tests verified at SI-MH-0098. [G04-A2-LAB-01](../work03b/G04_A2_LAB_01_DECISION_PACKET.md) proposes actual isolated PostgreSQL RLS proof, not approved migration or release. Original G04 and formal E1 gates remain unchanged.
