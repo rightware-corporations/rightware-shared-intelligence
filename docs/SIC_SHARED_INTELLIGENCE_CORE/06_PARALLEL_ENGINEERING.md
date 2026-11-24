@@ -36,3 +36,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0093 — TRUST CI layout reconciliation
 - G04-A1 lab remains isolated by job and dependency installation, now in the single existing ci.yml to satisfy the established repository layout. Previous core failure preserved; no test weakening or changes to LEARN or other jobs. New combined CI pending.
+
+## SI-MH-0096 — TRUST LAB-02
+- G04-A1-LAB-01 verified (29 tests); G04-A1-LAB-02 active: synthetic principal binding in existing lab module and dedicated tests only. No real identity, runtime or DB scope. CI pending, LEARN X03 unchanged. SIC-PILOT-01 remains proposed; human review awaiting actual input.

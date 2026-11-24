@@ -1339,6 +1339,13 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0096 — TRUST G04-A1-LAB-02 synthetic principal binding (CI PENDING)
+- Base `develop@c434031e32333351738cfa8509bdd22aa873db6b`. SI-MH-0095 CI 45369616977 SUCCESS all 3 jobs: 356 core, 29 RSA lab tests, browser and real synthetic MCP/REST/Mem0 plus bound handoff/fence recovery PASS. Operator resumed existing engineering after vision review; no deployment or new real-identity approval inferred.
+- [Implementation and limits](work03b/G04_A1_LAB_02_PRINCIPAL_BINDING.md). Extend existing isolated lab with SyntheticPrincipalResolver: fresh raw-token verification, exact issuer+subject binding, separate principal kinds, unique IDs, active/expiry checks, version/freshness and bounded history; no caller-supplied identity objects or authority. 21 new tests authored, 50 expected lab tests; actual new test execution PENDING CI. Existing workflow, 29 tests and dependencies unchanged.
+- No real account linking, IdP, tenancy/ACL/RLS, SQL/API/MCP, remote deployment, LEARN, main or production changes. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next inspect exact CI, record PASS/FAIL and decide next bounded integration scope. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

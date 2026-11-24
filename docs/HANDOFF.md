@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0095 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0096 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -602,4 +602,9 @@
 - Base `develop@e737f8d1687b0268365bc7fadbfe6f12426c51bd`. [Review and proposed pilot](research/SI_MH_0095_SIC_VISION_CLIENT_INTEROPERABILITY_REVIEW.md). Verified SI-MH-0093 CI 45368557908 all three jobs SUCCESS: 356 core + 29 isolated RSA tests, browser smoke, real synthetic MCP/REST/Mem0 and independent-agent bound handoff/fence recovery PASS. No product or science approval.
 - Actual MCP stdio tool surface has 4 read-only tools; REST experimental task/checkpoint/handoff writes exist. No verified ChatGPT/Claude live client connection, remote MCP service or automatic cross-account execution. Interactive connectors require user initiation unless supported trigger exists; autonomous dispatch requires supported runtime/API adapters and an orchestrator. Separate account auth, scopes and billing. No native account/memory merging.
 - Proposed SIC-PILOT-01 synthetic real-client vertical slice (read-only first, separately approved narrow writes and remote authorization); human review, G04 and formal E1 gates preserved. No deployment or implementation in this review. TRUST principal binding remains candidate; LEARN X03 independent. Both handoffs updated; own CI PENDING. Next operator chooses pilot prioritization and authorized scope.
+
+## SI-MH-0096 — TRUST G04-A1-LAB-02 synthetic principal binding (CI PENDING)
+- Base `develop@c434031e32333351738cfa8509bdd22aa873db6b`. SI-MH-0095 CI 45369616977 SUCCESS all 3 jobs: 356 core, 29 RSA lab tests, browser and real synthetic MCP/REST/Mem0 plus bound handoff/fence recovery PASS. Operator resumed existing engineering after vision review; no deployment or new real-identity approval inferred.
+- [Implementation and limits](work03b/G04_A1_LAB_02_PRINCIPAL_BINDING.md). Extend existing isolated lab with SyntheticPrincipalResolver: fresh raw-token verification, exact issuer+subject binding, separate principal kinds, unique IDs, active/expiry checks, version/freshness and bounded history; no caller-supplied identity objects or authority. 21 new tests authored, 50 expected lab tests; actual new test execution PENDING CI. Existing workflow, 29 tests and dependencies unchanged.
+- No real account linking, IdP, tenancy/ACL/RLS, SQL/API/MCP, remote deployment, LEARN, main or production changes. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next inspect exact CI, record PASS/FAIL and decide next bounded integration scope. Both handoffs updated.
 

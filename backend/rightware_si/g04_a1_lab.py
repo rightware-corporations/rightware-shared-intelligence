@@ -275,3 +275,140 @@ class SyntheticVerifier:
 
         return IdentityCandidate(claims["iss"], claims["sub"], profile,
                                  claims["jti"], claims["gen"], claims["exp"])
+
+
+# G04-A1-LAB-02: identity resolution only. This is an in-memory experiment,
+# not a production directory, account link, membership grant or permission.
+MAX_BINDINGS = 256
+
+
+@dataclass(frozen=True)
+class PrincipalBinding:
+    issuer: str = field(repr=False)
+    subject: str = field(repr=False)
+    principal_id: str = field(repr=False)
+    kind: str
+    active: bool
+    expires_at: int
+
+
+@dataclass(frozen=True)
+class DirectorySnapshot:
+    observed_at: int
+    valid_until: int
+    bindings: tuple[PrincipalBinding, ...] = field(repr=False)
+
+
+@dataclass(frozen=True)
+class ResolvedPrincipal:
+    principal_id: str = field(repr=False)
+    issuer: str = field(repr=False)
+    subject: str = field(repr=False)
+    kind: str
+    expires_at: int
+    status: str = field(default="RESOLVED_SYNTHETIC_PRINCIPAL", init=False)
+
+
+class SyntheticPrincipalResolver:
+    """Bind a fresh verified token to one explicit synthetic principal.
+
+    Construct the verifier here; do not accept caller-supplied IdentityCandidate
+    objects. Both callbacks and the clock are trusted laboratory dependencies,
+    not request data. This result conveys no membership or authorization.
+    """
+    def __init__(self, key_snapshot: Callable[[], Snapshot],
+                 directory_snapshot: Callable[[], DirectorySnapshot],
+                 clock: Callable[[], int]):
+        if not enabled() or not callable(directory_snapshot) or not callable(clock):
+            reject()
+        self._verifier = SyntheticVerifier(key_snapshot, clock)
+        self._directory = directory_snapshot
+        self._clock = clock
+        self._lock = Lock()
+        self._last_now = None
+        self._last_directory = None
+        self._history = {}
+        self._principal_history = {}
+
+    def resolve(self, token: str, expected_kind: str) -> ResolvedPrincipal:
+        try:
+            with self._lock:
+                return self._resolve(token, expected_kind)
+        except Exception:
+            pass
+        raise CredentialRejected("synthetic credential rejected") from None
+
+    def _resolve(self, token, expected_kind):
+        if not enabled() or type(expected_kind) is not str or expected_kind not in KINDS:
+            reject()
+        # Obtain a freshly verified result, never trust cached candidate objects.
+        identity = self._verifier.verify(token, expected_kind)
+        now = self._clock()
+        if (not number(now) or now >= identity.expires_at
+                or (self._last_now is not None and now < self._last_now)):
+            reject()
+        self._last_now = now
+        snapshot = self._directory()
+        if (type(snapshot) is not DirectorySnapshot
+                or not number(snapshot.observed_at) or not number(snapshot.valid_until)
+                or not (snapshot.observed_at <= now < snapshot.valid_until
+                        <= snapshot.observed_at + MAX_SNAPSHOT_AGE)
+                or type(snapshot.bindings) is not tuple
+                or len(snapshot.bindings) > MAX_BINDINGS):
+            reject()
+        index, ids = {}, set()
+        for binding in snapshot.bindings:
+            if (type(binding) is not PrincipalBinding
+                    or not all(ident(v) for v in
+                               (binding.issuer, binding.subject, binding.principal_id))
+                    or binding.kind not in KINDS
+                    or type(binding.active) is not bool
+                    or not number(binding.expires_at)):
+                reject()
+            key = (binding.issuer, binding.subject)
+            if key in index or binding.principal_id in ids:
+                reject()
+            index[key] = binding
+            ids.add(binding.principal_id)
+
+        # Same-version mutation or snapshot rollback is not permitted.
+        stamp = (snapshot.observed_at, snapshot.valid_until,
+                 frozenset(index.items()))
+        previous = self._last_directory
+        if previous is not None:
+            if stamp[0] < previous[0] or (stamp[0] == previous[0] and stamp != previous):
+                reject()
+        previous_active = ({k for k, _ in previous[2]} if previous else set())
+        history = dict(self._history)
+        principal_history = dict(self._principal_history)
+        for key, binding in index.items():
+            old = history.get(key)
+            if old is not None:
+                if (key not in previous_active or old.principal_id != binding.principal_id
+                        or old.kind != binding.kind or (not old.active and binding.active)):
+                    reject()
+            owner = principal_history.get(binding.principal_id)
+            if owner is not None and owner != key:
+                reject()
+            history[key] = binding
+            principal_history[binding.principal_id] = key
+        if len(history) > MAX_BINDINGS or len(principal_history) > MAX_BINDINGS:
+            reject()
+        self._history = history
+        self._principal_history = principal_history
+        self._last_directory = stamp
+
+        match = index.get((identity.issuer, identity.subject))
+        if match is None or match.kind != identity.kind or not match.active:
+            reject()
+        # A second clock check covers slow directory callbacks; it does not
+        # claim atomic cross-store revocation or distributed consistency.
+        end = self._clock()
+        if (not number(end) or end < now or end >= snapshot.valid_until
+                or end >= match.expires_at or end >= identity.expires_at):
+            reject()
+        self._last_now = end
+        return ResolvedPrincipal(match.principal_id, identity.issuer,
+                                 identity.subject, identity.kind,
+                                 min(identity.expires_at, match.expires_at,
+                                     snapshot.valid_until))
