@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0078 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0079 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -502,3 +502,9 @@
 
 ## SI-MH-0078 — ENG-E1-03C conflict annotation v2 (CI PENDING)
 - [Contract and implementation](research/SI_MH_0078_E1_03C_CONFLICT_CONTRACT.md): separates authority support grade from explicitly cited contradiction; unverified claim stays grade 0. New opaque v2 packets/custody, private A/B pair reconciliation; +15 mock tests, 356 expected (341+15). Local execution NOT_RUN; new CI PENDING. Previous SI-MH-0077 CI at read completed/success. No actual humans/gold; E1_DATA_READY REVIEW_REQUIRED. No Core/API/SQL/production/main/JARVIS/PULSE/vendor change. NEXT check CI and recruit independent humans + external curator.
+
+## SI-MH-0079 — Reviewer alias+conflict v2 CI VERIFIED 356/356
+
+- Parent `develop@65c2e8b0315af898e5b0771beed123001665775b`, [Actions 45346784374](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346784374) **SUCCESS 356/356**, 8 migrations, E1_03B alias/no-eval/no-gold marker, G01 GitHub LIVE/native PostgreSQL restore, full Mem0/Ollama E2E PASS. P0 patch [Actions 45346421772](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346421772) SUCCESS 341/341. [Detailed verifiable CI](research/SI_MH_0079_E1_03_REVIEW_CI_VERIFIED.md).
+- New v2 HUMAN REVIEW *protocol software* separates textual contradiction evidence (`conflict_claims`) from authority-grade relevance; opaque A/B alias maps stay in private `.runtime/CUSTODY_ONLY`. **0 human reviewers, 0 adjudication, 0 evaluator-only independent gold**, underlying public texts/labels searchable; E1_DATA_READY REVIEW_REQUIRED. No RW-R1 training, no E1.2–E1.5 implementation or real G04 IAM/RLS.
+- NEXT ENG-E1-04 actual independent human reviews, expert adjudication and private evaluator-controlled blind corpus; do not distribute old v1 packets. SI-MH-0079 docs-only own CI pending; main/JARVIS/PULSE/vendor Mem0 unchanged.

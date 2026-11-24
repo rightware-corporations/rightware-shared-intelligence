@@ -1184,6 +1184,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+
+---
+
+## SI-MH-0079 — E1.1C P0/P1 reviewer contract CI 356/356 VERIFIED, SCIENCE STILL OPEN
+
+**2026-11-24 Africa/Maputo. BASE:** `develop@65c2e8b0315af898e5b0771beed123001665775b`. [Actions 45346784374](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346784374), job 138283161244 **SUCCESS**: `Ran 356 tests in 33.764s / OK`, 8 migrations, HANDOFF gate, E1_03B opaque alias A/B no raw ID/gold and full MCP/Mem0/Ollama PASS. P0 patch [Actions 45346421772](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45346421772) **SUCCESS 341/341** also independently verified. [Full evidence](research/SI_MH_0079_E1_03_REVIEW_CI_VERIFIED.md).
+
+**Engineering achievements:** reviewer-specific random opaque source/query IDs and private reverse-map custody; v2 explicit `conflict_claims` citations distinct from authority-support grade, offline alias-pair comparison. **LIMITS:** original public E1.1B source texts/provisional labels remain searchable, so NOT a true blind benchmark; 0 human reviews, 0 adjudication, no evaluator-only hidden gold; `E1_DATA_READY=REVIEW_REQUIRED`. E1.2–E1.5 and real G04 IAM/RLS OPEN. No model trained/production/customer data, SQL/API/main/JARVIS/PULSE/vendor Mem0 changes.
+
+**This checkpoint** updates only report and BOTH handoffs; own CI PENDING. **NEXT:** ENG-E1-04 genuine human expert review and independent hidden evaluator custody with real adjudication; do NOT distribute old v1 packets.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
