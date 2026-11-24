@@ -62,6 +62,7 @@ class E103ReviewProcessTests(unittest.TestCase):
             self.assertNotIn("relevance", q)
             self.assertNotIn("kind", q)
         self.assertNotIn("RULE_PROVISIONAL_NOT_HUMAN", str(self.packet))
+        self.assertNotIn("labels_provisional", str(self.packet))
 
     def test_03_blank_templates_are_not_valid_reviews(self):
         with self.assertRaises(DataIntegrityError):
@@ -173,7 +174,9 @@ class E103ReviewProcessTests(unittest.TestCase):
             assert_private_path(ROOT / "docs" / "public_review.json", ROOT)
 
     def test_24_private_file_exclusive_create_prevents_overwrite(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / ".runtime") as tmp:
+        runtime = ROOT / ".runtime"
+        runtime.mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=runtime) as tmp:
             target = Path(tmp) / "trial.json"
             private_write_json(target, {"mock":True}, ROOT)
             with self.assertRaises(FileExistsError):

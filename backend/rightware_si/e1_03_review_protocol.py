@@ -53,7 +53,7 @@ def make_packet(dataset: Path) -> dict:
     packet = {
         "schema_version": SCHEMA,
         "dataset_id": manifest["dataset_id"],
-        "data_sha256": dict(manifest["sha256"]),
+        "data_sha256": {key: manifest["sha256"][key] for key in ("documents", "queries")},
         "status": "REVIEW_PACKET_NO_GOLD_TRAIN_DEV_ONLY",
         "documents": [
             {k: d[k] for k in DOC_FIELDS}

@@ -1129,6 +1129,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **NEXT:** inspect actual CI; if green checkpoint evidence only, then obtain actual independent human reviews, verify identity out-of-band and adjudicate, independent evaluator custodian to hold blind gold.
 
+
+---
+
+## SI-MH-0074 — ENG-E1-03 review workflow initial CI FAILED, local scratch and packet-label-hash repair (CI PENDING)
+
+**2026-11-24 Africa/Maputo. BASE:** `develop@249f82d0c70003e71e9d6bae298907e8a8eeefb9`, [Actions 45344586199](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344586199) **FAILED**, job 138275989859; `Ran 328 tests ... FAILED(errors=1)` because `test_24_private_file_exclusive_create_prevents_overwrite` assumed ignored `.runtime/` already existed in new checkout. Other 24 new E1.1C tests PASS. No CI self-check marker reached. [Forensic repair receipt](research/SI_MH_0074_E1_03_CI_REPAIR.md).
+
+**Fix:** make test create .runtime before temporary files, still test exclusive create; remove labels_provisional SHA metadata key from review packet (while `read_data` continues to verify all three manifest hashes), add assertion no provisional-label key exported. 25 review tests unchanged, **328 expected CI, NEW CI PENDING**. Human submissions=0, independent identities unverified, private evaluator gold none, E1_DATA_READY REVIEW_REQUIRED. No corpus, SQL/API, main, JARVIS/PULSE/vendor Mem0 changes.
+
+**NEXT:** validate 328 tests and E1_03_REVIEW_CONTRACT_PASS on new run, with full GitHub/PostgreSQL/Mem0 regressions; then append verified evidence.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

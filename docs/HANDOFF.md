@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0073 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0074 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -476,3 +476,9 @@
 - Base `develop@8417dd163e0e55f3de0a80d6847f912449bfada2` SI-MH-0072 SIC dossier [Actions 44335025606](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/44335025606) **SUCCESS** 303 tests existing. SIC files/docs preserved.
 - [Implementation report](research/SI_MH_0073_E1_03_REVIEW_WORKFLOW.md) / [reviewer custody protocol](research/e1_03/REVIEW_CUSTODY_AND_GATE_R0.md): new offline packet 42 synthetic train/dev sources, 24 queries **without gold, eval or author labels**; two BLANK local reviewer forms; strict validator and agreement, `.runtime/` untracked private inputs and exclusive output, no HTTP integration. +25 security/quality tests, **328 expected**, new CI step self-check pending.
 - Human reviewers=0, real adjudication=0, evaluator gold=none; self-attestation/2 pseudonyms never proof of real independent persons. `E1_DATA_READY=REVIEW_REQUIRED`, E1.2–E1.5 and G04 real OIDC/RLS still open. No evaluator eval/scoring, no product deployment, SQL/API, main/JARVIS/PULSE/vendor Mem0 changes. NEXT inspect CI, then external independent review and holdout under privacy-controlled custody.
+
+## SI-MH-0074 — ENG-E1-03 initial CI FAIL preserved; scratch folder and label metadata repaired
+
+- Parent `develop@249f82d0c70003e71e9d6bae298907e8a8eeefb9` [Actions 45344586199](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344586199) **FAILED**: 328 tests ran, 1 error in reviewer private-temp test because `.runtime/` absent. CI E1_03 self-check not reached. [Exact failure and repair](research/SI_MH_0074_E1_03_CI_REPAIR.md).
+- Fix creates .runtime in isolated test and removes provisional-label SHA key from exported review packet; underlying labels/hashes still fully validated by `read_data`; assert no provisional metadata in packet. Still 25 new tests / 328 total expected, new CI PENDING.
+- **No real human reviewer submissions, no adjudication, no gold test labels**. `E1_DATA_READY=REVIEW_REQUIRED`, E1.2–E1.5 and G04 real IAM/RLS untouched. No SQL/API, production, main/JARVIS/PULSE/vendor changes. NEXT new CI results, then actual independent reviewer coordination.
