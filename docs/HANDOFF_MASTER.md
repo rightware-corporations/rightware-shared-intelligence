@@ -1254,6 +1254,16 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+---
+
+## SI-MH-0086 — LEARN E1-X01 Kaggle audit verified; experimental prototypes underperform (VERIFIED)
+
+**2026-11-24 Africa/Maputo. Base:** develop@77e98da07db7105b8f8ec5716f2ff6f31d3d9e36; CI 45361352225 completed/failure. [Audit](research/SI_MH_0086_E1_X01_KAGGLE_AUDIT.md), [scorecard](research/fixtures/E1_X01_KAGGLE_AUDITED_SCORECARD.json). Operator ZIP SHA256 ec3cc94effbcec167cbf4b3593b403c8def3888b5ceac92f8d11dac446168882; 10 manifest files CRC/hash/length verified, 1344 rankings/63 metric rows/102 dev threshold entries independently reconciled. Corpus/queries/gold/metrics/abstention byte-identical to local X01; weights/raw differ across libraries. Diagnostic (20 positive,20 negative) nDCG BM25 .4961, hybrid .5133, hard-authority hybrid .7579, text learned .2217, meta learned .3851. Meta train hit1 56/56 vs dev 5/20 and diagnostic 3/20. Scope violations 0 in fixed synthetic scopes, not production authorization. Abstention 1.01 accepts zero; risk undefined. Post-hoc exact-ID inspection narrows 20 positive and 10 unknown diagnostic queries to 3 official current candidates, 10 foreign-only to 0. No new benchmark or training in this audit.
+
+**Next LEARN:** E1-X02 proposal: new synthetic families, equal candidate eligibility, exact-ID/property features, query-balanced pairwise learning, frozen X01 comparator, dev-only thresholds. Not formal E1.2/E1.3. TRUST ownership retained; no browser CI fixes here. E1_DATA_READY REVIEW_REQUIRED, 0 humans, no independent gold, A0 sealed untouched. No runtime/SQL/API/G04/main/JARVIS/PULSE/vendor changes. Raw ZIP external; sanitized scorecard + handoffs/SIC registered; own CI PENDING.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

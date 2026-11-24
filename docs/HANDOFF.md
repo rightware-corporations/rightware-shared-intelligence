@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0085 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0086 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -548,3 +548,6 @@
 
 **LEARN reconciliation:** E1-X01 reported local fit, 288 docs/192 queries/15680 training pairs, two prototypes underperform, threshold accepts zero, Kaggle NOT_RUN; [frozen report](research/SI_MH_0084_E1_X01_EXPERIMENT.md) unchanged. Operator to return Kaggle ZIP in other conversation. TRUST does not tune or alter X01. Real humans=0, adjudication/holdout absent, E1_DATA_READY REVIEW_REQUIRED. No formal E1.2–E1.5, runtime/SQL/API/G04/main/JARVIS/PULSE/vendor changes. NEXT TRUST verify browser CI, address concrete failure, then local packaging and human review; LEARN reproduce X01 and audit returned ZIP. Both handoffs updated.
 
+
+## SI-MH-0086 — LEARN: X01 Kaggle reproduction audit
+- [Audit](research/SI_MH_0086_E1_X01_KAGGLE_AUDIT.md), [scorecard](research/fixtures/E1_X01_KAGGLE_AUDITED_SCORECARD.json). 10 manifest entries/1344 ranking rows/63 metrics/102 thresholds verified; same metrics as local. Learned text/meta underperform B4; zero coverage abstention, risk undefined. Next proposed LEARN E1-X02 with common candidate eligibility, exact-ID/property and pairwise training, fresh templates. TRUST action remains independent; E1_DATA_READY REVIEW_REQUIRED. Own CI PENDING.

@@ -34,3 +34,6 @@ O pacote v2 distingue suporte autoritativo de evidência contraditória não ver
 
 ## SI-MH-0085 — Parallel engineering
 [Ownership registry](06_PARALLEL_ENGINEERING.md): TRUST (E1.1C/ENG-E1-04B) and LEARN (provisional E1-X01) independently implement in disjoint scopes. Formal E1 gates unchanged; only shared atomic publication serialized. Browser runner compatibility repair CI PENDING.
+
+## SI-MH-0086 — LEARN X01 Kaggle audited
+[Audit](../research/SI_MH_0086_E1_X01_KAGGLE_AUDIT.md). Reproduced metrics; learned prototypes underperform, threshold abstains all. Proposed X02 experimental; formal E1 gate remains open, TRUST independent.

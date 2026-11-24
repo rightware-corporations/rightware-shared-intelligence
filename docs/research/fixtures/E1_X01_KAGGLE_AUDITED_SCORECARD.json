@@ -1,0 +1,115 @@
+{
+  "schema": "RIGHTWARE_E1_X01_KAGGLE_AUDIT_V1",
+  "checkpoint": "SI-MH-0086",
+  "classification": "EXPERIMENTAL_RULE_LABELS_NOT_SCIENCE_APPROVAL",
+  "zip_sha256": "ec3cc94effbcec167cbf4b3593b403c8def3888b5ceac92f8d11dac446168882",
+  "manifest_verified": 10,
+  "rankings": 1344,
+  "recalculated_metric_rows": 63,
+  "recalculated_thresholds": 102,
+  "scope_violations_observed": 0,
+  "counts": {
+    "documents": 288,
+    "queries": 192,
+    "train_pairs": 15680,
+    "train_positive_pairs": 56,
+    "diagnostic_positive": 20,
+    "diagnostic_negative": 20
+  },
+  "diagnostic": [
+    {
+      "method": "B0-BM25",
+      "hit1": 0.35,
+      "hit2": 0.4,
+      "hit5": 0.65,
+      "mrr5_rounded": 0.4458,
+      "ndcg5_rounded": 0.4961,
+      "top1_ineligible": 23
+    },
+    {
+      "method": "B1-CharTFIDF",
+      "hit1": 0.25,
+      "hit2": 0.3,
+      "hit5": 0.5,
+      "mrr5_rounded": 0.3333,
+      "ndcg5_rounded": 0.3746,
+      "top1_ineligible": 25
+    },
+    {
+      "method": "B2-LSA32",
+      "hit1": 0.2,
+      "hit2": 0.35,
+      "hit5": 0.35,
+      "mrr5_rounded": 0.275,
+      "ndcg5_rounded": 0.2946,
+      "top1_ineligible": 10
+    },
+    {
+      "method": "B3-Hybrid",
+      "hit1": 0.35,
+      "hit2": 0.4,
+      "hit5": 0.7,
+      "mrr5_rounded": 0.4533,
+      "ndcg5_rounded": 0.5133,
+      "top1_ineligible": 23
+    },
+    {
+      "method": "B4-Hybrid-Authority",
+      "hit1": 0.5,
+      "hit2": 0.7,
+      "hit5": 1,
+      "mrr5_rounded": 0.6783,
+      "ndcg5_rounded": 0.7579,
+      "top1_ineligible": 0
+    },
+    {
+      "method": "RW-R1-X01-text",
+      "hit1": 0.05,
+      "hit2": 0.05,
+      "hit5": 0.45,
+      "mrr5_rounded": 0.15,
+      "ndcg5_rounded": 0.2217,
+      "top1_ineligible": 26
+    },
+    {
+      "method": "RW-R1-X01-meta",
+      "hit1": 0.15,
+      "hit2": 0.35,
+      "hit5": 0.6,
+      "mrr5_rounded": 0.3142,
+      "ndcg5_rounded": 0.3851,
+      "top1_ineligible": 0
+    }
+  ],
+  "meta_hit1": {
+    "train": [
+      56,
+      56
+    ],
+    "dev": [
+      5,
+      20
+    ],
+    "diagnostic": [
+      3,
+      20
+    ]
+  },
+  "abstention": {
+    "threshold": 1.01,
+    "dev_accepted": 0,
+    "diagnostic_accepted": 0,
+    "risk": null
+  },
+  "same_as_local": [
+    "documents",
+    "queries",
+    "rule_gold",
+    "retrieval_metrics",
+    "abstention"
+  ],
+  "model_weights_byte_identical": false,
+  "human_reviews": 0,
+  "science_gate": "REVIEW_REQUIRED",
+  "provider_comparisons": "NOT_RUN"
+}
