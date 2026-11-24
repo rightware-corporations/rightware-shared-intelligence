@@ -108,3 +108,20 @@ GRANT USAGE ON SCHEMA g04_lab TO g04_alpha,g04_beta,g04_service;
 GRANT USAGE ON DOMAIN g04_lab.syn_id TO g04_alpha,g04_beta,g04_service;
 GRANT SELECT, UPDATE(body) ON g04_lab.payload TO g04_alpha,g04_beta,g04_service;
 GRANT EXECUTE ON FUNCTION g04_lab.permitted(text,text,text,text,text) TO g04_alpha,g04_beta,g04_service;
+
+-- G04-A2-LAB-02: revalidate the provisioned external identity on the very
+-- statement that reads RLS-protected data. No caller-selected login.
+CREATE FUNCTION g04_lab.bound_identity(i text,s text,p text,k text)
+RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER
+SET search_path = pg_catalog
+AS $fn$
+ SELECT EXISTS (
+  SELECT 1 FROM g04_lab.login_binding l
+  JOIN g04_lab.external_identity e ON e.principal_id=l.principal_id
+  JOIN g04_lab.principal a ON a.id=e.principal_id AND a.kind=e.kind
+  WHERE l.login_name=session_user AND e.issuer=i AND e.subject=s
+    AND e.principal_id=p AND e.kind=k
+ )
+$fn$;
+REVOKE ALL ON FUNCTION g04_lab.bound_identity(text,text,text,text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION g04_lab.bound_identity(text,text,text,text) TO g04_alpha,g04_beta,g04_service;

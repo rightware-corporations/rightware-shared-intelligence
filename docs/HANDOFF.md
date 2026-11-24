@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0101 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0102 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -627,4 +627,8 @@
 ## SI-MH-0101 — TRUST G04-A2-LAB-01 verified real PostgreSQL evidence
 - Base `develop@958c486d59a9524250eade6856a6840bcd22d840`. [Evidence](work03b/G04_A2_LAB_01_VERIFIED_EVIDENCE.md): CI 45377653608, A2 job 138388097032 SUCCESS, PostgreSQL 16.16, guard PASS, 16/16 real DB test families (0.707s); A1 98/98 and browser PASS. Core job 138388097049: in_progress/PENDING at evidence publication; deterministic/real PostgreSQL suite step success.
 - Verified prior jobs preserved, no existing migration/runtime changes. A2 lab DB proof only; original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. No real identity integration/deployment/LEARN changes. Next verify any pending Core result and delimit signed-identity-to-DB integration separately. Both handoffs updated; documentation-only commit CI pending.
+
+## SI-MH-0102 — TRUST G04-A2-LAB-02 signed identity-to-DB integration (CI PENDING)
+- Base `develop@ea242e2f73b508431e1f0a95b5ade5e9165a3481`. SI-MH-0100 CI 45377653608 SUCCESS all four jobs: 356 Core, 98 A1, 16 A2, browser and real synthetic integration PASS. [Integration contract](work03b/G04_A2_LAB_02_IDENTITY_DB_INTEGRATION.md).
+- Existing disposable A2 lab only: signed RSA -> A1 principal resolver -> trusted provisioned DB login -> exact persisted identity recheck in RLS query. Read-only fresh connection, uniform deny, reverify and re-read; 13 new tests, 29 expected A2, CI PENDING. Fourth job installs existing pinned A1 deps; prior jobs, migrations, backend runtime and LEARN unchanged. No real account linking, external service, provider, production, original G04 oracle or E1 gate promotion. Next verify exact CI. Both handoffs updated.
 

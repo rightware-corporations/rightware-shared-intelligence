@@ -282,5 +282,174 @@ class DatabaseIsolation(unittest.TestCase):
         self.assertEqual(self.baseline(),before)
 
 
+    def reader_fixture(self,roles=None,connect=None):
+        import jwt
+        from cryptography.hazmat.primitives.asymmetric import rsa
+        from rightware_si.g04_a1_lab import (
+            DirectorySnapshot,PrincipalBinding,Snapshot,TrustKey,PROFILES,
+        )
+        from signed_reader import SignedResourceReader
+        from types import SimpleNamespace
+        now=2000000000
+        # Provision from actual protected DB directory, bootstrap only.
+        rows=self.admin.execute("SELECT e.issuer,e.subject,e.principal_id,e.kind,l.login_name::text "
+            "FROM g04_lab.external_identity e JOIN g04_lab.login_binding l "
+            "ON l.principal_id=e.principal_id ORDER BY e.principal_id").fetchall()
+        keys={row[0]:rsa.generate_private_key(public_exponent=65537,key_size=2048) for row in rows}
+        fixture=SimpleNamespace(now=now,calls=[])
+        fixture.key_snapshot=Snapshot(now-1,now+59,tuple(
+            TrustKey(i,"syn-kid",kind,keys[i].public_key()) for i,s,p,kind,role in rows))
+        fixture.directory=DirectorySnapshot(now-1,now+59,tuple(
+            PrincipalBinding(i,s,p,kind,True,now+120) for i,s,p,kind,role in rows))
+        def issue(issuer="syn-issuer-a",subject="syn-sub",kind="AGENT",signer=None,**extra):
+            claims=dict(iss=issuer,sub=subject,aud=PROFILES[kind][1],iat=now-5,
+                        nbf=now-5,exp=now+120,jti="syn-jti",gen=1)
+            claims.update(extra)
+            return jwt.encode(claims,keys[signer or issuer],algorithm="RS256",
+                              headers={"typ":PROFILES[kind][0],"kid":"syn-kid"})
+        def login(role):
+            fixture.calls.append(role)
+            return (connect or self.login)(role)
+        fixture.issue=issue
+        fixture.reader=SignedResourceReader(lambda:fixture.key_snapshot,lambda:fixture.directory,
+            lambda:fixture.now,roles if roles is not None else {p:role for i,s,p,kind,role in rows},login)
+        return fixture
+
+    def read_signed(self,f,token=None,kind="AGENT",org="syn-rw",project="syn-alpha",
+                    resource="syn-task",purpose="syn-work"):
+        return f.reader.read(f.issue() if token is None else token,kind,org,project,resource,purpose)
+
+    def assert_read_denied(self,f,**kwargs):
+        from signed_reader import ReadResult
+        self.assertEqual(self.read_signed(f,**kwargs),ReadResult("DENY_SYNTHETIC"))
+
+    def test_17_signed_read_real_payload(self):
+        f=self.reader_fixture()
+        result=self.read_signed(f)
+        self.assertEqual((result.status,result.resource_id,result.body),
+                         ("ALLOW_SYNTHETIC_READ","syn-task","synthetic:syn-task"))
+        self.assertEqual(f.calls,["g04_alpha"])
+        self.assertNotIn("synthetic:syn-task",repr(result))
+
+    def test_18_same_subject_separate_signed_issuers(self):
+        f=self.reader_fixture()
+        beta=f.issue("syn-issuer-b")
+        result=self.read_signed(f,beta,org="syn-other",project="syn-beta",resource="syn-beta-task")
+        self.assertEqual(result.body,"synthetic:syn-beta-task")
+        self.assertEqual(f.calls,["g04_beta"])
+        self.assert_read_denied(f,token=beta)
+        self.assert_read_denied(f,org="syn-other",project="syn-beta",resource="syn-beta-task")
+
+    def test_19_wrong_signature_never_connects(self):
+        f=self.reader_fixture()
+        self.assert_read_denied(f,token=f.issue(signer="syn-issuer-b"))
+        self.assert_read_denied(f,token=f.issue(exp=f.now))
+        self.assertEqual(f.calls,[])
+
+    def test_20_forged_principal_or_role_claim_never_connects(self):
+        f=self.reader_fixture()
+        for extra in ({"principal_id":"syn-b"},{"role":"g04_beta"},{"organization_id":"syn-other"}):
+            self.assert_read_denied(f,token=f.issue(**extra))
+        self.assertEqual(f.calls,[])
+
+    def test_21_scope_and_resource_denial(self):
+        f=self.reader_fixture()
+        for kwargs in ({"resource":"syn-hidden-task"},{"resource":"syn-beta-task"},
+                       {"resource":"syn-gamma-task","org":"syn-third","project":"syn-gamma"},
+                       {"purpose":"syn-audit"},{"resource":"syn-unknown"}):
+            self.assert_read_denied(f,**kwargs)
+        self.assertEqual(set(f.calls),{"g04_alpha"})
+
+    def test_22_service_profile_and_purpose(self):
+        f=self.reader_fixture()
+        service=f.issue("syn-issuer-s","syn-service","SERVICE")
+        self.assertEqual(self.read_signed(f,service,kind="SERVICE",purpose="syn-audit").body,
+                         "synthetic:syn-task")
+        self.assert_read_denied(f,token=service,kind="AGENT",purpose="syn-audit")
+        self.assert_read_denied(f,token=service,kind="SERVICE")
+        self.assert_read_denied(f,kind="HUMAN")
+
+    def test_23_misprovisioned_role_fails_db_identity_binding(self):
+        f=self.reader_fixture({"syn-a":"g04_beta","syn-b":"g04_alpha","syn-s":"g04_service"})
+        self.assert_read_denied(f,org="syn-other",project="syn-beta",resource="syn-beta-task")
+        self.assertEqual(f.calls,["g04_beta"])
+        # The same direct login really has access; the extra identity check
+        # is what blocks the confused provisioned role.
+        with self.login("g04_beta") as c,c.transaction():
+            self.scope(c,"syn-other","syn-beta")
+            self.assertEqual(self.ids(c),["syn-beta-task"])
+            self.assertFalse(c.execute("SELECT g04_lab.bound_identity('syn-issuer-a','syn-sub','syn-a','AGENT')").fetchone()[0])
+
+    def test_24_persisted_external_identity_removed(self):
+        f=self.reader_fixture()
+        self.admin.execute("DELETE FROM g04_lab.external_identity WHERE principal_id='syn-a'")
+        try:
+            self.assert_read_denied(f)
+            self.assertEqual(f.calls,["g04_alpha"])
+        finally:
+            self.admin.execute("INSERT INTO g04_lab.external_identity VALUES ('syn-issuer-a','syn-sub','syn-a','AGENT')")
+
+    def test_25_persisted_grant_and_membership_revocation(self):
+        f=self.reader_fixture()
+        self.assertEqual(self.read_signed(f).status,"ALLOW_SYNTHETIC_READ")
+        for table,where in (("resource_grant","principal_id='syn-a' AND resource_id='syn-task' AND action='task:read'"),
+                            ("project_member","principal_id='syn-a' AND project_id='syn-alpha'")):
+            self.admin.execute("UPDATE g04_lab."+table+" SET active=false WHERE "+where)
+            try:
+                self.assert_read_denied(f)
+            finally:
+                self.admin.execute("UPDATE g04_lab."+table+" SET active=true WHERE "+where)
+
+    def test_26_credential_revoked_during_connection(self):
+        from contextlib import contextmanager
+        from dataclasses import replace
+        @contextmanager
+        def revoke(role):
+            with self.login(role) as c:
+                f.now+=1
+                f.key_snapshot=replace(f.key_snapshot,observed_at=f.now,
+                                       revoked=frozenset({("syn-issuer-a","syn-jti")}))
+                yield c
+        f=self.reader_fixture(connect=revoke)
+        self.assert_read_denied(f)
+        self.assertEqual(f.calls,["g04_alpha"])
+
+    def test_27_wrong_actual_login_and_outage(self):
+        from contextlib import contextmanager
+        @contextmanager
+        def wrong(role):
+            with self.login("g04_beta") as c:
+                yield c
+        f=self.reader_fixture(connect=wrong)
+        self.assert_read_denied(f,org="syn-other",project="syn-beta",resource="syn-beta-task")
+        @contextmanager
+        def unavailable(role):
+            raise RuntimeError("private connection detail")
+            yield
+        f=self.reader_fixture(connect=unavailable)
+        self.assert_read_denied(f)
+
+    def test_28_lab_disabled_and_missing_role(self):
+        from unittest.mock import patch
+        f=self.reader_fixture()
+        with patch.dict(os.environ,{"RW_SI_ENABLE_G04_A2_LAB":"0"}):
+            self.assert_read_denied(f)
+        self.assertEqual(f.calls,[])
+        f=self.reader_fixture({"syn-b":"g04_beta"})
+        self.assert_read_denied(f)
+        self.assertEqual(f.calls,[])
+
+    def test_29_fresh_requests_and_no_foreign_mutations(self):
+        before=self.baseline()
+        f=self.reader_fixture()
+        self.assertEqual(self.read_signed(f).body,"synthetic:syn-task")
+        beta=f.issue("syn-issuer-b")
+        self.assertEqual(self.read_signed(f,beta,org="syn-other",project="syn-beta",resource="syn-beta-task").body,
+                         "synthetic:syn-beta-task")
+        self.assert_read_denied(f,token=beta)
+        self.assertEqual(f.calls,["g04_alpha","g04_beta","g04_beta"])
+        self.assertEqual(self.baseline(),before)
+
+
 if __name__=="__main__":
     unittest.main(verbosity=2)

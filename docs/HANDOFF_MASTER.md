@@ -1376,6 +1376,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0102 — TRUST G04-A2-LAB-02 signed identity-to-DB integration (CI PENDING)
+- Base `develop@ea242e2f73b508431e1f0a95b5ade5e9165a3481`. SI-MH-0100 CI 45377653608 SUCCESS all four jobs: 356 Core, 98 A1, 16 A2, browser and real synthetic integration PASS. [Integration contract](work03b/G04_A2_LAB_02_IDENTITY_DB_INTEGRATION.md).
+- Existing disposable A2 lab only: signed RSA -> A1 principal resolver -> trusted provisioned DB login -> exact persisted identity recheck in RLS query. Read-only fresh connection, uniform deny, reverify and re-read; 13 new tests, 29 expected A2, CI PENDING. Fourth job installs existing pinned A1 deps; prior jobs, migrations, backend runtime and LEARN unchanged. No real account linking, external service, provider, production, original G04 oracle or E1 gate promotion. Next verify exact CI. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
