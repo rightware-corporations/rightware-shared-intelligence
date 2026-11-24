@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0080 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0081 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -511,3 +511,18 @@
 
 ## SI-MH-0080 — ENG-E1-04 ready for real human execution (AWAITING REVIEWERS)
 - SI-MH-0079 docs CI 45347242669 SUCCESS; engineering v2 356/356 verified at 45346784374. [Runbook](research/e1_04/OPERATOR_RUNBOOK.md), [guide](research/e1_04/REVIEWER_GUIDE_PT_EN.md), [offline reviewer form](research/e1_04/REVIEWER_OFFLINE.html), [receipt template](research/e1_04/ADJUDICATION_AND_HOLDOUT_RECEIPT_TEMPLATE.json), [curator protocol](research/e1_04/INDEPENDENT_HOLDOUT_PROTOCOL.md). 8 mock helper checks passed; browser smoke NOT_RUN; local export/dispatch NOT_RUN; new CI PENDING. 0 humans, 0 submissions, 0 adjudication, no reserved gold. E1_DATA_READY REVIEW_REQUIRED. NEXT select actual independent reviewers, perform local browser smoke + export, collect submissions. No model/production/G04/Core/API/SQL/main/JARVIS/PULSE/vendor edits.
+
+## SI-MH-0081 — Continuidade por output: decisão oficial e recuperação CI SI-MH-0080
+
+**Data:** 2026-11-24 Africa/Maputo (UTC+02:00). **Classificação:** DECISÃO OFICIAL DO OPERADOR / CI ANTERIOR VERIFIED. **Base:** `develop@d30395071eed1fbaa94055f986d4fb10a4b8b2a0`.
+
+**Contexto:** a conversa de desenvolvimento anterior atingiu o limite. A recuperação por Git identificou SI-MH-0080, um commit depois do SI-MH-0079, sem perda dos handoffs versionados. O operador determinou que cada output relevante seja registado no GitHub, com histórico detalhado suficiente para retomar sem a conversa.
+
+**Decisão e implementação documental:** reforço de [HANDOFF_POLICY.md](HANDOFF_POLICY.md), com checkpoints por output, registo de trabalho parcial, decisões, erros e evidências, verificação remota antes de declarar conclusão, recuperação após interrupção, e bloqueio REGISTO PENDENTE quando indisponível. Ambos os handoffs actualizados atomicamente no mesmo commit. Política aplica-se a agentes e ferramentas no SIC; não equivale a nova protecção técnica nem à publicação integral de conversas privadas.
+
+**Evidência anterior confirmada directamente:** [Actions 45348458409](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45348458409), job 138288701428, HEAD d30395071eed1fbaa94055f986d4fb10a4b8b2a0, completed/success; logs `Ran 356 tests in 36.416s / OK`, HANDOFF_POLICY_PASS, E1_03B_OPAQUE_IDS_PASS (actual_reviewers=0), G01_NATIVE_RESTORE_PASS e WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS. 8 migrações e passos CI de verificação GitHub aprovados. A adenda preserva o estado PENDING original do SI-MH-0080; não altera retroactivamente o histórico.
+
+**Limites:** CI próprio deste novo commit PENDING até observação; não houve novos testes locais, runtime, SQL/API, alteração de corpus, G04, vendor, JARVIS/PULSE, main ou produção. Browser smoke e exportação real NÃO EXECUTADOS, revisores=0, submissões=0, adjudicação=0, holdout independente ausente; E1_DATA_READY=REVIEW_REQUIRED. Não divulgar pacotes privados ou gold.
+
+**Próximo passo:** verificar CI deste checkpoint; continuar ENG-E1-04 com browser smoke local, exportação V2, custódia e revisores humanos reais segundo [runbook](research/e1_04/OPERATOR_RUNBOOK.md). E1.2–E1.5 permanecem pendentes. Se não houver revisores, registar BLOCKED_HUMAN_REVIEW, não simular resultados.
+

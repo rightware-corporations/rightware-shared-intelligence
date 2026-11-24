@@ -10,6 +10,18 @@ Dois documentos com funções diferentes:
 - docs/HANDOFF.md é a **fotografia operacional atual**: HEAD de desenvolvimento, teste comprovado, bloqueios, riscos, próximo comando/ação, compatibilidade, o que não está implementado. Pode ser atualizado a cada checkpoint, mas o histórico não se perde porque está no MASTER e no Git.
 - docs/handoffs/ contém dossiers de recuperação e checkpoints detalhados quando necessário, vinculando evidência, diffs e relatórios externos. Não guardar logs que contenham segredos.
 
+## Reforço oficial — output por output (SI-MH-0081, 2026-11-24)
+
+**DECISÃO OFICIAL DO OPERADOR:** cada output relevante de trabalho do SIC, inclusive análise sem código, deve ter um registo durável, detalhado e verificável no GitHub. Aplica-se a qualquer agente ou ferramenta que trabalhe no projecto. Não depende do fim da conversa, da missão inteira ou de solicitação adicional do operador.
+
+- Unidade de registo: cada entrega, conclusão técnica, decisão, mudança de plano, experiência, resultado, tentativa falhada ou bloqueio significativo. Progresso parcial que permita retomar trabalho também é um checkpoint; não esperar pelo fecho de uma fase longa. Mensagens de cortesia e progresso sem conteúdo novo não exigem commit.
+- Antes de apresentar um output como concluído, publicar a evidência sanitizada e os dois handoffs no mesmo commit em develop, verificar que o HEAD remoto contém a entrega e fornecer ao operador o SHA, referências, estado de validação e próxima acção. CI ainda em execução = PENDING, não PASS; registar o resultado observado por adenda quando disponível, sem criar uma cadeia infinita de commits que apenas atestam o CI da adenda anterior.
+- Cada registo deve permitir a outro agente reconstruir o trabalho sem o chat: contexto de entrada, objectivo, estado anterior/HEAD, opções consideradas e razão técnica da escolha, decisões versus hipóteses, passos efectivamente executados, comandos reproduzíveis sanitizados, artefactos/diffs, ambiente e resultados PASS/FAIL/SKIP/NOT_RUN, erros e tentativas, alterações e não-alterações, riscos, dependências e próxima acção exacta. Incluir rollback quando aplicável.
+- Para trabalho longo, criar checkpoints intermédios a cada marco relevante e antes de mudar de sessão, quando possível. Se ocorrer interrupção, recuperar pelo HEAD remoto e último checkpoint, identificar trabalho local não publicado e não presumir que foi concluído. Não apagar trabalho desconhecido nem fazer reset destrutivo.
+- Se GitHub estiver inacessível, preservar um handoff sanitizado local quando possível, declarar REGISTO PENDENTE e não declarar entrega concluída; reconciliar e publicar antes de prosseguir com trabalho dependente.
+- O GitHub público não é arquivo de conversas privadas integrais, segredos, dados pessoais, anotações privadas, gold reservado ou material confidencial. Registar decisões e evidência técnica necessária em resumo sanitizado; usar referências ou compromissos públicos apenas quando não exponham informação protegida. Não publicar conteúdo de CUSTODY_ONLY ou .runtime.
+- Em cada recuperação, ler HANDOFF_POLICY, HANDOFF, última entrada MASTER, dossier SIC e verificar HEAD/CI reais. O histórico MASTER é append-only; não reescrever falhas nem decisões antigas. Preservar develop/main e a política de release existente.
+
 ## Fluxo de trabalho obrigatório para cada output técnico
 1. ANTES: consultar develop remoto, HANDOFF.md, última entrada HANDOFF_MASTER.md, PRs e CI reais; não assumir estado do chat.
 2. DECIDIR: registrar âmbito, hipótese, decisão aprovada ou recomendação; identificar o que NÃO será alterado.

@@ -1205,6 +1205,22 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0081 — Continuidade por output: decisão oficial e recuperação CI SI-MH-0080
+
+**Data:** 2026-11-24 Africa/Maputo (UTC+02:00). **Classificação:** DECISÃO OFICIAL DO OPERADOR / CI ANTERIOR VERIFIED. **Base:** `develop@d30395071eed1fbaa94055f986d4fb10a4b8b2a0`.
+
+**Contexto:** a conversa de desenvolvimento anterior atingiu o limite. A recuperação por Git identificou SI-MH-0080, um commit depois do SI-MH-0079, sem perda dos handoffs versionados. O operador determinou que cada output relevante seja registado no GitHub, com histórico detalhado suficiente para retomar sem a conversa.
+
+**Decisão e implementação documental:** reforço de [HANDOFF_POLICY.md](HANDOFF_POLICY.md), com checkpoints por output, registo de trabalho parcial, decisões, erros e evidências, verificação remota antes de declarar conclusão, recuperação após interrupção, e bloqueio REGISTO PENDENTE quando indisponível. Ambos os handoffs actualizados atomicamente no mesmo commit. Política aplica-se a agentes e ferramentas no SIC; não equivale a nova protecção técnica nem à publicação integral de conversas privadas.
+
+**Evidência anterior confirmada directamente:** [Actions 45348458409](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45348458409), job 138288701428, HEAD d30395071eed1fbaa94055f986d4fb10a4b8b2a0, completed/success; logs `Ran 356 tests in 36.416s / OK`, HANDOFF_POLICY_PASS, E1_03B_OPAQUE_IDS_PASS (actual_reviewers=0), G01_NATIVE_RESTORE_PASS e WORK02D_FULL_MCP_REAL_MEM0_E2E_PASS. 8 migrações e passos CI de verificação GitHub aprovados. A adenda preserva o estado PENDING original do SI-MH-0080; não altera retroactivamente o histórico.
+
+**Limites:** CI próprio deste novo commit PENDING até observação; não houve novos testes locais, runtime, SQL/API, alteração de corpus, G04, vendor, JARVIS/PULSE, main ou produção. Browser smoke e exportação real NÃO EXECUTADOS, revisores=0, submissões=0, adjudicação=0, holdout independente ausente; E1_DATA_READY=REVIEW_REQUIRED. Não divulgar pacotes privados ou gold.
+
+**Próximo passo:** verificar CI deste checkpoint; continuar ENG-E1-04 com browser smoke local, exportação V2, custódia e revisores humanos reais segundo [runbook](research/e1_04/OPERATOR_RUNBOOK.md). E1.2–E1.5 permanecem pendentes. Se não houver revisores, registar BLOCKED_HUMAN_REVIEW, não simular resultados.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
