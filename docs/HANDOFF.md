@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0099 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0100 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -619,4 +619,8 @@
 ## SI-MH-0099 — TRUST G04-A1 verified closure; G04-A2-LAB-01 decision packet
 - Base `develop@fd7903da5af80fbefebbdcdd0592e2cadcd4540b`. CI 45374656422 SUCCESS all 3 jobs: 356 core (27.066s), 98 A1 (0.926s), browser, handoff and real synthetic MCP/REST/Mem0 and bound handoff recovery PASS. Close isolated A1 sequence; no G04 production or formal science promotion.
 - Static audit all eight SQL migrations and actual project/bearer authorization: no RLS/policies/role creation in migrations; existing project grants and composite task FKs preserved. [G04-A2-LAB-01 decision packet](work03b/G04_A2_LAB_01_DECISION_PACKET.md) freezes disposable PostgreSQL 16 separate database, restricted direct-login roles, explicit persisted membership/resource/purpose grants, FORCE RLS and 16 DB_REAL_LAB test families. Existing schema/migrations/CI unchanged. No SQL run, tables, provider, deployment, LEARN/model/main changes. Prior approvals exclude new DB tables; explicit bounded approval requested. Original 28 G04 oracles unchanged, E1_DATA_READY REVIEW_REQUIRED. Next after authorization implement and verify isolated DB proof. Both handoffs updated; own CI pending.
+
+## SI-MH-0100 — TRUST G04-A2-LAB-01 approved and implemented (CI PENDING)
+- Base `develop@15f510418bfc788cc7c37d814d43ca2cb51f82b9`; operator explicitly approved SI-MH-0099 disposable synthetic PostgreSQL scope. CI 45375432132 SUCCESS. [Implementation](work03b/G04_A2_LAB_01_IMPLEMENTATION.md).
+- New lab-only SQL, disposable PostgreSQL 16 runner, generated credentials, guard/marker, protected session_user binding, composite FKs, explicit resource grants, FORCE RLS, direct restricted login tests, 16 test families. Fourth isolated job appended to existing ci.yml; previous jobs and migrations unchanged. Actual DB execution NOT_RUN locally (tools unavailable); CI PENDING. No production, real accounts, DB migrations, runtime/API/MCP, LEARN/main or original oracle changes. E1_DATA_READY REVIEW_REQUIRED. NEXT inspect four jobs, fix failures, record exact evidence. Both handoffs updated.
 

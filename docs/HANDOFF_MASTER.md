@@ -1364,6 +1364,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0100 — TRUST G04-A2-LAB-01 approved and implemented (CI PENDING)
+- Base `develop@15f510418bfc788cc7c37d814d43ca2cb51f82b9`; operator explicitly approved SI-MH-0099 disposable synthetic PostgreSQL scope. CI 45375432132 SUCCESS. [Implementation](work03b/G04_A2_LAB_01_IMPLEMENTATION.md).
+- New lab-only SQL, disposable PostgreSQL 16 runner, generated credentials, guard/marker, protected session_user binding, composite FKs, explicit resource grants, FORCE RLS, direct restricted login tests, 16 test families. Fourth isolated job appended to existing ci.yml; previous jobs and migrations unchanged. Actual DB execution NOT_RUN locally (tools unavailable); CI PENDING. No production, real accounts, DB migrations, runtime/API/MCP, LEARN/main or original oracle changes. E1_DATA_READY REVIEW_REQUIRED. NEXT inspect four jobs, fix failures, record exact evidence. Both handoffs updated.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

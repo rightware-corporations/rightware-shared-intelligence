@@ -48,3 +48,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0099 — TRUST A1 closed; A2 proposal
 - LAB-04 and full baseline verified; 98 isolated A1 + 356 core tests, browser PASS. G04-A2-LAB-01 awaits explicit bounded approval for new disposable DB tables/roles/job only. No operational migrations, real identity, deployment or LEARN edits. [Decision packet](../work03b/G04_A2_LAB_01_DECISION_PACKET.md).
+
+## SI-MH-0100 — TRUST A2 lab active
+- Explicit operator approval for disposable DB lab. TRUST owns database/labs/g04_a2/, tests/g04_a2_lab/, G04_A2 lab documentation, isolated appended CI job and shared publication files only. 16 DB_REAL_LAB test families implemented, CI pending. No existing migrations or runtime/LEARN changes.
