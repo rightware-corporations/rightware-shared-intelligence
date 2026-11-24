@@ -1401,6 +1401,12 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0106 — TRUST SEC-R2-X01 observed evidence; stop for operator analysis
+- Executed base `develop@054869d0fe134a6f25cdd45d97b9f60c612c8a9b`, CI 45439599363, A2 job 138606696905 SUCCESS, PostgreSQL 16.16, 32/32 in 5.789s; nine trials. [Evidence](research/SI_MH_0106_SEC_R2_X01_OBSERVED_EVIDENCE.md). SR-F01 REPRODUCED 3/3 signed DENY but existing/fresh restricted DB ALLOW after external identity deletion. SR-F02 early recheck DENY 3/3; late in-flight delivery ALLOW 3/3; all six new post-revocation reads DENY. Stronger delivery cutoff not adopted; mutation race NOT_RUN. No production exploit, credential theft or cross-tenant breach claimed.
+- synthetic-signed-credentials (138606696798): completed/success; g04-a2-real-postgres-isolation (138606696905): completed/success; real-mcp-mem0 (138606697064): in_progress/PENDING; e1-04-offline-browser-smoke (138606697235): completed/success. Diagnostic CI PASS is not security PASS. Baseline enforcement/workflow verified unchanged, fixture restored, no corrective code, MCP, operational migrations, runtime, LEARN or main changes. Original 28 G04 oracles unchanged; E1_DATA_READY REVIEW_REQUIRED. NEXT operator evaluates F01 revocation and F02 in-flight semantics before remediation. Both handoffs updated; own docs-only CI pending.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

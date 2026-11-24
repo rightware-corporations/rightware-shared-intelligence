@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0105 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0106 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -644,4 +644,8 @@
 ## SI-MH-0105 — TRUST SEC-R2-X01 authorized baseline diagnostics (CI PENDING)
 - Base `develop@0038c177f42b568d8b197dc2f33a25bb7155fc21`. Operator approved SI-MH-0104 SR-F01/F02 disposable laboratory only; no fixes or MCP. [Frozen protocol](research/SI_MH_0105_SEC_R2_X01_EXPERIMENT_PROTOCOL.md). SI-MH-0104 CI 45438968050 in_progress/PENDING; previous research CI success.
 - Three diagnostic test methods appended to existing 29-test A2 suite; test-only helper observes real DB reads, independent committed revocation and deterministic barriers. F01 3 trials, F02 3 each at two barriers. Positive/unrelated controls, restoration, no payload mutation. Original enforcement and workflow unchanged, 32 expected A2 tests. CI pending; no observations claimed. No production, runtime, migration, MCP, LEARN or original oracle changes. Next record actual results before any mitigation. Both handoffs updated.
+
+## SI-MH-0106 — TRUST SEC-R2-X01 observed evidence; stop for operator analysis
+- Executed base `develop@054869d0fe134a6f25cdd45d97b9f60c612c8a9b`, CI 45439599363, A2 job 138606696905 SUCCESS, PostgreSQL 16.16, 32/32 in 5.789s; nine trials. [Evidence](research/SI_MH_0106_SEC_R2_X01_OBSERVED_EVIDENCE.md). SR-F01 REPRODUCED 3/3 signed DENY but existing/fresh restricted DB ALLOW after external identity deletion. SR-F02 early recheck DENY 3/3; late in-flight delivery ALLOW 3/3; all six new post-revocation reads DENY. Stronger delivery cutoff not adopted; mutation race NOT_RUN. No production exploit, credential theft or cross-tenant breach claimed.
+- synthetic-signed-credentials (138606696798): completed/success; g04-a2-real-postgres-isolation (138606696905): completed/success; real-mcp-mem0 (138606697064): in_progress/PENDING; e1-04-offline-browser-smoke (138606697235): completed/success. Diagnostic CI PASS is not security PASS. Baseline enforcement/workflow verified unchanged, fixture restored, no corrective code, MCP, operational migrations, runtime, LEARN or main changes. Original 28 G04 oracles unchanged; E1_DATA_READY REVIEW_REQUIRED. NEXT operator evaluates F01 revocation and F02 in-flight semantics before remediation. Both handoffs updated; own docs-only CI pending.
 

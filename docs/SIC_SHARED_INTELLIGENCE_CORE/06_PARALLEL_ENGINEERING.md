@@ -66,3 +66,6 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 
 ## SI-MH-0105 — TRUST SEC-R2-X01 active
 - Explicit operator approval for SR-F01/F02 only; test-only diagnostics on existing guarded disposable DB. Baseline unchanged, no fixes/MCP/LEARN. CI pending. [Protocol](../research/SI_MH_0105_SEC_R2_X01_EXPERIMENT_PROTOCOL.md).
+
+## SI-MH-0106 — TRUST X01 evidence recorded
+- Nine actual DB trials, F01 boundary divergence and F02 late delivery window reproduced. No corrections or MCP; stop for operator analysis. LEARN independent. [Evidence](../research/SI_MH_0106_SEC_R2_X01_OBSERVED_EVIDENCE.md).
