@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0074 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0075 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -482,3 +482,10 @@
 - Parent `develop@249f82d0c70003e71e9d6bae298907e8a8eeefb9` [Actions 45344586199](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344586199) **FAILED**: 328 tests ran, 1 error in reviewer private-temp test because `.runtime/` absent. CI E1_03 self-check not reached. [Exact failure and repair](research/SI_MH_0074_E1_03_CI_REPAIR.md).
 - Fix creates .runtime in isolated test and removes provisional-label SHA key from exported review packet; underlying labels/hashes still fully validated by `read_data`; assert no provisional metadata in packet. Still 25 new tests / 328 total expected, new CI PENDING.
 - **No real human reviewer submissions, no adjudication, no gold test labels**. `E1_DATA_READY=REVIEW_REQUIRED`, E1.2–E1.5 and G04 real IAM/RLS untouched. No SQL/API, production, main/JARVIS/PULSE/vendor changes. NEXT new CI results, then actual independent reviewer coordination.
+
+## SI-MH-0075 — ENG-E1-03 E1.1C review-infrastructure CI VERIFIED (328/328)
+
+- Source develop@d160ad7aa3c5cd8554c10bc26d2a6caacdd72b40, [Actions 45344939725](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344939725) **SUCCESS 328/328**, eight migrations, E1_01/E1_02 integrity and `E1_03_REVIEW_CONTRACT_PASS` train/dev 42 sources + 24 queries, no provisional gold/eval, real G01 GitHub native restore, agents/Mem0/Ollama PASS. [Exact report](research/SI_MH_0075_E1_03_CI_VERIFIED.md).
+- Prior 45344586199 FAILED one test from missing ignored `.runtime/`; SI-MH-0074 fixes validated in new run. `E1_REVIEW_INFRA_READY` as **engineering gate only**; 2 blank independent reviewer templates, pseudo-ID/quote/scope schema, kappa computation and private local storage implemented. **NO actual human reviews, no third adjudicator, no evaluator gold**. No trained RW-R1, E1_DATA_READY SCIENTIFIC REVIEW_REQUIRED.
+- E1.2–E1.5 and real G04 identity/tenant RLS still not implemented. SI-RD sealed test and all E1.1B data hashes unchanged; no private/customer/production/SQL/API/main/JARVIS/PULSE/vendor Mem0 changes.
+- SI-MH-0075 documents+both handoffs only, own CI PENDING. NEXT **ENG-E1-04** actual independent human review and adjudication, evaluator-only blinded holdout; operator must arrange reviewers without fake test submissions.

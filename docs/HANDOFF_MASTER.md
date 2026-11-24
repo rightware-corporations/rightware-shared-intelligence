@@ -1140,6 +1140,17 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 **NEXT:** validate 328 tests and E1_03_REVIEW_CONTRACT_PASS on new run, with full GitHub/PostgreSQL/Mem0 regressions; then append verified evidence.
 
+
+---
+
+## SI-MH-0075 — ENG-E1-03 E1.1C REVIEW-INFRA CI 328/328 PASS; human scientific review still OPEN
+
+**2026-11-24 Africa/Maputo. BASE:** `develop@d160ad7aa3c5cd8554c10bc26d2a6caacdd72b40`. [Actions 45344939725](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344939725), job 138277116787 **SUCCESS**: `Ran 328 tests in 36.135s / OK` (303 existing + 25 E1.1C), 8 PostgreSQL migrations, HANDOFF policy, E1_01 and E1_02 data checks, `E1_03_REVIEW_CONTRACT_PASS` 42 sources/24 queries **without gold or eval**, G01 real GitHub native PG restore, independent agents and real Mem0/Ollama PASS. [Verified report](research/SI_MH_0075_E1_03_CI_VERIFIED.md).
+
+**Failure preserved:** SI-MH-0073 [CI 45344586199](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45344586199) FAILED one test due missing ignored `.runtime/`; SI-MH-0074 fixed it and excluded provisional label metadata from reviewer packet. Software REVIEW INFRA READY, but **HUMAN REVIEWERS=0**, identity independence unproven, adjudication none, evaluator gold none, `E1_DATA_READY=REVIEW_REQUIRED`. E1.2–E1.5 not started. G04 OIDC/RLS/privacy separate open gate. No source/oracle leakage, model training, private client data, production, main/JARVIS/PULSE/vendor Mem0 edits.
+
+**This checkpoint:** only CI report + both handoffs; own docs-only CI PENDING. **NEXT:** coordinate two real independent human annotators and third adjudicator plus offline evaluator-controlled genuinely blind gold. Do not mark DONE or E1_DATA_READY without evidence.
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.
