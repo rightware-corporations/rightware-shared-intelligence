@@ -1,6 +1,6 @@
 # RIGHTWARE Shared Intelligence — CURRENT HANDOFF
 
-**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0086 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
+**Refreshed:** 2026-11-24 (Africa/Maputo); checkpoint SI-MH-0087 · **Source of historical truth:** [HANDOFF_MASTER.md](HANDOFF_MASTER.md) · **Policy:** [HANDOFF_POLICY.md](HANDOFF_POLICY.md)
 
 ## SIC document registry (SI-MH-0072)
 - [Dossier SIC](SIC_SHARED_INTELLIGENCE_CORE/README.md): cronologia, recovery, 40 ficheiros Git existentes verificados, 10 referências externas por SHA, scorecards e custódia. **Não** é nova autoridade além de CURRENT/MASTER. A chave privada, os ZIPs Kaggle brutos e o gold plaintext continuam fora do Git público.
@@ -551,3 +551,16 @@
 
 ## SI-MH-0086 — LEARN: X01 Kaggle reproduction audit
 - [Audit](research/SI_MH_0086_E1_X01_KAGGLE_AUDIT.md), [scorecard](research/fixtures/E1_X01_KAGGLE_AUDITED_SCORECARD.json). 10 manifest entries/1344 ranking rows/63 metrics/102 thresholds verified; same metrics as local. Learned text/meta underperform B4; zero coverage abstention, risk undefined. Next proposed LEARN E1-X02 with common candidate eligibility, exact-ID/property and pairwise training, fresh templates. TRUST action remains independent; E1_DATA_READY REVIEW_REQUIRED. Own CI PENDING.
+
+## SI-MH-0087 — TRUST / ENG-E1-04B: CSP-compatible browser test repair (CI PENDING)
+
+**2026-11-24 Africa/Maputo. Base:** develop@8c372187a578dd86d7a8a4c080539713f5b474b5. **Owner:** TRUST. Scoped repair only to existing e1_04 browser test, coordination status and both handoffs; LEARN owns E1-X02 and its artifacts.
+
+**Verified failures:** [SI-MH-0085 CI 45361352225](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45361352225) and [SI-MH-0086 CI 45362876461](https://github.com/rightware-corporations/rightware-shared-intelligence/actions/runs/45362876461) completed/failure. Ubuntu 24.04 resolved browser installation (Chromium 143.0.7499.4); exporter printed E1_03B_EXPORT_READY. Browser jobs 138331921347 and 138337073002 then failed at smoke line 67, Page.wait_for_function EvalError: string evaluation violates CSP because unsafe-eval is not allowed by script-src 'unsafe-inline'. Latest core job 138337073534 SUCCESS, logs 356 tests in 32.024s, HANDOFF_POLICY_PASS, E1_03B_OPAQUE_IDS_PASS actual_reviewers=0, real MCP/Mem0/Ollama E2E PASS. Full workflows NOT green.
+
+**Repair:** replace all 3 string wait_for_function calls with Playwright locator assertions (error prefix via regex, correct slot success status and visible review panel). Explicit bypass_csp=False; retain offline context, HTTP(S) request detection and abort, existing HTML CSP, actual exporter and ZIP archive checks. No unsafe-eval, no bypass, no product HTML changes. Static replacement checked (no remaining wait_for_function calls); actual new browser run NOT_RUN until CI. New CI PENDING. If failure persists, inspect exact failing step, do not weaken CSP.
+
+**LEARN reconciliation:** [SI-MH-0086 audit](research/SI_MH_0086_E1_X01_KAGGLE_AUDIT.md) records reproduced metrics and 1344 rankings, 10 manifest files verified, two prototypes underperform baseline, zero abstention coverage and risk undefined. This conversation did not receive/re-audit raw ZIP, tune or train X02. LEARN next E1-X02 comparative ranking experiment.
+
+**Next TRUST:** verify browser A/B PASS and core CI, then stop browser infrastructure work absent concrete defects. Real operator export/dispatch, two independent human reviews, adjudication and reserved holdout remain pending. If people not available record BLOCKED_HUMAN_REVIEW; propose separately scoped G04 work within existing approvals instead of blocking all engineering. E1_DATA_READY REVIEW_REQUIRED; formal E1.2–E1.5 unchanged. No G04 implementation, model, corpus, sealed A0, runtime/API/SQL, main/JARVIS/PULSE/vendor changes.
+

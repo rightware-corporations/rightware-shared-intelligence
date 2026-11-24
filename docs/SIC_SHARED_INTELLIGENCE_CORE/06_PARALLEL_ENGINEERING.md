@@ -19,3 +19,7 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 - TRUST: prior browser CI failed twice at Playwright install on ubuntu26.04-x64; scoped pin to ubuntu-24.04 is a candidate repair, pending new CI. Actual browser run, operator distribution, human reviews (0), adjudication and independent holdout are not yet verified.
 - LEARN: X01 local training performed, Kaggle evidence ZIP not yet supplied; 2 prototypes underperform best baseline; abstention coverage zero and risk undefined. No official scientific promotion.
 - E1_DATA_READY=REVIEW_REQUIRED. Neither track changes main or customer/production data.
+
+## SI-MH-0087 — synchronization
+- TRUST: Ubuntu 24.04 installation verified; actual browser test failed on CSP-blocked string evaluation. Locator-only patch published, strict CSP retained; new CI pending. Human review gate remains open.
+- LEARN: SI-MH-0086 records audited Kaggle X01 reproduction; next E1-X02 provisional experiment. No official model promotion. No change of write-scope ownership.

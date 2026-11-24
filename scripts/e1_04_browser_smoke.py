@@ -6,13 +6,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 from zipfile import ZipFile
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 from e1_04_prepare_review import archive, PUBLIC
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,7 +49,7 @@ def smoke(browser, out):
         folder = extracted[slot]
         packet, blank = folder / "packet.json", folder / "BLANK.json"
         wrong = extracted[other] / "BLANK.json"
-        context = browser.new_context(accept_downloads=True, offline=True)
+        context = browser.new_context(accept_downloads=True, offline=True, bypass_csp=False)
         remote, errors, downloads = [], [], []
         context.route("**/*", lambda route: route.abort()
                       if route.request.url.startswith(("http:", "https:"))
@@ -61,10 +62,11 @@ def smoke(browser, out):
         try:
             page.goto((folder / "REVIEWER_OFFLINE.html").as_uri())
             load(page, packet, wrong)
-            page.wait_for_function("document.querySelector('#loadstatus').textContent.startsWith('Error:')")
+            expect(page.locator("#loadstatus")).to_have_text(re.compile(r"^Error:"))
             require(not page.locator("#review").is_visible(), "wrong slot accepted")
             load(page, packet, blank)
-            page.wait_for_function("!document.querySelector('#review').hidden")
+            expect(page.locator("#loadstatus")).to_have_text(f"Loaded reviewer {slot}; no network transfer.")
+            expect(page.locator("#review")).to_be_visible()
             require(page.locator("#question option").count() == 24, "question count")
             require(page.locator("#progress").inner_text().startswith("0/560"), "blank coverage")
             page.locator("#finish").click()
@@ -92,7 +94,8 @@ def smoke(browser, out):
                         for r in j["ratings"]) == 1, "draft marker")
             page.reload()
             load(page, packet, draft)
-            page.wait_for_function("!document.querySelector('#review').hidden")
+            expect(page.locator("#loadstatus")).to_have_text(f"Loaded reviewer {slot}; no network transfer.")
+            expect(page.locator("#review")).to_be_visible()
             require(page.locator("#progress").inner_text().startswith("1/560"), "draft reload")
             require(page.locator("#questionbody article").first.locator("textarea").first.input_value()
                     == MARKER, "draft restored text")
