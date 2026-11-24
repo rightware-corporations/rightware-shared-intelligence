@@ -1286,6 +1286,16 @@ NEXT: observe new exact Actions logs for 283 tests and E1.1 runner plus R2/G01/M
 
 ---
 
+## SI-MH-0089 — TRUST: ENG-E1-04B verified; G04-A1-LAB-01 proposed
+
+**2026-11-24 Africa/Maputo. Base:** develop@c4e46021afef8c55b7deda2e60e4af2c3f205470. [Detailed evidence and next decision packet](research/SI_MH_0089_TRUST_BROWSER_CLOSE_G04_A1_SCOPE.md). CI 45364884789 and 45365605458 SUCCESS both jobs, exact logs 356/356 and real Chromium A/B PASS (24 questions/560 ratings each, wrong pair/blank/partial rejected, draft roundtrip, external HTTP(S) requests=0). Prior failures preserved; engineering ENG-E1-04B CLOSED. Operator dispatch and real human reviews=0 documented; adjudication and reserved holdout absent. AWAITING_HUMAN_INPUT / BLOCKED_HUMAN_REVIEW for science, E1_DATA_READY REVIEW_REQUIRED. Do not add review infrastructure without concrete defect.
+
+**Next TRUST:** proposed G04-A1-LAB-01 isolated signed synthetic credential verification, no real IdP or runtime integration. Re-read G04-A0 ratification: only synthetic in-memory evaluator approved; A1/A2 need explicit authorization. Detailed allowed paths, negative test families, identity-vs-authorization boundaries and exit criteria in report. 28 original G04 oracles unchanged NOT_IMPLEMENTED; no new G04 code or tests run. Operator approval requested before implementation.
+
+**LEARN:** SI-MH-0088 X02 local experiment completed, Kaggle evidence pending as recorded, no model promotion. LEARN owns reproduction/audit. No notebook/model/corpus changes. Documentation-only checkpoint, both handoffs and coordination updated; own CI PENDING. No runtime, SQL/API, dependencies, G04, main, JARVIS/PULSE/vendor changes.
+
+---
+
 ## Modelo para cada NOVA entrada
 ### SI-MH-XXXX — [WORK / checkpoint]
 - Data UTC e Africa/Maputo; estado declarado: DECISÃO, PROPOSTA, IMPLEMENTADO, VALIDADO, FALHOU ou BLOQUEADO.

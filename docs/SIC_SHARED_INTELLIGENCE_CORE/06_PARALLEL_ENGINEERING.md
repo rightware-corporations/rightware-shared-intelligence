@@ -23,3 +23,7 @@ G04 security/identity and Core continuity are candidate next missions for TRUST 
 ## SI-MH-0087 — synchronization
 - TRUST: Ubuntu 24.04 installation verified; actual browser test failed on CSP-blocked string evaluation. Locator-only patch published, strict CSP retained; new CI pending. Human review gate remains open.
 - LEARN: SI-MH-0086 records audited Kaggle X01 reproduction; next E1-X02 provisional experiment. No official model promotion. No change of write-scope ownership.
+
+## SI-MH-0089 — TRUST gate closed; proposed G04 mission
+- TRUST ENG-E1-04B verified in two green CI runs. Review tooling closed absent defects. Human execution awaiting independent reviewers and curator. Proposed G04-A1-LAB-01 awaits explicit scope approval; until then no G04 implementation. See [decision packet](../research/SI_MH_0089_TRUST_BROWSER_CLOSE_G04_A1_SCOPE.md).
+- LEARN remains owner of E1-X02 Kaggle reproduction and experimental algorithm work (SI-MH-0088). Shared publication protocol unchanged.
